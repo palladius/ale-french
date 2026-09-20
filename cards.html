@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🇫🇷 Ale French — Flashcards Vocabulaire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f1f5f9;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --purple: #7c3aed;
+      --red-dark: #991b1b;
+      --red-light: #ef4444;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.08), 0 6px 12px -4px rgba(0, 0, 0, 0.03);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Fredoka', 'Lexend', system-ui, sans-serif;
+      background: var(--bg-main);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: white;
+      border-bottom: 2px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    .badge-ale {
+      background: #fef08a;
+      color: #854d0e;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: 1px solid #facc15;
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .nav-tab {
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #475569;
+      transition: all 0.2s;
+    }
+
+    .nav-tab:hover {
+      color: #1e3a8a;
+    }
+
+    .nav-tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 20px 4px 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: white;
+      border: 2px solid #cbd5e1;
+      color: #334155;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #94a3b8;
+    }
+
+    .filter-btn.active {
+      background: #e0f2fe;
+      border-color: #0284c7;
+      color: #0369a1;
+      font-weight: 700;
+    }
+
+    .view-toggle-btn {
+      background: white;
+      border: 2px solid #818cf8;
+      color: #4f46e5;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .view-toggle-btn:hover {
+      background: #e0e7ff;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* DECK SINGLE CARD VIEW */
+    .deck-container {
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      margin: 0 14px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      border-radius: 999px;
+      width: 5%;
+      transition: width 0.3s ease;
+    }
+
+    /* 3D FLIP CARD EFFECT */
+    .card-scene {
+      width: 100%;
+      height: 420px;
+      perspective: 1200px;
+      cursor: pointer;
+    }
+
+    .flip-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 24px;
+    }
+
+    .flip-card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 24px;
+      background: var(--card-bg);
+      border: 3px solid #e2e8f0;
+      box-shadow: var(--shadow);
+      padding: 30px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .card-front {
+      border-color: #cbd5e1;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background: #ffffff;
+      border-color: #93c5fd;
+    }
+
+    .card-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-reflexive {
+      background: #ede9fe;
+      color: #6d28d9;
+    }
+
+    .tag-common {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .card-image-box {
+      font-size: 4.8rem;
+      line-height: 1;
+      margin: 10px 0;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08));
+      transition: transform 0.2s;
+    }
+
+    .card-scene:hover .card-image-box {
+      transform: scale(1.08);
+    }
+
+    .prompt-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .italian-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin: 4px 0 14px 0;
+    }
+
+    /* RIDDLE QUESTION MARK TILES */
+    .riddle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 10px 0;
+      padding: 10px 16px;
+      background: #f8fafc;
+      border-radius: 14px;
+      border: 1px dashed #cbd5e1;
+      max-width: 100%;
+    }
+
+    .riddle-word {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .riddle-tile {
+      width: 34px;
+      height: 42px;
+      background: #ffffff;
+      border: 2px solid #94a3b8;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #64748b;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      animation: pulseRiddle 2s infinite ease-in-out;
+    }
+
+    .riddle-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #7c3aed;
+      margin-right: 4px;
+    }
+
+    @keyframes pulseRiddle {
+      0%, 100% { transform: scale(1); border-color: #94a3b8; }
+      50% { transform: scale(1.04); border-color: #3b82f6; }
+    }
+
+    .tap-hint {
+      font-size: 0.95rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      background: #eff6ff;
+      padding: 6px 16px;
+      border-radius: 999px;
+      color: #2563eb;
+    }
+
+    /* CARD BACK STYLING */
+    .french-infinitive-revealed {
+      font-size: 2.3rem;
+      font-weight: 700;
+      margin: 10px 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .back-refl {
+      color: #7c3aed;
+      margin-right: 8px;
+    }
+
+    .back-stem {
+      color: var(--red-dark);
+      font-weight: 600;
+    }
+
+    .back-ending {
+      color: var(--red-light);
+      font-weight: 700;
+      text-decoration: underline;
+      text-decoration-color: #fca5a5;
+      text-underline-offset: 4px;
+    }
+
+    .back-extra {
+      color: #475569;
+      margin-left: 8px;
+      font-size: 1.8rem;
+    }
+
+    .audio-btn-large {
+      background: #eff6ff;
+      border: 2px solid #93c5fd;
+      color: #1d4ed8;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin: 10px 0;
+      transition: all 0.2s;
+    }
+
+    .audio-btn-large:hover {
+      background: #2563eb;
+      color: white;
+      transform: scale(1.12);
+    }
+
+    .letters-count-info {
+      font-size: 0.95rem;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .link-to-study {
+      background: white;
+      border: 2px solid #cbd5e1;
+      color: #1e3a8a;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .link-to-study:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    /* DECK CONTROLS */
+    .deck-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .ctrl-btn {
+      background: white;
+      border: 2px solid #cbd5e1;
+      color: #334155;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .ctrl-btn:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      transform: translateY(-2px);
+    }
+
+    .ctrl-btn-primary {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0 24px;
+      width: auto;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .ctrl-btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    /* GRID VIEW */
+    .grid-container {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+    }
+
+    .grid-card {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 250px;
+    }
+
+    .grid-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+      border-color: #93c5fd;
+    }
+
+    .grid-card.revealed {
+      border-color: #3b82f6;
+      background: #f8fafc;
+    }
+
+    .grid-icon {
+      font-size: 3rem;
+      margin: 8px 0;
+    }
+
+    .grid-italian {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+
+    .grid-mystery {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      flex-wrap: wrap;
+      margin: 6px 0;
+    }
+
+    .grid-tile {
+      width: 20px;
+      height: 26px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .grid-revealed-french {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--red-dark);
+      margin: 6px 0;
+    }
+
+    @media(max-width: 600px) {
+      .card-scene {
+        height: 390px;
+      }
+      .italian-title {
+        font-size: 1.7rem;
+      }
+      .riddle-tile {
+        width: 28px;
+        height: 36px;
+        font-size: 1.2rem;
+      }
+      .french-infinitive-revealed {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <h1>🇫🇷 Ale French</h1>
+      <span class="badge-ale">Pour Alessandro 🦁</span>
+    </div>
+
+    <!-- MAIN NAVIGATION TABS -->
+    <div class="nav-tabs">
+      <a href="index.html" class="nav-tab">📖 Coniugazioni</a>
+      <a href="cards.html" class="nav-tab active">🃏 Flashcards Infinito</a>
+    </div>
+  </header>
+
+  <div class="top-controls">
+    <button class="filter-btn active" onclick="setFilter('all', this)">🌟 Tutti (<span id="count-all">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('reflexive', this)">🧴 Riflessivi (<span id="count-reflexive">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('common', this)">🍽️ Comuni (<span id="count-common">0</span>)</button>
+    <button class="view-toggle-btn" id="btn-toggle-view" onclick="toggleView()">🔲 Vista Griglia</button>
+  </div>
+
+  <main class="main-content">
+
+    <!-- SINGLE DECK FLASHCARD VIEW -->
+    <div class="deck-container" id="deck-view">
+      <div class="progress-bar-wrap">
+        <span id="deck-index-label">Carta 1 di 18</span>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill-el"></div>
+        </div>
+        <span id="deck-known-count">⭐ 0/18</span>
+      </div>
+
+      <div class="card-scene" onclick="flipCurrentCard()">
+        <div class="flip-card" id="active-flip-card">
+          
+          <!-- FRONT: IL MISTERO (PUNTI DI DOMANDA) -->
+          <div class="card-face card-front">
+            <span class="card-tag" id="card-tag-el">Riflessivo</span>
+            
+            <div class="card-image-box" id="card-icon-el">🪥</div>
+            
+            <div>
+              <div class="prompt-subtitle">Come si dice in francese?</div>
+              <div class="italian-title" id="card-italian-el">lavarsi i denti</div>
+            </div>
+
+            <!-- RIDDLE QUESTION BOXES -->
+            <div class="riddle-container" id="card-riddle-el">
+              <!-- Populated by JS -->
+            </div>
+
+            <div class="tap-hint">
+              <span>✨ Tocca la carta per scoprire</span>
+            </div>
+          </div>
+
+          <!-- BACK: LA RISPOSTA RIVELATA CON AUDIO -->
+          <div class="card-face card-back" onclick="event.stopPropagation()">
+            <span class="card-tag" id="card-tag-back-el">Riflessivo</span>
+
+            <div class="card-image-box" id="card-icon-back-el" style="font-size: 3.5rem;">🪥</div>
+
+            <div class="prompt-subtitle">All'infinito si dice:</div>
+
+            <div class="french-infinitive-revealed" id="card-revealed-french">
+              <!-- e.g. se brosser les dents -->
+            </div>
+
+            <button class="audio-btn-large" onclick="playCurrentAudio()" title="Riascolta pronuncia">
+              🔊
+            </button>
+
+            <div class="letters-count-info" id="card-count-info-el">
+              Totale lettere: 14
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 6px;">
+              <button class="link-to-study" onclick="flipCurrentCard()">
+                🔄 Gira carta
+              </button>
+              <a href="#" id="link-to-conj-el" class="link-to-study" style="background: #2563eb; color: white; border: none;">
+                📖 Coniuga ➔
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DECK CONTROLS -->
+      <div class="deck-controls">
+        <button class="ctrl-btn" onclick="prevCard()" title="Carta precedente">⬅️</button>
+        <button class="ctrl-btn" onclick="shuffleDeck()" title="Mescola le carte">🔀</button>
+        <button class="ctrl-btn-primary ctrl-btn" onclick="flipCurrentCard()" id="btn-deck-flip">
+          💡 Rivela
+        </button>
+        <button class="ctrl-btn" onclick="nextCard()" title="Carta successiva">➡️</button>
+      </div>
+    </div>
+
+    <!-- GRID VIEW FOR ALL CARDS -->
+    <div class="grid-container" id="grid-view">
+      <!-- Populated by JS -->
+    </div>
+
+  </main>
+
+  <script>
+    let allVerbs = [];
+    let filteredVerbs = [];
+    let currentIndex = 0;
+    let isFlipped = false;
+    let isGridView = false;
+    let currentFilter = 'all';
+
+    fetch('verbs.json')
+      .then(res => res.json())
+      .then(data => {
+        allVerbs = data;
+        updateCounts();
+        applyFilter('all');
+      })
+      .catch(err => console.error("Error loading verbs:", err));
+
+    function updateCounts() {
+      document.getElementById('count-all').textContent = allVerbs.length;
+      document.getElementById('count-reflexive').textContent = allVerbs.filter(v => v.category === 'reflexive').length;
+      document.getElementById('count-common').textContent = allVerbs.filter(v => v.category === 'common').length;
+    }
+
+    function setFilter(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      applyFilter(filter);
+    }
+
+    function applyFilter(filter) {
+      if (filter === 'reflexive') {
+        filteredVerbs = allVerbs.filter(v => v.category === 'reflexive');
+      } else if (filter === 'common') {
+        filteredVerbs = allVerbs.filter(v => v.category === 'common');
+      } else {
+        filteredVerbs = [...allVerbs];
+      }
+      currentIndex = 0;
+      renderCurrentCard();
+      renderGridView();
+    }
+
+    // Splits infinitive into display chunks and letter boxes
+    function buildRiddleHtml(verb) {
+      const inf = verb.infinitive;
+      const words = inf.split(' ');
+      let html = '';
+
+      words.forEach((word, wIdx) => {
+        html += '<div class="riddle-word">';
+        
+        // If it's a known short marker like "se" or "s'" in reflexive, we can show it or hint it!
+        if (word === "se") {
+          html += '<span class="riddle-text">se</span>';
+        } else if (word.startsWith("s'")) {
+          html += '<span class="riddle-text">s\'</span>';
+          const rest = word.slice(2);
+          for (let i = 0; i < rest.length; i++) {
+            html += '<div class="riddle-tile">?</div>';
+          }
+        } else {
+          // Normal word: each letter gets a '?' box
+          for (let i = 0; i < word.length; i++) {
+            const ch = word[i];
+            if (ch === "'" || ch === "-") {
+              html += `<span class="riddle-text" style="color:#64748b;">${ch}</span>`;
+            } else {
+              html += '<div class="riddle-tile">?</div>';
+            }
+          }
+        }
+        html += '</div>';
+        if (wIdx < words.length - 1) {
+          html += '<div style="width: 10px;"></div>';
+        }
+      });
+
+      return html;
+    }
+
+    function renderRevealedFrench(verb) {
+      const inf = verb.infinitive;
+      
+      // Highlight infinitive ending (-er, -ir, -re, -oir)
+      // Extract reflexive prefix if any
+      let prefix = '';
+      let mainVerb = inf;
+      let suffixExtra = '';
+
+      if (inf.startsWith("se ")) {
+        prefix = 'se ';
+        mainVerb = inf.slice(3);
+      } else if (inf.startsWith("s'")) {
+        prefix = "s'";
+        mainVerb = inf.slice(2);
+      }
+
+      // Check if there are extra words (e.g. "brosser les dents" -> mainVerb "brosser", extra " les dents")
+      const parts = mainVerb.split(' ');
+      let baseWord = parts[0];
+      if (parts.length > 1) {
+        suffixExtra = ' ' + parts.slice(1).join(' ');
+      }
+
+      // Endings: er, ir, re, oir
+      let stem = baseWord;
+      let ending = '';
+      if (baseWord.endsWith('er')) {
+        stem = baseWord.slice(0, -2);
+        ending = 'er';
+      } else if (baseWord.endsWith('ir')) {
+        stem = baseWord.slice(0, -2);
+        ending = 'ir';
+      } else if (baseWord.endsWith('re')) {
+        stem = baseWord.slice(0, -2);
+        ending = 're';
+      }
+
+      let res = '';
+      if (prefix) {
+        res += `<span class="back-refl">${prefix}</span>`;
+      }
+      res += `<span class="back-stem">${stem}</span><span class="back-ending">${ending}</span>`;
+      if (suffixExtra) {
+        res += `<span class="back-extra">${suffixExtra}</span>`;
+      }
+      return res;
+    }
+
+    function renderCurrentCard() {
+      if (!filteredVerbs.length) return;
+      const verb = filteredVerbs[currentIndex];
+      const cardEl = document.getElementById('active-flip-card');
+      
+      // reset flip
+      isFlipped = false;
+      cardEl.classList.remove('is-flipped');
+      document.getElementById('btn-deck-flip').textContent = '💡 Rivela';
+
+      // FRONT
+      const tagEl = document.getElementById('card-tag-el');
+      const tagBackEl = document.getElementById('card-tag-back-el');
+      const isRefl = verb.category === 'reflexive';
+      tagEl.textContent = isRefl ? '🧴 Riflessivo' : '🍽️ Comune';
+      tagEl.className = `card-tag ${isRefl ? 'tag-reflexive' : 'tag-common'}`;
+      tagBackEl.textContent = isRefl ? '🧴 Riflessivo' : '🍽️ Comune';
+      tagBackEl.className = `card-tag ${isRefl ? 'tag-reflexive' : 'tag-common'}`;
+
+      document.getElementById('card-icon-el').textContent = verb.icon || '📘';
+      document.getElementById('card-icon-back-el').textContent = verb.icon || '📘';
+      document.getElementById('card-italian-el').textContent = verb.italian;
+      document.getElementById('card-riddle-el').innerHTML = buildRiddleHtml(verb);
+
+      // BACK
+      document.getElementById('card-revealed-french').innerHTML = renderRevealedFrench(verb);
+      
+      // Count letters excluding spaces
+      const pureLetters = verb.infinitive.replace(/[\s'-]/g, '').length;
+      document.getElementById('card-count-info-el').textContent = `Parola di ${pureLetters} lettere (${verb.infinitive})`;
+
+      // Link to index conjugation
+      document.getElementById('link-to-conj-el').href = `index.html#verb-${verb.id}`;
+
+      // Progress bar
+      const progressPercent = ((currentIndex + 1) / filteredVerbs.length) * 100;
+      document.getElementById('progress-fill-el').style.width = `${progressPercent}%`;
+      document.getElementById('deck-index-label').textContent = `Carta ${currentIndex + 1} di ${filteredVerbs.length}`;
+      document.getElementById('deck-known-count').textContent = `🦁 Ale French`;
+    }
+
+    function flipCurrentCard() {
+      const cardEl = document.getElementById('active-flip-card');
+      isFlipped = !isFlipped;
+      if (isFlipped) {
+        cardEl.classList.add('is-flipped');
+        document.getElementById('btn-deck-flip').textContent = '🔄 Gira';
+        playCurrentAudio();
+      } else {
+        cardEl.classList.remove('is-flipped');
+        document.getElementById('btn-deck-flip').textContent = '💡 Rivela';
+      }
+    }
+
+    function playCurrentAudio() {
+      if (!filteredVerbs.length) return;
+      const verb = filteredVerbs[currentIndex];
+      speakFrench(verb.infinitive);
+    }
+
+    function speakFrench(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'fr-FR';
+      utterance.rate = 0.85; // slightly slower for young learners
+
+      const voices = window.speechSynthesis.getVoices();
+      const frVoice = voices.find(v => v.lang.startsWith('fr') && (v.name.includes('Thomas') || v.name.includes('Amelie') || v.name.includes('Audrey') || v.name.includes('Google') || v.localService));
+      if (frVoice) utterance.voice = frVoice;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function nextCard() {
+      if (currentIndex < filteredVerbs.length - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0; // loop around
+      }
+      renderCurrentCard();
+    }
+
+    function prevCard() {
+      if (currentIndex > 0) {
+        currentIndex--;
+      } else {
+        currentIndex = filteredVerbs.length - 1;
+      }
+      renderCurrentCard();
+    }
+
+    function shuffleDeck() {
+      for (let i = filteredVerbs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [filteredVerbs[i], filteredVerbs[j]] = [filteredVerbs[j], filteredVerbs[i]];
+      }
+      currentIndex = 0;
+      renderCurrentCard();
+    }
+
+    // GRID VIEW IMPLEMENTATION
+    function renderGridView() {
+      const gridEl = document.getElementById('grid-view');
+      gridEl.innerHTML = '';
+
+      filteredVerbs.forEach((verb, idx) => {
+        const item = document.createElement('div');
+        item.className = 'grid-card';
+        item.id = `grid-card-${verb.id}`;
+        
+        item.innerHTML = `
+          <div>
+            <span class="card-tag ${verb.category === 'reflexive' ? 'tag-reflexive' : 'tag-common'}" style="font-size:0.7rem;">
+              ${verb.category === 'reflexive' ? 'Riflessivo' : 'Comune'}
+            </span>
+            <div class="grid-icon">${verb.icon || '📘'}</div>
+            <div class="grid-italian">${verb.italian}</div>
+          </div>
+          
+          <div class="grid-target-box" id="grid-box-${verb.id}">
+            <div class="grid-mystery">
+              ${verb.infinitive.split('').map(c => c === ' ' ? '<span style="width:6px;"></span>' : (c === "'" || c === "-" ? `<span>${c}</span>` : '<div class="grid-tile">?</div>')).join('')}
+            </div>
+            <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">Tocca per scoprire ✨</div>
+          </div>
+
+          <div style="margin-top: 10px; width: 100%;">
+            <a href="index.html#verb-${verb.id}" class="link-to-study" style="font-size:0.8rem; padding: 4px 10px; display:inline-block;" onclick="event.stopPropagation()">
+              📖 Coniugazione
+            </a>
+          </div>
+        `;
+
+        item.onclick = () => {
+          revealGridCard(verb);
+        };
+
+        gridEl.appendChild(item);
+      });
+    }
+
+    function revealGridCard(verb) {
+      const targetBox = document.getElementById(`grid-box-${verb.id}`);
+      const parentCard = document.getElementById(`grid-card-${verb.id}`);
+      
+      parentCard.classList.toggle('revealed');
+      const isRevealed = parentCard.classList.contains('revealed');
+
+      if (isRevealed) {
+        targetBox.innerHTML = `
+          <div class="grid-revealed-french">${renderRevealedFrench(verb)}</div>
+          <button class="audio-btn-large" style="width:36px; height:36px; font-size:1.1rem; margin: 4px auto;" onclick="event.stopPropagation(); speakFrench('${verb.infinitive}')">
+            🔊
+          </button>
+        `;
+        speakFrench(verb.infinitive);
+      } else {
+        targetBox.innerHTML = `
+          <div class="grid-mystery">
+            ${verb.infinitive.split('').map(c => c === ' ' ? '<span style="width:6px;"></span>' : (c === "'" || c === "-" ? `<span>${c}</span>` : '<div class="grid-tile">?</div>')).join('')}
+          </div>
+          <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">Tocca per scoprire ✨</div>
+        `;
+      }
+    }
+
+    function toggleView() {
+      isGridView = !isGridView;
+      const deckEl = document.getElementById('deck-view');
+      const gridEl = document.getElementById('grid-view');
+      const btn = document.getElementById('btn-toggle-view');
+
+      if (isGridView) {
+        deckEl.style.display = 'none';
+        gridEl.style.display = 'grid';
+        btn.textContent = '🃏 Vista Mazzo';
+      } else {
+        deckEl.style.display = 'flex';
+        gridEl.style.display = 'none';
+        btn.textContent = '🔲 Vista Griglia';
+      }
+    }
+
+    // KEYBOARD NAVIGATION
+    document.addEventListener('keydown', (e) => {
+      if (isGridView) return;
+      if (e.key === ' ' || e.key === 'Enter') {
+        flipCurrentCard();
+      } else if (e.key === 'ArrowRight') {
+        nextCard();
+      } else if (e.key === 'ArrowLeft') {
+        prevCard();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -21,10 +21,17 @@
    - L'applicazione separa nettamente le componenti con colori ad alto contrasto:
      - 🔵 **Soggetto:** Blu (`#2563eb`)
      - 🟣 **Pronome Riflessivo:** Viola tenue (`#7c3aed`) con pillola arrotondata (`me`, `te`, `se`, `nous`, `vous`, `se`, `m'`, `t'`, `s'`)
-     - ⚫️ **Radice Base:** Grafite scuro (`#0f172a`, es. `mang-`, `habill-`, `lav-`)
-     - 🔴 **Desinenza Scritta:** Rosso corallo (`#dc2626`) con sfondo leggero e sottolineatura solida (`-e`, `-es`, `-ons`, `-ez`, `-ent`).
+    - ⚫️ **Radice Base:** Rosso scuro / bordeaux (`#991b1b`, es. `mang-`, `habill-`, `lav-`)
+    - 🔴 **Desinenza Scritta:** Rosso chiaro vivace (`#ef4444`) con sottolineatura coordinata senza padding o spazi intermedi, così radice e desinenza appaiono come un'unica parola coesa senza distaccarsi!
 
-3. **Il Layout a Gruppi di Tre (Regola Fondamentale):**
+3. **🃏 Nuova Sezione Flashcards Vocabolario (`cards.html`):**
+   - **Obiettivo:** Imparare l'infinito francese associandolo all'azione ("Come si dice mangiare? Manger! Come si dice lavarsi i denti? Se brosser les dents!").
+   - **Indovinello con Caselle Lettera (Hangman Style):** Ogni lettera dell'infinito è rappresentata da un tassello `?` (se la parola ha 6 lettere ci sono 6 caselle, se ne ha 12 ce ne sono 12), permettendo ad Ale di dedurre e contare la lunghezza esatta.
+   - **3D Card Flip & Auto-Audio:** Al tocco/click la carta si capovolge in 3D, rivela la parola con desinenza evidenziata e pronuncia immediatamente l'audio francese a 0.85x.
+   - **Doppia modalità:** Vista Mazzo (Flashcard a tutto schermo con navigazione sequenziale, shuffle `🔀` e filtri) e Vista Griglia (tutte le 18 carte contemporaneamente).
+   - **Navigazione diretta:** Pulsante `📖 Coniuga ➔` sulla carta girata per atterrare direttamente alla tabella della coniugazione in `index.html`.
+
+4. **Il Layout a Gruppi di Tre (Regola Fondamentale):**
    - Il verbo è introdotto da un **`<h2>`** grande e chiaro con icona emoji.
    - Sotto, i 6 tempi sono raggruppati esattamente in **due gruppi da tre**:
      - 👤 **Singulier (3 persone):** `je`, `tu`, `il / elle / on`

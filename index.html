@@ -67,6 +67,38 @@
       border: 1px solid #facc15;
     }
 
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .nav-tab {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #475569;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      color: #1e3a8a;
+    }
+
+    .nav-tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -630,6 +662,13 @@
       <h1>Ale French</h1>
       <span class="badge-ale">Pour Alessandro 🦁</span>
     </div>
+
+    <!-- TABS TO SWITCH BETWEEN CONJUGATION & VOCAB FLASHCARDS -->
+    <div class="nav-tabs">
+      <a href="index.html" class="nav-tab active">📖 Coniugazioni</a>
+      <a href="cards.html" class="nav-tab">🃏 Flashcards Infinito</a>
+    </div>
+
     <div class="nav-actions">
       <button class="btn-toggle-it active" id="btn-toggle-italian" onclick="toggleItalianMode()">
         <span id="toggle-it-icon">👁️</span> <span id="toggle-it-label">Italiano</span>
@@ -721,9 +760,13 @@
       .then(data => {
         verbsData = data;
         renderSidebar();
-        // default to first verb or 'etre'
-        const defaultVerb = verbsData.find(v => v.id === 'etre') || verbsData[0];
-        selectVerb(defaultVerb.id);
+        // Support URL hash or ?verb=id to jump directly to verb from flashcards
+        const urlParams = new URLSearchParams(window.location.search);
+        const paramVerb = urlParams.get('verb');
+        const hashVerb = window.location.hash.replace('#verb-', '').replace('#', '');
+        const targetId = paramVerb || hashVerb;
+        const initialVerb = (targetId && verbsData.find(v => v.id === targetId)) || verbsData.find(v => v.id === 'etre') || verbsData[0];
+        selectVerb(initialVerb.id);
       })
       .catch(err => console.error("Error loading verbs:", err));
 
