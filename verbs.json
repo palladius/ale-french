@@ -11,42 +11,48 @@
         "reflexive": "m'",
         "stem": "habill",
         "ending": "e",
-        "full": "je m'habille"
+        "full": "je m'habille",
+        "italian": "io mi vesto"
       },
       {
         "pronoun": "tu",
         "reflexive": "t'",
         "stem": "habill",
         "ending": "es",
-        "full": "tu t'habilles"
+        "full": "tu t'habilles",
+        "italian": "tu ti vesti"
       },
       {
         "pronoun": "il / elle / on",
         "reflexive": "s'",
         "stem": "habill",
         "ending": "e",
-        "full": "il s'habille"
+        "full": "il s'habille",
+        "italian": "lui / lei si veste"
       },
       {
         "pronoun": "nous",
         "reflexive": "nous",
         "stem": "habill",
         "ending": "ons",
-        "full": "nous nous habillons"
+        "full": "nous nous habillons",
+        "italian": "noi ci vestiamo"
       },
       {
         "pronoun": "vous",
         "reflexive": "vous",
         "stem": "habill",
         "ending": "ez",
-        "full": "vous vous habillez"
+        "full": "vous vous habillez",
+        "italian": "voi vi vestite"
       },
       {
         "pronoun": "ils / elles",
         "reflexive": "s'",
         "stem": "habill",
         "ending": "ent",
-        "full": "ils s'habillent"
+        "full": "ils s'habillent",
+        "italian": "loro si vestono"
       }
     ]
   },
@@ -63,7 +69,8 @@
         "stem": "bross",
         "ending": "e",
         "extra": "les dents",
-        "full": "je me brosse les dents"
+        "full": "je me brosse les dents",
+        "italian": "io mi lavo i denti"
       },
       {
         "pronoun": "tu",
@@ -71,7 +78,8 @@
         "stem": "bross",
         "ending": "es",
         "extra": "les dents",
-        "full": "tu te brosses les dents"
+        "full": "tu te brosses les dents",
+        "italian": "tu ti lavi i denti"
       },
       {
         "pronoun": "il / elle / on",
@@ -79,7 +87,8 @@
         "stem": "bross",
         "ending": "e",
         "extra": "les dents",
-        "full": "il se brosse les dents"
+        "full": "il se brosse les dents",
+        "italian": "lui si lava i denti"
       },
       {
         "pronoun": "nous",
@@ -87,7 +96,8 @@
         "stem": "bross",
         "ending": "ons",
         "extra": "les dents",
-        "full": "nous nous brossons les dents"
+        "full": "nous nous brossons les dents",
+        "italian": "noi ci laviamo i denti"
       },
       {
         "pronoun": "vous",
@@ -95,7 +105,8 @@
         "stem": "bross",
         "ending": "ez",
         "extra": "les dents",
-        "full": "vous vous brossez les dents"
+        "full": "vous vous brossez les dents",
+        "italian": "voi vi lavate i denti"
       },
       {
         "pronoun": "ils / elles",
@@ -103,7 +114,8 @@
         "stem": "bross",
         "ending": "ent",
         "extra": "les dents",
-        "full": "ils se brossent les dents"
+        "full": "ils se brossent les dents",
+        "italian": "loro si lavano i denti"
       }
     ]
   },
@@ -119,42 +131,48 @@
         "reflexive": "me",
         "stem": "lèv",
         "ending": "e",
-        "full": "je me lève"
+        "full": "je me lève",
+        "italian": "io mi alzo"
       },
       {
         "pronoun": "tu",
         "reflexive": "te",
         "stem": "lèv",
         "ending": "es",
-        "full": "tu te lèves"
+        "full": "tu te lèves",
+        "italian": "tu ti alzi"
       },
       {
         "pronoun": "il / elle / on",
         "reflexive": "se",
         "stem": "lèv",
         "ending": "e",
-        "full": "il se lève"
+        "full": "il se lève",
+        "italian": "lui si alza"
       },
       {
         "pronoun": "nous",
         "reflexive": "nous",
         "stem": "lev",
         "ending": "ons",
-        "full": "nous nous levons"
+        "full": "nous nous levons",
+        "italian": "noi ci alziamo"
       },
       {
         "pronoun": "vous",
         "reflexive": "vous",
         "stem": "lev",
         "ending": "ez",
-        "full": "vous vous levez"
+        "full": "vous vous levez",
+        "italian": "voi vi alzate"
       },
       {
         "pronoun": "ils / elles",
         "reflexive": "se",
         "stem": "lèv",
         "ending": "ent",
-        "full": "ils se lèvent"
+        "full": "ils se lèvent",
+        "italian": "loro si alzano"
       }
     ]
   },
@@ -170,42 +188,48 @@
         "reflexive": "me",
         "stem": "peign",
         "ending": "e",
-        "full": "je me peigne"
+        "full": "je me peigne",
+        "italian": "io mi pettino"
       },
       {
         "pronoun": "tu",
         "reflexive": "te",
         "stem": "peign",
         "ending": "es",
-        "full": "tu te peignes"
+        "full": "tu te peignes",
+        "italian": "tu ti pettini"
       },
       {
         "pronoun": "il / elle / on",
         "reflexive": "se",
         "stem": "peign",
         "ending": "e",
-        "full": "il se peigne"
+        "full": "il se peigne",
+        "italian": "lui si pettina"
       },
       {
         "pronoun": "nous",
         "reflexive": "nous",
         "stem": "peign",
         "ending": "ons",
-        "full": "nous nous peignons"
+        "full": "nous nous peignons",
+        "italian": "noi ci pettiniamo"
       },
       {
         "pronoun": "vous",
         "reflexive": "vous",
         "stem": "peign",
         "ending": "ez",
-        "full": "vous vous peignez"
+        "full": "vous vous peignez",
+        "italian": "voi vi pettinate"
       },
       {
         "pronoun": "ils / elles",
         "reflexive": "se",
         "stem": "peign",
         "ending": "ent",
-        "full": "ils se peignent"
+        "full": "ils se peignent",
+        "italian": "loro si pettinano"
       }
     ]
   },
@@ -221,42 +245,48 @@
         "reflexive": "me",
         "stem": "douch",
         "ending": "e",
-        "full": "je me douche"
+        "full": "je me douche",
+        "italian": "io mi faccio la doccia"
       },
       {
         "pronoun": "tu",
         "reflexive": "te",
         "stem": "douch",
         "ending": "es",
-        "full": "tu te douches"
+        "full": "tu te douches",
+        "italian": "tu ti fai la doccia"
       },
       {
         "pronoun": "il / elle / on",
         "reflexive": "se",
         "stem": "douch",
         "ending": "e",
-        "full": "il se douche"
+        "full": "il se douche",
+        "italian": "lui si fa la doccia"
       },
       {
         "pronoun": "nous",
         "reflexive": "nous",
         "stem": "douch",
         "ending": "ons",
-        "full": "nous nous douchons"
+        "full": "nous nous douchons",
+        "italian": "noi ci facciamo la doccia"
       },
       {
         "pronoun": "vous",
         "reflexive": "vous",
         "stem": "douch",
         "ending": "ez",
-        "full": "vous vous douchez"
+        "full": "vous vous douchez",
+        "italian": "voi vi fate la doccia"
       },
       {
         "pronoun": "ils / elles",
         "reflexive": "se",
         "stem": "douch",
         "ending": "ent",
-        "full": "ils se douchent"
+        "full": "ils se douchent",
+        "italian": "loro si fanno la doccia"
       }
     ]
   },
@@ -272,42 +302,48 @@
         "reflexive": "me",
         "stem": "réveill",
         "ending": "e",
-        "full": "je me réveille"
+        "full": "je me réveille",
+        "italian": "io mi sveglio"
       },
       {
         "pronoun": "tu",
         "reflexive": "te",
         "stem": "réveill",
         "ending": "es",
-        "full": "tu te réveilles"
+        "full": "tu te réveilles",
+        "italian": "tu ti svegli"
       },
       {
         "pronoun": "il / elle / on",
         "reflexive": "se",
         "stem": "réveill",
         "ending": "e",
-        "full": "il se réveille"
+        "full": "il se réveille",
+        "italian": "lui si sveglia"
       },
       {
         "pronoun": "nous",
         "reflexive": "nous",
         "stem": "réveill",
         "ending": "ons",
-        "full": "nous nous réveillons"
+        "full": "nous nous réveillons",
+        "italian": "noi ci svegliamo"
       },
       {
         "pronoun": "vous",
         "reflexive": "vous",
         "stem": "réveill",
         "ending": "ez",
-        "full": "vous vous réveillez"
+        "full": "vous vous réveillez",
+        "italian": "voi vi svegliate"
       },
       {
         "pronoun": "ils / elles",
         "reflexive": "se",
         "stem": "réveill",
         "ending": "ent",
-        "full": "ils se réveillent"
+        "full": "ils se réveillent",
+        "italian": "loro si svegliano"
       }
     ]
   },
@@ -323,42 +359,48 @@
         "reflexive": "me",
         "stem": "couch",
         "ending": "e",
-        "full": "je me couche"
+        "full": "je me couche",
+        "italian": "io vado a letto"
       },
       {
         "pronoun": "tu",
         "reflexive": "te",
         "stem": "couch",
         "ending": "es",
-        "full": "tu te couches"
+        "full": "tu te couches",
+        "italian": "tu vai a letto"
       },
       {
         "pronoun": "il / elle / on",
         "reflexive": "se",
         "stem": "couch",
         "ending": "e",
-        "full": "il se couche"
+        "full": "il se couche",
+        "italian": "lui va a letto"
       },
       {
         "pronoun": "nous",
         "reflexive": "nous",
         "stem": "couch",
         "ending": "ons",
-        "full": "nous nous couchons"
+        "full": "nous nous couchons",
+        "italian": "noi andiamo a letto"
       },
       {
         "pronoun": "vous",
         "reflexive": "vous",
         "stem": "couch",
         "ending": "ez",
-        "full": "vous vous couchez"
+        "full": "vous vous couchez",
+        "italian": "voi andate a letto"
       },
       {
         "pronoun": "ils / elles",
         "reflexive": "se",
         "stem": "couch",
         "ending": "ent",
-        "full": "ils se couchent"
+        "full": "ils se couchent",
+        "italian": "loro vanno a letto"
       }
     ]
   },
@@ -375,7 +417,8 @@
         "stem": "lav",
         "ending": "e",
         "extra": "les mains",
-        "full": "je me lave les mains"
+        "full": "je me lave les mains",
+        "italian": "io mi lavo le mani"
       },
       {
         "pronoun": "tu",
@@ -383,7 +426,8 @@
         "stem": "lav",
         "ending": "es",
         "extra": "les mains",
-        "full": "tu te laves les mains"
+        "full": "tu te laves les mains",
+        "italian": "tu ti lavi le mani"
       },
       {
         "pronoun": "il / elle / on",
@@ -391,7 +435,8 @@
         "stem": "lav",
         "ending": "e",
         "extra": "les mains",
-        "full": "il se lave les mains"
+        "full": "il se lave les mains",
+        "italian": "lui si lava le mani"
       },
       {
         "pronoun": "nous",
@@ -399,7 +444,8 @@
         "stem": "lav",
         "ending": "ons",
         "extra": "les mains",
-        "full": "nous nous lavons les mains"
+        "full": "nous nous lavons les mains",
+        "italian": "noi ci laviamo le mani"
       },
       {
         "pronoun": "vous",
@@ -407,7 +453,8 @@
         "stem": "lav",
         "ending": "ez",
         "extra": "les mains",
-        "full": "vous vous lavez les mains"
+        "full": "vous vous lavez les mains",
+        "italian": "voi vi lavate le mani"
       },
       {
         "pronoun": "ils / elles",
@@ -415,7 +462,8 @@
         "stem": "lav",
         "ending": "ent",
         "extra": "les mains",
-        "full": "ils se lavent les mains"
+        "full": "ils se lavent les mains",
+        "italian": "loro si lavano le mani"
       }
     ]
   },
@@ -430,37 +478,43 @@
         "pronoun": "je",
         "stem": "vais",
         "ending": "",
-        "full": "je vais"
+        "full": "je vais",
+        "italian": "io vado"
       },
       {
         "pronoun": "tu",
         "stem": "vas",
         "ending": "",
-        "full": "tu vas"
+        "full": "tu vas",
+        "italian": "tu vai"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "va",
         "ending": "",
-        "full": "il va"
+        "full": "il va",
+        "italian": "lui / lei va"
       },
       {
         "pronoun": "nous",
         "stem": "all",
         "ending": "ons",
-        "full": "nous allons"
+        "full": "nous allons",
+        "italian": "noi andiamo"
       },
       {
         "pronoun": "vous",
         "stem": "all",
         "ending": "ez",
-        "full": "vous allez"
+        "full": "vous allez",
+        "italian": "voi andate"
       },
       {
         "pronoun": "ils / elles",
         "stem": "vont",
         "ending": "",
-        "full": "ils vont"
+        "full": "ils vont",
+        "italian": "loro vanno"
       }
     ]
   },
@@ -475,37 +529,43 @@
         "pronoun": "je",
         "stem": "mang",
         "ending": "e",
-        "full": "je mange"
+        "full": "je mange",
+        "italian": "io mangio"
       },
       {
         "pronoun": "tu",
         "stem": "mang",
         "ending": "es",
-        "full": "tu manges"
+        "full": "tu manges",
+        "italian": "tu mangi"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "mang",
         "ending": "e",
-        "full": "il mange"
+        "full": "il mange",
+        "italian": "lui / lei mangia"
       },
       {
         "pronoun": "nous",
         "stem": "mange",
         "ending": "ons",
-        "full": "nous mangeons"
+        "full": "nous mangeons",
+        "italian": "noi mangiamo"
       },
       {
         "pronoun": "vous",
         "stem": "mang",
         "ending": "ez",
-        "full": "vous mangez"
+        "full": "vous mangez",
+        "italian": "voi mangiate"
       },
       {
         "pronoun": "ils / elles",
         "stem": "mang",
         "ending": "ent",
-        "full": "ils mangent"
+        "full": "ils mangent",
+        "italian": "loro mangiano"
       }
     ]
   },
@@ -520,37 +580,43 @@
         "pronoun": "je",
         "stem": "boi",
         "ending": "s",
-        "full": "je bois"
+        "full": "je bois",
+        "italian": "io bevo"
       },
       {
         "pronoun": "tu",
         "stem": "boi",
         "ending": "s",
-        "full": "tu bois"
+        "full": "tu bois",
+        "italian": "tu bevi"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "boi",
         "ending": "t",
-        "full": "il boit"
+        "full": "il boit",
+        "italian": "lui / lei beve"
       },
       {
         "pronoun": "nous",
         "stem": "buv",
         "ending": "ons",
-        "full": "nous buvons"
+        "full": "nous buvons",
+        "italian": "noi beviamo"
       },
       {
         "pronoun": "vous",
         "stem": "buv",
         "ending": "ez",
-        "full": "vous buvez"
+        "full": "vous buvez",
+        "italian": "voi bevete"
       },
       {
         "pronoun": "ils / elles",
         "stem": "boiv",
         "ending": "ent",
-        "full": "ils boivent"
+        "full": "ils boivent",
+        "italian": "loro bevono"
       }
     ]
   },
@@ -565,37 +631,43 @@
         "pronoun": "je",
         "stem": "march",
         "ending": "e",
-        "full": "je marche"
+        "full": "je marche",
+        "italian": "io cammino"
       },
       {
         "pronoun": "tu",
         "stem": "march",
         "ending": "es",
-        "full": "tu marches"
+        "full": "tu marches",
+        "italian": "tu cammini"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "march",
         "ending": "e",
-        "full": "il marche"
+        "full": "il marche",
+        "italian": "lui / lei cammina"
       },
       {
         "pronoun": "nous",
         "stem": "march",
         "ending": "ons",
-        "full": "nous marchons"
+        "full": "nous marchons",
+        "italian": "noi camminiamo"
       },
       {
         "pronoun": "vous",
         "stem": "march",
         "ending": "ez",
-        "full": "vous marchez"
+        "full": "vous marchez",
+        "italian": "voi camminate"
       },
       {
         "pronoun": "ils / elles",
         "stem": "march",
         "ending": "ent",
-        "full": "ils marchent"
+        "full": "ils marchent",
+        "italian": "loro camminano"
       }
     ]
   },
@@ -610,37 +682,43 @@
         "pronoun": "je",
         "stem": "fai",
         "ending": "s",
-        "full": "je fais"
+        "full": "je fais",
+        "italian": "io faccio"
       },
       {
         "pronoun": "tu",
         "stem": "fai",
         "ending": "s",
-        "full": "tu fais"
+        "full": "tu fais",
+        "italian": "tu fai"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "fai",
         "ending": "t",
-        "full": "il fait"
+        "full": "il fait",
+        "italian": "lui / lei fa"
       },
       {
         "pronoun": "nous",
         "stem": "fais",
         "ending": "ons",
-        "full": "nous faisons"
+        "full": "nous faisons",
+        "italian": "noi facciamo"
       },
       {
         "pronoun": "vous",
         "stem": "fai",
         "ending": "tes",
-        "full": "vous faites"
+        "full": "vous faites",
+        "italian": "voi fate"
       },
       {
         "pronoun": "ils / elles",
         "stem": "font",
         "ending": "",
-        "full": "ils font"
+        "full": "ils font",
+        "italian": "loro fanno"
       }
     ]
   },
@@ -655,37 +733,43 @@
         "pronoun": "je",
         "stem": "dor",
         "ending": "s",
-        "full": "je dors"
+        "full": "je dors",
+        "italian": "io dormo"
       },
       {
         "pronoun": "tu",
         "stem": "dor",
         "ending": "s",
-        "full": "tu dors"
+        "full": "tu dors",
+        "italian": "tu dormi"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "dor",
         "ending": "t",
-        "full": "il dort"
+        "full": "il dort",
+        "italian": "lui / lei dorme"
       },
       {
         "pronoun": "nous",
         "stem": "dorm",
         "ending": "ons",
-        "full": "nous dormons"
+        "full": "nous dormons",
+        "italian": "noi dormiamo"
       },
       {
         "pronoun": "vous",
         "stem": "dorm",
         "ending": "ez",
-        "full": "vous dormez"
+        "full": "vous dormez",
+        "italian": "voi dormite"
       },
       {
         "pronoun": "ils / elles",
         "stem": "dorm",
         "ending": "ent",
-        "full": "ils dorment"
+        "full": "ils dorment",
+        "italian": "loro dormono"
       }
     ]
   },
@@ -700,37 +784,43 @@
         "pronoun": "je",
         "stem": "regard",
         "ending": "e",
-        "full": "je regarde"
+        "full": "je regarde",
+        "italian": "io guardo"
       },
       {
         "pronoun": "tu",
         "stem": "regard",
         "ending": "es",
-        "full": "tu regardes"
+        "full": "tu regardes",
+        "italian": "tu guardi"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "regard",
         "ending": "e",
-        "full": "il regarde"
+        "full": "il regarde",
+        "italian": "lui / lei guarda"
       },
       {
         "pronoun": "nous",
         "stem": "regard",
         "ending": "ons",
-        "full": "nous regardons"
+        "full": "nous regardons",
+        "italian": "noi guardiamo"
       },
       {
         "pronoun": "vous",
         "stem": "regard",
         "ending": "ez",
-        "full": "vous regardez"
+        "full": "vous regardez",
+        "italian": "voi guardate"
       },
       {
         "pronoun": "ils / elles",
         "stem": "regard",
         "ending": "ent",
-        "full": "ils regardent"
+        "full": "ils regardent",
+        "italian": "loro guardano"
       }
     ]
   },
@@ -745,37 +835,43 @@
         "pronoun": "j'",
         "stem": "écout",
         "ending": "e",
-        "full": "j'écoute"
+        "full": "j'écoute",
+        "italian": "io ascolto"
       },
       {
         "pronoun": "tu",
         "stem": "écout",
         "ending": "es",
-        "full": "tu écoutes"
+        "full": "tu écoutes",
+        "italian": "tu ascolti"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "écout",
         "ending": "e",
-        "full": "il écoute"
+        "full": "il écoute",
+        "italian": "lui / lei ascolta"
       },
       {
         "pronoun": "nous",
         "stem": "écout",
         "ending": "ons",
-        "full": "nous écoutons"
+        "full": "nous écoutons",
+        "italian": "noi ascoltiamo"
       },
       {
         "pronoun": "vous",
         "stem": "écout",
         "ending": "ez",
-        "full": "vous écoutez"
+        "full": "vous écoutez",
+        "italian": "voi ascoltate"
       },
       {
         "pronoun": "ils / elles",
         "stem": "écout",
         "ending": "ent",
-        "full": "ils écoutent"
+        "full": "ils écoutent",
+        "italian": "loro ascoltano"
       }
     ]
   },
@@ -790,37 +886,43 @@
         "pronoun": "je",
         "stem": "suis",
         "ending": "",
-        "full": "je suis"
+        "full": "je suis",
+        "italian": "io sono"
       },
       {
         "pronoun": "tu",
         "stem": "es",
         "ending": "",
-        "full": "tu es"
+        "full": "tu es",
+        "italian": "tu sei"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "est",
         "ending": "",
-        "full": "il est"
+        "full": "il est",
+        "italian": "lui / lei è"
       },
       {
         "pronoun": "nous",
         "stem": "sommes",
         "ending": "",
-        "full": "nous sommes"
+        "full": "nous sommes",
+        "italian": "noi siamo"
       },
       {
         "pronoun": "vous",
         "stem": "êtes",
         "ending": "",
-        "full": "vous êtes"
+        "full": "vous êtes",
+        "italian": "voi siete"
       },
       {
         "pronoun": "ils / elles",
         "stem": "sont",
         "ending": "",
-        "full": "ils sont"
+        "full": "ils sont",
+        "italian": "loro sono"
       }
     ]
   },
@@ -835,37 +937,43 @@
         "pronoun": "j'",
         "stem": "ai",
         "ending": "",
-        "full": "j'ai"
+        "full": "j'ai",
+        "italian": "io ho"
       },
       {
         "pronoun": "tu",
         "stem": "as",
         "ending": "",
-        "full": "tu as"
+        "full": "tu as",
+        "italian": "tu hai"
       },
       {
         "pronoun": "il / elle / on",
         "stem": "a",
         "ending": "",
-        "full": "il a"
+        "full": "il a",
+        "italian": "lui / lei ha"
       },
       {
         "pronoun": "nous",
         "stem": "avons",
         "ending": "",
-        "full": "nous avons"
+        "full": "nous avons",
+        "italian": "noi abbiamo"
       },
       {
         "pronoun": "vous",
         "stem": "avez",
         "ending": "",
-        "full": "vous avez"
+        "full": "vous avez",
+        "italian": "voi avete"
       },
       {
         "pronoun": "ils / elles",
         "stem": "ont",
         "ending": "",
-        "full": "ils ont"
+        "full": "ils ont",
+        "italian": "loro hanno"
       }
     ]
   }

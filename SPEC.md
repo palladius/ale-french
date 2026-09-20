@@ -2,78 +2,55 @@
 
 **Target Learner:** Alessandro Carlesso (Age 8, Primary 3 / 3ª Elementare)  
 **Tutors / Parents:** Riccardo Carlesso & Kate Knight  
-**Focus:** French Present Indicative (Le Présent de l'Indicatif) — Reflexive Routine Verbs & High-Frequency Verbs.
+**Focus:** French Present Indicative (Le Présent de l'Indicatif) — Reflexive Routine Verbs & High-Frequency Common Verbs.
 
 ---
 
-## 🎯 1. Obiettivi Pedagogici & Didattici
+## 🎯 1. Obiettivi Didattici & Approccio Multilingue
 
-1. **Focus Verbi Riflessivi (La Routine Quotidiana):**
-   - Imparare la sequenza dei pronomi riflessivi: `me`, `te`, `se`, `nous`, `vous`, `se` (e le forme elise davanti a vocale/h muta: `m'`, `t'`, `s'`).
-   - Verbi coperti:
-     - `s'habiller` (vestirsi)
-     - `se brosser les dents` (lavarsi i denti)
-     - `se lever` (alzarsi)
-     - `se peigner` (pettinarsi)
-     - `se doucher` (farsi la doccia)
-     - `se réveiller` (svegliarsi)
-     - `se coucher` (andare a letto)
-     - `se laver les mains` (lavarsi le mani)
+1. **Il Ponte Linguistico (Francese ↔ Italiano):**
+   - Alessandro parla 4 lingue. L'italiano è la lingua neolatina più vicina al francese come struttura verbale.
+   - **Colonna di Traduzione Italiana a Destra:** Ogni voce coniugata ha la sua esatta traduzione italiana in corsivo (`je m'habille` ➔ *io mi vesto*, `nous nous habillons` ➔ *noi ci vestiamo*).
+   - **Modalità Copri/Scopri (Toggle 👁️):** L'utente può commutare tra 3 modalità per allenare la memoria:
+     1. *Visibile:* la traduzione italiana è sempre visibile a destra.
+     2. *Coperto (Flashcard):* la traduzione italiana è mascherata con un velo grigio (`👁️ tocca per scoprire`), così Ale prova prima a tradurla a mente e tocca col dito per verificare.
+     3. *Nascosto:* la colonna italiana viene rimossa per concentrarsi al 100% sulla lingua francese.
 
-2. **Focus Verbi ad Alta Frequenza (Transitivi & Irregolari):**
-   - `aller` (je vais, tu vas, il va, nous allons, vous allez, ils vont)
-   - `manger` (je mange, tu manges, il mange, nous mangeons, vous mangez, ils mangent)
-   - `boire`, `marcher`, `faire`, `dormir`, `regarder`, `écouter`, `être`, `avoir`.
+2. **La Decomposizione Morfologica Visiva (Radice vs Desinenza):**
+   - Per i bambini delle elementari l'ortografia francese è un incubo a causa delle lettere mute finali (`-s`, `-e`, `-ent`).
+   - L'applicazione separa nettamente le componenti con colori ad alto contrasto:
+     - 🔵 **Soggetto:** Blu (`#2563eb`)
+     - 🟣 **Pronome Riflessivo:** Viola tenue (`#7c3aed`) con pillola arrotondata (`me`, `te`, `se`, `nous`, `vous`, `se`, `m'`, `t'`, `s'`)
+     - ⚫️ **Radice Base:** Grafite scuro (`#0f172a`, es. `mang-`, `habill-`, `lav-`)
+     - 🔴 **Desinenza Scritta:** Rosso corallo (`#dc2626`) con sfondo leggero e sottolineatura solida (`-e`, `-es`, `-ons`, `-ez`, `-ent`).
 
-3. **La Memoria Visiva & Ortografica (Test di Scrittura):**
-   - Alessandro parla già 4 lingue, ma la scuola svizzera/internazionale richiede la **memorizzazione dell'ortografia scritta esatta** (es. le `s` silenti di `tu vas`, `tu manges`, e la desinenza `ent` muta della 3ª plurale `ils mangent`).
-   - Per questo ogni verbo ha le desinenze scritte evidenziate in rosso e sottolineate.
-
----
-
-## 📐 2. Specifiche UI / Layout (Secondo Direttive di Riccardo)
-
-* **Titolo Principale del Verbo:** In `<h2>` grande, chiaro, con icona emoji esplicativa (es. `🪥 se brosser les dents`, `👕 s'habiller`).
-* **I Sei Indicativi divisi in 2 Gruppi da Tre:**
-  - **Gruppo 1 (Singulier):** `je`, `tu`, `il / elle / on`
-  - **Gruppo 2 (Pluriel):** `nous`, `vous`, `ils / elles`
-* **Codifica Colori Morfologica:**
-  - 🔵 **Soggetto:** Blu (`#2563eb`)
-  - 🟣 **Pronome Riflessivo:** Viola / Magenta con badge di sfondo (`#9333ea`)
-  - ⚫️ **Radice verbale:** Grigio scuro / Nero (`#0f172a`)
-  - 🔴 **Desinenza scritta:** Rosso acceso (`#dc2626`) con sottolineatura solida per fissare l'ortografia.
-* **Tipografia Adatta a Bambini:** Font `Fredoka` e `Lexend` (Google Fonts), studiati specificamente per la leggibilità infantile e la facilitazione della dislessia/lettura precoce.
+3. **Il Layout a Gruppi di Tre (Regola Fondamentale):**
+   - Il verbo è introdotto da un **`<h2>`** grande e chiaro con icona emoji.
+   - Sotto, i 6 tempi sono raggruppati esattamente in **due gruppi da tre**:
+     - 👤 **Singulier (3 persone):** `je`, `tu`, `il / elle / on`
+     - 👥 **Pluriel (3 persone):** `nous`, `vous`, `ils / elles`
 
 ---
 
-## 🔊 3. Sistema di Pronuncia Audio
+## 🔊 2. Sintesi Vocale & Pronuncia (Web Speech API)
 
-* **Zero Dipendenze Esterne:** Utilizzo nativo dell'API standard dei browser `window.speechSynthesis` (Web Speech API).
-* **Configurazione Audio:**
-  - Lingua impostata su `fr-FR`.
-  - Velocità di riproduzione rallentata a `rate: 0.85` (ideale per un bambino che deve cogliere i suoni delle desinenze e le *liaisons*).
-  - Tasto audio 🔊 sull'infinito e su ciascuna delle 6 forme coniugate.
-
----
-
-## 🎮 4. Modalità Interattive
-
-1. **Modalità Studio (Default):**
-   - Navigazione libera tra i verbi dalla barra laterale.
-   - Filtri veloci: "Tutti (18)", "Routine (8)", "Comuni (10)".
-   - Clic su audio per ascoltare la corretta dizione parigina/francese.
-
-2. **Modalità Quiz / Test di Scrittura:**
-   - La schermata propone un pronome e un infinito (es. `tu + s'habiller = ?`).
-   - Alessandro deve digitare a tastiera la forma corretta.
-   - Verifica immediata:
-     - Se corretta: campo verde, punteggio ⭐, pronuncia automatica di rinforzo.
-     - Se errata: campo rosso, suggerimento visivo con la grafia corretta evidenziata.
+* **Zero Dipendenze / Zero Server:** L'audio sfrutta l'API standard `window.speechSynthesis` presente in Safari (iPad/Mac), Chrome e Firefox.
+* **Lingua:** `fr-FR` nativa francese.
+* **Velocità:** Calibrata a `0.85x` (leggermente rallentata per facilitare la percezione fonetica dei suoni vocalici e delle consonanti nasali).
+* **Ascolto puntuale:** Pulsante altoparlante 🔊 per l'infinito e per ciascuna riga coniugata.
 
 ---
 
-## 🚀 5. Roadmap per Antigravity / Sviluppi Futuri
+## ✍️ 3. Quiz & Test di Scrittura Interattivo
 
-1. **Schede Stampabili (PDF Worksheets):** Bottone per generare fogli di esercizi a quadretti da stampare su carta per la scrittura a mano.
-2. **Supporto Riconoscimento Vocale (STT):** Ale pronuncia la frase e il browser valuta se la pronuncia è corretta.
-3. **Modalità "Memory Game":** Carte da abbinare tra verbo italiano e coniugazione francese.
+* **Allenamento Ortografico:** L'app propone un pronome e un verbo (es. `Tu + s'habiller = ?`) e mostra la traduzione italiana come indizio.
+* **Feedback Istantaneo:**
+  - Se corretto: campo verde, suono vocale di conferma, +10 punti ⭐.
+  - Se errato: campo rosso, visualizzazione della grafia corretta per rinforzare la memoria visiva prima di riprovare.
+
+---
+
+## 📦 4. Repository & Deployment
+
+* **URL Pubblico GitHub Pages:** https://palladius.github.io/ale-french/
+* **Codice Sorgente:** https://github.com/palladius/ale-french
