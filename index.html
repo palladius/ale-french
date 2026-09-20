@@ -366,12 +366,12 @@
 
     .part-reflexive {
       color: #7c3aed;
-      background: #f3e8ff;
-      border: 1px solid #d8b4fe;
-      padding: 1px 6px;
-      border-radius: 6px;
-      margin-right: 5px;
       font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .part-reflexive.elided {
+      margin-right: 0;
     }
 
     .part-verb-block {
@@ -381,18 +381,23 @@
     }
 
     .part-stem {
-      color: #0f172a;
+      color: #991b1b; /* Rosso scuro / bordeaux */
       font-weight: 600;
+      padding: 0;
+      margin: 0;
+      letter-spacing: 0;
     }
 
     .part-ending {
-      color: #dc2626;
-      background: #fee2e2;
-      border-radius: 4px;
-      padding: 0 4px;
+      color: #ef4444; /* Rosso chiaro / vivace */
       font-weight: 700;
+      padding: 0;
+      margin: 0;
+      background: none;
+      border: none;
       text-decoration: underline;
-      text-decoration-thickness: 3px;
+      text-decoration-color: #fca5a5;
+      text-decoration-thickness: 2.5px;
       text-underline-offset: 4px;
     }
 
@@ -672,10 +677,10 @@
 
         <!-- LEGEND BAR -->
         <div class="legend-bar">
-          <div class="legend-item"><span class="dot" style="background:#2563eb;"></span> Soggetto</div>
-          <div class="legend-item"><span class="dot" style="background:#7c3aed;"></span> Pronome riflessivo</div>
-          <div class="legend-item"><span class="dot" style="background:#0f172a;"></span> Radice</div>
-          <div class="legend-item"><span class="dot" style="background:#dc2626;"></span> Desinenza scritta (-e, -es, -ons, -ez, -ent)</div>
+          <div class="legend-item"><span class="dot" style="background:#2563eb;"></span> Soggetto (blu)</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed;"></span> Riflessivo (viola)</div>
+          <div class="legend-item"><span class="dot" style="background:#991b1b;"></span> Radice (rosso scuro)</div>
+          <div class="legend-item"><span class="dot" style="background:#ef4444;"></span> Desinenza scritta (rosso chiaro)</div>
         </div>
       </div>
 
@@ -819,16 +824,14 @@
       innerHtml += `<span class="part-pronoun">${simplifyPronoun(conj.pronoun)}</span>`;
 
       if (conj.reflexive) {
-        innerHtml += `<span class="part-reflexive">${conj.reflexive}</span>`;
+        const isElided = conj.reflexive.endsWith("'");
+        innerHtml += `<span class="part-reflexive ${isElided ? 'elided' : ''}">${conj.reflexive}</span>`;
       }
 
-      innerHtml += '<span class="part-verb-block">';
-      innerHtml += `<span class="part-stem">${conj.stem}</span>`;
-
-      if (conj.ending) {
-        innerHtml += `<span class="part-ending">${conj.ending}</span>`;
-      }
-      innerHtml += '</span>';
+      // Root and ending attached seamlessly with NO whitespace or gap between tags
+      const stemPart = `<span class="part-stem">${conj.stem || ''}</span>`;
+      const endingPart = conj.ending ? `<span class="part-ending">${conj.ending}</span>` : '';
+      innerHtml += `<span class="part-verb-block">${stemPart}${endingPart}</span>`;
 
       if (conj.extra) {
         innerHtml += `<span class="part-extra">${conj.extra}</span>`;
