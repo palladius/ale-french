@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #f8fafc;
+      --bg-main: #f1f5f9;
       --card-bg: #ffffff;
       --primary: #2563eb;
       --purple: #7c3aed;
@@ -17,7 +17,7 @@
       --text: #0f172a;
       --text-muted: #64748b;
       --border: #cbd5e1;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
     }
 
     * {
@@ -28,7 +28,7 @@
 
     body {
       font-family: 'Fredoka', 'Lexend', system-ui, sans-serif;
-      background: #f1f5f9;
+      background: var(--bg-main);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -38,7 +38,7 @@
     header {
       background: white;
       border-bottom: 2px solid var(--border);
-      padding: 14px 24px;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -48,11 +48,11 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .brand h1 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: #1e3a8a;
     }
@@ -60,9 +60,9 @@
     .badge-ale {
       background: #fef08a;
       color: #854d0e;
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       border: 1px solid #facc15;
     }
@@ -70,16 +70,16 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .btn-toggle-it {
       background: #f8fafc;
       border: 2px solid #cbd5e1;
       color: #334155;
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: 999px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -98,14 +98,14 @@
       border: 2px solid var(--primary);
       background: white;
       color: var(--primary);
-      padding: 8px 18px;
+      padding: 6px 14px;
       border-radius: 999px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s;
     }
 
@@ -117,66 +117,54 @@
     .app-container {
       display: flex;
       flex: 1;
-      height: calc(100vh - 73px);
+      height: calc(100vh - 65px);
       overflow: hidden;
     }
 
-    /* SIDEBAR */
+    /* SIDEBAR: TWO CLEAN VERTICAL GROUPS */
     .sidebar {
-      width: 320px;
+      width: 280px;
       background: white;
       border-right: 2px solid var(--border);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-    }
-
-    .filter-tabs {
-      display: flex;
-      padding: 10px;
-      gap: 6px;
-      background: #f8fafc;
-      border-bottom: 2px solid #e2e8f0;
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 8px 4px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
-    }
-
-    .tab-btn.active {
-      background: #2563eb;
-      color: white;
-      border-color: #2563eb;
-    }
-
-    .verb-list {
-      flex: 1;
       overflow-y: auto;
-      padding: 10px;
+      padding: 12px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin: 8px 4px 6px 4px;
+    }
+
+    .sidebar-divider {
+      height: 2px;
+      background: #e2e8f0;
+      margin: 12px 4px;
+      border-radius: 2px;
+    }
+
+    .verb-group-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .verb-item {
-      padding: 12px 14px;
-      border-radius: 12px;
+      padding: 9px 12px;
+      border-radius: 10px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border: 2px solid transparent;
       background: #f8fafc;
-      transition: all 0.15s;
+      transition: all 0.12s;
     }
 
     .verb-item:hover {
@@ -187,44 +175,35 @@
     .verb-item.selected {
       background: #dbeafe;
       border-color: #3b82f6;
-      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.12);
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.12);
     }
 
     .verb-info {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .verb-icon {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
     }
 
     .verb-names .infinitive {
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #0f172a;
     }
 
     .verb-names .italian {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
-    .tag-reflexive {
-      font-size: 0.7rem;
-      background: #ede9fe;
-      color: #6d28d9;
-      padding: 3px 7px;
-      border-radius: 6px;
-      font-weight: 700;
-    }
-
-    /* MAIN CONTENT */
+    /* MAIN VIEW */
     .main-view {
       flex: 1;
       overflow-y: auto;
-      padding: 28px 36px;
+      padding: 20px 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -232,63 +211,82 @@
 
     .verb-card {
       width: 100%;
-      max-width: 980px;
+      max-width: 760px;
       background: white;
-      border-radius: 24px;
-      padding: 32px;
+      border-radius: 20px;
+      padding: 24px 28px;
       box-shadow: var(--shadow);
       border: 2px solid var(--border);
     }
 
+    /* VERB HEADER: <h2> */
     .verb-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 24px;
-      padding-bottom: 20px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
       border-bottom: 2px dashed #cbd5e1;
     }
 
     .verb-header-title {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 14px;
     }
 
     .verb-header h2 {
-      font-size: 2.8rem;
+      font-size: 2.3rem;
       font-weight: 700;
       color: #1e3a8a;
       letter-spacing: -0.5px;
+      line-height: 1.1;
     }
 
     .verb-header-sub {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       margin-top: 4px;
     }
 
     .verb-header .translation {
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       color: var(--text-muted);
       font-weight: 600;
       font-style: italic;
+    }
+
+    .tag-type {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+    }
+
+    .tag-reflexive {
+      background: #ede9fe;
+      color: #6d28d9;
+    }
+
+    .tag-common {
+      background: #e0f2fe;
+      color: #0369a1;
     }
 
     .btn-audio-main {
       background: #eff6ff;
       border: 2px solid #93c5fd;
       color: #1d4ed8;
-      width: 52px;
-      height: 52px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
     }
 
     .btn-audio-main:hover {
@@ -297,88 +295,91 @@
       transform: scale(1.08);
     }
 
-    /* GROUPS OF THREE */
-    .conjugation-groups {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .group-card {
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
-      border-radius: 20px;
-      padding: 20px;
-    }
-
-    .group-title {
-      font-size: 1rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: #475569;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .conj-list {
+    /* 6 ROWS TABLE IN SINGLE COLUMN WITH MIDDLE GAP (7 ROWS TOTAL) */
+    .table-6-rows {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 8px;
     }
 
     .conj-row {
-      background: white;
+      background: #f8fafc;
       border: 2px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 14px 18px;
+      border-radius: 12px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: transform 0.15s, border-color 0.15s;
+      transition: all 0.12s;
     }
 
     .conj-row:hover {
-      transform: translateY(-2px);
+      background: #ffffff;
       border-color: #93c5fd;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.03);
     }
 
-    .french-side {
+    .row-left {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+      min-width: 0;
+      flex-shrink: 0;
     }
 
+    .btn-speak-row {
+      background: white;
+      border: 1px solid #cbd5e1;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .btn-speak-row:hover {
+      background: #dbeafe;
+      border-color: #93c5fd;
+      transform: scale(1.15);
+    }
+
+    /* CRITICAL: NO MULTI-LINE BREAKING ON FRENCH VERBS! */
     .conj-text {
-      font-size: 1.65rem;
+      font-size: 1.5rem;
       font-weight: 600;
-      letter-spacing: 0.5px;
       font-family: 'Fredoka', sans-serif;
+      white-space: nowrap;
       display: inline-flex;
       align-items: baseline;
-      flex-wrap: wrap;
     }
 
     .part-pronoun {
       color: #2563eb;
       font-weight: 700;
-      margin-right: 8px;
+      margin-right: 6px;
     }
 
     .part-reflexive {
       color: #7c3aed;
       background: #f3e8ff;
       border: 1px solid #d8b4fe;
-      padding: 1px 8px;
-      border-radius: 8px;
-      margin-right: 6px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      margin-right: 5px;
       font-weight: 700;
     }
 
-    /* MORPHOLOGICAL SEPARATION: STEM VS ENDING */
+    .part-verb-block {
+      display: inline-flex;
+      align-items: baseline;
+      white-space: nowrap;
+    }
+
     .part-stem {
       color: #0f172a;
       font-weight: 600;
@@ -387,34 +388,60 @@
     .part-ending {
       color: #dc2626;
       background: #fee2e2;
-      border-radius: 6px;
+      border-radius: 4px;
       padding: 0 4px;
       font-weight: 700;
       text-decoration: underline;
       text-decoration-thickness: 3px;
       text-underline-offset: 4px;
-      margin-left: 1px;
     }
 
     .part-extra {
       color: #475569;
-      margin-left: 8px;
-      font-size: 1.35rem;
+      margin-left: 6px;
+      font-size: 1.25rem;
       font-weight: 500;
     }
 
-    /* ITALIAN TRANSLATION COLUMN */
+    /* THE MIDDLE SEPARATOR (ROW 4 GAP) */
+    .middle-gap {
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 4px 0;
+    }
+
+    .middle-gap-line {
+      width: 100%;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .middle-gap-text {
+      position: absolute;
+      background: white;
+      padding: 0 10px;
+      font-size: 0.72rem;
+      color: #94a3b8; /* impalpabile */
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ITALIAN TRANSLATION COLUMN ON THE RIGHT */
     .italian-side {
-      font-size: 1.25rem;
-      color: #64748b;
+      font-size: 1.2rem;
+      color: #475569;
       font-style: italic;
       font-weight: 500;
-      margin-left: auto;
-      padding-left: 16px;
-      padding-right: 12px;
+      margin-left: 20px;
       text-align: right;
-      border-left: 2px dotted #e2e8f0;
-      transition: opacity 0.2s;
+      white-space: nowrap;
+      padding-left: 14px;
+      border-left: 2px dotted #cbd5e1;
+      transition: all 0.15s;
     }
 
     .italian-side.hidden {
@@ -425,77 +452,58 @@
       background: #f1f5f9;
       color: transparent;
       user-select: none;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      position: relative;
+      padding: 2px 8px;
     }
 
     .italian-side.covered::after {
-      content: "👁️ tocca per scoprire";
+      content: "👁️ tocca";
       color: #94a3b8;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-style: normal;
       font-weight: 600;
-    }
-
-    .btn-speak-row {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: 8px;
-      transition: all 0.2s;
-    }
-
-    .btn-speak-row:hover {
-      background: #dbeafe;
-      border-color: #93c5fd;
-      transform: scale(1.15);
     }
 
     /* PRACTICE TEST MODE */
     .practice-container {
       width: 100%;
-      max-width: 800px;
+      max-width: 760px;
       background: white;
-      border-radius: 24px;
-      padding: 36px;
+      border-radius: 20px;
+      padding: 30px;
       box-shadow: var(--shadow);
       border: 2px solid var(--border);
       text-align: center;
     }
 
-    .practice-header {
-      margin-bottom: 24px;
+    .practice-header h2 {
+      font-size: 2rem;
+      color: #1e3a8a;
+      margin-bottom: 6px;
     }
 
     .practice-prompt {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       color: var(--text-muted);
-      margin-bottom: 8px;
+      margin-bottom: 20px;
     }
 
     .practice-target {
-      font-size: 2.3rem;
+      font-size: 2rem;
       font-weight: 700;
       color: #1e3a8a;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .input-box {
       font-family: 'Fredoka', sans-serif;
-      font-size: 2.1rem;
-      padding: 14px 22px;
+      font-size: 1.8rem;
+      padding: 12px 20px;
       border: 3px solid #cbd5e1;
-      border-radius: 18px;
-      width: 85%;
-      max-width: 520px;
+      border-radius: 14px;
+      width: 90%;
+      max-width: 460px;
       text-align: center;
       outline: none;
       transition: border-color 0.2s;
@@ -518,52 +526,47 @@
     }
 
     .feedback-msg {
-      margin-top: 16px;
-      font-size: 1.35rem;
+      margin-top: 14px;
+      font-size: 1.2rem;
       font-weight: 600;
-      min-height: 38px;
+      min-height: 32px;
     }
 
     .btn-submit-test {
-      margin-top: 20px;
+      margin-top: 16px;
       background: #2563eb;
       color: white;
       border: none;
-      padding: 14px 36px;
+      padding: 12px 30px;
       border-radius: 999px;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-      transition: transform 0.15s;
-    }
-
-    .btn-submit-test:hover {
-      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
     }
 
     .score-badge {
       display: inline-block;
-      margin-top: 22px;
+      margin-top: 18px;
       background: #fef3c7;
       color: #92400e;
-      padding: 8px 20px;
+      padding: 6px 16px;
       border-radius: 999px;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     /* FOOTER */
     .legend-bar {
-      margin-top: 28px;
+      margin-top: 20px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 20px;
-      font-size: 1rem;
+      gap: 16px;
+      font-size: 0.88rem;
       color: #64748b;
-      padding-top: 18px;
+      padding-top: 14px;
       border-top: 1px solid #e2e8f0;
     }
 
@@ -574,29 +577,43 @@
     }
 
     .dot {
-      width: 14px;
-      height: 14px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       display: inline-block;
     }
 
-    @media(max-width: 820px) {
+    @media(max-width: 768px) {
       .app-container {
         flex-direction: column;
         height: auto;
       }
       .sidebar {
         width: 100%;
-        height: 220px;
+        max-height: 220px;
       }
-      .conjugation-groups {
-        grid-template-columns: 1fr;
+      .main-view {
+        padding: 12px;
+      }
+      .verb-card {
+        padding: 18px 14px;
+      }
+      .verb-header h2 {
+        font-size: 1.8rem;
+      }
+      .conj-row {
+        padding: 8px 10px;
       }
       .conj-text {
-        font-size: 1.35rem;
+        font-size: 1.15rem;
+      }
+      .part-extra {
+        font-size: 1rem;
       }
       .italian-side {
-        font-size: 1.05rem;
+        font-size: 0.95rem;
+        margin-left: 8px;
+        padding-left: 8px;
       }
     }
   </style>
@@ -604,78 +621,60 @@
 <body>
   <header>
     <div class="brand">
-      <span style="font-size: 2.2rem;">🥖</span>
+      <span style="font-size: 1.8rem;">🥖</span>
       <h1>Ale French</h1>
-      <span class="badge-ale">Pour Alessandro 🦁 Primary 3</span>
+      <span class="badge-ale">Pour Alessandro 🦁</span>
     </div>
     <div class="nav-actions">
       <button class="btn-toggle-it active" id="btn-toggle-italian" onclick="toggleItalianMode()">
-        <span id="toggle-it-icon">👁️</span> Italiano a destra: <strong id="toggle-it-status">Visibile</strong>
+        <span id="toggle-it-icon">👁️</span> <span id="toggle-it-label">Italiano</span>
       </button>
-      <button class="btn-mode active" id="btn-mode-study" onclick="setMode('study')">📖 Studio & Scrittura</button>
-      <button class="btn-mode" id="btn-mode-quiz" onclick="setMode('quiz')">✍️ Quiz Test!</button>
+      <button class="btn-mode active" id="btn-mode-study" onclick="setMode('study')">📖 Studio</button>
+      <button class="btn-mode" id="btn-mode-quiz" onclick="setMode('quiz')">✍️ Quiz</button>
     </div>
   </header>
 
   <div class="app-container">
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR: TWO SECTIONS WITH DIVIDER -->
     <div class="sidebar">
-      <div class="filter-tabs">
-        <button class="tab-btn active" onclick="filterVerbs('all', this)">Tous (18)</button>
-        <button class="tab-btn" onclick="filterVerbs('reflexive', this)">Routine (8)</button>
-        <button class="tab-btn" onclick="filterVerbs('common', this)">Communs (10)</button>
-      </div>
-      <div class="verb-list" id="verb-list-el">
-        <!-- populated via JS -->
-      </div>
+      <div class="sidebar-section-title">⭐ Verbes Communs (10)</div>
+      <div class="verb-group-list" id="common-verbs-list"></div>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section-title">🧴 Verbes Réfléchis (8)</div>
+      <div class="verb-group-list" id="reflexive-verbs-list"></div>
     </div>
 
     <!-- MAIN VIEW -->
     <div class="main-view" id="main-view-el">
       <!-- STUDY VIEW -->
       <div class="verb-card" id="study-card">
+        <!-- <h2> VERB HEADER -->
         <div class="verb-header">
           <div class="verb-header-title">
-            <span id="verb-icon-large" style="font-size: 3.2rem;">👕</span>
+            <span id="verb-icon-large" style="font-size: 2.6rem;">👕</span>
             <div>
               <h2 id="verb-infinitive">s'habiller</h2>
               <div class="verb-header-sub">
                 <span class="translation" id="verb-italian">vestirsi</span>
-                <span class="tag-reflexive" id="verb-tag">Verbo Riflessivo</span>
+                <span class="tag-type tag-reflexive" id="verb-tag">Riflessivo</span>
               </div>
             </div>
           </div>
           <button class="btn-audio-main" onclick="speakInfinitive()" title="Pronuncia l'infinito">🔊</button>
         </div>
 
-        <!-- GROUPS OF THREE -->
-        <div class="conjugation-groups">
-          <!-- GROUP 1: SINGULIER -->
-          <div class="group-card">
-            <div class="group-title">
-              <span>👤</span> Singulier (Io, Tu, Lui/Lei)
-            </div>
-            <div class="conj-list" id="group-singular-el">
-              <!-- Je, Tu, Il -->
-            </div>
-          </div>
-
-          <!-- GROUP 2: PLURIEL -->
-          <div class="group-card">
-            <div class="group-title">
-              <span>👥</span> Pluriel (Noi, Voi, Loro)
-            </div>
-            <div class="conj-list" id="group-plural-el">
-              <!-- Nous, Vous, Ils -->
-            </div>
-          </div>
+        <!-- 6 ROWS TABLE IN SINGLE VERTICAL COLUMN WITH GAP AT ROW 4 -->
+        <div class="table-6-rows" id="table-6-rows-el">
+          <!-- Populated by JS -->
         </div>
 
         <!-- LEGEND BAR -->
         <div class="legend-bar">
           <div class="legend-item"><span class="dot" style="background:#2563eb;"></span> Soggetto</div>
           <div class="legend-item"><span class="dot" style="background:#7c3aed;"></span> Pronome riflessivo</div>
-          <div class="legend-item"><span class="dot" style="background:#0f172a;"></span> Radice base</div>
+          <div class="legend-item"><span class="dot" style="background:#0f172a;"></span> Radice</div>
           <div class="legend-item"><span class="dot" style="background:#dc2626;"></span> Desinenza scritta (-e, -es, -ons, -ez, -ent)</div>
         </div>
       </div>
@@ -687,7 +686,7 @@
           <p class="practice-prompt">Scrivi la forma corretta con la giusta ortografia!</p>
         </div>
         <div class="practice-target" id="quiz-question-el">
-          Tu + s'habiller = ?
+          tu + s'habiller = ?
         </div>
         <div>
           <input type="text" id="quiz-input-el" class="input-box" placeholder="Scrivi qui..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
@@ -707,32 +706,29 @@
   <script>
     let verbsData = [];
     let currentVerb = null;
-    let currentFilter = 'all';
     let currentMode = 'study';
     let italianMode = 'visible'; // 'visible' | 'covered' | 'hidden'
     let quizCurrent = null;
     let quizScore = 0;
 
-    // Load data
     fetch('verbs.json')
       .then(res => res.json())
       .then(data => {
         verbsData = data;
         renderSidebar();
-        selectVerb(verbsData[0].id);
+        // default to first verb or 'etre'
+        const defaultVerb = verbsData.find(v => v.id === 'etre') || verbsData[0];
+        selectVerb(defaultVerb.id);
       })
       .catch(err => console.error("Error loading verbs:", err));
 
     function renderSidebar() {
-      const listEl = document.getElementById('verb-list-el');
-      listEl.innerHTML = '';
+      const commonEl = document.getElementById('common-verbs-list');
+      const reflexiveEl = document.getElementById('reflexive-verbs-list');
+      commonEl.innerHTML = '';
+      reflexiveEl.innerHTML = '';
 
-      const filtered = verbsData.filter(v => {
-        if (currentFilter === 'all') return true;
-        return v.category === currentFilter;
-      });
-
-      filtered.forEach(verb => {
+      verbsData.forEach(verb => {
         const item = document.createElement('div');
         item.className = `verb-item ${currentVerb && currentVerb.id === verb.id ? 'selected' : ''}`;
         item.id = `verb-item-${verb.id}`;
@@ -746,9 +742,13 @@
               <div class="italian">${verb.italian}</div>
             </div>
           </div>
-          ${verb.category === 'reflexive' ? '<span class="tag-reflexive">rifl.</span>' : ''}
         `;
-        listEl.appendChild(item);
+
+        if (verb.category === 'common') {
+          commonEl.appendChild(item);
+        } else {
+          reflexiveEl.appendChild(item);
+        }
       });
     }
 
@@ -769,46 +769,72 @@
       document.getElementById('verb-infinitive').textContent = currentVerb.infinitive;
       document.getElementById('verb-italian').textContent = currentVerb.italian;
       document.getElementById('verb-icon-large').textContent = currentVerb.icon;
-      document.getElementById('verb-tag').textContent = currentVerb.category === 'reflexive' ? 'Verbo Riflessivo (Routine)' : 'Verbo Comune';
 
-      const singularEl = document.getElementById('group-singular-el');
-      const pluralEl = document.getElementById('group-plural-el');
-      singularEl.innerHTML = '';
-      pluralEl.innerHTML = '';
+      const tagEl = document.getElementById('verb-tag');
+      if (currentVerb.category === 'reflexive') {
+        tagEl.textContent = 'Riflessivo';
+        tagEl.className = 'tag-type tag-reflexive';
+      } else {
+        tagEl.textContent = 'Comune';
+        tagEl.className = 'tag-type tag-common';
+      }
 
-      // First 3 = Singular (Je, Tu, Il)
-      const singularGroup = currentVerb.conjugation.slice(0, 3);
-      // Next 3 = Plural (Nous, Vous, Ils)
-      const pluralGroup = currentVerb.conjugation.slice(3, 6);
+      const tableEl = document.getElementById('table-6-rows-el');
+      tableEl.innerHTML = '';
 
-      singularGroup.forEach(c => singularEl.appendChild(createConjRow(c)));
-      pluralGroup.forEach(c => pluralEl.appendChild(createConjRow(c)));
+      // ROWS 1, 2, 3: Je, Tu, Il (3 singulars)
+      for (let i = 0; i < 3; i++) {
+        tableEl.appendChild(createConjRow(currentVerb.conjugation[i]));
+      }
+
+      // ROW 4: SUBTLE MIDDLE GAP (7-row layout)
+      const gapRow = document.createElement('div');
+      gapRow.className = 'middle-gap';
+      gapRow.innerHTML = `
+        <div class="middle-gap-line"></div>
+        <span class="middle-gap-text">···</span>
+      `;
+      tableEl.appendChild(gapRow);
+
+      // ROWS 5, 6, 7: Nous, Vous, Ils (3 plurals)
+      for (let i = 3; i < 6; i++) {
+        tableEl.appendChild(createConjRow(currentVerb.conjugation[i]));
+      }
+    }
+
+    // Friendly display for 3rd persons to prevent long wraps on mobile
+    function simplifyPronoun(p) {
+      if (p.includes('il / elle')) return 'il (elle)';
+      if (p.includes('ils / elles')) return 'ils (elles)';
+      return p;
     }
 
     function createConjRow(conj) {
       const row = document.createElement('div');
       row.className = 'conj-row';
 
-      let innerHtml = '<div class="french-side">';
+      let innerHtml = '<div class="row-left">';
+      innerHtml += `<button class="btn-speak-row" onclick="speakText('${conj.full}')" title="Ascolta pronuncia">🔊</button>`;
       innerHtml += '<div class="conj-text">';
-      innerHtml += `<span class="part-pronoun">${conj.pronoun}</span>`;
+      innerHtml += `<span class="part-pronoun">${simplifyPronoun(conj.pronoun)}</span>`;
 
       if (conj.reflexive) {
         innerHtml += `<span class="part-reflexive">${conj.reflexive}</span>`;
       }
 
+      innerHtml += '<span class="part-verb-block">';
       innerHtml += `<span class="part-stem">${conj.stem}</span>`;
 
       if (conj.ending) {
         innerHtml += `<span class="part-ending">${conj.ending}</span>`;
       }
+      innerHtml += '</span>';
 
       if (conj.extra) {
         innerHtml += `<span class="part-extra">${conj.extra}</span>`;
       }
 
       innerHtml += '</div>';
-      innerHtml += `<button class="btn-speak-row" onclick="speakText('${conj.full}')" title="Ascolta pronuncia">🔊</button>`;
       innerHtml += '</div>';
 
       // Italian column on the right
@@ -828,33 +854,26 @@
     function toggleItalianMode() {
       const btn = document.getElementById('btn-toggle-italian');
       const icon = document.getElementById('toggle-it-icon');
-      const status = document.getElementById('toggle-it-status');
+      const label = document.getElementById('toggle-it-label');
 
       if (italianMode === 'visible') {
         italianMode = 'covered';
         icon.textContent = '🙈';
-        status.textContent = 'Coperto';
+        label.textContent = 'Coperto';
         btn.classList.remove('active');
       } else if (italianMode === 'covered') {
         italianMode = 'hidden';
         icon.textContent = '❌';
-        status.textContent = 'Nascosto';
+        label.textContent = 'Nascosto';
         btn.classList.remove('active');
       } else {
         italianMode = 'visible';
         icon.textContent = '👁️';
-        status.textContent = 'Visibile';
+        label.textContent = 'Italiano';
         btn.classList.add('active');
       }
 
       renderVerbDetails();
-    }
-
-    function filterVerbs(type, btn) {
-      currentFilter = type;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderSidebar();
     }
 
     function setMode(mode) {
@@ -872,9 +891,7 @@
 
     // WEB SPEECH API PRONUNCIATION (French fr-FR)
     function speakText(text) {
-      if (!('speechSynthesis' in window)) {
-        return;
-      }
+      if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'fr-FR';
@@ -888,9 +905,7 @@
     }
 
     function speakInfinitive() {
-      if (currentVerb) {
-        speakText(currentVerb.infinitive);
-      }
+      if (currentVerb) speakText(currentVerb.infinitive);
     }
 
     // QUIZ / TEST MODE
@@ -905,9 +920,9 @@
 
       const questionEl = document.getElementById('quiz-question-el');
       questionEl.innerHTML = `
-        <span style="font-size: 2.2rem;">${verb.icon}</span> 
-        <strong>${conj.pronoun}</strong> + <em>${verb.infinitive}</em>
-        <div style="font-size: 1.1rem; color: #64748b; margin-top: 6px;">👉 Traduzione: <em>${conj.italian || verb.italian}</em></div>
+        <span style="font-size: 2rem;">${verb.icon}</span> 
+        <strong>${simplifyPronoun(conj.pronoun)}</strong> + <em>${verb.infinitive}</em>
+        <div style="font-size: 1.05rem; color: #64748b; margin-top: 4px;">👉 <em>${conj.italian || verb.italian}</em></div>
       `;
 
       const input = document.getElementById('quiz-input-el');
