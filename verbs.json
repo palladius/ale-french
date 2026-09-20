@@ -1,0 +1,872 @@
+[
+  {
+    "id": "s-habiller",
+    "infinitive": "s'habiller",
+    "italian": "vestirsi",
+    "category": "reflexive",
+    "icon": "👕",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "m'",
+        "stem": "habill",
+        "ending": "e",
+        "full": "je m'habille"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "t'",
+        "stem": "habill",
+        "ending": "es",
+        "full": "tu t'habilles"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "s'",
+        "stem": "habill",
+        "ending": "e",
+        "full": "il s'habille"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "habill",
+        "ending": "ons",
+        "full": "nous nous habillons"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "habill",
+        "ending": "ez",
+        "full": "vous vous habillez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "s'",
+        "stem": "habill",
+        "ending": "ent",
+        "full": "ils s'habillent"
+      }
+    ]
+  },
+  {
+    "id": "se-brosser-les-dents",
+    "infinitive": "se brosser les dents",
+    "italian": "lavarsi i denti",
+    "category": "reflexive",
+    "icon": "🪥",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "me",
+        "stem": "bross",
+        "ending": "e",
+        "extra": "les dents",
+        "full": "je me brosse les dents"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "te",
+        "stem": "bross",
+        "ending": "es",
+        "extra": "les dents",
+        "full": "tu te brosses les dents"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "se",
+        "stem": "bross",
+        "ending": "e",
+        "extra": "les dents",
+        "full": "il se brosse les dents"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "bross",
+        "ending": "ons",
+        "extra": "les dents",
+        "full": "nous nous brossons les dents"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "bross",
+        "ending": "ez",
+        "extra": "les dents",
+        "full": "vous vous brossez les dents"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "se",
+        "stem": "bross",
+        "ending": "ent",
+        "extra": "les dents",
+        "full": "ils se brossent les dents"
+      }
+    ]
+  },
+  {
+    "id": "se-lever",
+    "infinitive": "se lever",
+    "italian": "alzarsi",
+    "category": "reflexive",
+    "icon": "⏰",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "me",
+        "stem": "lèv",
+        "ending": "e",
+        "full": "je me lève"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "te",
+        "stem": "lèv",
+        "ending": "es",
+        "full": "tu te lèves"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "se",
+        "stem": "lèv",
+        "ending": "e",
+        "full": "il se lève"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "lev",
+        "ending": "ons",
+        "full": "nous nous levons"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "lev",
+        "ending": "ez",
+        "full": "vous vous levez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "se",
+        "stem": "lèv",
+        "ending": "ent",
+        "full": "ils se lèvent"
+      }
+    ]
+  },
+  {
+    "id": "se-peigner",
+    "infinitive": "se peigner",
+    "italian": "pettinarsi",
+    "category": "reflexive",
+    "icon": "🪮",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "me",
+        "stem": "peign",
+        "ending": "e",
+        "full": "je me peigne"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "te",
+        "stem": "peign",
+        "ending": "es",
+        "full": "tu te peignes"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "se",
+        "stem": "peign",
+        "ending": "e",
+        "full": "il se peigne"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "peign",
+        "ending": "ons",
+        "full": "nous nous peignons"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "peign",
+        "ending": "ez",
+        "full": "vous vous peignez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "se",
+        "stem": "peign",
+        "ending": "ent",
+        "full": "ils se peignent"
+      }
+    ]
+  },
+  {
+    "id": "se-doucher",
+    "infinitive": "se doucher",
+    "italian": "farsi la doccia",
+    "category": "reflexive",
+    "icon": "🚿",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "me",
+        "stem": "douch",
+        "ending": "e",
+        "full": "je me douche"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "te",
+        "stem": "douch",
+        "ending": "es",
+        "full": "tu te douches"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "se",
+        "stem": "douch",
+        "ending": "e",
+        "full": "il se douche"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "douch",
+        "ending": "ons",
+        "full": "nous nous douchons"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "douch",
+        "ending": "ez",
+        "full": "vous vous douchez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "se",
+        "stem": "douch",
+        "ending": "ent",
+        "full": "ils se douchent"
+      }
+    ]
+  },
+  {
+    "id": "se-reveiller",
+    "infinitive": "se réveiller",
+    "italian": "svegliarsi",
+    "category": "reflexive",
+    "icon": "🌅",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "me",
+        "stem": "réveill",
+        "ending": "e",
+        "full": "je me réveille"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "te",
+        "stem": "réveill",
+        "ending": "es",
+        "full": "tu te réveilles"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "se",
+        "stem": "réveill",
+        "ending": "e",
+        "full": "il se réveille"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "réveill",
+        "ending": "ons",
+        "full": "nous nous réveillons"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "réveill",
+        "ending": "ez",
+        "full": "vous vous réveillez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "se",
+        "stem": "réveill",
+        "ending": "ent",
+        "full": "ils se réveillent"
+      }
+    ]
+  },
+  {
+    "id": "se-coucher",
+    "infinitive": "se coucher",
+    "italian": "andare a letto",
+    "category": "reflexive",
+    "icon": "🛏️",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "me",
+        "stem": "couch",
+        "ending": "e",
+        "full": "je me couche"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "te",
+        "stem": "couch",
+        "ending": "es",
+        "full": "tu te couches"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "se",
+        "stem": "couch",
+        "ending": "e",
+        "full": "il se couche"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "couch",
+        "ending": "ons",
+        "full": "nous nous couchons"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "couch",
+        "ending": "ez",
+        "full": "vous vous couchez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "se",
+        "stem": "couch",
+        "ending": "ent",
+        "full": "ils se couchent"
+      }
+    ]
+  },
+  {
+    "id": "se-laver-les-mains",
+    "infinitive": "se laver les mains",
+    "italian": "lavarsi le mani",
+    "category": "reflexive",
+    "icon": "🧼",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "me",
+        "stem": "lav",
+        "ending": "e",
+        "extra": "les mains",
+        "full": "je me lave les mains"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "te",
+        "stem": "lav",
+        "ending": "es",
+        "extra": "les mains",
+        "full": "tu te laves les mains"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "se",
+        "stem": "lav",
+        "ending": "e",
+        "extra": "les mains",
+        "full": "il se lave les mains"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "lav",
+        "ending": "ons",
+        "extra": "les mains",
+        "full": "nous nous lavons les mains"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "lav",
+        "ending": "ez",
+        "extra": "les mains",
+        "full": "vous vous lavez les mains"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "se",
+        "stem": "lav",
+        "ending": "ent",
+        "extra": "les mains",
+        "full": "ils se lavent les mains"
+      }
+    ]
+  },
+  {
+    "id": "aller",
+    "infinitive": "aller",
+    "italian": "andare",
+    "category": "common",
+    "icon": "🚶‍♂️",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "vais",
+        "ending": "",
+        "full": "je vais"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "vas",
+        "ending": "",
+        "full": "tu vas"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "va",
+        "ending": "",
+        "full": "il va"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "all",
+        "ending": "ons",
+        "full": "nous allons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "all",
+        "ending": "ez",
+        "full": "vous allez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "vont",
+        "ending": "",
+        "full": "ils vont"
+      }
+    ]
+  },
+  {
+    "id": "manger",
+    "infinitive": "manger",
+    "italian": "mangiare",
+    "category": "common",
+    "icon": "🍕",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "mang",
+        "ending": "e",
+        "full": "je mange"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "mang",
+        "ending": "es",
+        "full": "tu manges"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "mang",
+        "ending": "e",
+        "full": "il mange"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "mange",
+        "ending": "ons",
+        "full": "nous mangeons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "mang",
+        "ending": "ez",
+        "full": "vous mangez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "mang",
+        "ending": "ent",
+        "full": "ils mangent"
+      }
+    ]
+  },
+  {
+    "id": "boire",
+    "infinitive": "boire",
+    "italian": "bere",
+    "category": "common",
+    "icon": "🥤",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "boi",
+        "ending": "s",
+        "full": "je bois"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "boi",
+        "ending": "s",
+        "full": "tu bois"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "boi",
+        "ending": "t",
+        "full": "il boit"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "buv",
+        "ending": "ons",
+        "full": "nous buvons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "buv",
+        "ending": "ez",
+        "full": "vous buvez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "boiv",
+        "ending": "ent",
+        "full": "ils boivent"
+      }
+    ]
+  },
+  {
+    "id": "marcher",
+    "infinitive": "marcher",
+    "italian": "camminare",
+    "category": "common",
+    "icon": "👟",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "march",
+        "ending": "e",
+        "full": "je marche"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "march",
+        "ending": "es",
+        "full": "tu marches"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "march",
+        "ending": "e",
+        "full": "il marche"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "march",
+        "ending": "ons",
+        "full": "nous marchons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "march",
+        "ending": "ez",
+        "full": "vous marchez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "march",
+        "ending": "ent",
+        "full": "ils marchent"
+      }
+    ]
+  },
+  {
+    "id": "faire",
+    "infinitive": "faire",
+    "italian": "fare",
+    "category": "common",
+    "icon": "✍️",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "fai",
+        "ending": "s",
+        "full": "je fais"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "fai",
+        "ending": "s",
+        "full": "tu fais"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "fai",
+        "ending": "t",
+        "full": "il fait"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "fais",
+        "ending": "ons",
+        "full": "nous faisons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "fai",
+        "ending": "tes",
+        "full": "vous faites"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "font",
+        "ending": "",
+        "full": "ils font"
+      }
+    ]
+  },
+  {
+    "id": "dormir",
+    "infinitive": "dormir",
+    "italian": "dormire",
+    "category": "common",
+    "icon": "😴",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "dor",
+        "ending": "s",
+        "full": "je dors"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "dor",
+        "ending": "s",
+        "full": "tu dors"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "dor",
+        "ending": "t",
+        "full": "il dort"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "dorm",
+        "ending": "ons",
+        "full": "nous dormons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "dorm",
+        "ending": "ez",
+        "full": "vous dormez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "dorm",
+        "ending": "ent",
+        "full": "ils dorment"
+      }
+    ]
+  },
+  {
+    "id": "regarder",
+    "infinitive": "regarder",
+    "italian": "guardare",
+    "category": "common",
+    "icon": "👀",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "regard",
+        "ending": "e",
+        "full": "je regarde"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "regard",
+        "ending": "es",
+        "full": "tu regardes"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "regard",
+        "ending": "e",
+        "full": "il regarde"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "regard",
+        "ending": "ons",
+        "full": "nous regardons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "regard",
+        "ending": "ez",
+        "full": "vous regardez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "regard",
+        "ending": "ent",
+        "full": "ils regardent"
+      }
+    ]
+  },
+  {
+    "id": "ecouter",
+    "infinitive": "écouter",
+    "italian": "ascoltare",
+    "category": "common",
+    "icon": "🎧",
+    "conjugation": [
+      {
+        "pronoun": "j'",
+        "stem": "écout",
+        "ending": "e",
+        "full": "j'écoute"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "écout",
+        "ending": "es",
+        "full": "tu écoutes"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "écout",
+        "ending": "e",
+        "full": "il écoute"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "écout",
+        "ending": "ons",
+        "full": "nous écoutons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "écout",
+        "ending": "ez",
+        "full": "vous écoutez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "écout",
+        "ending": "ent",
+        "full": "ils écoutent"
+      }
+    ]
+  },
+  {
+    "id": "etre",
+    "infinitive": "être",
+    "italian": "essere",
+    "category": "common",
+    "icon": "⭐",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "suis",
+        "ending": "",
+        "full": "je suis"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "es",
+        "ending": "",
+        "full": "tu es"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "est",
+        "ending": "",
+        "full": "il est"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "sommes",
+        "ending": "",
+        "full": "nous sommes"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "êtes",
+        "ending": "",
+        "full": "vous êtes"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "sont",
+        "ending": "",
+        "full": "ils sont"
+      }
+    ]
+  },
+  {
+    "id": "avoir",
+    "infinitive": "avoir",
+    "italian": "avere",
+    "category": "common",
+    "icon": "🎒",
+    "conjugation": [
+      {
+        "pronoun": "j'",
+        "stem": "ai",
+        "ending": "",
+        "full": "j'ai"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "as",
+        "ending": "",
+        "full": "tu as"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "a",
+        "ending": "",
+        "full": "il a"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "avons",
+        "ending": "",
+        "full": "nous avons"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "avez",
+        "ending": "",
+        "full": "vous avez"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "ont",
+        "ending": "",
+        "full": "ils ont"
+      }
+    ]
+  }
+]
