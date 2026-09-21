@@ -275,6 +275,67 @@
       color: #b45309;
     }
 
+        .tag-objects {
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    /* GENDER BADGES: Blue for masculine, Pink for feminine, Green for plural */
+    .article-badge-m {
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 4px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: 2.5px solid #60a5fa;
+      display: inline-block;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.12);
+    }
+
+    .article-badge-f {
+      background: #fdf2f8;
+      color: #db2777;
+      padding: 4px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: 2.5px solid #f472b6;
+      display: inline-block;
+      box-shadow: 0 2px 6px rgba(219, 39, 119, 0.12);
+    }
+
+    .article-badge-pl {
+      background: #f0fdf4;
+      color: #16a34a;
+      padding: 4px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: 2.5px solid #4ade80;
+      display: inline-block;
+      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.12);
+    }
+
+    /* RIDDLE QUESTION TILES COLORED BY GENDER */
+    .riddle-tile.tile-m {
+      background: #eff6ff;
+      border: 2.5px solid #60a5fa;
+      color: #1d4ed8;
+      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.18);
+    }
+
+    .riddle-tile.tile-f {
+      background: #fdf2f8;
+      border: 2.5px solid #f472b6;
+      color: #db2777;
+      box-shadow: 0 3px 8px rgba(219, 39, 119, 0.18);
+    }
+
+    .riddle-tile.tile-pl {
+      background: #f0fdf4;
+      border: 2.5px solid #4ade80;
+      color: #16a34a;
+      box-shadow: 0 3px 8px rgba(22, 163, 74, 0.18);
+    }
+
     .card-image-box {
       font-size: 4.8rem;
       line-height: 1;
@@ -646,7 +707,8 @@
   <div class="top-controls">
     <button class="filter-btn active" onclick="setFilter('all', this)">🌟 Tutti (<span id="count-all">0</span>)</button>
     <button class="filter-btn" onclick="setFilter('reflexive', this)">🧴 Riflessivi (<span id="count-reflexive">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('school', this)">🎒 Simboli Classe (<span id="count-school">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('school', this)">🎒 Simboli (<span id="count-school">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('objects', this)">🏫 Oggetti Scuola (<span id="count-objects">0</span>)</button>
     <button class="filter-btn" onclick="setFilter('common', this)">🍽️ Comuni (<span id="count-common">0</span>)</button>
     <button class="view-toggle-btn" id="btn-toggle-view" onclick="toggleView()">🔲 Vista Griglia</button>
   </div>
@@ -767,6 +829,9 @@
       if (document.getElementById('count-school')) {
         document.getElementById('count-school').textContent = allVerbs.filter(v => v.category === 'school').length;
       }
+      if (document.getElementById('count-objects')) {
+        document.getElementById('count-objects').textContent = allVerbs.filter(v => v.category === 'objects').length;
+      }
       document.getElementById('count-common').textContent = allVerbs.filter(v => v.category === 'common').length;
     }
 
@@ -782,6 +847,8 @@
         filteredVerbs = allVerbs.filter(v => v.category === 'reflexive');
       } else if (filter === 'school') {
         filteredVerbs = allVerbs.filter(v => v.category === 'school');
+      } else if (filter === 'objects') {
+        filteredVerbs = allVerbs.filter(v => v.category === 'objects');
       } else if (filter === 'common') {
         filteredVerbs = allVerbs.filter(v => v.category === 'common');
       } else {
@@ -798,10 +865,19 @@
       const words = inf.split(' ');
       let html = '';
 
+      // Determine gender color tile for clues
+      let genderTileClass = '';
+      if (verb.gender === 'm' || inf.startsWith('un ')) {
+        genderTileClass = 'tile-m';
+      } else if (verb.gender === 'f' || inf.startsWith('une ')) {
+        genderTileClass = 'tile-f';
+      } else if (verb.gender === 'pl' || inf.startsWith('des ')) {
+        genderTileClass = 'tile-pl';
+      }
+
       words.forEach((word, wIdx) => {
         html += '<div class="riddle-word">';
         
-        // If it's a known short marker like "se" or "s'" in reflexive, we can show it or hint it!
         if (word === "se") {
           html += '<span class="riddle-text">se</span>';
         } else if (word.startsWith("s'")) {
@@ -810,14 +886,20 @@
           for (let i = 0; i < rest.length; i++) {
             html += '<div class="riddle-tile">?</div>';
           }
+        } else if (word === "un") {
+          html += '<span class="article-badge-m">un 👦</span>';
+        } else if (word === "une") {
+          html += '<span class="article-badge-f">une 👧</span>';
+        } else if (word === "des") {
+          html += '<span class="article-badge-pl">des 👥</span>';
         } else {
-          // Normal word: each letter gets a '?' box
+          // Normal word: each letter gets a '?' box with gender color hint!
           for (let i = 0; i < word.length; i++) {
             const ch = word[i];
             if (ch === "'" || ch === "-") {
               html += `<span class="riddle-text" style="color:#64748b;">${ch}</span>`;
             } else {
-              html += '<div class="riddle-tile">?</div>';
+              html += `<div class="riddle-tile ${genderTileClass}">?</div>`;
             }
           }
         }
@@ -832,6 +914,23 @@
 
     function renderRevealedFrench(verb) {
       const inf = verb.infinitive;
+
+      // Special rendering for Nouns / School Objects (with colored articles and nouns)
+      if (verb.category === 'objects' || inf.startsWith('un ') || inf.startsWith('une ') || inf.startsWith('des ')) {
+        const parts = inf.split(' ');
+        const art = parts[0];
+        const rest = parts.slice(1).join(' ');
+        let artBadgeClass = 'article-badge-m';
+        let nounColor = '#1d4ed8'; // azzurro
+        if (art === 'une' || verb.gender === 'f') {
+          artBadgeClass = 'article-badge-f';
+          nounColor = '#db2777'; // rosa
+        } else if (art === 'des' || verb.gender === 'pl') {
+          artBadgeClass = 'article-badge-pl';
+          nounColor = '#16a34a'; // verde
+        }
+        return `<span class="${artBadgeClass}" style="font-size: 1.8rem; margin-right: 8px;">${art}</span> <span style="font-weight: 700; color: ${nounColor}; font-size: 2.2rem;">${rest}</span>`;
+      }
       
       // Highlight infinitive ending (-er, -ir, -re, -oir)
       // Extract reflexive prefix if any
@@ -894,8 +993,9 @@
       const tagBackEl = document.getElementById('card-tag-back-el');
       const isRefl = verb.category === 'reflexive';
       const isSchool = verb.category === 'school';
-      const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo Classe' : '🍽️ Comune');
-      const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : 'tag-common');
+      const isObject = verb.category === 'objects';
+      const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : (isObject ? '🏫 Oggetto Scuola' : '🍽️ Comune'));
+      const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common'));
       tagEl.textContent = tagText;
       tagEl.className = `card-tag ${tagClass}`;
       tagBackEl.textContent = tagText;
@@ -919,7 +1019,14 @@
       document.getElementById('card-count-info-el').textContent = `Parola di ${pureLetters} lettere (${verb.infinitive})`;
 
       // Link to index conjugation
-      document.getElementById('link-to-conj-el').href = `index.html#verb-${verb.id}`;
+      const linkEl = document.getElementById('link-to-conj-el');
+      if (verb.category === 'objects') {
+        linkEl.href = 'grid.html';
+        linkEl.textContent = '🎒 Oggetto Scuola';
+      } else {
+        linkEl.href = `index.html#verb-${verb.id}`;
+        linkEl.textContent = '📖 Coniugazione';
+      }
 
       // Progress bar
       const progressPercent = ((currentIndex + 1) / filteredVerbs.length) * 100;

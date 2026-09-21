@@ -1474,5 +1474,158 @@
       }
     ],
     "image": "images/repondre.jpg"
+  },
+  {
+    "id": "un-ordinateur",
+    "infinitive": "un ordinateur",
+    "italian": "il computer",
+    "category": "objects",
+    "gender": "m",
+    "icon": "🖥️",
+    "image": "images/un-ordinateur.jpg"
+  },
+  {
+    "id": "un-tableau",
+    "infinitive": "un tableau",
+    "italian": "la lavagna",
+    "category": "objects",
+    "gender": "m",
+    "icon": "🧑‍🏫",
+    "image": "images/un-tableau.jpg"
+  },
+  {
+    "id": "une-table",
+    "infinitive": "une table",
+    "italian": "il tavolo / banco",
+    "category": "objects",
+    "gender": "f",
+    "icon": "🪵",
+    "image": null
+  },
+  {
+    "id": "une-chaise",
+    "infinitive": "une chaise",
+    "italian": "la sedia",
+    "category": "objects",
+    "gender": "f",
+    "icon": "🪑",
+    "image": "images/une-chaise.jpg"
+  },
+  {
+    "id": "une-bibliotheque",
+    "infinitive": "une bibliothèque",
+    "italian": "la libreria",
+    "category": "objects",
+    "gender": "f",
+    "icon": "📚",
+    "image": null
+  },
+  {
+    "id": "une-armoire",
+    "infinitive": "une armoire",
+    "italian": "l'armadio",
+    "category": "objects",
+    "gender": "f",
+    "icon": "🗄️",
+    "image": null
+  },
+  {
+    "id": "une-poubelle",
+    "infinitive": "une poubelle",
+    "italian": "il cestino",
+    "category": "objects",
+    "gender": "f",
+    "icon": "🗑️",
+    "image": null
+  },
+  {
+    "id": "une-fenetre",
+    "infinitive": "une fenêtre",
+    "italian": "la finestra",
+    "category": "objects",
+    "gender": "f",
+    "icon": "🪟",
+    "image": null
+  },
+  {
+    "id": "une-porte",
+    "infinitive": "une porte",
+    "italian": "la porta",
+    "category": "objects",
+    "gender": "f",
+    "icon": "🚪",
+    "image": null
+  },
+  {
+    "id": "un-cartable",
+    "infinitive": "un cartable",
+    "italian": "lo zaino / cartella",
+    "category": "objects",
+    "gender": "m",
+    "icon": "🎒",
+    "image": "images/un-cartable.jpg"
+  },
+  {
+    "id": "une-trousse",
+    "infinitive": "une trousse",
+    "italian": "l'astuccio",
+    "category": "objects",
+    "gender": "f",
+    "icon": "👝",
+    "image": null
+  },
+  {
+    "id": "un-crayon",
+    "infinitive": "un crayon",
+    "italian": "la matita",
+    "category": "objects",
+    "gender": "m",
+    "icon": "✏️",
+    "image": null
+  },
+  {
+    "id": "un-stylo",
+    "infinitive": "un stylo",
+    "italian": "la penna",
+    "category": "objects",
+    "gender": "m",
+    "icon": "🖊️",
+    "image": null
+  },
+  {
+    "id": "une-regle",
+    "infinitive": "une règle",
+    "italian": "il righello",
+    "category": "objects",
+    "gender": "f",
+    "icon": "📏",
+    "image": null
+  },
+  {
+    "id": "une-colle",
+    "infinitive": "une colle",
+    "italian": "la colla",
+    "category": "objects",
+    "gender": "f",
+    "icon": "🧴",
+    "image": null
+  },
+  {
+    "id": "une-gomme",
+    "infinitive": "une gomme",
+    "italian": "la gomma per cancellare",
+    "category": "objects",
+    "gender": "f",
+    "icon": "🧼",
+    "image": null
+  },
+  {
+    "id": "des-ciseaux",
+    "infinitive": "des ciseaux",
+    "italian": "le forbici",
+    "category": "objects",
+    "gender": "pl",
+    "icon": "✂️",
+    "image": null
   }
 ]
