@@ -238,6 +238,64 @@
     "image": "images/se-peigner.jpg"
   },
   {
+    "id": "se-coiffer",
+    "infinitive": "se coiffer",
+    "italian": "pettinarsi / acconciarsi",
+    "category": "reflexive",
+    "icon": "💇‍♂️",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "reflexive": "me",
+        "stem": "coiff",
+        "ending": "e",
+        "full": "je me coiffe",
+        "italian": "io mi pettino / mi acconcio"
+      },
+      {
+        "pronoun": "tu",
+        "reflexive": "te",
+        "stem": "coiff",
+        "ending": "es",
+        "full": "tu te coiffes",
+        "italian": "tu ti pettini / ti acconci"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "reflexive": "se",
+        "stem": "coiff",
+        "ending": "e",
+        "full": "il se coiffe",
+        "italian": "lui si pettina / si acconcia"
+      },
+      {
+        "pronoun": "nous",
+        "reflexive": "nous",
+        "stem": "coiff",
+        "ending": "ons",
+        "full": "nous nous coiffons",
+        "italian": "noi ci pettiniamo"
+      },
+      {
+        "pronoun": "vous",
+        "reflexive": "vous",
+        "stem": "coiff",
+        "ending": "ez",
+        "full": "vous vous coiffez",
+        "italian": "voi vi pettinate"
+      },
+      {
+        "pronoun": "ils / elles",
+        "reflexive": "se",
+        "stem": "coiff",
+        "ending": "ent",
+        "full": "ils se coiffent",
+        "italian": "loro si pettinano"
+      }
+    ],
+    "image": "images/se-coiffer.jpg"
+  },
+  {
     "id": "se-doucher",
     "infinitive": "se doucher",
     "italian": "farsi la doccia",
@@ -994,5 +1052,63 @@
       }
     ],
     "image": null
+  },
+  {
+    "id": "prendre-son-petit-dejeuner",
+    "infinitive": "prendre son petit déjeuner",
+    "italian": "fare colazione",
+    "category": "common",
+    "icon": "🥐",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "prend",
+        "ending": "s",
+        "extra": "mon petit déjeuner",
+        "full": "je prends mon petit déjeuner",
+        "italian": "io faccio colazione"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "prend",
+        "ending": "s",
+        "extra": "ton petit déjeuner",
+        "full": "tu prends ton petit déjeuner",
+        "italian": "tu fai colazione"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "prend",
+        "ending": "",
+        "extra": "son petit déjeuner",
+        "full": "il prend son petit déjeuner",
+        "italian": "lui fa colazione"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "pren",
+        "ending": "ons",
+        "extra": "notre petit déjeuner",
+        "full": "nous prenons notre petit déjeuner",
+        "italian": "noi facciamo colazione"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "pren",
+        "ending": "ez",
+        "extra": "votre petit déjeuner",
+        "full": "vous prenez votre petit déjeuner",
+        "italian": "voi fate colazione"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "prenn",
+        "ending": "ent",
+        "extra": "leur petit déjeuner",
+        "full": "ils prennent leur petit déjeuner",
+        "italian": "loro fanno colazione"
+      }
+    ],
+    "image": "images/prendre-son-petit-dejeuner.jpg"
   }
 ]
