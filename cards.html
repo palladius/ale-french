@@ -278,6 +278,39 @@
       transition: transform 0.2s;
     }
 
+    .card-thumb-img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 3px solid #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      display: block;
+      margin: 0 auto;
+    }
+
+    .card-thumb-img-small {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: block;
+      margin: 0 auto;
+    }
+
+    .grid-thumb-img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin: 6px auto;
+      border: 2px solid white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      display: block;
+    }
+
     .card-scene:hover .card-image-box {
       transform: scale(1.08);
     }
@@ -854,8 +887,13 @@
       tagBackEl.textContent = isRefl ? '🧴 Riflessivo' : '🍽️ Comune';
       tagBackEl.className = `card-tag ${isRefl ? 'tag-reflexive' : 'tag-common'}`;
 
-      document.getElementById('card-icon-el').textContent = verb.icon || '📘';
-      document.getElementById('card-icon-back-el').textContent = verb.icon || '📘';
+      if (verb.image) {
+        document.getElementById('card-icon-el').innerHTML = `<img src="${verb.image}" alt="${verb.italian}" class="card-thumb-img">`;
+        document.getElementById('card-icon-back-el').innerHTML = `<img src="${verb.image}" alt="${verb.italian}" class="card-thumb-img-small">`;
+      } else {
+        document.getElementById('card-icon-el').textContent = verb.icon || '📘';
+        document.getElementById('card-icon-back-el').textContent = verb.icon || '📘';
+      }
       document.getElementById('card-italian-el').textContent = verb.italian;
       document.getElementById('card-riddle-el').innerHTML = buildRiddleHtml(verb);
 
@@ -946,12 +984,16 @@
         item.className = 'grid-card';
         item.id = `grid-card-${verb.id}`;
         
+        const iconHtml = verb.image
+          ? `<img src="${verb.image}" class="grid-thumb-img" alt="${verb.italian}">`
+          : `<div class="grid-icon">${verb.icon || '📘'}</div>`;
+
         item.innerHTML = `
           <div>
             <span class="card-tag ${verb.category === 'reflexive' ? 'tag-reflexive' : 'tag-common'}" style="font-size:0.7rem;">
               ${verb.category === 'reflexive' ? 'Riflessivo' : 'Comune'}
             </span>
-            <div class="grid-icon">${verb.icon || '📘'}</div>
+            ${iconHtml}
             <div class="grid-italian">${verb.italian}</div>
           </div>
           

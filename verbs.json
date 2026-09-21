@@ -54,7 +54,8 @@
         "full": "ils s'habillent",
         "italian": "loro si vestono"
       }
-    ]
+    ],
+    "image": "images/s-habiller.jpg"
   },
   {
     "id": "se-brosser-les-dents",
@@ -117,7 +118,8 @@
         "full": "ils se brossent les dents",
         "italian": "loro si lavano i denti"
       }
-    ]
+    ],
+    "image": "images/se-brosser-les-dents.jpg"
   },
   {
     "id": "se-lever",
@@ -174,7 +176,8 @@
         "full": "ils se lèvent",
         "italian": "loro si alzano"
       }
-    ]
+    ],
+    "image": "images/se-lever.jpg"
   },
   {
     "id": "se-peigner",
@@ -231,7 +234,8 @@
         "full": "ils se peignent",
         "italian": "loro si pettinano"
       }
-    ]
+    ],
+    "image": "images/se-peigner.jpg"
   },
   {
     "id": "se-doucher",
@@ -288,7 +292,8 @@
         "full": "ils se douchent",
         "italian": "loro si fanno la doccia"
       }
-    ]
+    ],
+    "image": "images/se-doucher.jpg"
   },
   {
     "id": "se-reveiller",
@@ -345,7 +350,8 @@
         "full": "ils se réveillent",
         "italian": "loro si svegliano"
       }
-    ]
+    ],
+    "image": "images/se-reveiller.jpg"
   },
   {
     "id": "se-coucher",
@@ -402,7 +408,8 @@
         "full": "ils se couchent",
         "italian": "loro vanno a letto"
       }
-    ]
+    ],
+    "image": "images/se-coucher.jpg"
   },
   {
     "id": "se-laver-les-mains",
@@ -465,7 +472,8 @@
         "full": "ils se lavent les mains",
         "italian": "loro si lavano le mani"
       }
-    ]
+    ],
+    "image": "images/se-laver-les-mains.jpg"
   },
   {
     "id": "aller",
@@ -516,7 +524,8 @@
         "full": "ils vont",
         "italian": "loro vanno"
       }
-    ]
+    ],
+    "image": null
   },
   {
     "id": "manger",
@@ -567,7 +576,8 @@
         "full": "ils mangent",
         "italian": "loro mangiano"
       }
-    ]
+    ],
+    "image": "images/manger.jpg"
   },
   {
     "id": "boire",
@@ -618,7 +628,8 @@
         "full": "ils boivent",
         "italian": "loro bevono"
       }
-    ]
+    ],
+    "image": "images/boire.jpg"
   },
   {
     "id": "marcher",
@@ -669,7 +680,8 @@
         "full": "ils marchent",
         "italian": "loro camminano"
       }
-    ]
+    ],
+    "image": null
   },
   {
     "id": "faire",
@@ -720,7 +732,8 @@
         "full": "ils font",
         "italian": "loro fanno"
       }
-    ]
+    ],
+    "image": null
   },
   {
     "id": "dormir",
@@ -771,7 +784,8 @@
         "full": "ils dorment",
         "italian": "loro dormono"
       }
-    ]
+    ],
+    "image": "images/dormir.jpg"
   },
   {
     "id": "regarder",
@@ -822,7 +836,8 @@
         "full": "ils regardent",
         "italian": "loro guardano"
       }
-    ]
+    ],
+    "image": null
   },
   {
     "id": "ecouter",
@@ -873,7 +888,8 @@
         "full": "ils écoutent",
         "italian": "loro ascoltano"
       }
-    ]
+    ],
+    "image": null
   },
   {
     "id": "etre",
@@ -924,7 +940,8 @@
         "full": "ils sont",
         "italian": "loro sono"
       }
-    ]
+    ],
+    "image": null
   },
   {
     "id": "avoir",
@@ -975,6 +992,7 @@
         "full": "ils ont",
         "italian": "loro hanno"
       }
-    ]
+    ],
+    "image": null
   }
 ]

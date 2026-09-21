@@ -560,10 +560,14 @@
           </div>
         `;
 
+        const iconHtml = verb.image
+          ? `<img src="${verb.image}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 14px; margin: 4px auto; display: block; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">`
+          : `<div class="card-icon">${verb.icon || '📘'}</div>`;
+
         // Card Body
         let bodyHtml = `
           <div class="card-body">
-            <div class="card-icon">${verb.icon || '📘'}</div>
+            ${iconHtml}
             <div class="card-italian">${verb.italian}</div>
             <div id="card-content-${verb.id}">
               ${isRevealed ? getRevealedHtml(verb) : getRiddleHtml(verb)}
