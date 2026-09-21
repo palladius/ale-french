@@ -283,6 +283,11 @@
       color: #0369a1;
     }
 
+    .tag-school {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
     .card-body {
       display: flex;
       flex-direction: column;
@@ -545,6 +550,9 @@
         const isSelected = selectedIds.has(verb.id);
         const isRevealed = revealedIds.has(verb.id);
         const isRefl = verb.category === 'reflexive';
+        const isSchool = verb.category === 'school';
+        const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : '🍽️ Comune');
+        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : 'tag-common');
 
         const card = document.createElement('div');
         card.className = `verb-card ${isSelected ? 'selected' : ''} ${isRevealed ? 'revealed' : ''}`;
@@ -554,8 +562,8 @@
         let headerHtml = `
           <div class="card-top-bar">
             <div class="card-checkbox" title="Seleziona verbo" onclick="toggleSelect('${verb.id}', event)"></div>
-            <span class="card-tag ${isRefl ? 'tag-reflexive' : 'tag-common'}">
-              ${isRefl ? '🧴 Riflessivo' : '🍽️ Comune'}
+            <span class="card-tag ${tagClass}">
+              ${tagText}
             </span>
           </div>
         `;

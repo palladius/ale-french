@@ -270,6 +270,11 @@
       color: #0369a1;
     }
 
+    .tag-school {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
     .card-image-box {
       font-size: 4.8rem;
       line-height: 1;
@@ -641,6 +646,7 @@
   <div class="top-controls">
     <button class="filter-btn active" onclick="setFilter('all', this)">🌟 Tutti (<span id="count-all">0</span>)</button>
     <button class="filter-btn" onclick="setFilter('reflexive', this)">🧴 Riflessivi (<span id="count-reflexive">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('school', this)">🎒 Simboli Classe (<span id="count-school">0</span>)</button>
     <button class="filter-btn" onclick="setFilter('common', this)">🍽️ Comuni (<span id="count-common">0</span>)</button>
     <button class="view-toggle-btn" id="btn-toggle-view" onclick="toggleView()">🔲 Vista Griglia</button>
   </div>
@@ -758,6 +764,9 @@
     function updateCounts() {
       document.getElementById('count-all').textContent = allVerbs.length;
       document.getElementById('count-reflexive').textContent = allVerbs.filter(v => v.category === 'reflexive').length;
+      if (document.getElementById('count-school')) {
+        document.getElementById('count-school').textContent = allVerbs.filter(v => v.category === 'school').length;
+      }
       document.getElementById('count-common').textContent = allVerbs.filter(v => v.category === 'common').length;
     }
 
@@ -771,6 +780,8 @@
     function applyFilter(filter) {
       if (filter === 'reflexive') {
         filteredVerbs = allVerbs.filter(v => v.category === 'reflexive');
+      } else if (filter === 'school') {
+        filteredVerbs = allVerbs.filter(v => v.category === 'school');
       } else if (filter === 'common') {
         filteredVerbs = allVerbs.filter(v => v.category === 'common');
       } else {
@@ -882,10 +893,13 @@
       const tagEl = document.getElementById('card-tag-el');
       const tagBackEl = document.getElementById('card-tag-back-el');
       const isRefl = verb.category === 'reflexive';
-      tagEl.textContent = isRefl ? '🧴 Riflessivo' : '🍽️ Comune';
-      tagEl.className = `card-tag ${isRefl ? 'tag-reflexive' : 'tag-common'}`;
-      tagBackEl.textContent = isRefl ? '🧴 Riflessivo' : '🍽️ Comune';
-      tagBackEl.className = `card-tag ${isRefl ? 'tag-reflexive' : 'tag-common'}`;
+      const isSchool = verb.category === 'school';
+      const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo Classe' : '🍽️ Comune');
+      const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : 'tag-common');
+      tagEl.textContent = tagText;
+      tagEl.className = `card-tag ${tagClass}`;
+      tagBackEl.textContent = tagText;
+      tagBackEl.className = `card-tag ${tagClass}`;
 
       if (verb.image) {
         document.getElementById('card-icon-el').innerHTML = `<img src="${verb.image}" alt="${verb.italian}" class="card-thumb-img">`;
@@ -988,10 +1002,15 @@
           ? `<img src="${verb.image}" class="grid-thumb-img" alt="${verb.italian}">`
           : `<div class="grid-icon">${verb.icon || '📘'}</div>`;
 
+        const isRefl = verb.category === 'reflexive';
+        const isSchool = verb.category === 'school';
+        const tagText = isRefl ? 'Riflessivo' : (isSchool ? 'Simbolo' : 'Comune');
+        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : 'tag-common');
+
         item.innerHTML = `
           <div>
-            <span class="card-tag ${verb.category === 'reflexive' ? 'tag-reflexive' : 'tag-common'}" style="font-size:0.7rem;">
-              ${verb.category === 'reflexive' ? 'Riflessivo' : 'Comune'}
+            <span class="card-tag ${tagClass}" style="font-size:0.7rem;">
+              ${tagText}
             </span>
             ${iconHtml}
             <div class="grid-italian">${verb.italian}</div>

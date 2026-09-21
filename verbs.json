@@ -849,7 +849,7 @@
     "id": "regarder",
     "infinitive": "regarder",
     "italian": "guardare",
-    "category": "common",
+    "category": "school",
     "icon": "👀",
     "conjugation": [
       {
@@ -901,7 +901,7 @@
     "id": "ecouter",
     "infinitive": "écouter",
     "italian": "ascoltare",
-    "category": "common",
+    "category": "school",
     "icon": "🎧",
     "conjugation": [
       {
@@ -1110,5 +1110,369 @@
       }
     ],
     "image": "images/prendre-son-petit-dejeuner.jpg"
+  },
+  {
+    "id": "chanter",
+    "infinitive": "chanter",
+    "italian": "cantare",
+    "category": "school",
+    "icon": "🎤",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "chant",
+        "ending": "e",
+        "full": "je chante",
+        "italian": "io canto"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "chant",
+        "ending": "es",
+        "full": "tu chantes",
+        "italian": "tu canti"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "chant",
+        "ending": "e",
+        "full": "il chante",
+        "italian": "lui canta"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "chant",
+        "ending": "ons",
+        "full": "nous chantons",
+        "italian": "noi cantiamo"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "chant",
+        "ending": "ez",
+        "full": "vous chantez",
+        "italian": "voi cantate"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "chant",
+        "ending": "ent",
+        "full": "ils chantent",
+        "italian": "loro cantano"
+      }
+    ],
+    "image": "images/chanter.jpg"
+  },
+  {
+    "id": "montrer",
+    "infinitive": "montrer",
+    "italian": "mostrare / indicare",
+    "category": "school",
+    "icon": "👉",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "montr",
+        "ending": "e",
+        "full": "je montre",
+        "italian": "io mostro"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "montr",
+        "ending": "es",
+        "full": "tu montres",
+        "italian": "tu mostri"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "montr",
+        "ending": "e",
+        "full": "il montre",
+        "italian": "lui mostra"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "montr",
+        "ending": "ons",
+        "full": "nous montrons",
+        "italian": "noi mostriamo"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "montr",
+        "ending": "ez",
+        "full": "vous montrez",
+        "italian": "voi mostrate"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "montr",
+        "ending": "ent",
+        "full": "ils montrent",
+        "italian": "loro mostrano"
+      }
+    ],
+    "image": "images/montrer.jpg"
+  },
+  {
+    "id": "mimer",
+    "infinitive": "mimer",
+    "italian": "mimare / fare a gesti",
+    "category": "school",
+    "icon": "🕺",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "mim",
+        "ending": "e",
+        "full": "je mime",
+        "italian": "io mimo"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "mim",
+        "ending": "es",
+        "full": "tu mimes",
+        "italian": "tu mimi"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "mim",
+        "ending": "e",
+        "full": "il mime",
+        "italian": "lui mima"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "mim",
+        "ending": "ons",
+        "full": "nous mimons",
+        "italian": "noi mimiamo"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "mim",
+        "ending": "ez",
+        "full": "vous mimez",
+        "italian": "voi mimate"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "mim",
+        "ending": "ent",
+        "full": "ils miment",
+        "italian": "loro mimano"
+      }
+    ],
+    "image": "images/mimer.jpg"
+  },
+  {
+    "id": "decouper",
+    "infinitive": "découper",
+    "italian": "ritagliare",
+    "category": "school",
+    "icon": "✂️",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "découp",
+        "ending": "e",
+        "full": "je découpe",
+        "italian": "io ritaglio"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "découp",
+        "ending": "es",
+        "full": "tu découpes",
+        "italian": "tu ritagli"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "découp",
+        "ending": "e",
+        "full": "il découpe",
+        "italian": "lui ritaglia"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "découp",
+        "ending": "ons",
+        "full": "nous découpons",
+        "italian": "noi ritagliamo"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "découp",
+        "ending": "ez",
+        "full": "vous découpez",
+        "italian": "voi ritagliate"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "découp",
+        "ending": "ent",
+        "full": "ils découpent",
+        "italian": "loro ritagliano"
+      }
+    ],
+    "image": "images/decouper.jpg"
+  },
+  {
+    "id": "lire",
+    "infinitive": "lire",
+    "italian": "leggere",
+    "category": "school",
+    "icon": "📖",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "li",
+        "ending": "s",
+        "full": "je lis",
+        "italian": "io leggo"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "li",
+        "ending": "s",
+        "full": "tu lis",
+        "italian": "tu leggi"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "li",
+        "ending": "t",
+        "full": "il lit",
+        "italian": "lui legge"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "lis",
+        "ending": "ons",
+        "full": "nous lisons",
+        "italian": "noi leggiamo"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "lis",
+        "ending": "ez",
+        "full": "vous lisez",
+        "italian": "voi leggete"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "lis",
+        "ending": "ent",
+        "full": "ils lisent",
+        "italian": "loro leggono"
+      }
+    ],
+    "image": "images/lire.jpg"
+  },
+  {
+    "id": "ecrire",
+    "infinitive": "écrire",
+    "italian": "scrivere",
+    "category": "school",
+    "icon": "✍️",
+    "conjugation": [
+      {
+        "pronoun": "j'",
+        "stem": "écri",
+        "ending": "s",
+        "full": "j'écris",
+        "italian": "io scrivo"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "écri",
+        "ending": "s",
+        "full": "tu écris",
+        "italian": "tu scrivi"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "écri",
+        "ending": "t",
+        "full": "il écrit",
+        "italian": "lui scrive"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "écriv",
+        "ending": "ons",
+        "full": "nous écrivons",
+        "italian": "noi scriviamo"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "écriv",
+        "ending": "ez",
+        "full": "vous écrivez",
+        "italian": "voi scrivete"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "écriv",
+        "ending": "ent",
+        "full": "ils écrivent",
+        "italian": "loro scrivono"
+      }
+    ],
+    "image": "images/ecrire.jpg"
+  },
+  {
+    "id": "repondre",
+    "infinitive": "répondre",
+    "italian": "rispondere",
+    "category": "school",
+    "icon": "💬",
+    "conjugation": [
+      {
+        "pronoun": "je",
+        "stem": "répond",
+        "ending": "s",
+        "full": "je réponds",
+        "italian": "io rispondo"
+      },
+      {
+        "pronoun": "tu",
+        "stem": "répond",
+        "ending": "s",
+        "full": "tu réponds",
+        "italian": "tu rispondi"
+      },
+      {
+        "pronoun": "il / elle / on",
+        "stem": "répond",
+        "ending": "",
+        "full": "il répond",
+        "italian": "lui risponde"
+      },
+      {
+        "pronoun": "nous",
+        "stem": "répond",
+        "ending": "ons",
+        "full": "nous répondons",
+        "italian": "noi rispondiamo"
+      },
+      {
+        "pronoun": "vous",
+        "stem": "répond",
+        "ending": "ez",
+        "full": "vous répondez",
+        "italian": "voi rispondete"
+      },
+      {
+        "pronoun": "ils / elles",
+        "stem": "répond",
+        "ending": "ent",
+        "full": "ils répondent",
+        "italian": "loro rispondono"
+      }
+    ],
+    "image": "images/repondre.jpg"
   }
 ]
