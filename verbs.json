@@ -1627,5 +1627,14 @@
     "gender": "pl",
     "icon": "✂️",
     "image": null
+  },
+  {
+    "id": "un-hopital",
+    "infinitive": "un hôpital",
+    "italian": "l'ospedale (nota l'accento circonflesso ^: hôpital come fenêtre!)",
+    "category": "objects",
+    "gender": "m",
+    "icon": "🏥",
+    "image": "images/un-hopital.jpg"
   }
 ]
