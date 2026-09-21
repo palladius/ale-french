@@ -583,7 +583,7 @@
         "italian": "loro vanno"
       }
     ],
-    "image": null
+    "image": "images/aller.jpg"
   },
   {
     "id": "manger",
@@ -739,7 +739,7 @@
         "italian": "loro camminano"
       }
     ],
-    "image": null
+    "image": "images/marcher.jpg"
   },
   {
     "id": "faire",
@@ -791,7 +791,7 @@
         "italian": "loro fanno"
       }
     ],
-    "image": null
+    "image": "images/faire.jpg"
   },
   {
     "id": "dormir",
@@ -895,7 +895,7 @@
         "italian": "loro guardano"
       }
     ],
-    "image": null
+    "image": "images/regarder.jpg"
   },
   {
     "id": "ecouter",
@@ -947,7 +947,7 @@
         "italian": "loro ascoltano"
       }
     ],
-    "image": null
+    "image": "images/ecouter.jpg"
   },
   {
     "id": "etre",
@@ -999,7 +999,7 @@
         "italian": "loro sono"
       }
     ],
-    "image": null
+    "image": "images/etre.jpg"
   },
   {
     "id": "avoir",
@@ -1051,7 +1051,7 @@
         "italian": "loro hanno"
       }
     ],
-    "image": null
+    "image": "images/avoir.jpg"
   },
   {
     "id": "prendre-son-petit-dejeuner",
