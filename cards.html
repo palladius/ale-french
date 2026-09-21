@@ -206,9 +206,11 @@
     /* 3D FLIP CARD EFFECT */
     .card-scene {
       width: 100%;
-      height: 420px;
+      max-width: 440px;
+      height: 560px;
       perspective: 1200px;
       cursor: pointer;
+      margin: 0 auto;
     }
 
     .flip-card {
@@ -217,7 +219,7 @@
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 24px;
+      border-radius: 26px;
     }
 
     .flip-card.is-flipped {
@@ -229,26 +231,22 @@
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      border-radius: 24px;
+      border-radius: 26px;
       background: var(--card-bg);
       border: 3px solid #e2e8f0;
-      box-shadow: var(--shadow);
-      padding: 30px 24px;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.12), 0 6px 16px -4px rgba(0, 0, 0, 0.05);
+      padding: 18px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      text-align: center;
-    }
-
-    .card-front {
-      border-color: #cbd5e1;
+      overflow: hidden;
     }
 
     .card-back {
       transform: rotateY(180deg);
-      background: #ffffff;
-      border-color: #93c5fd;
+      background: #f8fafc;
+      border-color: #cbd5e1;
     }
 
     .card-tag {
@@ -275,7 +273,7 @@
       color: #b45309;
     }
 
-        .tag-objects {
+    .tag-objects {
       background: #e0e7ff;
       color: #3730a3;
     }
@@ -336,49 +334,44 @@
       box-shadow: 0 3px 8px rgba(22, 163, 74, 0.18);
     }
 
+    /* GLORIOUS HERO IMAGE BOX (FULL WIDTH OF CARD) */
     .card-image-box {
-      font-size: 4.8rem;
-      line-height: 1;
-      margin: 10px 0;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08));
-      transition: transform 0.2s;
-    }
-
-    .card-thumb-img {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
+      width: 100%;
+      height: 260px;
+      margin: 6px 0 10px 0;
       border-radius: 20px;
-      border: 3px solid #ffffff;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-      display: block;
-      margin: 0 auto;
-    }
-
-    .card-thumb-img-small {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 14px;
-      border: 2px solid #ffffff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      display: block;
-      margin: 0 auto;
-    }
-
-    .grid-thumb-img {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 14px;
-      margin: 6px auto;
-      border: 2px solid white;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      display: block;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 24px -4px rgba(0,0,0,0.15);
+      border: 3.5px solid #ffffff;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease;
     }
 
     .card-scene:hover .card-image-box {
-      transform: scale(1.08);
+      transform: scale(1.02);
+    }
+
+    .card-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px;
+    }
+
+    .card-thumb-img-small {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 3px solid #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      display: block;
+      margin: 6px auto;
     }
 
     .prompt-subtitle {
@@ -596,30 +589,31 @@
     /* GRID VIEW */
     .grid-container {
       display: none;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 20px;
       width: 100%;
     }
 
+    /* COLLECTIBLE TRADING CARD STYLE FOR GRID */
     .grid-card {
       background: white;
-      border: 2px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 18px;
+      border: 2.5px solid #e2e8f0;
+      border-radius: 22px;
+      overflow: hidden;
+      padding: 0;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: space-between;
-      min-height: 250px;
+      min-height: 290px;
     }
 
     .grid-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+      transform: translateY(-5px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.08);
       border-color: #93c5fd;
     }
 
@@ -628,9 +622,72 @@
       background: #f8fafc;
     }
 
-    .grid-icon {
-      font-size: 3rem;
-      margin: 8px 0;
+    .grid-card-media {
+      position: relative;
+      width: 100%;
+      height: 155px;
+      background: #f1f5f9;
+      overflow: hidden;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .grid-overlay-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .grid-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .grid-card:hover .grid-thumb-img {
+      transform: scale(1.06);
+    }
+
+    .grid-icon-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      background: #f8fafc;
+    }
+
+    .grid-card-content {
+      padding: 12px 14px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-grow: 1;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    /* GENDER TILES FOR GRID */
+    .grid-tile.grid-tile-m {
+      background: #eff6ff;
+      border: 1.5px solid #60a5fa;
+      color: #1d4ed8;
+    }
+
+    .grid-tile.grid-tile-f {
+      background: #fdf2f8;
+      border: 1.5px solid #f472b6;
+      color: #db2777;
+    }
+
+    .grid-tile.grid-tile-pl {
+      background: #f0fdf4;
+      border: 1.5px solid #4ade80;
+      color: #16a34a;
     }
 
     .grid-italian {
@@ -672,18 +729,31 @@
 
     @media(max-width: 600px) {
       .card-scene {
-        height: 390px;
+        height: 520px;
+      }
+      .card-image-box {
+        height: 230px;
+      }
+      .card-face {
+        padding: 12px;
       }
       .italian-title {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
       }
       .riddle-tile {
-        width: 28px;
-        height: 36px;
-        font-size: 1.2rem;
+        width: 30px;
+        height: 38px;
+        font-size: 1.25rem;
       }
       .french-infinitive-revealed {
         font-size: 1.8rem;
+      }
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .grid-card-media {
+        height: 125px;
       }
     }
   </style>
@@ -1107,33 +1177,48 @@
         
         const iconHtml = verb.image
           ? `<img src="${verb.image}" class="grid-thumb-img" alt="${verb.italian}">`
-          : `<div class="grid-icon">${verb.icon || '📘'}</div>`;
+          : `<div class="grid-icon-placeholder">${verb.icon || '📘'}</div>`;
 
         const isRefl = verb.category === 'reflexive';
         const isSchool = verb.category === 'school';
-        const tagText = isRefl ? 'Riflessivo' : (isSchool ? 'Simbolo' : 'Comune');
-        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : 'tag-common');
+        const isObject = verb.category === 'objects';
+        const tagText = isRefl ? 'Riflessivo' : (isSchool ? 'Simbolo' : (isObject ? 'Oggetto' : 'Comune'));
+        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common'));
+
+        // Gender color for grid tiles
+        let gridTileClass = '';
+        if (verb.gender === 'm' || verb.infinitive.startsWith('un ')) {
+          gridTileClass = 'grid-tile-m';
+        } else if (verb.gender === 'f' || verb.infinitive.startsWith('une ')) {
+          gridTileClass = 'grid-tile-f';
+        } else if (verb.gender === 'pl' || verb.infinitive.startsWith('des ')) {
+          gridTileClass = 'grid-tile-pl';
+        }
+
+        const actionBtn = isObject
+          ? `<div style="font-size:0.8rem; color:#475569; font-weight:700; padding:4px 0;">🎒 Oggetto Scuola</div>`
+          : `<a href="index.html#verb-${verb.id}" class="link-to-study" style="font-size:0.8rem; padding: 4px 10px; display:inline-block;" onclick="event.stopPropagation()">📖 Coniugazione</a>`;
 
         item.innerHTML = `
-          <div>
-            <span class="card-tag ${tagClass}" style="font-size:0.7rem;">
+          <div class="grid-card-media">
+            <span class="card-tag ${tagClass} grid-overlay-tag" style="font-size:0.7rem;">
               ${tagText}
             </span>
             ${iconHtml}
-            <div class="grid-italian">${verb.italian}</div>
           </div>
-          
-          <div class="grid-target-box" id="grid-box-${verb.id}">
-            <div class="grid-mystery">
-              ${verb.infinitive.split('').map(c => c === ' ' ? '<span style="width:6px;"></span>' : (c === "'" || c === "-" ? `<span>${c}</span>` : '<div class="grid-tile">?</div>')).join('')}
+          <div class="grid-card-content">
+            <div class="grid-italian" style="margin: 4px 0 8px 0;">${verb.italian}</div>
+            
+            <div class="grid-target-box" id="grid-box-${verb.id}" style="width: 100%;">
+              <div class="grid-mystery">
+                ${verb.infinitive.split('').map(c => c === ' ' ? '<span style="width:6px;"></span>' : (c === "'" || c === "-" ? `<span>${c}</span>` : `<div class="grid-tile ${gridTileClass}">?</div>`)).join('')}
+              </div>
+              <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">Tocca per scoprire ✨</div>
             </div>
-            <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">Tocca per scoprire ✨</div>
-          </div>
 
-          <div style="margin-top: 10px; width: 100%;">
-            <a href="index.html#verb-${verb.id}" class="link-to-study" style="font-size:0.8rem; padding: 4px 10px; display:inline-block;" onclick="event.stopPropagation()">
-              📖 Coniugazione
-            </a>
+            <div style="margin-top: 10px; width: 100%;">
+              ${actionBtn}
+            </div>
           </div>
         `;
 
