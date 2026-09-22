@@ -203,11 +203,11 @@
       background: var(--card-bg);
       border: 2px solid #e2e8f0;
       border-radius: 18px;
-      padding: 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 270px;
+      min-height: 360px;
       box-shadow: var(--shadow);
       transition: all 0.2s ease;
       position: relative;
@@ -240,15 +240,15 @@
 
     /* TOUCH CHECKBOX */
     .card-checkbox {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
       border: 2px solid #94a3b8;
       background: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: white;
       cursor: pointer;
@@ -267,7 +267,7 @@
     .card-tag {
       font-size: 0.72rem;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 3px 10px;
       border-radius: 999px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -288,18 +288,52 @@
       color: #b45309;
     }
 
+    .tag-objects {
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
     .card-body {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      margin: 10px 0;
+      margin: 6px 0;
       flex: 1;
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    /* HERO IMAGE TAKES HALF OF THE CARD (>= 50% OF CARD HEIGHT) */
+    .card-hero-img-box {
+      width: 100%;
+      height: 180px;
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 4px 0 10px 0;
+      position: relative;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
       justify-content: center;
     }
 
+    .card-hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .verb-card:hover .card-hero-img {
+      transform: scale(1.04);
+    }
+
     .card-icon {
-      font-size: 3.2rem;
+      font-size: 3.8rem;
       line-height: 1;
       margin-bottom: 6px;
       filter: drop-shadow(0 3px 6px rgba(0,0,0,0.06));
@@ -313,6 +347,40 @@
       margin-bottom: 8px;
     }
 
+    /* GENDER BADGES & GENDER RIDDLE TILES */
+    .article-badge-m {
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: 2px solid #60a5fa;
+      display: inline-block;
+    }
+
+    .article-badge-f {
+      background: #fdf2f8;
+      color: #db2777;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: 2px solid #f472b6;
+      display: inline-block;
+    }
+
+    .article-badge-pl {
+      background: #f0fdf4;
+      color: #16a34a;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: 2px solid #4ade80;
+      display: inline-block;
+    }
+
     /* RIDDLE LETTERS FOR HANGMAN / GUESSING */
     .card-riddle {
       display: flex;
@@ -324,17 +392,38 @@
     }
 
     .riddle-box {
-      width: 20px;
-      height: 26px;
+      width: 22px;
+      height: 28px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
-      border-radius: 4px;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.85rem;
       font-weight: 700;
       color: #64748b;
+    }
+
+    .riddle-box.tile-m {
+      background: #eff6ff;
+      border: 2px solid #60a5fa;
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    .riddle-box.tile-f {
+      background: #fdf2f8;
+      border: 2px solid #f472b6;
+      color: #db2777;
+      font-weight: 700;
+    }
+
+    .riddle-box.tile-pl {
+      background: #f0fdf4;
+      border: 2px solid #4ade80;
+      color: #16a34a;
+      font-weight: 700;
     }
 
     .riddle-char {
@@ -496,16 +585,22 @@
   <!-- MULTI-SELECTION CONTROL BAR -->
   <div class="selection-toolbar">
     <div class="select-status">
-      <span class="counter-pill" id="counter-selected-el">Selezionati: 0 di 18</span>
+      <span class="counter-pill" id="counter-selected-el">Selezionati: 0 di 0</span>
       <span style="font-size: 0.85rem; color: #64748b;" id="select-hint-el">Tocca le carte per selezionarle!</span>
     </div>
 
     <div class="tool-btn-group">
+      <button class="tool-btn" onclick="selectOnlyObjects()" id="btn-filter-objects">🏫 Solo Oggetti (<span id="count-btn-objects">0</span>)</button>
+      <button class="tool-btn" onclick="selectOnlyVerbs()" id="btn-filter-verbs">🗣️ Solo Verbi (<span id="count-btn-verbs">0</span>)</button>
+      <button class="tool-btn" onclick="selectByCategory('school')">🎒 Simboli (<span id="count-btn-school">0</span>)</button>
+      <button class="tool-btn" onclick="selectByCategory('reflexive')">🧴 Riflessivi (<span id="count-btn-reflexive">0</span>)</button>
+      <button class="tool-btn" onclick="selectByCategory('common')">🍽️ Comuni (<span id="count-btn-common">0</span>)</button>
+      
+      <div style="width: 1px; height: 24px; background: #cbd5e1; margin: 0 4px;"></div>
+
       <button class="tool-btn" onclick="selectAll(true)">✅ Tutti</button>
       <button class="tool-btn" onclick="selectAll(false)">❌ Nessuno</button>
-      <button class="tool-btn" onclick="selectByCategory('reflexive')">🧴 Riflessivi (8)</button>
-      <button class="tool-btn" onclick="selectByCategory('common')">🍽️ Comuni (10)</button>
-      
+
       <div style="width: 1px; height: 24px; background: #cbd5e1; margin: 0 4px;"></div>
 
       <button class="tool-btn" onclick="toggleRevealAll()">💡 Svela/Copri Tutti</button>
@@ -519,7 +614,7 @@
   </div>
 
   <main class="grid-wrapper">
-    <!-- THE 4-COLUMN RESPONSIVE GRID (18 CARDS = 4 COLUMNS X 4-5 ROWS) -->
+    <!-- THE 4-COLUMN RESPONSIVE GRID -->
     <div class="cards-4col-grid" id="cards-grid-el">
       <!-- Populated dynamically via JS -->
     </div>
@@ -535,12 +630,40 @@
       .then(res => res.json())
       .then(data => {
         verbsData = data;
-        // Default: select all verbs
-        verbsData.forEach(v => selectedIds.add(v.id));
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const catParam = urlParams.get('cat') || urlParams.get('category') || urlParams.get('mode');
+        
+        if (catParam === 'verbs') {
+          verbsData.filter(v => v.category !== 'objects').forEach(v => selectedIds.add(v.id));
+        } else if (catParam === 'all') {
+          verbsData.forEach(v => selectedIds.add(v.id));
+        } else if (catParam === 'reflexive' || catParam === 'school' || catParam === 'common') {
+          verbsData.filter(v => v.category === catParam).forEach(v => selectedIds.add(v.id));
+        } else {
+          // Default: select only objects! As requested by Riccardo ("Per oggi dobbiamo fare gli oggetti quindi mettimi la cosa nel mazzo che le card hanno di selezionati solo gli oggetti")
+          verbsData.filter(v => v.category === 'objects').forEach(v => selectedIds.add(v.id));
+        }
+        
+        updateCategoryCounts();
         renderGrid();
         updateSelectedCounter();
       })
       .catch(err => console.error("Error loading verbs:", err));
+
+    function updateCategoryCounts() {
+      const objCount = verbsData.filter(v => v.category === 'objects').length;
+      const verbCount = verbsData.filter(v => v.category !== 'objects').length;
+      const reflCount = verbsData.filter(v => v.category === 'reflexive').length;
+      const schoolCount = verbsData.filter(v => v.category === 'school').length;
+      const commonCount = verbsData.filter(v => v.category === 'common').length;
+
+      if (document.getElementById('count-btn-objects')) document.getElementById('count-btn-objects').textContent = objCount;
+      if (document.getElementById('count-btn-verbs')) document.getElementById('count-btn-verbs').textContent = verbCount;
+      if (document.getElementById('count-btn-reflexive')) document.getElementById('count-btn-reflexive').textContent = reflCount;
+      if (document.getElementById('count-btn-school')) document.getElementById('count-btn-school').textContent = schoolCount;
+      if (document.getElementById('count-btn-common')) document.getElementById('count-btn-common').textContent = commonCount;
+    }
 
     function renderGrid() {
       const container = document.getElementById('cards-grid-el');
@@ -551,8 +674,9 @@
         const isRevealed = revealedIds.has(verb.id);
         const isRefl = verb.category === 'reflexive';
         const isSchool = verb.category === 'school';
-        const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : '🍽️ Comune');
-        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : 'tag-common');
+        const isObject = verb.category === 'objects';
+        const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : (isObject ? '🏫 Oggetto' : '🍽️ Comune'));
+        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common'));
 
         const card = document.createElement('div');
         card.className = `verb-card ${isSelected ? 'selected' : ''} ${isRevealed ? 'revealed' : ''}`;
@@ -569,8 +693,8 @@
         `;
 
         const iconHtml = verb.image
-          ? `<img src="${verb.image}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 14px; margin: 4px auto; display: block; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">`
-          : `<div class="card-icon">${verb.icon || '📘'}</div>`;
+          ? `<div class="card-hero-img-box"><img src="${verb.image}" class="card-hero-img" alt="${verb.italian}"></div>`
+          : `<div class="card-hero-img-box"><div class="card-icon">${verb.icon || '📘'}</div></div>`;
 
         // Card Body
         let bodyHtml = `
@@ -592,15 +716,16 @@
             <button class="btn-reveal-mini" onclick="toggleSingleReveal('${verb.id}')">
               ${isRevealed ? '🙈 Copri' : '💡 Svela'}
             </button>
-            <a href="index.html#verb-${verb.id}" class="btn-conj-link" title="Vedi presente indicativo">
-              📖 Coniuga
-            </a>
+            ${isObject 
+              ? `<a href="cards.html?ids=${verb.id}" class="btn-conj-link" style="background:#4338ca; color:white; border-color:#4338ca;" title="Apri flashcard">🎒 Flashcard</a>`
+              : `<a href="index.html#verb-${verb.id}" class="btn-conj-link" title="Vedi presente indicativo">📖 Coniuga</a>`
+            }
           </div>
         `;
 
         card.innerHTML = headerHtml + bodyHtml + footerHtml;
 
-        // Clicking card toggles selection (or reveal)
+        // Clicking card toggles selection
         card.onclick = (e) => {
           toggleSelect(verb.id);
         };
@@ -613,6 +738,15 @@
       const words = verb.infinitive.split(' ');
       let html = '<div class="card-riddle">';
 
+      let genderTileClass = '';
+      if (verb.gender === 'm' || verb.infinitive.startsWith('un ')) {
+        genderTileClass = 'tile-m';
+      } else if (verb.gender === 'f' || verb.infinitive.startsWith('une ')) {
+        genderTileClass = 'tile-f';
+      } else if (verb.gender === 'pl' || verb.infinitive.startsWith('des ')) {
+        genderTileClass = 'tile-pl';
+      }
+
       words.forEach((word, wIdx) => {
         html += '<div style="display:inline-flex; align-items:center; gap:2px;">';
         if (word === 'se') {
@@ -620,15 +754,21 @@
         } else if (word.startsWith("s'")) {
           html += '<span class="riddle-char">s\'</span>';
           for (let i = 0; i < word.length - 2; i++) {
-            html += '<div class="riddle-box">?</div>';
+            html += `<div class="riddle-box">?</div>`;
           }
+        } else if (word === 'un') {
+          html += '<span class="article-badge-m">un 👦</span>';
+        } else if (word === 'une') {
+          html += '<span class="article-badge-f">une 👧</span>';
+        } else if (word === 'des') {
+          html += '<span class="article-badge-pl">des 👥</span>';
         } else {
           for (let i = 0; i < word.length; i++) {
             const ch = word[i];
             if (ch === "'" || ch === "-") {
               html += `<span class="riddle-char" style="color:#64748b;">${ch}</span>`;
             } else {
-              html += '<div class="riddle-box">?</div>';
+              html += `<div class="riddle-box ${genderTileClass}">?</div>`;
             }
           }
         }
@@ -644,6 +784,24 @@
 
     function getRevealedHtml(verb) {
       const inf = verb.infinitive;
+
+      // Special rendering for Nouns / School Objects
+      if (verb.category === 'objects' || inf.startsWith('un ') || inf.startsWith('une ') || inf.startsWith('des ')) {
+        const parts = inf.split(' ');
+        const art = parts[0];
+        const rest = parts.slice(1).join(' ');
+        let artBadgeClass = 'article-badge-m';
+        let nounColor = '#1d4ed8';
+        if (art === 'une' || verb.gender === 'f') {
+          artBadgeClass = 'article-badge-f';
+          nounColor = '#db2777';
+        } else if (art === 'des' || verb.gender === 'pl') {
+          artBadgeClass = 'article-badge-pl';
+          nounColor = '#16a34a';
+        }
+        return `<div class="revealed-french"><span class="${artBadgeClass}" style="font-size:1rem; margin-right:4px;">${art}</span> <span style="font-weight:700; color:${nounColor}; font-size:1.15rem;">${rest}</span></div>`;
+      }
+
       let prefix = '';
       let mainVerb = inf;
       let suffixExtra = '';
@@ -709,6 +867,20 @@
       updateSelectedCounter();
     }
 
+    function selectOnlyObjects() {
+      selectedIds.clear();
+      verbsData.filter(v => v.category === 'objects').forEach(v => selectedIds.add(v.id));
+      renderGrid();
+      updateSelectedCounter();
+    }
+
+    function selectOnlyVerbs() {
+      selectedIds.clear();
+      verbsData.filter(v => v.category !== 'objects').forEach(v => selectedIds.add(v.id));
+      renderGrid();
+      updateSelectedCounter();
+    }
+
     function selectByCategory(cat) {
       selectedIds.clear();
       verbsData.filter(v => v.category === cat).forEach(v => selectedIds.add(v.id));
@@ -720,7 +892,18 @@
       const count = selectedIds.size;
       const total = verbsData.length;
       document.getElementById('counter-selected-el').textContent = `Selezionati: ${count} di ${total}`;
-      document.getElementById('select-hint-el').textContent = count === total ? 'Tutti i verbi selezionati!' : `${count} verbi attivi per lo studio`;
+      const objCount = verbsData.filter(v => v.category === 'objects' && selectedIds.has(v.id)).length;
+      const verbCount = verbsData.filter(v => v.category !== 'objects' && selectedIds.has(v.id)).length;
+      
+      if (objCount > 0 && verbCount === 0) {
+        document.getElementById('select-hint-el').textContent = `🎒 Solo Oggetti attivi (${count}) per il mazzo!`;
+      } else if (verbCount > 0 && objCount === 0) {
+        document.getElementById('select-hint-el').textContent = `🗣️ Solo Verbi attivi (${count}) per il mazzo!`;
+      } else if (count === total) {
+        document.getElementById('select-hint-el').textContent = '🌟 Tutte le carte selezionate!';
+      } else {
+        document.getElementById('select-hint-el').textContent = `${count} carte selezionate per lo studio`;
+      }
     }
 
     function toggleSingleReveal(id) {

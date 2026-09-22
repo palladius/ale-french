@@ -180,64 +180,6 @@
     "image": "images/se-lever.jpg"
   },
   {
-    "id": "se-peigner",
-    "infinitive": "se peigner",
-    "italian": "pettinarsi",
-    "category": "reflexive",
-    "icon": "🪮",
-    "conjugation": [
-      {
-        "pronoun": "je",
-        "reflexive": "me",
-        "stem": "peign",
-        "ending": "e",
-        "full": "je me peigne",
-        "italian": "io mi pettino"
-      },
-      {
-        "pronoun": "tu",
-        "reflexive": "te",
-        "stem": "peign",
-        "ending": "es",
-        "full": "tu te peignes",
-        "italian": "tu ti pettini"
-      },
-      {
-        "pronoun": "il / elle / on",
-        "reflexive": "se",
-        "stem": "peign",
-        "ending": "e",
-        "full": "il se peigne",
-        "italian": "lui si pettina"
-      },
-      {
-        "pronoun": "nous",
-        "reflexive": "nous",
-        "stem": "peign",
-        "ending": "ons",
-        "full": "nous nous peignons",
-        "italian": "noi ci pettiniamo"
-      },
-      {
-        "pronoun": "vous",
-        "reflexive": "vous",
-        "stem": "peign",
-        "ending": "ez",
-        "full": "vous vous peignez",
-        "italian": "voi vi pettinate"
-      },
-      {
-        "pronoun": "ils / elles",
-        "reflexive": "se",
-        "stem": "peign",
-        "ending": "ent",
-        "full": "ils se peignent",
-        "italian": "loro si pettinano"
-      }
-    ],
-    "image": "images/se-peigner.jpg"
-  },
-  {
     "id": "se-coiffer",
     "infinitive": "se coiffer",
     "italian": "pettinarsi / acconciarsi",
@@ -1500,7 +1442,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "🪵",
-    "image": null
+    "image": "images/une-table.jpg"
   },
   {
     "id": "une-chaise",
@@ -1518,7 +1460,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "📚",
-    "image": null
+    "image": "images/une-bibliotheque.jpg"
   },
   {
     "id": "une-armoire",
@@ -1527,7 +1469,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "🗄️",
-    "image": null
+    "image": "images/une-armoire.jpg"
   },
   {
     "id": "une-poubelle",
@@ -1536,7 +1478,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "🗑️",
-    "image": null
+    "image": "images/une-poubelle.jpg"
   },
   {
     "id": "une-fenetre",
@@ -1545,7 +1487,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "🪟",
-    "image": null
+    "image": "images/une-fenetre.jpg"
   },
   {
     "id": "une-porte",
@@ -1554,7 +1496,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "🚪",
-    "image": null
+    "image": "images/une-porte.jpg"
   },
   {
     "id": "un-cartable",
@@ -1572,7 +1514,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "👝",
-    "image": null
+    "image": "images/une-trousse.jpg"
   },
   {
     "id": "un-crayon",
@@ -1581,7 +1523,7 @@
     "category": "objects",
     "gender": "m",
     "icon": "✏️",
-    "image": null
+    "image": "images/un-crayon.jpg"
   },
   {
     "id": "un-stylo",
@@ -1590,7 +1532,7 @@
     "category": "objects",
     "gender": "m",
     "icon": "🖊️",
-    "image": null
+    "image": "images/un-stylo.jpg"
   },
   {
     "id": "une-regle",
@@ -1599,7 +1541,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "📏",
-    "image": null
+    "image": "images/une-regle.jpg"
   },
   {
     "id": "une-colle",
@@ -1608,7 +1550,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "🧴",
-    "image": null
+    "image": "images/une-colle.jpg"
   },
   {
     "id": "une-gomme",
@@ -1617,7 +1559,7 @@
     "category": "objects",
     "gender": "f",
     "icon": "🧼",
-    "image": null
+    "image": "images/une-gomme.jpg"
   },
   {
     "id": "des-ciseaux",
@@ -1626,7 +1568,7 @@
     "category": "objects",
     "gender": "pl",
     "icon": "✂️",
-    "image": null
+    "image": "images/des-ciseaux.jpg"
   },
   {
     "id": "un-hopital",

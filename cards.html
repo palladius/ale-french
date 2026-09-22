@@ -775,11 +775,12 @@
   </header>
 
   <div class="top-controls">
-    <button class="filter-btn active" onclick="setFilter('all', this)">🌟 Tutti (<span id="count-all">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('reflexive', this)">🧴 Riflessivi (<span id="count-reflexive">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('school', this)">🎒 Simboli (<span id="count-school">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('objects', this)">🏫 Oggetti Scuola (<span id="count-objects">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('common', this)">🍽️ Comuni (<span id="count-common">0</span>)</button>
+    <button class="filter-btn active" onclick="setFilter('objects', this)" id="btn-filter-objects">🏫 Oggetti Scuola (<span id="count-objects">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('verbs', this)" id="btn-filter-verbs">🗣️ Solo Verbi (<span id="count-verbs">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('all', this)" id="btn-filter-all">🌟 Tutti (<span id="count-all">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('reflexive', this)" id="btn-filter-reflexive">🧴 Riflessivi (<span id="count-reflexive">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('school', this)" id="btn-filter-school">🎒 Simboli (<span id="count-school">0</span>)</button>
+    <button class="filter-btn" onclick="setFilter('common', this)" id="btn-filter-common">🍽️ Comuni (<span id="count-common">0</span>)</button>
     <button class="view-toggle-btn" id="btn-toggle-view" onclick="toggleView()">🔲 Vista Griglia</button>
   </div>
 
@@ -876,7 +877,7 @@
     let currentIndex = 0;
     let isFlipped = false;
     let isGridView = false;
-    let currentFilter = 'all';
+    let currentFilter = 'objects';
 
     fetch('verbs.json')
       .then(res => res.json())
@@ -884,17 +885,39 @@
         allVerbs = data;
         const urlParams = new URLSearchParams(window.location.search);
         const idsParam = urlParams.get('ids');
+        const catParam = urlParams.get('cat') || urlParams.get('category') || urlParams.get('mode');
+
         if (idsParam) {
           const targetIds = new Set(idsParam.split(','));
           allVerbs = allVerbs.filter(v => targetIds.has(v.id));
         }
+
         updateCounts();
-        applyFilter('all');
+
+        let initialFilter = 'objects';
+        if (catParam === 'verbs') {
+          initialFilter = 'verbs';
+        } else if (catParam === 'all') {
+          initialFilter = 'all';
+        } else if (catParam && ['reflexive', 'school', 'objects', 'common'].includes(catParam)) {
+          initialFilter = catParam;
+        } else if (idsParam) {
+          initialFilter = 'all';
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.getElementById(`btn-filter-${initialFilter}`) || document.querySelector(`[onclick*="setFilter('${initialFilter}'"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        applyFilter(initialFilter);
       })
       .catch(err => console.error("Error loading verbs:", err));
 
     function updateCounts() {
       document.getElementById('count-all').textContent = allVerbs.length;
+      if (document.getElementById('count-verbs')) {
+        document.getElementById('count-verbs').textContent = allVerbs.filter(v => v.category !== 'objects').length;
+      }
       document.getElementById('count-reflexive').textContent = allVerbs.filter(v => v.category === 'reflexive').length;
       if (document.getElementById('count-school')) {
         document.getElementById('count-school').textContent = allVerbs.filter(v => v.category === 'school').length;
@@ -919,6 +942,8 @@
         filteredVerbs = allVerbs.filter(v => v.category === 'school');
       } else if (filter === 'objects') {
         filteredVerbs = allVerbs.filter(v => v.category === 'objects');
+      } else if (filter === 'verbs') {
+        filteredVerbs = allVerbs.filter(v => v.category !== 'objects');
       } else if (filter === 'common') {
         filteredVerbs = allVerbs.filter(v => v.category === 'common');
       } else {
