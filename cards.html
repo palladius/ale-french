@@ -981,6 +981,14 @@
           for (let i = 0; i < rest.length; i++) {
             html += '<div class="riddle-tile">?</div>';
           }
+        } else if (word.startsWith("l'")) {
+          const badgeClass = verb.gender === 'm' ? 'article-badge-m' : 'article-badge-f';
+          const genderIcon = verb.gender === 'm' ? '👦' : '👧';
+          html += `<span class="${badgeClass}">l' ${genderIcon}</span>`;
+          const rest = word.slice(2);
+          for (let i = 0; i < rest.length; i++) {
+            html += `<div class="riddle-tile ${genderTileClass}">?</div>`;
+          }
         } else if (word === "un") {
           html += '<span class="article-badge-m">un 👦</span>';
         } else if (word === "une") {
@@ -1011,10 +1019,17 @@
       const inf = verb.infinitive;
 
       // Special rendering for Nouns / School Objects (with colored articles and nouns)
-      if (verb.category === 'objects' || inf.startsWith('un ') || inf.startsWith('une ') || inf.startsWith('des ')) {
-        const parts = inf.split(' ');
-        const art = parts[0];
-        const rest = parts.slice(1).join(' ');
+      if (verb.category === 'objects' || inf.startsWith('un ') || inf.startsWith('une ') || inf.startsWith('des ') || inf.startsWith("l'")) {
+        let art = '';
+        let rest = '';
+        if (inf.startsWith("l'")) {
+          art = "l'";
+          rest = inf.slice(2);
+        } else {
+          const parts = inf.split(' ');
+          art = parts[0];
+          rest = parts.slice(1).join(' ');
+        }
         let artBadgeClass = 'article-badge-m';
         let nounColor = '#1d4ed8'; // azzurro
         if (art === 'une' || verb.gender === 'f') {

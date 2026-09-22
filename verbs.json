@@ -1578,5 +1578,14 @@
     "gender": "m",
     "icon": "🏥",
     "image": "images/un-hopital.jpg"
+  },
+  {
+    "id": "l-eau",
+    "infinitive": "l'eau",
+    "italian": "l'acqua",
+    "category": "objects",
+    "gender": "f",
+    "icon": "💧",
+    "image": "images/l-eau.jpg"
   }
 ]
