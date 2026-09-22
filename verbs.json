@@ -1573,11 +1573,12 @@
   {
     "id": "un-hopital",
     "infinitive": "un hôpital",
-    "italian": "l'ospedale (nota l'accento circonflesso ^: hôpital come fenêtre!)",
+    "italian": "l'ospedale",
     "category": "objects",
     "gender": "m",
     "icon": "🏥",
-    "image": "images/un-hopital.jpg"
+    "image": "images/un-hopital.jpg",
+    "note": "🎩 Cappellino magico (^): al posto della S di oSpedale, come feneStra ➔ fenêtre!"
   },
   {
     "id": "l-eau",

@@ -813,7 +813,11 @@
           artBadgeClass = 'article-badge-pl';
           nounColor = '#16a34a';
         }
-        return `<div class="revealed-french"><span class="${artBadgeClass}" style="font-size:1rem; margin-right:4px;">${art}</span> <span style="font-weight:700; color:${nounColor}; font-size:1.15rem;">${rest}</span></div>`;
+        let res = `<div class="revealed-french"><span class="${artBadgeClass}" style="font-size:1rem; margin-right:4px;">${art}</span> <span style="font-weight:700; color:${nounColor}; font-size:1.15rem;">${rest}</span></div>`;
+        if (verb.note) {
+          res += `<div style="font-size:0.75rem; color:#64748b; margin-top:4px; font-weight:600; line-height:1.2;">${verb.note}</div>`;
+        }
+        return res;
       }
 
       let prefix = '';

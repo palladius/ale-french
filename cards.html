@@ -1039,7 +1039,11 @@
           artBadgeClass = 'article-badge-pl';
           nounColor = '#16a34a'; // verde
         }
-        return `<span class="${artBadgeClass}" style="font-size: 1.8rem; margin-right: 8px;">${art}</span> <span style="font-weight: 700; color: ${nounColor}; font-size: 2.2rem;">${rest}</span>`;
+        let html = `<span class="${artBadgeClass}" style="font-size: 1.8rem; margin-right: 8px;">${art}</span> <span style="font-weight: 700; color: ${nounColor}; font-size: 2.2rem;">${rest}</span>`;
+        if (verb.note) {
+          html += `<div style="font-size: 1rem; color: #64748b; margin-top: 10px; font-weight: 600; line-height: 1.3; max-width: 440px; margin-left: auto; margin-right: auto;">${verb.note}</div>`;
+        }
+        return html;
       }
       
       // Highlight infinitive ending (-er, -ir, -re, -oir)
