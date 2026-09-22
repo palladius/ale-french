@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎯 Quiz Francese — Ale French</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --green: #10b981;
+      --green-dark: #047857;
+      --red: #ef4444;
+      --red-dark: #b91c1c;
+      --purple: #8b5cf6;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Fredoka', 'Lexend', system-ui, sans-serif;
+      background: var(--bg-main);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: white;
+      border-bottom: 2px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    .badge-ale {
+      background: #fef08a;
+      color: #854d0e;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: 1px solid #facc15;
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+
+    .nav-tab {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #475569;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      color: #1e3a8a;
+    }
+
+    .nav-tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      flex: 1;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 16px 40px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* CARD STYLING */
+    .card-box {
+      background: white;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    /* RESUME NOTIFICATION */
+    .resume-banner {
+      background: #eff6ff;
+      border: 2px solid #93c5fd;
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .resume-banner p {
+      font-weight: 600;
+      color: #1e40af;
+      font-size: 0.95rem;
+    }
+
+    .resume-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* SETUP SCREEN */
+    .setup-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 6px;
+    }
+
+    .setup-subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* PLAYER PICKER */
+    .player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .player-chip {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .player-chip:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .player-chip.active {
+      background: #eff6ff;
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    /* DIFFICULTY PICKER */
+    .difficulty-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    @media (max-width: 600px) {
+      .difficulty-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .difficulty-card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .difficulty-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .difficulty-card.facile.active {
+      background: #ecfdf5;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    .difficulty-card.moyen.active {
+      background: #fffbeb;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+
+    .difficulty-card.difficile.active {
+      background: #fef2f2;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+    }
+
+    .difficulty-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .diff-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .facile .diff-badge { background: #d1fae5; color: var(--green-dark); }
+    .moyen .diff-badge { background: #fef3c7; color: #b45309; }
+    .difficile .diff-badge { background: #fee2e2; color: var(--red-dark); }
+
+    .diff-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .diff-desc {
+      font-size: 0.84rem;
+      color: #64748b;
+      line-height: 1.35;
+    }
+
+    /* WORD SET & COUNT */
+    .options-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    @media (max-width: 600px) {
+      .options-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btn-toggle-group {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .toggle-opt {
+      flex: 1;
+      padding: 8px 10px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .toggle-opt.active {
+      background: white;
+      color: #1e3a8a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      font-weight: 700;
+    }
+
+    /* START BUTTON */
+    .start-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-giant {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 36px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+      transition: all 0.2s;
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-giant:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-giant:active {
+      transform: translateY(0);
+    }
+
+    .btn-history-link {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-history-link:hover {
+      color: #1e3a8a;
+      background: #f1f5f9;
+    }
+
+    /* ACTIVE QUIZ SCREEN */
+    .quiz-hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .hud-chip {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .hud-progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .hud-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* QUIZ QUESTION BOX */
+    .question-card {
+      background: white;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      position: relative;
+    }
+
+    .image-preview-wrapper {
+      width: 100%;
+      max-width: 420px;
+      height: 240px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f1f5f9;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      position: relative;
+    }
+
+    .quiz-hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .italian-clue-box {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      padding: 10px 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    .audio-hint-btn {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      color: #1d4ed8;
+      border-radius: 999px;
+      padding: 7px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .audio-hint-btn:hover {
+      background: #dbeafe;
+      transform: scale(1.03);
+    }
+
+    /* ANSWERS GRID */
+    .answers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      max-width: 620px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 550px) {
+      .answers-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .answer-btn {
+      background: #ffffff;
+      border: 2.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 16px 14px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      font-family: 'Fredoka', system-ui;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+      user-select: none;
+    }
+
+    .answer-btn:hover:not(:disabled) {
+      border-color: #93c5fd;
+      background: #f8fafc;
+      transform: translateY(-2px);
+    }
+
+    .answer-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .ans-letter {
+      background: #f1f5f9;
+      color: #475569;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .ans-text {
+      flex: 1;
+      word-break: break-word;
+    }
+
+    /* FEEDBACK STATES */
+    .answer-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: var(--green) !important;
+      color: var(--green-dark) !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
+    }
+
+    .answer-btn.correct .ans-letter {
+      background: var(--green);
+      color: white;
+    }
+
+    .answer-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: var(--red) !important;
+      color: var(--red-dark) !important;
+      animation: shake 0.4s ease;
+    }
+
+    .answer-btn.wrong .ans-letter {
+      background: var(--red);
+      color: white;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    /* TIP BOX */
+    .feedback-tip-box {
+      width: 100%;
+      max-width: 620px;
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 0.95rem;
+      color: #166534;
+      display: none;
+      animation: fadeIn 0.3s ease;
+      text-align: left;
+    }
+
+    .feedback-tip-box.wrong-tip {
+      background: #fffbeb;
+      border-color: #fde68a;
+      color: #92400e;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .next-btn-row {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .btn-next {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 32px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+      transition: all 0.2s;
+    }
+
+    .btn-next:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    /* RESULTS SCREEN */
+    .results-hero {
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    .trophy-badge {
+      font-size: 4rem;
+      margin-bottom: 8px;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+
+    .results-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 4px;
+    }
+
+    .results-subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+
+    .results-score-pill {
+      display: inline-block;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 12px 32px;
+      border-radius: 999px;
+      font-size: 1.8rem;
+      font-weight: 800;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+      margin-bottom: 24px;
+    }
+
+    .results-meta-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    /* REPORT BREAKDOWN */
+    .report-table-box {
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .report-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: white;
+    }
+
+    .report-item:last-child {
+      border-bottom: none;
+    }
+
+    .report-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #f1f5f9;
+    }
+
+    .report-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .report-word {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .report-it {
+      font-size: 0.88rem;
+      color: #64748b;
+    }
+
+    .report-answer-tag {
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .report-answer-tag.correct {
+      background: #d1fae5;
+      color: var(--green-dark);
+    }
+
+    .report-answer-tag.wrong {
+      background: #fee2e2;
+      color: var(--red-dark);
+    }
+
+    /* HISTORY VIEW */
+    .history-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .history-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .history-card-item {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+    }
+
+    .history-card-item:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .history-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .history-card-details {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      display: none;
+      font-size: 0.9rem;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      color: #334155;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      border: 1.5px solid #fca5a5;
+      color: var(--red-dark);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-danger:hover {
+      background: #fecaca;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: white;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header>
+    <div class="brand">
+      <span style="font-size: 1.8rem;">🦁</span>
+      <div>
+        <h1>Ale French</h1>
+        <span class="badge-ale">Pour Alessandro 🦁</span>
+      </div>
+    </div>
+
+    <!-- MAIN NAVIGATION TABS -->
+    <div class="nav-tabs">
+      <a href="index.html" class="nav-tab">📖 Coniugazioni</a>
+      <a href="cards.html" class="nav-tab">🃏 Flashcards</a>
+      <a href="grid.html" class="nav-tab">🔲 Griglia 4x4 & Selezione</a>
+      <a href="quiz.html" class="nav-tab active">🎯 Quiz a Scelta Multipla</a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main id="app-container">
+
+    <!-- VIEW 1: SETUP SCREEN -->
+    <section id="view-setup" class="card-box">
+
+      <!-- IN-PROGRESS RESUME BANNER -->
+      <div id="resume-banner" class="resume-banner" style="display: none;">
+        <div>
+          <p>⚡ <strong>Partita in corso trovata!</strong></p>
+          <span id="resume-text" style="font-size: 0.85rem; color: #1e3a8a;"></span>
+        </div>
+        <div class="resume-btn-group">
+          <button class="btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;" onclick="resumeActiveQuiz()">Riprendi 🚀</button>
+          <button class="btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;" onclick="discardActiveQuiz()">Ignora ✖️</button>
+        </div>
+      </div>
+
+      <h2 class="setup-title">🎯 Il Grande Quiz di Francese!</h2>
+      <p class="setup-subtitle">Allena la memoria visiva e l'ortografia con le illustrazioni di Sebi & Ale!</p>
+
+      <!-- 1. CHI GIOCA? -->
+      <div class="section-label">👤 Chi gioca adesso?</div>
+      <div class="player-grid">
+        <div class="player-chip active" onclick="selectPlayer('Alessandro 🦁', this)">🦁 Alessandro</div>
+        <div class="player-chip" onclick="selectPlayer('Sebastiano 🐻', this)">🐻 Sebastiano</div>
+        <div class="player-chip" onclick="selectPlayer('Papà Riccardo 👑', this)">👑 Papà Riccardo</div>
+      </div>
+
+      <!-- 2. LIVELLO DI DIFFICOLTÀ -->
+      <div class="section-label">🎚️ Scegli la Difficoltà:</div>
+      <div class="difficulty-grid">
+
+        <!-- FACILE -->
+        <div class="difficulty-card facile" onclick="selectDifficulty('facile', this)">
+          <div class="difficulty-header">
+            <span style="font-size: 1.5rem;">🟢</span>
+            <span class="diff-badge">Facile</span>
+          </div>
+          <div class="diff-title">Principiante</div>
+          <div class="diff-desc">Distrattori con vocali buffe e parole inventate (es. <em>bibliotaca</em>, <em>bibliosono</em>).</div>
+        </div>
+
+        <!-- MEDIO (DEFAULT) -->
+        <div class="difficulty-card moyen active" onclick="selectDifficulty('moyen', this)">
+          <div class="difficulty-header">
+            <span style="font-size: 1.5rem;">🟡</span>
+            <span class="diff-badge">Consigliato</span>
+          </div>
+          <div class="diff-title">Intermedio</div>
+          <div class="diff-desc">Trappole ortografiche francesi: <strong>c / k / qu</strong>, <strong>h muta</strong>, doppie <strong>ss</strong> (es. <em>bibliotec</em>).</div>
+        </div>
+
+        <!-- DIFFICILE -->
+        <div class="difficulty-card difficile" onclick="selectDifficulty('difficile', this)">
+          <div class="difficulty-header">
+            <span style="font-size: 1.5rem;">🔴</span>
+            <span class="diff-badge">Campione</span>
+          </div>
+          <div class="diff-title">Esperto</div>
+          <div class="diff-desc">La sfida degli accenti francesi (<strong>é, è, ê</strong>), apostrofi e sottigliezze (es. <em>bibliothèque</em> vs <em>bibliothéque</em>).</div>
+        </div>
+
+      </div>
+
+      <!-- 3. AMBITO PAROLE E NUMERO DOMANDE -->
+      <div class="options-row">
+        <div>
+          <div class="section-label">🎒 Parole da includere:</div>
+          <div class="btn-toggle-group">
+            <button class="toggle-opt active" onclick="setWordSet('objects', this)">🏫 Oggetti Scuola (19)</button>
+            <button class="toggle-opt" onclick="setWordSet('verbs', this)">🗣️ Solo Verbi (26)</button>
+            <button class="toggle-opt" onclick="setWordSet('all', this)">🌟 Tutto (45)</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label">🔢 Numero di Domande:</div>
+          <div class="btn-toggle-group">
+            <button class="toggle-opt" onclick="setQuestionCount(5, this)">5 veloci</button>
+            <button class="toggle-opt active" onclick="setQuestionCount(10, this)">10 domande ⭐</button>
+            <button class="toggle-opt" onclick="setQuestionCount(15, this)">15 maratona</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. START BUTTONS -->
+      <div class="start-btn-group">
+        <button class="btn-giant" onclick="startQuizSession()">🚀 Inizia il Quiz!</button>
+        <button class="btn-history-link" onclick="openHistoryView()">📜 Registro del Papà & Storico Partite</button>
+      </div>
+
+    </section>
+
+    <!-- VIEW 2: ACTIVE QUIZ SCREEN -->
+    <section id="view-quiz" style="display: none;">
+
+      <!-- HUD -->
+      <div class="quiz-hud">
+        <div class="hud-chip" id="hud-player">🦁 Alessandro</div>
+        <div class="hud-chip" id="hud-difficulty" style="font-weight: 700;">🟡 Medio</div>
+        <div class="hud-chip" id="hud-counter">Domanda 1 di 10</div>
+        <div class="hud-chip" id="hud-score" style="background: #ecfdf5; color: #047857;">⭐ 0 corrette</div>
+      </div>
+
+      <div class="hud-progress-bar">
+        <div class="hud-progress-fill" id="hud-progress-fill"></div>
+      </div>
+
+      <!-- MAIN QUESTION CARD -->
+      <div class="question-card">
+        
+        <div class="image-preview-wrapper">
+          <img id="quiz-img" class="quiz-hero-image" src="" alt="Quiz illustration">
+        </div>
+
+        <div class="italian-clue-box">
+          <span>🇮🇹</span>
+          <span id="quiz-italian-text">la libreria</span>
+        </div>
+
+        <button class="audio-hint-btn" onclick="playQuizPronunciation()">
+          <span>🔊</span> Ascolta la pronuncia francese
+        </button>
+
+        <!-- 4 OPTIONS -->
+        <div class="answers-grid" id="answers-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- FEEDBACK TIP -->
+        <div id="feedback-tip" class="feedback-tip-box">
+          <span id="feedback-tip-text"></span>
+        </div>
+
+        <!-- NEXT BUTTON -->
+        <div class="next-btn-row">
+          <button id="btn-next" class="btn-next" onclick="nextQuestion()">Domanda Successiva ➔</button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- VIEW 3: RESULTS SCREEN -->
+    <section id="view-results" class="card-box" style="display: none;">
+      
+      <div class="results-hero">
+        <div class="trophy-badge" id="results-trophy">🏆</div>
+        <h2 class="results-title" id="results-title">Bravissimo!</h2>
+        <p class="results-subtitle" id="results-subtitle">Hai completato il quiz con successo!</p>
+        
+        <div class="results-score-pill" id="results-score-pill">8 / 10</div>
+
+        <div class="results-meta-row">
+          <div class="hud-chip" id="results-player-chip">🦁 Alessandro</div>
+          <div class="hud-chip" id="results-diff-chip">🟡 Livello Medio</div>
+          <div class="hud-chip" id="results-date-chip">Oggi</div>
+        </div>
+      </div>
+
+      <!-- BREAKDOWN TABLE (PAPA' REPORT) -->
+      <div class="section-label">📋 Dettaglio Risposte del Test:</div>
+      <div class="report-table-box" id="report-items-container">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="start-btn-group" style="margin-top: 20px;">
+        <button class="btn-giant" onclick="restartSetup()">🔄 Gioca di Nuovo</button>
+        <button class="btn-history-link" onclick="openHistoryView()">📜 Vai al Registro del Papà</button>
+      </div>
+
+    </section>
+
+    <!-- VIEW 4: HISTORY & PARENT REPORT -->
+    <section id="view-history" class="card-box" style="display: none;">
+      
+      <div class="history-header">
+        <div>
+          <h2 style="font-size: 1.5rem; color: #1e3a8a;">📜 Registro di Papà Riccardo</h2>
+          <p style="font-size: 0.88rem; color: #64748b;">Storico dei test e progressi salvati in questo browser (localStorage).</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-secondary" onclick="closeHistoryView()">🔙 Torna al Gioco</button>
+          <button class="btn-danger" onclick="clearQuizHistory()">🗑️ Cancella Storico</button>
+        </div>
+      </div>
+
+      <!-- SUMMARY STATS -->
+      <div class="history-stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="stat-total-games">0</div>
+          <div class="stat-label">Partite Totali</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-avg-score">0%</div>
+          <div class="stat-label">Media Successo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-best-score">0/10</div>
+          <div class="stat-label">Miglior Punteggio</div>
+        </div>
+      </div>
+
+      <!-- HISTORY LIST -->
+      <div id="history-items-container">
+        <!-- Populated by JS -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    🇫🇷 <strong>Ale French</strong> — Didattica del Francese per Alessandro & Sebastiano Carlesso 🦁🐻 — <em>Romagna Trucking & Pux Edition 🚛</em>
+  </footer>
+
+  <!-- SCRIPT DATA & LOGIC -->
+  <script src="quiz-data.js"></script>
+  <script>
+    /* ==========================================================================
+       GLOBAL STATE & CONFIG
+       ========================================================================== */
+    let allVerbs = [];
+    let currentQuizState = null;
+    let selectedPlayer = 'Alessandro 🦁';
+    let selectedDifficulty = 'moyen'; // facile | moyen | difficile
+    let selectedWordSet = 'objects';  // objects | verbs | all
+    let selectedQuestionCount = 10;
+    let autoAdvanceTimeout = null;
+
+    // Web Audio Synthesizer (Zero External Files)
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function playAudioTone(type) {
+      try {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (type === 'correct') {
+          // Cheery ascending triad
+          [523.25, 659.25, 783.99].forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.08);
+            gain.gain.setValueAtTime(0.18, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.35);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + i * 0.08);
+            osc.stop(now + i * 0.08 + 0.35);
+          });
+        } else if (type === 'wrong') {
+          // Gentle soft buzz
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.28);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.28);
+        } else if (type === 'fanfare') {
+          // Celebration fanfare
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.12);
+            gain.gain.setValueAtTime(0.2, now + i * 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.5);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + i * 0.12);
+            osc.stop(now + i * 0.12 + 0.5);
+          });
+        }
+      } catch (e) {
+        console.warn('Audio tone could not play', e);
+      }
+    }
+
+    // French Text To Speech
+    function speakFrench(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'fr-FR';
+      utterance.rate = 0.85; // slower for young learners
+
+      const voices = window.speechSynthesis.getVoices();
+      const frVoice = voices.find(v => v.lang.startsWith('fr') && (v.name.includes('Thomas') || v.name.includes('Amelie') || v.name.includes('Audrey') || v.name.includes('Google') || v.localService));
+      if (frVoice) utterance.voice = frVoice;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    /* ==========================================================================
+       INITIALIZATION
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      fetch('verbs.json')
+        .then(res => res.json())
+        .then(data => {
+          allVerbs = data;
+          checkResumeQuiz();
+        })
+        .catch(err => {
+          console.error('Error loading verbs.json', err);
+        });
+    });
+
+    /* ==========================================================================
+       SETUP INTERACTIONS
+       ========================================================================== */
+    function selectPlayer(name, element) {
+      selectedPlayer = name;
+      document.querySelectorAll('.player-chip').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    function selectDifficulty(diff, element) {
+      selectedDifficulty = diff;
+      document.querySelectorAll('.difficulty-card').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    function setWordSet(setMode, element) {
+      selectedWordSet = setMode;
+      element.parentElement.querySelectorAll('.toggle-opt').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    function setQuestionCount(count, element) {
+      selectedQuestionCount = count;
+      element.parentElement.querySelectorAll('.toggle-opt').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    function checkResumeQuiz() {
+      const activeRaw = localStorage.getItem('ale_french_active_quiz');
+      if (!activeRaw) return;
+      try {
+        const state = JSON.parse(activeRaw);
+        if (state && state.questions && state.currentIndex < state.questions.length) {
+          const banner = document.getElementById('resume-banner');
+          const bannerText = document.getElementById('resume-text');
+          banner.style.display = 'flex';
+          bannerText.textContent = `${state.player} • Livello ${state.difficulty.toUpperCase()} • Domanda ${state.currentIndex + 1} di ${state.questions.length}`;
+        }
+      } catch (e) {
+        localStorage.removeItem('ale_french_active_quiz');
+      }
+    }
+
+    function resumeActiveQuiz() {
+      const activeRaw = localStorage.getItem('ale_french_active_quiz');
+      if (!activeRaw) return;
+      currentQuizState = JSON.parse(activeRaw);
+      showView('quiz');
+      renderCurrentQuestion();
+    }
+
+    function discardActiveQuiz() {
+      localStorage.removeItem('ale_french_active_quiz');
+      document.getElementById('resume-banner').style.display = 'none';
+    }
+
+    /* ==========================================================================
+       START QUIZ SESSION
+       ========================================================================== */
+    function startQuizSession() {
+      // 1. Filter eligible pool
+      let pool = [];
+      if (selectedWordSet === 'objects') {
+        pool = allVerbs.filter(v => v.category === 'objects');
+      } else if (selectedWordSet === 'verbs') {
+        pool = allVerbs.filter(v => v.category !== 'objects');
+      } else {
+        pool = [...allVerbs];
+      }
+
+      if (!pool.length) pool = [...allVerbs];
+
+      // Shuffle pool
+      const shuffled = [...pool].sort(() => 0.5 - Math.random());
+      const selectedWords = shuffled.slice(0, Math.min(selectedQuestionCount, shuffled.length));
+
+      // 2. Build Question Objects with Distractors
+      const questions = selectedWords.map(word => {
+        const distractorEntry = (typeof QUIZ_DISTRACTORS !== 'undefined' && QUIZ_DISTRACTORS[word.id])
+          ? QUIZ_DISTRACTORS[word.id]
+          : null;
+
+        let distractors = [];
+        let tip = `In francese l'ortografia corretta è: ${word.infinitive}`;
+
+        if (distractorEntry) {
+          distractors = distractorEntry[selectedDifficulty] || distractorEntry['moyen'] || [];
+          if (distractorEntry.tip) tip = distractorEntry.tip;
+        } else {
+          // Fallback algorithm if word not explicitly in dictionary
+          distractors = generateFallbackDistractors(word.infinitive, selectedDifficulty);
+        }
+
+        // Combine correct answer and 3 distractors, then shuffle
+        const options = [word.infinitive, ...distractors.slice(0, 3)].sort(() => 0.5 - Math.random());
+
+        return {
+          wordId: word.id,
+          infinitive: word.infinitive,
+          italian: word.italian,
+          image: word.image || `images/${word.id}.jpg`,
+          options: options,
+          tip: tip,
+          userAnswer: null,
+          isCorrect: null
+        };
+      });
+
+      // 3. Setup state
+      currentQuizState = {
+        player: selectedPlayer,
+        difficulty: selectedDifficulty,
+        questions: questions,
+        currentIndex: 0,
+        score: 0,
+        startedAt: new Date().toISOString()
+      };
+
+      saveActiveQuizState();
+      showView('quiz');
+      renderCurrentQuestion();
+    }
+
+    function generateFallbackDistractors(word, difficulty) {
+      if (difficulty === 'facile') {
+        return [word + 'a', word + 'oni', 'le ' + word];
+      } else if (difficulty === 'moyen') {
+        return [word.replace(/qu/g, 'k').replace(/c/g, 'k'), word + 'e', word.replace(/h/g, '')];
+      } else {
+        return [word.replace(/é/g, 'è').replace(/è/g, 'é'), word.replace(/ê/g, 'e'), word.replace(/î/g, 'i')];
+      }
+    }
+
+    function saveActiveQuizState() {
+      if (!currentQuizState) return;
+      localStorage.setItem('ale_french_active_quiz', JSON.stringify(currentQuizState));
+    }
+
+    /* ==========================================================================
+       RENDER CURRENT QUESTION
+       ========================================================================== */
+    function renderCurrentQuestion() {
+      if (!currentQuizState) return;
+      const q = currentQuizState.questions[currentQuizState.currentIndex];
+      const total = currentQuizState.questions.length;
+      const curNum = currentQuizState.currentIndex + 1;
+
+      // Update HUD
+      document.getElementById('hud-player').textContent = currentQuizState.player;
+      
+      const diffLabel = currentQuizState.difficulty === 'facile' ? '🟢 Facile' : (currentQuizState.difficulty === 'moyen' ? '🟡 Medio' : '🔴 Difficile');
+      document.getElementById('hud-difficulty').textContent = diffLabel;
+      
+      document.getElementById('hud-counter').textContent = `Domanda ${curNum} di ${total}`;
+      document.getElementById('hud-score').textContent = `⭐ ${currentQuizState.score} corrette`;
+
+      const progressPct = ((curNum - 1) / total) * 100;
+      document.getElementById('hud-progress-fill').style.width = `${progressPct}%`;
+
+      // Question Content
+      const heroImg = document.getElementById('quiz-img');
+      heroImg.src = q.image;
+      heroImg.alt = q.infinitive;
+
+      document.getElementById('quiz-italian-text').textContent = q.italian;
+
+      // Reset feedback and Next button
+      const tipBox = document.getElementById('feedback-tip');
+      tipBox.style.display = 'none';
+      tipBox.className = 'feedback-tip-box';
+
+      const btnNext = document.getElementById('btn-next');
+      btnNext.style.display = 'none';
+      if (autoAdvanceTimeout) clearTimeout(autoAdvanceTimeout);
+
+      // Render 4 Options
+      const letters = ['A', 'B', 'C', 'D'];
+      const grid = document.getElementById('answers-grid');
+      grid.innerHTML = '';
+
+      q.options.forEach((optText, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        btn.innerHTML = `
+          <div class="ans-letter">${letters[idx]}</div>
+          <div class="ans-text">${optText}</div>
+        `;
+        btn.onclick = () => handleAnswerSelect(optText, btn);
+        grid.appendChild(btn);
+      });
+    }
+
+    function playQuizPronunciation() {
+      if (!currentQuizState) return;
+      const q = currentQuizState.questions[currentQuizState.currentIndex];
+      speakFrench(q.infinitive);
+    }
+
+    /* ==========================================================================
+       ANSWER SELECTION LOGIC
+       ========================================================================== */
+    function handleAnswerSelect(selectedOption, clickedBtn) {
+      if (!currentQuizState) return;
+      const q = currentQuizState.questions[currentQuizState.currentIndex];
+      if (q.userAnswer !== null) return; // already answered
+
+      q.userAnswer = selectedOption;
+      const isCorrect = (selectedOption === q.infinitive);
+      q.isCorrect = isCorrect;
+
+      // Disable all buttons
+      const allBtns = document.querySelectorAll('.answer-btn');
+      allBtns.forEach(btn => {
+        btn.disabled = true;
+        const text = btn.querySelector('.ans-text').textContent.trim();
+        if (text === q.infinitive) {
+          btn.classList.add('correct');
+        }
+      });
+
+      const tipBox = document.getElementById('feedback-tip');
+      const tipText = document.getElementById('feedback-tip-text');
+
+      if (isCorrect) {
+        currentQuizState.score++;
+        playAudioTone('correct');
+        tipBox.className = 'feedback-tip-box';
+        tipText.innerHTML = `🎉 <strong>BRAVISSIMO!</strong> Risposta esatta! <br><span style="font-size:0.85rem; color:#15803d;">💡 ${q.tip}</span>`;
+        tipBox.style.display = 'block';
+
+        // Special visual reward for biblioteca
+        if (q.wordId === 'une-bibliotheque') {
+          document.getElementById('quiz-img').src = 'images/une-bibliotheque-ale.jpg';
+        }
+      } else {
+        clickedBtn.classList.add('wrong');
+        playAudioTone('wrong');
+        tipBox.className = 'feedback-tip-box wrong-tip';
+        tipText.innerHTML = `❌ <strong>ATTENZIONE!</strong> Quella corretta era <strong>${q.infinitive}</strong>.<br><span style="font-size:0.85rem; color:#b45309;">💡 ${q.tip}</span>`;
+        tipBox.style.display = 'block';
+      }
+
+      // Update live score
+      document.getElementById('hud-score').textContent = `⭐ ${currentQuizState.score} corrette`;
+
+      saveActiveQuizState();
+
+      // Show Next button
+      const btnNext = document.getElementById('btn-next');
+      btnNext.style.display = 'inline-flex';
+      btnNext.focus();
+
+      // Optional auto-advance after 2.8s
+      autoAdvanceTimeout = setTimeout(() => {
+        nextQuestion();
+      }, 2800);
+    }
+
+    function nextQuestion() {
+      if (autoAdvanceTimeout) clearTimeout(autoAdvanceTimeout);
+      if (!currentQuizState) return;
+
+      if (currentQuizState.currentIndex < currentQuizState.questions.length - 1) {
+        currentQuizState.currentIndex++;
+        saveActiveQuizState();
+        renderCurrentQuestion();
+      } else {
+        finishQuizSession();
+      }
+    }
+
+    /* ==========================================================================
+       FINISH QUIZ & PERSIST HISTORY
+       ========================================================================== */
+    function finishQuizSession() {
+      if (!currentQuizState) return;
+      document.getElementById('hud-progress-fill').style.width = '100%';
+
+      const total = currentQuizState.questions.length;
+      const score = currentQuizState.score;
+      const pct = Math.round((score / total) * 100);
+
+      // Save to localStorage History
+      const historyItem = {
+        id: 'quiz_' + Date.now(),
+        player: currentQuizState.player,
+        difficulty: currentQuizState.difficulty,
+        score: score,
+        total: total,
+        percentage: pct,
+        date: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        questions: currentQuizState.questions.map(q => ({
+          wordId: q.wordId,
+          infinitive: q.infinitive,
+          italian: q.italian,
+          image: q.image,
+          userAnswer: q.userAnswer,
+          isCorrect: q.isCorrect,
+          tip: q.tip
+        }))
+      };
+
+      const existingHistory = JSON.parse(localStorage.getItem('ale_french_quiz_history') || '[]');
+      existingHistory.unshift(historyItem);
+      localStorage.setItem('ale_french_quiz_history', JSON.stringify(existingHistory));
+
+      // Remove active quiz from localStorage
+      localStorage.removeItem('ale_french_active_quiz');
+      document.getElementById('resume-banner').style.display = 'none';
+
+      // Render Results Screen
+      renderResultsScreen(historyItem);
+    }
+
+    function renderResultsScreen(item) {
+      showView('results');
+
+      // Fanfare sound
+      playAudioTone('fanfare');
+
+      const pct = item.percentage;
+      const trophyEl = document.getElementById('results-trophy');
+      const titleEl = document.getElementById('results-title');
+      const subtitleEl = document.getElementById('results-subtitle');
+
+      if (pct === 100) {
+        trophyEl.textContent = '🏆';
+        titleEl.textContent = 'INCROYABLE! PARFAIT! 🌟';
+        subtitleEl.textContent = 'Sei un vero maestro della lingua francese!';
+      } else if (pct >= 80) {
+        trophyEl.textContent = '🥇';
+        titleEl.textContent = 'MAGNIFIQUE! BRAVISSIMO! 🎉';
+        subtitleEl.textContent = 'Hai fatto un punteggio strepitoso!';
+      } else if (pct >= 60) {
+        trophyEl.textContent = '🥈';
+        titleEl.textContent = 'TRÈS BIEN! OTTIMO LAVORO! 👍';
+        subtitleEl.textContent = 'Sei sulla strada giusta, continua ad allenarti!';
+      } else {
+        trophyEl.textContent = '🥉';
+        titleEl.textContent = 'BON COURAGE! BEL TENTATIVO! 💪';
+        subtitleEl.textContent = 'Riprova subito: con un po\' di pratica sarai imbattibile!';
+      }
+
+      document.getElementById('results-score-pill').textContent = `${item.score} / ${item.total} (${pct}%)`;
+      document.getElementById('results-player-chip').textContent = item.player;
+
+      const diffLabel = item.difficulty === 'facile' ? '🟢 Livello Facile' : (item.difficulty === 'moyen' ? '🟡 Livello Medio' : '🔴 Livello Difficile');
+      document.getElementById('results-diff-chip').textContent = diffLabel;
+      document.getElementById('results-date-chip').textContent = item.date;
+
+      // Populate Report Item Breakdown
+      const container = document.getElementById('report-items-container');
+      container.innerHTML = '';
+
+      item.questions.forEach((q, idx) => {
+        const row = document.createElement('div');
+        row.className = 'report-item';
+        row.innerHTML = `
+          <img class="report-thumb" src="${q.image}" alt="${q.infinitive}">
+          <div class="report-info">
+            <div class="report-word">${idx + 1}. ${q.infinitive}</div>
+            <div class="report-it">🇮🇹 ${q.italian}</div>
+            ${!q.isCorrect ? `<div style="font-size:0.8rem; color:#b91c1c; margin-top:2px;">Hai scelto: <em>${q.userAnswer}</em></div>` : ''}
+          </div>
+          <div>
+            ${q.isCorrect 
+              ? `<span class="report-answer-tag correct">✅ Esatto!</span>`
+              : `<span class="report-answer-tag wrong">❌ Sbagliato</span>`
+            }
+          </div>
+          <button class="audio-hint-btn" style="padding:4px 8px; font-size:0.85rem;" onclick="speakFrench('${q.infinitive}')">🔊</button>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function restartSetup() {
+      showView('setup');
+      checkResumeQuiz();
+    }
+
+    /* ==========================================================================
+       HISTORY VIEW (REGISTRO DI PAPA')
+       ========================================================================== */
+    function openHistoryView() {
+      showView('history');
+      renderHistoryView();
+    }
+
+    function closeHistoryView() {
+      showView('setup');
+      checkResumeQuiz();
+    }
+
+    function renderHistoryView() {
+      const history = JSON.parse(localStorage.getItem('ale_french_quiz_history') || '[]');
+      const container = document.getElementById('history-items-container');
+      container.innerHTML = '';
+
+      // Stats
+      document.getElementById('stat-total-games').textContent = history.length;
+      if (history.length > 0) {
+        const avg = Math.round(history.reduce((acc, h) => acc + h.percentage, 0) / history.length);
+        document.getElementById('stat-avg-score').textContent = `${avg}%`;
+
+        const maxScore = Math.max(...history.map(h => h.percentage));
+        document.getElementById('stat-best-score').textContent = `${maxScore}%`;
+      } else {
+        document.getElementById('stat-avg-score').textContent = '0%';
+        document.getElementById('stat-best-score').textContent = '0/10';
+      }
+
+      if (history.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: #94a3b8;">
+            <span style="font-size: 3rem;">📭</span>
+            <p style="margin-top: 10px; font-size: 1.1rem; font-weight: 600;">Nessun quiz salvato ancora!</p>
+            <p style="font-size: 0.9rem;">Fai fare una partita ad Ale e torna qui per vedere il punteggio e gli errori!</p>
+          </div>
+        `;
+        return;
+      }
+
+      history.forEach((game, index) => {
+        const item = document.createElement('div');
+        item.className = 'history-card-item';
+
+        const diffLabel = game.difficulty === 'facile' ? '🟢 Facile' : (game.difficulty === 'moyen' ? '🟡 Medio' : '🔴 Difficile');
+        const badgeColor = game.percentage >= 80 ? '#d1fae5; color:#047857;' : (game.percentage >= 60 ? '#fef3c7; color:#b45309;' : '#fee2e2; color:#b91c1c;');
+
+        item.innerHTML = `
+          <div class="history-card-top">
+            <div>
+              <strong>${game.player}</strong> • <span style="font-size: 0.88rem; color: #64748b;">${game.date}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="hud-chip" style="font-size: 0.8rem; padding: 3px 10px;">${diffLabel}</span>
+              <span class="hud-chip" style="background: ${badgeColor} font-size: 0.9rem; font-weight: 800; padding: 3px 12px;">
+                ${game.score}/${game.total} (${game.percentage}%)
+              </span>
+              <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.82rem;" onclick="toggleGameDetails(${index})">Dettagli 👁️</button>
+            </div>
+          </div>
+          <div class="history-card-details" id="game-details-${index}">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px;">
+              ${game.questions.map(q => `
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:6px 10px; display:flex; align-items:center; justify-content:space-between;">
+                  <div>
+                    <span style="font-weight:700;">${q.infinitive}</span>
+                    <span style="font-size:0.8rem; color:#64748b; display:block;">${q.italian}</span>
+                  </div>
+                  <div>${q.isCorrect ? '✅' : '❌'}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function toggleGameDetails(index) {
+      const details = document.getElementById(`game-details-${index}`);
+      if (details.style.display === 'block') {
+        details.style.display = 'none';
+      } else {
+        details.style.display = 'block';
+      }
+    }
+
+    function clearQuizHistory() {
+      if (confirm('Vuoi davvero cancellare tutto lo storico delle partite di Ale e Sebi?')) {
+        localStorage.removeItem('ale_french_quiz_history');
+        renderHistoryView();
+      }
+    }
+
+    /* ==========================================================================
+       VIEW ROUTER
+       ========================================================================== */
+    function showView(viewName) {
+      document.getElementById('view-setup').style.display = (viewName === 'setup' ? 'block' : 'none');
+      document.getElementById('view-quiz').style.display = (viewName === 'quiz' ? 'block' : 'none');
+      document.getElementById('view-results').style.display = (viewName === 'results' ? 'block' : 'none');
+      document.getElementById('view-history').style.display = (viewName === 'history' ? 'block' : 'none');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Keyboard support: 1, 2, 3, 4 to choose options, Space/Enter for Next
+    window.addEventListener('keydown', (e) => {
+      const viewQuiz = document.getElementById('view-quiz');
+      if (viewQuiz.style.display !== 'block') return;
+
+      const key = e.key;
+      if (['1', '2', '3', '4'].includes(key)) {
+        const index = parseInt(key, 10) - 1;
+        const btns = document.querySelectorAll('.answer-btn');
+        if (btns[index] && !btns[index].disabled) {
+          btns[index].click();
+        }
+      } else if (key === 'Enter' || key === ' ') {
+        const btnNext = document.getElementById('btn-next');
+        if (btnNext.style.display === 'inline-flex') {
+          e.preventDefault();
+          nextQuestion();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

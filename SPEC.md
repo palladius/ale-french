@@ -48,16 +48,43 @@
 
 ---
 
-## ✍️ 3. Quiz & Test di Scrittura Interattivo
+## 🎯 3. Quiz a Scelta Multipla & Registro del Papà (`quiz.html`)
 
-* **Allenamento Ortografico:** L'app propone un pronome e un verbo (es. `Tu + s'habiller = ?`) e mostra la traduzione italiana come indizio.
-* **Feedback Istantaneo:**
-  - Se corretto: campo verde, suono vocale di conferma, +10 punti ⭐.
-  - Se errato: campo rosso, visualizzazione della grafia corretta per rinforzare la memoria visiva prima di riprovare.
+Sviluppato per permettere ad Alessandro e Sebastiano di allenarsi in autonomia e a Papà Riccardo di verificare i risultati e gli errori storici al suo ritorno, senza bisogno di server complessi o database Cloud Run.
+
+### A. I 3 Livelli Didattici di Difficoltà:
+1. 🟢 **Facile (Débutant):**
+   - Riconoscimento della forma base della parola.
+   - Distrattori con vocali grossolanamente alterate, suffissi buffi o italianismi fittizi (es. per *bibliothèque* ➔ *bibliotaca*, *bibliosono*, *bibliocasa*).
+2. 🟡 **Medio (Intermédiaire — Consigliato):**
+   - Trappole fonetiche ed ortografiche tipiche del francese:
+     - Scambio **c / k / qu** (*bibliotec*, *bibliotek*, *quartable*).
+     - Presenza/assenza della **h** muta (*hospital*, *harmoire*).
+     - Doppie consonanti (*trouse* vs *trousse*, *cole* vs *colle*).
+3. 🔴 **Difficile (Expert — Campione):**
+   - Precisione millimetrica su accenti diacritici francesi e apostrofi:
+     - Accento acuto vs grave vs circonflesso (*bibliothèque* vs *bibliothéque* vs *bibliotheque* vs *bibliothêque*; *fenêtre* vs *fenétre* vs *fénêtre*).
+     - Trattamento dell'apostrofo (*l'eau* vs *le eau*).
+
+### B. Struttura del Quiz & Meccanica:
+* **Sessione standard:** 10 domande casuali (configurabile a 5, 10 o 15).
+* **Filtro contenuti:** Solo Oggetti di Scuola (19), Solo Verbi (26), o Tutto Insieme (45).
+* **Supporto Multimodale:** Immagine Pixar nitida senza spoiler, traduzione italiana come indizio (`🇮🇹 Cosa vedi? La libreria`), pulsante audio per pronuncia francese nativa a 0.85x.
+* **Feedback immediato ed educativo:** Suono Web Audio di successo/errore, spiegazione della regola o della trappola ortografica per ogni parola.
+
+### C. Persistenza & Architettura Senza Server (`localStorage`):
+* **Stato della partita in corso (`ale_french_active_quiz`):** se il browser o il tablet va in standby o viene ricaricato per sbaglio, il quiz può essere ripreso istantaneamente dal punto esatto.
+* **Registro Storico di Papà (`ale_french_quiz_history`):**
+  - Salva ogni partita completata con: `timestamp`, `giocatore`, `livello`, `punteggio/totale (%)`, e l'elenco analitico delle 10 domande (con le risposte esatte e gli errori commessi).
+  - Statistiche aggregate: partite totali giocate, media percentuale, miglior record.
+  - Funzione di dettaglio a fisarmonica (`Dettagli 👁️`) per esaminare singolarmente ogni parola sbagliata.
 
 ---
 
 ## 📦 4. Repository & Deployment
 
 * **URL Pubblico GitHub Pages:** https://palladius.github.io/ale-french/
+* **Quiz Diretto:** https://palladius.github.io/ale-french/quiz.html
+* **Mazzo Flashcard:** https://palladius.github.io/ale-french/cards.html
+* **Griglia Selezione:** https://palladius.github.io/ale-french/grid.html
 * **Codice Sorgente:** https://github.com/palladius/ale-french
