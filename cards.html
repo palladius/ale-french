@@ -1117,7 +1117,8 @@
 
       if (verb.image) {
         document.getElementById('card-icon-el').innerHTML = `<img src="${verb.image}" alt="${verb.italian}" class="card-thumb-img">`;
-        document.getElementById('card-icon-back-el').innerHTML = `<img src="${verb.image}" alt="${verb.italian}" class="card-thumb-img-small">`;
+        const backImg = verb.image_back || verb.image;
+        document.getElementById('card-icon-back-el').innerHTML = `<img src="${backImg}" alt="${verb.italian}" class="card-thumb-img-small">`;
       } else {
         document.getElementById('card-icon-el').textContent = verb.icon || '📘';
         document.getElementById('card-icon-back-el').textContent = verb.icon || '📘';

@@ -692,8 +692,9 @@
           </div>
         `;
 
-        const iconHtml = verb.image
-          ? `<div class="card-hero-img-box"><img src="${verb.image}" class="card-hero-img" alt="${verb.italian}"></div>`
+        const currentImg = (isRevealed && verb.image_back) ? verb.image_back : verb.image;
+        const iconHtml = currentImg
+          ? `<div class="card-hero-img-box"><img src="${currentImg}" class="card-hero-img" alt="${verb.italian}"></div>`
           : `<div class="card-hero-img-box"><div class="card-icon">${verb.icon || '📘'}</div></div>`;
 
         // Card Body
@@ -937,11 +938,20 @@
 
       const card = document.getElementById(`card-${id}`);
       if (card) {
-        card.classList.toggle('revealed', revealedIds.has(id));
+        const isRevealed = revealedIds.has(id);
+        card.classList.toggle('revealed', isRevealed);
         const contentBox = document.getElementById(`card-content-${id}`);
-        contentBox.innerHTML = revealedIds.has(id) ? getRevealedHtml(verb) : getRiddleHtml(verb);
+        contentBox.innerHTML = isRevealed ? getRevealedHtml(verb) : getRiddleHtml(verb);
         const btn = card.querySelector('.btn-reveal-mini');
-        if (btn) btn.textContent = revealedIds.has(id) ? '🙈 Copri' : '💡 Svela';
+        if (btn) btn.textContent = isRevealed ? '🙈 Copri' : '💡 Svela';
+
+        // Dynamic image swap for dual-image cards (like Sebi on front -> Ale on reveal!)
+        if (verb.image_back) {
+          const imgEl = card.querySelector('.card-hero-img');
+          if (imgEl) {
+            imgEl.src = isRevealed ? verb.image_back : verb.image;
+          }
+        }
       }
     }
 

@@ -1460,7 +1460,8 @@
     "category": "objects",
     "gender": "f",
     "icon": "📚",
-    "image": "images/une-bibliotheque.jpg"
+    "image": "images/une-bibliotheque.jpg",
+    "image_back": "images/une-bibliotheque-ale.jpg"
   },
   {
     "id": "une-armoire",
