@@ -68,7 +68,7 @@ Sviluppato per permettere ad Alessandro e Sebastiano di allenarsi in autonomia e
 
 ### B. Struttura del Quiz & Meccanica:
 * **Sessione standard:** 10 domande casuali (configurabile a 5, 10 o 15).
-* **Filtro contenuti:** Solo Oggetti di Scuola (19), Solo Verbi (26), o Tutto Insieme (45).
+* **Filtro contenuti:** Solo Oggetti di Scuola (20), Solo Verbi (26), o Tutto Insieme (46).
 * **Supporto Multimodale:** Immagine Pixar nitida senza spoiler, traduzione italiana come indizio (`🇮🇹 Cosa vedi? La libreria`), pulsante audio per pronuncia francese nativa a 0.85x.
 * **Feedback immediato ed educativo:** Suono Web Audio di successo/errore, spiegazione della regola o della trappola ortografica per ogni parola.
 

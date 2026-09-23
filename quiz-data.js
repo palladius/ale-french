@@ -202,6 +202,24 @@ const QUIZ_DISTRACTORS = {
     ],
     "tip": "Trappola classica! In francese l'armadio è femminile: UNE armoire, con la e finale!"
   },
+  "un-grimoire": {
+    "facile": [
+      "un libro magico",
+      "un grimorietto",
+      "un magone"
+    ],
+    "moyen": [
+      "une grimoire",
+      "un grimoir",
+      "un grymoire"
+    ],
+    "difficile": [
+      "une grimoire",
+      "un grimôire",
+      "un grimoir"
+    ],
+    "tip": "Attenzione alla rima con armoire! Il grimorio è MASCHILE: UN grimoire, con la i semplice e la e finale!"
+  },
   "une-poubelle": {
     "facile": [
       "un cestino",

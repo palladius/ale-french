@@ -1473,6 +1473,15 @@
     "image": "images/une-armoire.jpg"
   },
   {
+    "id": "un-grimoire",
+    "infinitive": "un grimoire",
+    "italian": "il grimorio (libro magico)",
+    "category": "objects",
+    "gender": "m",
+    "icon": "📖✨",
+    "image": "images/un-grimoire.jpg"
+  },
+  {
     "id": "une-poubelle",
     "infinitive": "une poubelle",
     "italian": "il cestino",
