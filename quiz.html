@@ -998,7 +998,7 @@
         <div class="hud-chip" id="hud-player">🦁 Alessandro</div>
         <div class="hud-chip" id="hud-difficulty" style="font-weight: 700;">🟡 Medio</div>
         <div class="hud-chip" id="hud-counter">Domanda 1 di 10</div>
-        <div class="hud-chip" id="hud-score" style="background: #ecfdf5; color: #047857;">⭐ 0 corrette</div>
+        <div class="hud-chip" id="hud-score" style="background: #ecfdf5; color: #047857;">⭐ 0 pt (0 corrette)</div>
       </div>
 
       <div class="hud-progress-bar">
@@ -1017,8 +1017,8 @@
           <span id="quiz-italian-text">la libreria</span>
         </div>
 
-        <button class="audio-hint-btn" onclick="playQuizPronunciation()">
-          <span>🔊</span> Ascolta la pronuncia francese
+        <button class="audio-hint-btn" id="btn-audio-hint" onclick="playQuizPronunciation()">
+          <span>🔊</span> Ascolta la pronuncia <span class="audio-penalty-tag" style="font-size: 0.8rem; opacity: 0.85; margin-left: 4px;">(-1 pt aiuto)</span>
         </button>
 
         <!-- 4 OPTIONS -->
@@ -1318,7 +1318,9 @@
           options: options,
           tip: tip,
           userAnswer: null,
-          isCorrect: null
+          isCorrect: null,
+          audioUsed: false,
+          pointsEarned: 0
         };
       });
 
@@ -1329,6 +1331,8 @@
         questions: questions,
         currentIndex: 0,
         score: 0,
+        points: 0,
+        maxPoints: questions.length * 2,
         startedAt: new Date().toISOString()
       };
 
@@ -1368,7 +1372,7 @@
       document.getElementById('hud-difficulty').textContent = diffLabel;
       
       document.getElementById('hud-counter').textContent = `Domanda ${curNum} di ${total}`;
-      document.getElementById('hud-score').textContent = `⭐ ${currentQuizState.score} corrette`;
+      document.getElementById('hud-score').textContent = `⭐ ${currentQuizState.points || 0} pt (${currentQuizState.score} corrette)`;
 
       const progressPct = ((curNum - 1) / total) * 100;
       document.getElementById('hud-progress-fill').style.width = `${progressPct}%`;
@@ -1379,6 +1383,15 @@
       heroImg.alt = q.infinitive;
 
       document.getElementById('quiz-italian-text').textContent = q.italian;
+
+      // Reset audio button
+      const audioBtn = document.getElementById('btn-audio-hint');
+      if (audioBtn) {
+        audioBtn.innerHTML = `<span>🔊</span> Ascolta la pronuncia <span class="audio-penalty-tag" style="font-size: 0.8rem; opacity: 0.85; margin-left: 4px;">(-1 pt aiuto)</span>`;
+        audioBtn.style.background = '#eff6ff';
+        audioBtn.style.borderColor = '#bfdbfe';
+        audioBtn.style.color = '#1d4ed8';
+      }
 
       // Reset feedback and Next button
       const tipBox = document.getElementById('feedback-tip');
@@ -1409,7 +1422,15 @@
     function playQuizPronunciation() {
       if (!currentQuizState) return;
       const q = currentQuizState.questions[currentQuizState.currentIndex];
+      q.audioUsed = true;
       speakFrench(q.infinitive);
+      const audioBtn = document.getElementById('btn-audio-hint');
+      if (audioBtn) {
+        audioBtn.innerHTML = `<span>🔊</span> Pronuncia riprodotta <span style="font-size: 0.8rem; color: #b45309; font-weight: 700; margin-left: 4px;">(Aiuto usato: max 1 pt)</span>`;
+        audioBtn.style.background = '#fef3c7';
+        audioBtn.style.borderColor = '#fde68a';
+        audioBtn.style.color = '#92400e';
+      }
     }
 
     /* ==========================================================================
@@ -1439,9 +1460,15 @@
 
       if (isCorrect) {
         currentQuizState.score++;
+        const earned = q.audioUsed ? 1 : 2;
+        q.pointsEarned = earned;
+        currentQuizState.points = (currentQuizState.points || 0) + earned;
         playAudioTone('correct');
         tipBox.className = 'feedback-tip-box';
-        tipText.innerHTML = `🎉 <strong>BRAVISSIMO!</strong> Risposta esatta! <br><span style="font-size:0.85rem; color:#15803d;">💡 ${q.tip}</span>`;
+        const bonusMsg = q.audioUsed 
+          ? '🎧 <strong>+1 punto!</strong> (con aiuto audio)' 
+          : '⚡ <strong>+2 punti!</strong> (Campione a memoria senza audio!)';
+        tipText.innerHTML = `🎉 <strong>BRAVISSIMO!</strong> ${bonusMsg}<br><span style="font-size:0.85rem; color:#15803d;">💡 ${q.tip}</span>`;
         tipBox.style.display = 'block';
 
         // Special visual reward for biblioteca
@@ -1449,15 +1476,16 @@
           document.getElementById('quiz-img').src = 'images/une-bibliotheque-ale.jpg';
         }
       } else {
+        q.pointsEarned = 0;
         clickedBtn.classList.add('wrong');
         playAudioTone('wrong');
         tipBox.className = 'feedback-tip-box wrong-tip';
-        tipText.innerHTML = `❌ <strong>ATTENZIONE!</strong> Quella corretta era <strong>${q.infinitive}</strong>.<br><span style="font-size:0.85rem; color:#b45309;">💡 ${q.tip}</span>`;
+        tipText.innerHTML = `❌ <strong>ATTENZIONE!</strong> (0 punti) Quella corretta era <strong>${q.infinitive}</strong>.<br><span style="font-size:0.85rem; color:#b45309;">💡 ${q.tip}</span>`;
         tipBox.style.display = 'block';
       }
 
       // Update live score
-      document.getElementById('hud-score').textContent = `⭐ ${currentQuizState.score} corrette`;
+      document.getElementById('hud-score').textContent = `⭐ ${currentQuizState.points || 0} pt (${currentQuizState.score} corrette)`;
 
       saveActiveQuizState();
 
@@ -1494,7 +1522,9 @@
 
       const total = currentQuizState.questions.length;
       const score = currentQuizState.score;
-      const pct = Math.round((score / total) * 100);
+      const points = currentQuizState.points || 0;
+      const maxPoints = total * 2;
+      const pct = Math.round((points / maxPoints) * 100);
 
       // Save to localStorage History
       const historyItem = {
@@ -1502,6 +1532,8 @@
         player: currentQuizState.player,
         difficulty: currentQuizState.difficulty,
         score: score,
+        points: points,
+        maxPoints: maxPoints,
         total: total,
         percentage: pct,
         date: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
@@ -1512,6 +1544,8 @@
           image: q.image,
           userAnswer: q.userAnswer,
           isCorrect: q.isCorrect,
+          audioUsed: !!q.audioUsed,
+          pointsEarned: q.pointsEarned || 0,
           tip: q.tip
         }))
       };
@@ -1542,7 +1576,7 @@
       if (pct === 100) {
         trophyEl.textContent = '🏆';
         titleEl.textContent = 'INCROYABLE! PARFAIT! 🌟';
-        subtitleEl.textContent = 'Sei un vero maestro della lingua francese!';
+        subtitleEl.textContent = 'Punteggio massimo da vero Campione a memoria!';
       } else if (pct >= 80) {
         trophyEl.textContent = '🥇';
         titleEl.textContent = 'MAGNIFIQUE! BRAVISSIMO! 🎉';
@@ -1557,7 +1591,8 @@
         subtitleEl.textContent = 'Riprova subito: con un po\' di pratica sarai imbattibile!';
       }
 
-      document.getElementById('results-score-pill').textContent = `${item.score} / ${item.total} (${pct}%)`;
+      const displayPts = item.points !== undefined ? `${item.points} / ${item.maxPoints} pt` : `${item.score} / ${item.total}`;
+      document.getElementById('results-score-pill').textContent = `${displayPts} (${pct}%) • ${item.score}/${item.total} corrette`;
       document.getElementById('results-player-chip').textContent = item.player;
 
       const diffLabel = item.difficulty === 'facile' ? '🟢 Livello Facile' : (item.difficulty === 'moyen' ? '🟡 Livello Medio' : '🔴 Livello Difficile');
@@ -1571,6 +1606,17 @@
       item.questions.forEach((q, idx) => {
         const row = document.createElement('div');
         row.className = 'report-item';
+        let badgeHtml = '';
+        if (q.isCorrect) {
+          if (q.audioUsed) {
+            badgeHtml = `<span class="report-answer-tag correct" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">🎧 +1 pt (Audio)</span>`;
+          } else {
+            badgeHtml = `<span class="report-answer-tag correct">⚡ +2 pt (Memoria)</span>`;
+          }
+        } else {
+          badgeHtml = `<span class="report-answer-tag wrong">❌ 0 pt Sbagliato</span>`;
+        }
+
         row.innerHTML = `
           <img class="report-thumb" src="${q.image}" alt="${q.infinitive}">
           <div class="report-info">
@@ -1579,10 +1625,7 @@
             ${!q.isCorrect ? `<div style="font-size:0.8rem; color:#b91c1c; margin-top:2px;">Hai scelto: <em>${q.userAnswer}</em></div>` : ''}
           </div>
           <div>
-            ${q.isCorrect 
-              ? `<span class="report-answer-tag correct">✅ Esatto!</span>`
-              : `<span class="report-answer-tag wrong">❌ Sbagliato</span>`
-            }
+            ${badgeHtml}
           </div>
           <button class="audio-hint-btn" style="padding:4px 8px; font-size:0.85rem;" onclick="speakFrench('${q.infinitive}')">🔊</button>
         `;
@@ -1652,7 +1695,7 @@
             <div style="display: flex; align-items: center; gap: 8px;">
               <span class="hud-chip" style="font-size: 0.8rem; padding: 3px 10px;">${diffLabel}</span>
               <span class="hud-chip" style="background: ${badgeColor} font-size: 0.9rem; font-weight: 800; padding: 3px 12px;">
-                ${game.score}/${game.total} (${game.percentage}%)
+                ${game.points !== undefined ? `${game.points}/${game.maxPoints} pt` : `${game.score}/${game.total}`} (${game.percentage}%)
               </span>
               <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.82rem;" onclick="toggleGameDetails(${index})">Dettagli 👁️</button>
             </div>
@@ -1665,7 +1708,7 @@
                     <span style="font-weight:700;">${q.infinitive}</span>
                     <span style="font-size:0.8rem; color:#64748b; display:block;">${q.italian}</span>
                   </div>
-                  <div>${q.isCorrect ? '✅' : '❌'}</div>
+                  <div style="font-size:0.88rem; font-weight:700;">${q.isCorrect ? (q.audioUsed ? '🎧 +1 pt' : '⚡ +2 pt') : '❌ 0 pt'}</div>
                 </div>
               `).join('')}
             </div>

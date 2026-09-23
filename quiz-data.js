@@ -1,305 +1,306 @@
 /**
  * Ale French - Quiz Distractors and Tips
- * Generated for Alessandro and Sebastiano
+ * Calibrato per Alessandro e Sebastiano
+ * Trappole fonetiche, falsi amici e inversione di genere (un/une) sistematica
  */
 const QUIZ_DISTRACTORS = {
   "une-bibliotheque": {
     "facile": [
+      "una biblioteca",
       "une bibliotaca",
-      "une bibliosono",
       "une bibliocasa"
     ],
     "moyen": [
-      "une bibliotec",
-      "une bibliothéque",
-      "une bibliotek"
+      "un bibliothèque",
+      "une bibliotek",
+      "une bibliotec"
     ],
     "difficile": [
+      "un bibliothèque",
       "une bibliothéque",
-      "une bibliotheque",
-      "une bibliothêque"
+      "une bibliotheque"
     ],
-    "tip": "In francese finisce sempre con -thèque (con h e qu), e l'accento sulla prima è è grave: bibliothèque!"
+    "tip": "È femminile (UNE bibliothèque), finisce con -thèque (con h e qu), e l'accento è grave sulla prima è!"
   },
   "une-fenetre": {
     "facile": [
+      "una finestra",
       "une fanatra",
-      "une feneporta",
       "une fenosole"
     ],
     "moyen": [
+      "un fenêtre",
       "une fenetre",
-      "une phénêtre",
       "une fenaistre"
     ],
     "difficile": [
+      "un fenêtre",
       "une fenétre",
-      "une fénêtre",
-      "une fenëtre"
+      "une fénêtre"
     ],
-    "tip": "Ha il cappellino magico (^) sulla prima e: fenêtre! Sostituisce la s dell'italiano fineStra!"
+    "tip": "È femminile (UNE fenêtre) e ha il cappellino magico (^) sulla prima e che ricorda la S di fineStra!"
   },
   "une-regle": {
     "facile": [
+      "una riga",
       "une ragla",
-      "une reglamita",
       "une roglia"
     ],
     "moyen": [
+      "un règle",
       "une regle",
-      "une reigle",
-      "une raigle"
+      "une reigle"
     ],
     "difficile": [
-      "une régle",
       "un règle",
+      "une régle",
       "une rêgle"
     ],
-    "tip": "L'accento è grave: rè-gle! Ed è femminile: une règle!"
+    "tip": "È femminile (UNE règle), l'accento è grave (è) e non acuto!"
   },
   "un-hopital": {
     "facile": [
+      "un ospedale",
       "un opitello",
-      "un hopitalo",
       "un ospedalino"
     ],
     "moyen": [
+      "une hôpital",
       "un opital",
-      "un hospital",
-      "un hopital-"
+      "un hospital"
     ],
     "difficile": [
+      "une hôpital",
       "un hopital",
-      "un hôpîtal",
       "un hòpital"
     ],
-    "tip": "Ha la h muta all'inizio e il cappellino magico (^) sulla o: un hôpital!"
+    "tip": "È maschile (UN hôpital), ha la H muta e il cappellino magico (^) sulla O!"
   },
   "l-eau": {
     "facile": [
-      "l'aqua",
+      "l'acqua",
       "l'eula",
       "le bau"
     ],
     "moyen": [
-      "l'o",
-      "l'eaux",
-      "l'ot"
+      "le eau",
+      "la eau",
+      "l'o"
     ],
     "difficile": [
       "le eau",
-      "l'eaux",
-      "l'eue"
+      "la eau",
+      "l'eaux"
     ],
-    "tip": "Si scrive eau (suona come 'o') e vuole l'apostrofo: l'eau!"
+    "tip": "Vuole l'apostrofo obbligatorio (l'eau) e si scrive -eau (suona O)!"
   },
   "des-ciseaux": {
     "facile": [
+      "le forbici",
       "des cisotti",
-      "des cesoni",
-      "des cizolli"
+      "des cesoni"
     ],
     "moyen": [
+      "les ciseaux",
       "des cisaux",
-      "des cizeaux",
-      "des sciseaux"
+      "des cizeaux"
     ],
     "difficile": [
+      "le ciseaux",
       "des cisots",
-      "des ciseauxs",
-      "des ciseaus"
+      "des ciseauxs"
     ],
-    "tip": "Inizia con c, ha la s dolce e finisce con -eaux al plurale: des ciseaux!"
+    "tip": "Si usa al plurale (des ciseaux), inizia con c, ha la s dolce e finisce con -eaux!"
   },
   "un-ordinateur": {
     "facile": [
+      "un computer",
       "un computero",
-      "un ordinatore",
-      "un ordinataur"
+      "un ordinatore"
     ],
     "moyen": [
+      "une ordinateur",
       "un ordinateure",
-      "un ordinatuer",
       "un ordonateur"
     ],
     "difficile": [
-      "un ordinatèur",
       "une ordinateur",
+      "un ordinatèur",
       "un ordinatêur"
     ],
-    "tip": "È maschile (un) e finisce in -eur: un ordinateur!"
+    "tip": "È maschile (UN ordinateur) e finisce con -eur senza la e finale!"
   },
   "un-tableau": {
     "facile": [
+      "una lavagna",
       "un tavolau",
-      "un tabli",
-      "un tablor"
+      "un tabli"
     ],
     "moyen": [
+      "une tableau",
       "un tableu",
-      "un tablo",
-      "un tabllo"
+      "un tablo"
     ],
     "difficile": [
+      "une tableau",
       "un tablô",
-      "un tabliau",
-      "une tableau"
+      "un tabliau"
     ],
-    "tip": "Finisce con il trittico francese -eau: un tableau!"
+    "tip": "In francese la lavagna è maschile: UN tableau, con il trittico -eau!"
   },
   "une-table": {
     "facile": [
+      "un tavolo",
       "une tabla",
-      "une tobola",
-      "une tabul"
+      "une tobola"
     ],
     "moyen": [
+      "un table",
       "une tabble",
-      "une tauble",
-      "une tappe"
+      "une tauble"
     ],
     "difficile": [
       "un table",
       "une tâble",
       "une tablee"
     ],
-    "tip": "In francese il tavolo è femminile: UNE table!"
+    "tip": "Attenzione al genere! In francese il tavolo è femminile: UNE table!"
   },
   "une-chaise": {
     "facile": [
+      "una sedia",
       "une scieda",
-      "une chasa",
-      "une chaisina"
+      "une chasa"
     ],
     "moyen": [
+      "un chaise",
       "une cheise",
-      "une chaize",
-      "une cheze"
+      "une chaize"
     ],
     "difficile": [
       "un chaise",
       "une chaîse",
-      "une chayse"
+      "une cheze"
     ],
-    "tip": "Si scrive con ai (che fa il suono 'e') e una sola s: une chaise!"
+    "tip": "È femminile (UNE chaise), si scrive con ai (suono e) e una sola s dolce!"
   },
   "une-armoire": {
     "facile": [
+      "un armadio",
       "une armoira",
-      "une armadure",
-      "une armuare"
+      "une armadure"
     ],
     "moyen": [
+      "un armoire",
       "une armoir",
-      "une harmoire",
-      "une armoite"
+      "une harmoire"
     ],
     "difficile": [
       "un armoire",
       "une armoîre",
       "une armoïre"
     ],
-    "tip": "In francese l'armadio è femminile: une armoire con la 'e' finale!"
+    "tip": "Trappola classica! In francese l'armadio è femminile: UNE armoire, con la e finale!"
   },
   "une-poubelle": {
     "facile": [
+      "un cestino",
       "une pubella",
-      "une poubello",
-      "une poubarla"
+      "une poubello"
     ],
     "moyen": [
+      "un poubelle",
       "une poubele",
-      "une poubbel",
       "une pubelle"
     ],
     "difficile": [
+      "un poubelle",
       "une poubêlle",
-      "une poubèlle",
-      "un poubelle"
+      "une poubèlle"
     ],
-    "tip": "Ha ou (suono u) e doppia ll: poubelle!"
+    "tip": "È femminile (UNE poubelle), con ou (suono u) e doppia ll!"
   },
   "une-porte": {
     "facile": [
+      "una porta",
       "une portazza",
-      "une parta",
-      "une purte"
+      "une parta"
     ],
     "moyen": [
+      "un porte",
       "une port",
-      "une pourte",
-      "une phorte"
+      "une pourte"
     ],
     "difficile": [
       "un porte",
       "une pôrte",
       "une portte"
     ],
-    "tip": "Ha la 'e' muta alla fine: une porte!"
+    "tip": "È femminile (UNE porte) e vuole la e muta finale!"
   },
   "un-cartable": {
     "facile": [
-      "un cartobolo",
+      "uno zaino",
       "un cartabello",
-      "un sacchettone"
+      "un cartobolo"
     ],
     "moyen": [
+      "une cartable",
       "un quartable",
-      "un cartab",
-      "un cartablle"
+      "un cartab"
     ],
     "difficile": [
       "une cartable",
       "un cartâble",
       "un cartabele"
     ],
-    "tip": "È maschile in francese: UN cartable!"
+    "tip": "In francese la cartella/zaino è maschile: UN cartable (con la c, non la q)!"
   },
   "une-trousse": {
     "facile": [
+      "un astuccio",
       "une trossa",
-      "une tru-tru",
       "une trussone"
     ],
     "moyen": [
+      "un trousse",
       "une trouse",
-      "une trusse",
-      "une trouce"
+      "une trusse"
     ],
     "difficile": [
       "un trousse",
       "une troûsse",
       "une trouss"
     ],
-    "tip": "Ha ou (suono u) e doppia ss per fare il suono 's' sibilante: une trousse!"
+    "tip": "In francese l'astuccio è femminile: UNE trousse, con ou e doppia ss!"
   },
   "un-crayon": {
     "facile": [
+      "una matita",
       "un crayone",
-      "un cravone",
       "un crayonzo"
     ],
     "moyen": [
+      "une crayon",
       "un craion",
-      "un creyon",
-      "un crayun"
+      "un creyon"
     ],
     "difficile": [
       "une crayon",
       "un crayòn",
       "un crâyon"
     ],
-    "tip": "Si scrive con la ipsilon (y) e il suono nasale -on: un crayon!"
+    "tip": "La matita è maschile in francese: UN crayon, e si scrive con la y!"
   },
   "un-stylo": {
     "facile": [
+      "una penna",
       "un stila",
-      "un stylone",
-      "un stylino"
+      "un stylone"
     ],
     "moyen": [
+      "une stylo",
       "un stilo",
-      "un stilot",
       "un stylot"
     ],
     "difficile": [
@@ -307,35 +308,35 @@ const QUIZ_DISTRACTORS = {
       "un stylô",
       "un stylò"
     ],
-    "tip": "Si scrive con la ipsilon (y): un stylo!"
+    "tip": "La penna è maschile in francese: UN stylo, e si scrive con la y!"
   },
   "une-colle": {
     "facile": [
+      "una colla",
       "une colli",
-      "une collazza",
       "une colletta"
     ],
     "moyen": [
+      "un colle",
       "une cole",
-      "une caulle",
-      "une coule"
+      "une caulle"
     ],
     "difficile": [
       "un colle",
       "une côlle",
-      "une collez"
+      "une colla"
     ],
-    "tip": "Doppia ll e desinenza con e muta: une colle!"
+    "tip": "È femminile (UNE colle), con doppia ll ed e muta finale!"
   },
   "une-gomme": {
     "facile": [
+      "una gomma",
       "une gommata",
-      "une gammi",
       "une gommolina"
     ],
     "moyen": [
+      "un gomme",
       "une gome",
-      "une gom",
       "une gaume"
     ],
     "difficile": [
@@ -343,7 +344,7 @@ const QUIZ_DISTRACTORS = {
       "une gômme",
       "une gomm"
     ],
-    "tip": "Doppia mm e desinenza con e muta: une gomme!"
+    "tip": "È femminile (UNE gomme), con doppia mm ed e muta finale!"
   },
   "regarder": {
     "facile": [
