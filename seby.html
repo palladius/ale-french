@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🥐 Seby French — Mon Premier Français (A1 Primary 1)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="profile-switcher.css">
+  <style>
+    :root {
+      --bg-seby: #f0fdf4;
+      --card-bg: #ffffff;
+      --primary: #059669;
+      --primary-light: #10b981;
+      --primary-subtle: #d1fae5;
+      --accent: #f59e0b;
+      --blue: #2563eb;
+      --purple: #7c3aed;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --radius: 20px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Fredoka', 'Lexend', system-ui, sans-serif;
+      background: var(--bg-seby);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: white;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #065f46;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-seby {
+      background: #dcfce7;
+      color: #166534;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid #86efac;
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .nav-tab {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #475569;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      color: #065f46;
+    }
+
+    .nav-tab.active {
+      background: white;
+      color: #059669;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-toggle-it {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      color: #334155;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle-it.active {
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #047857;
+    }
+
+    /* SUB NAV / CATEGORY SWITCHER */
+    .category-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 20px;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #475569;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cat-btn:hover {
+      border-color: #10b981;
+      color: #065f46;
+      transform: translateY(-2px);
+    }
+
+    .cat-btn.active {
+      background: #059669;
+      color: white;
+      border-color: #059669;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 60px 20px;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* SECTION HEADERS */
+    .section-hero {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-hero h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #065f46;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .section-hero p {
+      color: #64748b;
+      font-size: 1.05rem;
+      margin-top: 6px;
+    }
+
+    /* CARDS GRID */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .seby-card {
+      background: white;
+      border: 3px solid #e2e8f0;
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .seby-card:hover {
+      transform: translateY(-4px);
+      border-color: #10b981;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.06);
+    }
+
+    .seby-card-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .seby-card-fr {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+      letter-spacing: -0.5px;
+    }
+
+    .seby-card-phonetic {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-weight: 500;
+      background: #f1f5f9;
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .seby-card-it {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: #059669;
+      font-weight: 600;
+      margin-bottom: 14px;
+      min-height: 28px;
+      transition: all 0.2s;
+    }
+
+    .seby-card-it.covered {
+      background: #f1f5f9;
+      color: transparent;
+      user-select: none;
+      border-radius: 8px;
+      padding: 2px 12px;
+      cursor: pointer;
+    }
+
+    .seby-card-it.covered::after {
+      content: "👁️ tocca per scoprire";
+      color: #94a3b8;
+      font-size: 0.82rem;
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .seby-card-it.hidden {
+      display: none;
+    }
+
+    .btn-audio-seby {
+      background: #ecfdf5;
+      border: 2px solid #86efac;
+      color: #047857;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: auto;
+    }
+
+    .btn-audio-seby:hover {
+      background: #059669;
+      color: white;
+      transform: scale(1.12);
+      border-color: #059669;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    /* NUMBERS GRID SPECIFIC */
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .num-card {
+      background: white;
+      border: 3px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .num-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
+    }
+
+    .num-digit {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #2563eb;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .num-word-fr {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .num-dots {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      margin: 10px 0;
+      max-width: 140px;
+      min-height: 24px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #f59e0b;
+    }
+
+    /* COLORS & SHAPES */
+    .color-swatch-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+      border: 3px solid white;
+    }
+
+    /* QUIZ & SPELLING PRACTICE */
+    .quiz-seby-container {
+      background: white;
+      border: 3px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 30px;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-mode-selector {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .quiz-mode-btn {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      transition: all 0.2s;
+    }
+
+    .quiz-mode-btn.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .quiz-audio-prompt-btn {
+      background: #dbeafe;
+      border: 3px solid #3b82f6;
+      color: #1d4ed8;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      font-size: 2.2rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 16px 0;
+      transition: all 0.2s;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+    }
+
+    .quiz-audio-prompt-btn:hover {
+      transform: scale(1.08);
+      background: #2563eb;
+      color: white;
+    }
+
+    .quiz-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 500px) {
+      .quiz-options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quiz-opt-btn {
+      background: #f8fafc;
+      border: 3px solid #cbd5e1;
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #1e293b;
+    }
+
+    .quiz-opt-btn:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .quiz-opt-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #10b981 !important;
+      color: #065f46 !important;
+    }
+
+    .quiz-opt-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b !important;
+    }
+
+    /* SPELLING TILES */
+    .spelling-box {
+      margin-top: 20px;
+    }
+
+    .letter-slots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .letter-slot {
+      width: 44px;
+      height: 52px;
+      border: 3px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 1.8rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .letter-slot.filled {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .letter-bubbles {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .bubble-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #1e293b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .bubble-btn:hover {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+      transform: scale(1.1);
+    }
+
+    .bubble-btn.used {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .score-banner {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <span style="font-size: 1.8rem;">🥐</span>
+      <h1>Seby French</h1>
+      <span class="badge-seby">Primary 1 • 6 ans 🎈</span>
+    </div>
+
+    <!-- TABS -->
+    <div class="nav-tabs">
+      <a href="seby.html" class="nav-tab active">🧒 Spazio Seby (A1)</a>
+      <a href="index.html" class="nav-tab">📖 Verbi Ale (P3)</a>
+      <a href="cards.html" class="nav-tab">🃏 Flashcards</a>
+      <a href="quiz.html" class="nav-tab">🎯 Quiz Ale</a>
+    </div>
+
+    <!-- ACTIONS & USER BADGE -->
+    <div class="nav-actions">
+      <button class="user-profile-badge seby-active" onclick="showProfileModal()">
+        <img src="images/avatar-seby.png" alt="Seby" class="user-profile-avatar" onerror="this.src='images/aller.jpg'">
+        <span>Seby (P1)</span>
+        <span class="user-profile-change-hint">🔄 Cambia</span>
+      </button>
+
+      <button class="btn-toggle-it active" id="btn-toggle-italian" onclick="toggleItalianMode()">
+        <span id="toggle-it-icon">👁️</span> <span id="toggle-it-label">Italiano</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CATEGORY SELECTION BAR -->
+  <div class="category-bar">
+    <button class="cat-btn active" id="cat-salutations" onclick="setCategory('salutations')">
+      <span>👋</span> Saluti & Presentazione
+    </button>
+    <button class="cat-btn" id="cat-nombres" onclick="setCategory('nombres')">
+      <span>🔢</span> I Numeri (0 - 12)
+    </button>
+    <button class="cat-btn" id="cat-couleurs" onclick="setCategory('couleurs')">
+      <span>🎨</span> Colori & Forme
+    </button>
+    <button class="cat-btn" id="cat-quiz" onclick="setCategory('quiz')">
+      <span>✍️</span> Quiz & Scrittura
+    </button>
+  </div>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="container" id="content-container">
+    <!-- Populated dynamically via JS -->
+  </main>
+
+  <script src="seby-data.js"></script>
+  <script src="profile-switcher.js"></script>
+  <script>
+    // State
+    let currentCategory = 'salutations';
+    let italianMode = 'visible'; // 'visible' | 'covered' | 'hidden'
+    let quizMode = 'listen'; // 'listen' | 'spell'
+    let currentQuizIndex = 0;
+    let quizQuestions = [];
+    let currentSpellWord = null;
+    let spellUserLetters = [];
+    let spellScore = 0;
+
+    // Web Speech API
+    function speakFr(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'fr-FR';
+      utterance.rate = 0.80; // Più lento e chiaro per Primary 1
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function toggleItalianMode() {
+      if (italianMode === 'visible') {
+        italianMode = 'covered';
+        document.getElementById('toggle-it-label').textContent = 'Coperto';
+        document.getElementById('toggle-it-icon').textContent = '🙈';
+      } else if (italianMode === 'covered') {
+        italianMode = 'hidden';
+        document.getElementById('toggle-it-label').textContent = 'Nascosto';
+        document.getElementById('toggle-it-icon').textContent = '❌';
+      } else {
+        italianMode = 'visible';
+        document.getElementById('toggle-it-label').textContent = 'Italiano';
+        document.getElementById('toggle-it-icon').textContent = '👁️';
+      }
+      renderCategory();
+    }
+
+    function uncoverItalian(el) {
+      el.classList.remove('covered');
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`cat-${cat}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      renderCategory();
+    }
+
+    function renderCategory() {
+      const container = document.getElementById('content-container');
+      if (currentCategory === 'salutations') {
+        renderSalutations(container);
+      } else if (currentCategory === 'nombres') {
+        renderNombres(container);
+      } else if (currentCategory === 'couleurs') {
+        renderCouleurs(container);
+      } else if (currentCategory === 'quiz') {
+        renderQuiz(container);
+      }
+    }
+
+    // 1. SALUTATIONS & PRESENTATION
+    function renderSalutations(container) {
+      let html = `
+        <div class="section-hero">
+          <h2><span>👋</span> Salutations & Présentation</h2>
+          <p>Impara a salutare e a presentarti: <i>"Bonjour, je m'appelle Sebastian, j'ai 6 ans !"</i></p>
+        </div>
+        <div class="cards-grid">
+      `;
+
+      SEBY_DATA.salutations.forEach(item => {
+        let itClass = 'seby-card-it';
+        if (italianMode === 'covered') itClass += ' covered';
+        else if (italianMode === 'hidden') itClass += ' hidden';
+
+        html += `
+          <div class="seby-card" onclick="speakFr('${escapeSingleQuotes(item.fr)}')">
+            <div class="seby-card-icon">${item.icon}</div>
+            <div class="seby-card-fr">${item.fr}</div>
+            <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
+            <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
+              ${item.it}
+            </div>
+            <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${escapeSingleQuotes(item.fr)}')">
+              🔊
+            </button>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // 2. NOMBRES 0 À 12
+    function renderNombres(container) {
+      let html = `
+        <div class="section-hero">
+          <h2><span>🔢</span> Les Nombres (0 à 12)</h2>
+          <p>Tocca ciascun numero per ascoltare la pronuncia e contare i pallini!</p>
+        </div>
+        <div class="numbers-grid">
+      `;
+
+      SEBY_DATA.nombres.forEach(item => {
+        let itClass = 'seby-card-it';
+        if (italianMode === 'covered') itClass += ' covered';
+        else if (italianMode === 'hidden') itClass += ' hidden';
+
+        let dotsHtml = '';
+        for (let i = 0; i < item.dots; i++) {
+          dotsHtml += '<span class="dot"></span>';
+        }
+
+        html += `
+          <div class="num-card" onclick="speakFr('${item.fr}')">
+            <div class="num-digit">${item.num}</div>
+            <div class="num-word-fr">${item.fr}</div>
+            <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
+            <div class="num-dots">${dotsHtml}</div>
+            <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
+              ${item.it}
+            </div>
+            <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">
+              🔊
+            </button>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // 3. COULEURS & FORMES
+    function renderCouleurs(container) {
+      let html = `
+        <div class="section-hero">
+          <h2><span>🎨</span> Les Couleurs & Les Formes</h2>
+          <p>Le forme geometriche e i colori dal programma del test con Mme Conde!</p>
+        </div>
+
+        <h3 style="font-size: 1.4rem; color: #065f46; margin: 20px 0 14px 0;">🌈 Couleurs</h3>
+        <div class="cards-grid">
+      `;
+
+      SEBY_DATA.couleurs.forEach(item => {
+        let itClass = 'seby-card-it';
+        if (italianMode === 'covered') itClass += ' covered';
+        else if (italianMode === 'hidden') itClass += ' hidden';
+
+        html += `
+          <div class="seby-card" onclick="speakFr('${item.fr}')">
+            <div class="color-swatch-box" style="background: ${item.hex}; ${item.border ? 'border: 3px solid ' + item.border : ''}"></div>
+            <div class="seby-card-fr">${item.fr}</div>
+            <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
+            <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
+              ${item.it}
+            </div>
+            <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">
+              🔊
+            </button>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+
+      html += `
+        <h3 style="font-size: 1.4rem; color: #065f46; margin: 34px 0 14px 0;">📐 Formes Géométriques</h3>
+        <div class="cards-grid">
+      `;
+
+      SEBY_DATA.formes.forEach(item => {
+        let itClass = 'seby-card-it';
+        if (italianMode === 'covered') itClass += ' covered';
+        else if (italianMode === 'hidden') itClass += ' hidden';
+
+        html += `
+          <div class="seby-card" onclick="speakFr('${item.fr}')">
+            <div class="seby-card-icon">${item.icon}</div>
+            <div class="seby-card-fr">${item.fr}</div>
+            <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
+            <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
+              ${item.it}
+            </div>
+            <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">
+              🔊
+            </button>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // 4. QUIZ & SPELLING
+    function renderQuiz(container) {
+      if (quizQuestions.length === 0) {
+        initQuizQuestions();
+      }
+
+      container.innerHTML = `
+        <div class="quiz-seby-container">
+          <div class="score-banner">🏆 Punti: <span id="quiz-score-val">${spellScore}</span></div>
+          <div class="quiz-mode-selector">
+            <button class="quiz-mode-btn ${quizMode === 'listen' ? 'active' : ''}" onclick="switchQuizMode('listen')">
+              👂 Ascolta e Trova
+            </button>
+            <button class="quiz-mode-btn ${quizMode === 'spell' ? 'active' : ''}" onclick="switchQuizMode('spell')">
+              ✍️ Scrivi la Parola
+            </button>
+          </div>
+          <div id="quiz-question-box"></div>
+        </div>
+      `;
+
+      if (quizMode === 'listen') {
+        renderListenQuestion();
+      } else {
+        renderSpellQuestion();
+      }
+    }
+
+    function switchQuizMode(mode) {
+      quizMode = mode;
+      currentQuizIndex = 0;
+      renderQuiz(document.getElementById('content-container'));
+    }
+
+    function initQuizQuestions() {
+      // Unisci numeri e saluti per quiz
+      const pool = [
+        ...SEBY_DATA.nombres.map(n => ({ fr: n.fr, it: n.it, icon: n.icon, type: 'numero' })),
+        ...SEBY_DATA.salutations.map(s => ({ fr: s.fr, it: s.it, icon: s.icon, type: 'saluto' }))
+      ];
+      // Mescola
+      quizQuestions = pool.sort(() => 0.5 - Math.random());
+    }
+
+    function renderListenQuestion() {
+      const q = quizQuestions[currentQuizIndex % quizQuestions.length];
+      const box = document.getElementById('quiz-question-box');
+
+      // Trova 3 distrattori casuali
+      const others = quizQuestions.filter(x => x.fr !== q.fr).sort(() => 0.5 - Math.random()).slice(0, 3);
+      const options = [q, ...others].sort(() => 0.5 - Math.random());
+
+      box.innerHTML = `
+        <h3 style="font-size: 1.4rem; color: #1e293b; margin-bottom: 8px;">Ascolta attentamente e tocca la risposta!</h3>
+        <p style="color: #64748b; font-size: 0.95rem;">(Come nel test di ascolto di Mme Conde)</p>
+
+        <button class="quiz-audio-prompt-btn" onclick="speakFr('${escapeSingleQuotes(q.fr)}')">
+          🔊
+        </button>
+        <div><small style="color: #94a3b8;">Tocca l'altoparlante per riascoltare</small></div>
+
+        <div class="quiz-options-grid">
+          ${options.map(opt => `
+            <button class="quiz-opt-btn" onclick="checkListenAnswer(this, '${escapeSingleQuotes(opt.fr)}', '${escapeSingleQuotes(q.fr)}')">
+              <span>${opt.icon}</span> <span>${opt.fr}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div id="quiz-feedback" style="margin-top: 18px; font-size: 1.2rem; font-weight: 700; min-height: 30px;"></div>
+      `;
+
+      // Auto-pronuncia la domanda
+      setTimeout(() => speakFr(q.fr), 400);
+    }
+
+    function checkListenAnswer(btn, chosen, correct) {
+      const fb = document.getElementById('quiz-feedback');
+      const allBtns = document.querySelectorAll('.quiz-opt-btn');
+      allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+      if (chosen === correct) {
+        btn.classList.add('correct');
+        spellScore += 10;
+        document.getElementById('quiz-score-val').textContent = spellScore;
+        fb.innerHTML = `<span style="color: #059669;">🎉 Bravissimo Sebastian! Très bien !</span>`;
+        setTimeout(() => {
+          currentQuizIndex++;
+          renderListenQuestion();
+        }, 1200);
+      } else {
+        btn.classList.add('wrong');
+        allBtns.forEach(b => {
+          if (b.textContent.includes(correct)) b.classList.add('correct');
+        });
+        fb.innerHTML = `<span style="color: #dc2626;">Quasi! Era: <b>${correct}</b></span>`;
+        setTimeout(() => {
+          currentQuizIndex++;
+          renderListenQuestion();
+        }, 1800);
+      }
+    }
+
+    // SPELLING QUESTION
+    function renderSpellQuestion() {
+      const q = SEBY_DATA.nombres[currentQuizIndex % SEBY_DATA.nombres.length];
+      currentSpellWord = q.fr.toLowerCase();
+      spellUserLetters = [];
+
+      const box = document.getElementById('quiz-question-box');
+      const letters = currentSpellWord.split('');
+      const scrambled = [...letters].sort(() => 0.5 - Math.random());
+
+      box.innerHTML = `
+        <div style="font-size: 3.5rem; line-height: 1; margin: 10px 0;">${q.icon}</div>
+        <h3 style="font-size: 1.5rem; color: #1e293b; margin-bottom: 4px;">Come si scrive "${q.it}" in Francese?</h3>
+        <p style="color: #64748b; font-size: 0.95rem;">Tocca le lettere nell'ordine giusto:</p>
+
+        <button class="btn-audio-seby" style="margin: 10px auto;" onclick="speakFr('${q.fr}')">
+          🔊
+        </button>
+
+        <div class="letter-slots" id="letter-slots-box">
+          ${letters.map(() => `<div class="letter-slot">?</div>`).join('')}
+        </div>
+
+        <div class="letter-bubbles" id="letter-bubbles-box">
+          ${scrambled.map((char, idx) => `
+            <button class="bubble-btn" id="bubble-${idx}" onclick="pickLetter('${char}', ${idx})">${char}</button>
+          `).join('')}
+        </div>
+
+        <div style="margin-top: 16px;">
+          <button class="cat-btn" style="display: inline-flex;" onclick="resetSpell()">🔄 Riprova</button>
+        </div>
+
+        <div id="spell-feedback" style="margin-top: 16px; font-size: 1.2rem; font-weight: 700; min-height: 30px;"></div>
+      `;
+
+      setTimeout(() => speakFr(q.fr), 400);
+    }
+
+    function pickLetter(char, bubbleIdx) {
+      if (spellUserLetters.length >= currentSpellWord.length) return;
+
+      spellUserLetters.push({ char, bubbleIdx });
+      document.getElementById(`bubble-${bubbleIdx}`).classList.add('used');
+
+      updateSlots();
+
+      if (spellUserLetters.length === currentSpellWord.length) {
+        checkSpellResult();
+      }
+    }
+
+    function updateSlots() {
+      const slots = document.querySelectorAll('.letter-slot');
+      slots.forEach((slot, i) => {
+        if (i < spellUserLetters.length) {
+          slot.textContent = spellUserLetters[i].char;
+          slot.classList.add('filled');
+        } else {
+          slot.textContent = '?';
+          slot.classList.remove('filled');
+        }
+      });
+    }
+
+    function resetSpell() {
+      spellUserLetters = [];
+      document.querySelectorAll('.bubble-btn').forEach(b => b.classList.remove('used'));
+      document.getElementById('spell-feedback').innerHTML = '';
+      updateSlots();
+    }
+
+    function checkSpellResult() {
+      const userWord = spellUserLetters.map(x => x.char).join('');
+      const fb = document.getElementById('spell-feedback');
+
+      if (userWord === currentSpellWord) {
+        fb.innerHTML = `<span style="color: #059669;">🌟 Fantastico Sebastian! Scritto perfetto!</span>`;
+        spellScore += 15;
+        document.getElementById('quiz-score-val').textContent = spellScore;
+        speakFr(currentSpellWord);
+        setTimeout(() => {
+          currentQuizIndex++;
+          renderSpellQuestion();
+        }, 1400);
+      } else {
+        fb.innerHTML = `<span style="color: #dc2626;">Oops! La parola giusta era: <b>${currentSpellWord}</b></span>`;
+        setTimeout(() => {
+          resetSpell();
+        }, 1500);
+      }
+    }
+
+    function escapeSingleQuotes(str) {
+      return str.replace(/'/g, "\\'");
+    }
+
+    // Init page
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const catParam = params.get('cat') || window.location.hash.replace('#', '');
+      if (catParam && ['salutations', 'nombres', 'couleurs', 'quiz'].includes(catParam)) {
+        setCategory(catParam);
+      } else {
+        renderCategory();
+      }
+    });
+  </script>
+</body>
+</html>

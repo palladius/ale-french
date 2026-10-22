@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="profile-switcher.css">
   <style>
     :root {
       --bg-main: #f1f5f9;
@@ -762,7 +763,8 @@
 
   <header>
     <div class="brand">
-      <h1>🇫🇷 Ale French</h1>
+      <span style="font-size: 1.8rem;">🥖</span>
+      <h1>Ale French</h1>
       <span class="badge-ale">Pour Alessandro 🦁</span>
     </div>
 
@@ -770,8 +772,17 @@
     <div class="nav-tabs">
       <a href="index.html" class="nav-tab">📖 Coniugazioni</a>
       <a href="cards.html" class="nav-tab active">🃏 Flashcards</a>
-      <a href="grid.html" class="nav-tab">🔲 Griglia 4x4 & Selezione</a>
-      <a href="quiz.html" class="nav-tab">🎯 Quiz a Scelta Multipla</a>
+      <a href="grid.html" class="nav-tab">🔲 Griglia 4x4</a>
+      <a href="quiz.html" class="nav-tab">🎯 Quiz Ale</a>
+      <a href="seby.html" class="nav-tab" style="color: #059669; font-weight: 700;">🧒 Spazio Seby (A1)</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="user-profile-badge ale-active" onclick="showProfileModal()">
+        <img src="images/avatar-ale.png" alt="Ale" class="user-profile-avatar" onerror="this.src='images/s-habiller.jpg'">
+        <span>Ale (P3)</span>
+        <span class="user-profile-change-hint">🔄 Cambia</span>
+      </button>
     </div>
   </header>
 
@@ -1330,5 +1341,6 @@
       }
     });
   </script>
+  <script src="profile-switcher.js"></script>
 </body>
 </html>

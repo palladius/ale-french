@@ -81,10 +81,38 @@ Sviluppato per permettere ad Alessandro e Sebastiano di allenarsi in autonomia e
 
 ---
 
-## 📦 4. Repository & Deployment
+## 🧒 5. Sezione A1 Sebastian (Primary 1) & Selettore Profilo
+
+Aggiunto in risposta alla comunicazione della scuola Tandem IMS (`alert_pr1-french-test-next-week` via `piota-cli` da Mme Conde).
+
+### A. Requisiti d'Esame Primary 1:
+1. **Écouter (Ascolto):**
+   - Riconoscimento dei saluti di base (`Bonjour`, `Salut`, `Au revoir`, `Bonsoir`, `Bonne nuit`).
+   - Riconoscimento dei numeri da **0 a 12** (`zéro` ... `douze`).
+   - Riconoscimento colori e forme geometriche con matching su illustrazioni.
+2. **Parler (Espressione Orale):**
+   - Presentarsi con nome ed età: *"Je m'appelle Sebastian"*, *"J'ai 6 ans"*.
+   - Contare da 0 a 12 ad alta voce.
+   - Nominare colori e forme geometriche.
+
+### B. Architettura di `seby.html` & `seby-data.js`:
+* **Dataset dedicato (`seby-data.js`):** categorie `salutations`, `nombres`, `couleurs`, `formes` con testo francese, traduzione italiana, fonetica per i genitori e conteggio pallini per i numeri.
+* **Modalità Quiz & Scrittura:**
+  - *Ascolta e Trova:* Web Speech API pronuncia la parola a `0.80x`, Seby tocca la carta illustrata esatta tra 4 opzioni.
+  - *Scrivi la Parola:* Lettere sparpagliate a bolla da cliccare in ordine per comporre i numeri e le parole A1.
+
+### C. Selettore Profilo (`profile-switcher.js` / `profile-switcher.css`):
+* Modal iniziale *"Chi sei? / Qui es-tu ?"* con foto reali di Ale e Seby.
+* Badge dinamico nella barra di navigazione con switcher immediato e persistenza `localStorage`.
+
+---
+
+## 📦 6. Repository & Deployment
 
 * **URL Pubblico GitHub Pages:** https://palladius.github.io/ale-french/
+* **Spazio Seby (A1):** https://palladius.github.io/ale-french/seby.html
 * **Quiz Diretto:** https://palladius.github.io/ale-french/quiz.html
 * **Mazzo Flashcard:** https://palladius.github.io/ale-french/cards.html
 * **Griglia Selezione:** https://palladius.github.io/ale-french/grid.html
 * **Codice Sorgente:** https://github.com/palladius/ale-french
+
