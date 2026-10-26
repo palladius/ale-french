@@ -1,7 +1,7 @@
 {
   "generator": "gemini-3.8-flash-tts",
   "note": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
-  "updatedAt": "2026-10-26T06:40:15.299Z",
+  "updatedAt": "2026-10-26T17:25:48.743Z",
   "clips": {
     "je suis": {
       "slug": "je-suis",
@@ -12,6 +12,396 @@
       "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
       "sha256": "887dba226ab934429cb30efa8ab87949ddbaa0762c0688179982300a565108fa",
       "createdAt": "2026-10-26T06:40:15.298Z"
+    },
+    "zéro": {
+      "slug": "zero",
+      "text": "zéro",
+      "file": "audio/zero.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "0736d9ae3cab8a4b058d3bbcf8c6e36c430210986d2c651b20f84745d7595a9c",
+      "createdAt": "2026-10-26T17:25:34.531Z"
+    },
+    "un": {
+      "slug": "un",
+      "text": "un",
+      "file": "audio/un.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "69deaf213dc26bd3c4fa1cf4837d068963f3c26cbbb5997d3e0c56fdd7ebe5a9",
+      "createdAt": "2026-10-26T17:25:34.754Z"
+    },
+    "trois": {
+      "slug": "trois",
+      "text": "trois",
+      "file": "audio/trois.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "0db1a72d92d8fa2a53874633d25092e74ec883b5869c23fe420597e688a8b85b",
+      "createdAt": "2026-10-26T17:25:34.849Z"
+    },
+    "cinq": {
+      "slug": "cinq",
+      "text": "cinq",
+      "file": "audio/cinq.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "88f6b5e05536ab279737d64fae62cd1ed170f6551c0c5b54edbaafb3d7740955",
+      "createdAt": "2026-10-26T17:25:35.087Z"
+    },
+    "deux": {
+      "slug": "deux",
+      "text": "deux",
+      "file": "audio/deux.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "a1100c27f387296fc66543c6f60c171ef32c241aa90dde83541fc744f4ca37f8",
+      "createdAt": "2026-10-26T17:25:35.201Z"
+    },
+    "quatre": {
+      "slug": "quatre",
+      "text": "quatre",
+      "file": "audio/quatre.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "df25ead06ecba6b3550ae8309997beae5abda109e7cb47eda290f1b4caca13ad",
+      "createdAt": "2026-10-26T17:25:35.339Z"
+    },
+    "six": {
+      "slug": "six",
+      "text": "six",
+      "file": "audio/six.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "b247966b71e18bba3fc8825934bb6fffb8f03532b08cc49dfa196c106273dc59",
+      "createdAt": "2026-10-26T17:25:36.646Z"
+    },
+    "huit": {
+      "slug": "huit",
+      "text": "huit",
+      "file": "audio/huit.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "e6acbc9e5a6feac34727220cd34048ca59fcf871b47f000a19cf26946f913d10",
+      "createdAt": "2026-10-26T17:25:37.145Z"
+    },
+    "sept": {
+      "slug": "sept",
+      "text": "sept",
+      "file": "audio/sept.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "fac7acf237c61449ff6f312c27d1e80d29ccebe0cc7006176c1d9cc1e5c0f073",
+      "createdAt": "2026-10-26T17:25:37.265Z"
+    },
+    "neuf": {
+      "slug": "neuf",
+      "text": "neuf",
+      "file": "audio/neuf.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "a6b95ecba4def50390b1cf126187ed545cc96bd02a4535b8449ad1ecda7445c9",
+      "createdAt": "2026-10-26T17:25:37.394Z"
+    },
+    "dix": {
+      "slug": "dix",
+      "text": "dix",
+      "file": "audio/dix.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "c91a6eddbf44c9b33674d2b0b679223a36e84a1516ac17441d13c839e848f20d",
+      "createdAt": "2026-10-26T17:25:37.565Z"
+    },
+    "onze": {
+      "slug": "onze",
+      "text": "onze",
+      "file": "audio/onze.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "ca8a4a7fec643b918847ad6b82153b6cddd5ba53feed4dba6a810d63336db750",
+      "createdAt": "2026-10-26T17:25:37.750Z"
+    },
+    "Bonjour": {
+      "slug": "bonjour",
+      "text": "Bonjour",
+      "file": "audio/bonjour.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "8efc288a2aeb7d02eab2bff04c30f6edba28147f0dec765663fa96d672a70a03",
+      "createdAt": "2026-10-26T17:25:39.061Z"
+    },
+    "douze": {
+      "slug": "douze",
+      "text": "douze",
+      "file": "audio/douze.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "085c9106ff2b5d0cdc95741caa6ab4178bf79064657f7ee61c082dd1444d0062",
+      "createdAt": "2026-10-26T17:25:39.150Z"
+    },
+    "Au revoir": {
+      "slug": "au-revoir",
+      "text": "Au revoir",
+      "file": "audio/au-revoir.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "381718cc0b8e9e68a968ac5f40fc0ffb58f038a8c907926d6c576d3d11d50e92",
+      "createdAt": "2026-10-26T17:25:39.318Z"
+    },
+    "Salut": {
+      "slug": "salut",
+      "text": "Salut",
+      "file": "audio/salut.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "693595240f7b28decc2fba08f7292afb9f845339fcb10557bbbe3d7cf2798964",
+      "createdAt": "2026-10-26T17:25:39.632Z"
+    },
+    "Bonsoir": {
+      "slug": "bonsoir",
+      "text": "Bonsoir",
+      "file": "audio/bonsoir.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "0e6b02a7b4c83b48d4c46c409117d3a8c84e1a248bb18399265ebde8f78d8244",
+      "createdAt": "2026-10-26T17:25:39.798Z"
+    },
+    "Bonne nuit": {
+      "slug": "bonne-nuit",
+      "text": "Bonne nuit",
+      "file": "audio/bonne-nuit.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "78dd4468f4cd6ddddb63cb2a15efcffe843d7ebfa46035d556bf30a895cbd6b7",
+      "createdAt": "2026-10-26T17:25:40.242Z"
+    },
+    "Comment tu t'appelles ?": {
+      "slug": "comment-tu-t-appelles",
+      "text": "Comment tu t'appelles ?",
+      "file": "audio/comment-tu-t-appelles.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "afaa4ab7bdebca2e719bff293f9340fe0a7569ee6032667c47bc952a1c185853",
+      "createdAt": "2026-10-26T17:25:41.224Z"
+    },
+    "Je m'appelle Sebastian": {
+      "slug": "je-m-appelle-sebastian",
+      "text": "Je m'appelle Sebastian",
+      "file": "audio/je-m-appelle-sebastian.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "a992fd39e6ef5e251eea9916595f1d52f23326b040c8866373077a176bfe2554",
+      "createdAt": "2026-10-26T17:25:41.807Z"
+    },
+    "J'ai 6 ans": {
+      "slug": "j-ai-6-ans",
+      "text": "J'ai 6 ans",
+      "file": "audio/j-ai-6-ans.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "a289db9812b9869c96f70c396b13392a5dbc88ae529d61a2f55e4f5e7728f162",
+      "createdAt": "2026-10-26T17:25:41.903Z"
+    },
+    "Quel âge as-tu ?": {
+      "slug": "quel-age-as-tu",
+      "text": "Quel âge as-tu ?",
+      "file": "audio/quel-age-as-tu.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "b2276af66e136f5f4ef29027bc6d2c47b6bea1f33f2ab849132e859efd1781e6",
+      "createdAt": "2026-10-26T17:25:42.058Z"
+    },
+    "Comment ça va ?": {
+      "slug": "comment-ca-va",
+      "text": "Comment ça va ?",
+      "file": "audio/comment-ca-va.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "8c45eb46ffd8164f19f96dea8277b358654438d20d3741186a6205e2c7da8878",
+      "createdAt": "2026-10-26T17:25:42.317Z"
+    },
+    "Ça va bien, merci !": {
+      "slug": "ca-va-bien-merci",
+      "text": "Ça va bien, merci !",
+      "file": "audio/ca-va-bien-merci.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "9117329f00e85eac6085bedd58097c4518ff88dc603ffc8308e0f383e300213b",
+      "createdAt": "2026-10-26T17:25:42.635Z"
+    },
+    "Merci": {
+      "slug": "merci",
+      "text": "Merci",
+      "file": "audio/merci.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "47376f5c10e55a1eb8dec0f3a49177b3683cea705243f277b5bd5ceb4e96c00e",
+      "createdAt": "2026-10-26T17:25:43.399Z"
+    },
+    "S'il te plaît": {
+      "slug": "s-il-te-plait",
+      "text": "S'il te plaît",
+      "file": "audio/s-il-te-plait.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "3b951b4bf886c58b91590a4a7fdcca8f673dfc21e2074dee1c3c8f3306ab1c21",
+      "createdAt": "2026-10-26T17:25:44.004Z"
+    },
+    "rouge": {
+      "slug": "rouge",
+      "text": "rouge",
+      "file": "audio/rouge.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "000f8e64c1d74cd57b8570400a4482fe708aa11ec99b362064ad2371deae7e4e",
+      "createdAt": "2026-10-26T17:25:44.220Z"
+    },
+    "bleu": {
+      "slug": "bleu",
+      "text": "bleu",
+      "file": "audio/bleu.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "fbcdc04d9859e41214369b408c1673dc1ed9ed74670b5109d387fbd6f8f88e4a",
+      "createdAt": "2026-10-26T17:25:44.493Z"
+    },
+    "Oui / Non": {
+      "slug": "oui-non",
+      "text": "Oui / Non",
+      "file": "audio/oui-non.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "e82dcb271860ff2660e709efd92c1ec18769ce2955d44f61890ddf8c28d2273a",
+      "createdAt": "2026-10-26T17:25:44.640Z"
+    },
+    "vert": {
+      "slug": "vert",
+      "text": "vert",
+      "file": "audio/vert.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "f5640766dae36ebfc11eaae1c527048cf56c50fe449996c7c8df4c3c9076fe7d",
+      "createdAt": "2026-10-26T17:25:44.767Z"
+    },
+    "jaune": {
+      "slug": "jaune",
+      "text": "jaune",
+      "file": "audio/jaune.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "e7878f684c8ac0e1ca2a93e7f909e9b813bb4a633937e5266627dd81b8a70c3c",
+      "createdAt": "2026-10-26T17:25:45.530Z"
+    },
+    "orange": {
+      "slug": "orange",
+      "text": "orange",
+      "file": "audio/orange.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "3f564ce55e6591475c28e6ba3e575718441a47bb3b9edd3a98d045858600ab16",
+      "createdAt": "2026-10-26T17:25:46.285Z"
+    },
+    "rose": {
+      "slug": "rose",
+      "text": "rose",
+      "file": "audio/rose.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "a964a3ea4487d2dfe9428da83e85401bc4f54a18bb06819a4fdd134ce5aa5dd6",
+      "createdAt": "2026-10-26T17:25:46.402Z"
+    },
+    "violet": {
+      "slug": "violet",
+      "text": "violet",
+      "file": "audio/violet.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "18fd204544d9960536a89a1e0fad7b0b3c49450471f2006346e4002f95dffc65",
+      "createdAt": "2026-10-26T17:25:46.757Z"
+    },
+    "blanc": {
+      "slug": "blanc",
+      "text": "blanc",
+      "file": "audio/blanc.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "0fd6c5f087ac9fd4753b2dbbc0be2fad68b6055d8736a12242de455b0e7ed06d",
+      "createdAt": "2026-10-26T17:25:46.879Z"
+    },
+    "noir": {
+      "slug": "noir",
+      "text": "noir",
+      "file": "audio/noir.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "3544669bdf84009287e85015b53e65a9d646c915124dee0d225ee40ec9c3cde0",
+      "createdAt": "2026-10-26T17:25:46.999Z"
+    },
+    "le cercle": {
+      "slug": "le-cercle",
+      "text": "le cercle",
+      "file": "audio/le-cercle.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "c42ecda32f4ae6e047512bf7c5a5cb16e073180b25d0da1985b38f37a16fd9d1",
+      "createdAt": "2026-10-26T17:25:48.071Z"
+    },
+    "le carré": {
+      "slug": "le-carre",
+      "text": "le carré",
+      "file": "audio/le-carre.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "ff1eb4e67e658ba99603c5a36f32e6158df6499d8ac749d643325b4bab403bda",
+      "createdAt": "2026-10-26T17:25:48.442Z"
+    },
+    "le triangle": {
+      "slug": "le-triangle",
+      "text": "le triangle",
+      "file": "audio/le-triangle.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "67768867afee06e8e54f57a80844e8a784815d35e07f95f7d55479ed299294d4",
+      "createdAt": "2026-10-26T17:25:48.743Z"
     }
   }
 }

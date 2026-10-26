@@ -4,7 +4,11 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 import { phraseToSlug, getAudioPathForPhrase } from '../audio-player.js';
+
+const require = createRequire(import.meta.url);
+const SEBY_DATA = require('../seby-data.js');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -149,23 +153,32 @@ async function main() {
   const phrases = [];
   const seen = new Set();
 
-  // Prioritize "je suis" and "un tableau" first so we can verify them immediately!
-  for (const p of ['je suis', 'un tableau']) {
-    seen.add(p);
-    phrases.push(p);
+  function addPhrase(p) {
+    if (p && !seen.has(p)) {
+      seen.add(p);
+      phrases.push(p);
+    }
   }
 
+  // 1. P0: Seby's 13 numbers (0..12) + all Seby A1 vocabulary first!
+  if (SEBY_DATA) {
+    for (const n of SEBY_DATA.nombres || []) addPhrase(n.fr);
+    for (const s of SEBY_DATA.salutations || []) addPhrase(s.fr);
+    for (const c of SEBY_DATA.couleurs || []) addPhrase(c.fr);
+    for (const f of SEBY_DATA.formes || []) addPhrase(f.fr);
+  }
+
+  // 2. Prioritize "je suis" and "un tableau"
+  for (const p of ['je suis', 'un tableau']) {
+    addPhrase(p);
+  }
+
+  // 3. All Ale verbs, school objects, and conjugations
   for (const item of verbs) {
-    if (!seen.has(item.infinitive)) {
-      seen.add(item.infinitive);
-      phrases.push(item.infinitive);
-    }
+    addPhrase(item.infinitive);
     if (Array.isArray(item.conjugation)) {
       for (const conj of item.conjugation) {
-        if (!seen.has(conj.full)) {
-          seen.add(conj.full);
-          phrases.push(conj.full);
-        }
+        addPhrase(conj.full);
       }
     }
   }
