@@ -1124,6 +1124,7 @@
   </footer>
 
   <!-- SCRIPT DATA & LOGIC -->
+  <script src="audio-player.js"></script>
   <script src="quiz-data.js"></script>
   <script>
     /* ==========================================================================
@@ -1194,19 +1195,9 @@
       }
     }
 
-    // French Text To Speech
+    // French Text To Speech (via pre-generated Gemini 3.8 Flash TTS MP3)
     function speakFrench(text) {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'fr-FR';
-      utterance.rate = 0.85; // slower for young learners
-
-      const voices = window.speechSynthesis.getVoices();
-      const frVoice = voices.find(v => v.lang.startsWith('fr') && (v.name.includes('Thomas') || v.name.includes('Amelie') || v.name.includes('Audrey') || v.name.includes('Google') || v.localService));
-      if (frVoice) utterance.voice = frVoice;
-
-      window.speechSynthesis.speak(utterance);
+      playFrenchAudio(text);
     }
 
     /* ==========================================================================
@@ -1494,6 +1485,9 @@
         tipBox.style.display = 'block';
       }
 
+      // Always speak the French word out loud after answering so cards are never silent!
+      speakFrench(q.infinitive);
+
       // Update live score
       document.getElementById('hud-score').textContent = `⭐ ${currentQuizState.points || 0} pt (${currentQuizState.score} corrette)`;
 
@@ -1627,6 +1621,7 @@
           badgeHtml = `<span class="report-answer-tag wrong">❌ 0 pt Sbagliato</span>`;
         }
 
+        const safeInf = String(q.infinitive || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         row.innerHTML = `
           <img class="report-thumb" src="${q.image}" alt="${q.infinitive}">
           <div class="report-info">
@@ -1637,7 +1632,7 @@
           <div>
             ${badgeHtml}
           </div>
-          <button class="audio-hint-btn" style="padding:4px 8px; font-size:0.85rem;" onclick="speakFrench('${q.infinitive}')">🔊</button>
+          <button class="audio-hint-btn" style="padding:4px 8px; font-size:0.85rem;" onclick="speakFrench('${safeInf}')">🔊</button>
         `;
         container.appendChild(row);
       });

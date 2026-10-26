@@ -1,0 +1,17 @@
+{
+  "generator": "gemini-3.8-flash-tts",
+  "note": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+  "updatedAt": "2026-10-26T06:40:15.299Z",
+  "clips": {
+    "je suis": {
+      "slug": "je-suis",
+      "text": "je suis",
+      "file": "audio/je-suis.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "887dba226ab934429cb30efa8ab87949ddbaa0762c0688179982300a565108fa",
+      "createdAt": "2026-10-26T06:40:15.298Z"
+    }
+  }
+}

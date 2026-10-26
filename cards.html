@@ -439,6 +439,171 @@
       50% { transform: scale(1.04); border-color: #3b82f6; }
     }
 
+    /* INTERACTIVE SPELLING TILE STATES */
+    .riddle-tile {
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .riddle-tile.active-cursor {
+      animation: none;
+      border: 3px solid #2563eb !important;
+      background: #ffffff !important;
+      color: #1e3a8a !important;
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28) !important;
+    }
+
+    .riddle-tile.tile-filled {
+      animation: none;
+      background: #ffffff !important;
+      border: 2.5px solid #3b82f6 !important;
+      color: #0f172a !important;
+    }
+
+    .riddle-tile.tile-correct {
+      animation: popTile 0.25s ease;
+      background: #d1fae5 !important;
+      border: 2.5px solid #10b981 !important;
+      color: #047857 !important;
+      box-shadow: 0 3px 8px rgba(16, 185, 129, 0.22) !important;
+    }
+
+    .riddle-tile.tile-wrong {
+      animation: shakeTile 0.35s ease;
+      background: #fee2e2 !important;
+      border: 2.5px solid #ef4444 !important;
+      color: #b91c1c !important;
+      box-shadow: 0 3px 8px rgba(239, 68, 68, 0.25) !important;
+    }
+
+    @keyframes popTile {
+      0% { transform: scale(0.85); }
+      60% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shakeTile {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* SPELLING DIFFICULTY BAR */
+    .spelling-diff-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #ffffff;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 2px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      flex-wrap: wrap;
+    }
+
+    .spelling-diff-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #64748b;
+      padding: 0 6px;
+    }
+
+    .spelling-diff-btn {
+      border: 1.5px solid transparent;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .spelling-diff-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .spelling-diff-btn.active[data-diff="facile"] {
+      background: #d1fae5;
+      border-color: #10b981;
+      color: #047857;
+    }
+
+    .spelling-diff-btn.active[data-diff="moyen"] {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #b45309;
+    }
+
+    .spelling-diff-btn.active[data-diff="difficile"] {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #b91c1c;
+    }
+
+    /* 4-COLOR GOOGLE ACCENT PAD */
+    .google-accent-pad {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 4px 0;
+      padding: 6px 10px;
+      background: #ffffff;
+      border-radius: 14px;
+      border: 2px solid #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      flex-wrap: wrap;
+    }
+
+    .google-accent-pad.visible {
+      display: flex;
+    }
+
+    .google-accent-btn {
+      border: none;
+      color: #ffffff;
+      padding: 5px 11px;
+      border-radius: 10px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      transition: transform 0.12s, filter 0.12s;
+    }
+
+    .google-accent-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      filter: brightness(1.06);
+    }
+
+    .google-accent-btn:active {
+      transform: scale(0.97);
+    }
+
+    .google-key-badge {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+    }
+
+    .spelling-status-msg {
+      font-size: 0.9rem;
+      font-weight: 700;
+      min-height: 22px;
+      text-align: center;
+    }
+
     .tap-hint {
       font-size: 0.95rem;
       color: #64748b;
@@ -808,6 +973,17 @@
         <span id="deck-known-count">⭐ 0/18</span>
       </div>
 
+      <!-- 3-LEVEL KEYBOARD SPELLING DIFFICULTY SELECTOR -->
+      <div class="spelling-diff-bar">
+        <span class="spelling-diff-label">⌨️ Tastiera:</span>
+        <button class="spelling-diff-btn" data-diff="facile" onclick="setSpellingDifficulty('facile', this)" title="Verde/Rosso subito ad ogni lettera, accenti automatici">🟢 Facile (Lettera)</button>
+        <button class="spelling-diff-btn active" data-diff="moyen" onclick="setSpellingDifficulty('moyen', this)" title="Verde/Rosso a fine parola, accenti automatici">🟡 Medio (Parola)</button>
+        <button class="spelling-diff-btn" data-diff="difficile" onclick="setSpellingDifficulty('difficile', this)" title="Verde/Rosso a fine parola + Pulsantiera Accenti 4 colori Google">🔴 Difficile (+ Accenti Google)</button>
+      </div>
+
+      <!-- Hidden input to allow mobile/tablet virtual keyboard trigger when tapping tiles -->
+      <input type="text" id="mobile-kbd-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="position:fixed; opacity:0; pointer-events:none; width:1px; height:1px; left:-9999px;">
+
       <div class="card-scene" onclick="flipCurrentCard()">
         <div class="flip-card" id="active-flip-card">
           
@@ -823,12 +999,30 @@
             </div>
 
             <!-- RIDDLE QUESTION BOXES -->
-            <div class="riddle-container" id="card-riddle-el">
+            <div class="riddle-container" id="card-riddle-el" onclick="event.stopPropagation(); focusMobileKeyboard()">
               <!-- Populated by JS -->
             </div>
 
-            <div class="tap-hint">
-              <span>✨ Tocca la carta per scoprire</span>
+            <!-- 4-COLOR GOOGLE ACCENT PAD (ACTIVE IN DIFFICILE MODE) -->
+            <div class="google-accent-pad" id="google-accent-pad" onclick="event.stopPropagation()">
+              <button type="button" class="google-accent-btn" id="gpad-btn-1" style="background:#4285F4;" onclick="applyAccentFromPad(1)">
+                <span class="google-key-badge">1</span> <span id="gpad-char-1">e</span>
+              </button>
+              <button type="button" class="google-accent-btn" id="gpad-btn-2" style="background:#EA4335;" onclick="applyAccentFromPad(2)">
+                <span class="google-key-badge">2</span> <span id="gpad-char-2">é</span>
+              </button>
+              <button type="button" class="google-accent-btn" id="gpad-btn-3" style="background:#FBBC05; color:#0f172a;" onclick="applyAccentFromPad(3)">
+                <span class="google-key-badge" style="background:rgba(0,0,0,0.12);">3</span> <span id="gpad-char-3">è</span>
+              </button>
+              <button type="button" class="google-accent-btn" id="gpad-btn-4" style="background:#34A853;" onclick="applyAccentFromPad(4)">
+                <span class="google-key-badge">4</span> <span id="gpad-char-4">ê</span>
+              </button>
+            </div>
+
+            <div class="spelling-status-msg" id="spelling-status-el"></div>
+
+            <div class="tap-hint" id="card-tap-hint-el">
+              <span>⌨️ Digita con la tastiera o ✨ tocca per scoprire</span>
             </div>
           </div>
 
@@ -883,6 +1077,8 @@
 
   </main>
 
+  <script src="audio-player.js"></script>
+  <script src="card-spelling.js"></script>
   <script>
     let allVerbs = [];
     let filteredVerbs = [];
@@ -890,6 +1086,15 @@
     let isFlipped = false;
     let isGridView = false;
     let currentFilter = 'objects';
+
+    // Interactive Keyboard Spelling State
+    let spellingDifficulty = 'moyen'; // 'facile' | 'moyen' | 'difficile'
+    let currentSlots = [];
+    let typedChars = [];
+    let slotStates = []; // 'empty' | 'filled' | 'correct' | 'wrong'
+    let activeSlotIndex = 0;
+    let lastVowelSlotIndex = -1;
+    let wordCompleted = false;
 
     fetch('verbs.json')
       .then(res => res.json())
@@ -966,11 +1171,12 @@
       renderGridView();
     }
 
-    // Splits infinitive into display chunks and letter boxes
+    // Splits infinitive into display chunks and interactive letter boxes
     function buildRiddleHtml(verb) {
       const inf = verb.infinitive;
       const words = inf.split(' ');
       let html = '';
+      let slotCounter = 0;
 
       // Determine gender color tile for clues
       let genderTileClass = '';
@@ -982,6 +1188,11 @@
         genderTileClass = 'tile-pl';
       }
 
+      function renderTileSlot() {
+        const idx = slotCounter++;
+        return `<div class="riddle-tile ${genderTileClass}" id="slot-tile-${idx}" data-slot-index="${idx}" onclick="event.stopPropagation(); selectTileSlot(${idx})">?</div>`;
+      }
+
       words.forEach((word, wIdx) => {
         html += '<div class="riddle-word">';
         
@@ -991,7 +1202,7 @@
           html += '<span class="riddle-text">s\'</span>';
           const rest = word.slice(2);
           for (let i = 0; i < rest.length; i++) {
-            html += '<div class="riddle-tile">?</div>';
+            html += renderTileSlot();
           }
         } else if (word.startsWith("l'")) {
           const badgeClass = verb.gender === 'm' ? 'article-badge-m' : 'article-badge-f';
@@ -999,7 +1210,7 @@
           html += `<span class="${badgeClass}">l' ${genderIcon}</span>`;
           const rest = word.slice(2);
           for (let i = 0; i < rest.length; i++) {
-            html += `<div class="riddle-tile ${genderTileClass}">?</div>`;
+            html += renderTileSlot();
           }
         } else if (word === "un") {
           html += '<span class="article-badge-m">un 👦</span>';
@@ -1008,13 +1219,13 @@
         } else if (word === "des") {
           html += '<span class="article-badge-pl">des 👥</span>';
         } else {
-          // Normal word: each letter gets a '?' box with gender color hint!
+          // Normal word: each letter gets an interactive '?' box with gender color hint!
           for (let i = 0; i < word.length; i++) {
             const ch = word[i];
             if (ch === "'" || ch === "-") {
               html += `<span class="riddle-text" style="color:#64748b;">${ch}</span>`;
             } else {
-              html += `<div class="riddle-tile ${genderTileClass}">?</div>`;
+              html += renderTileSlot();
             }
           }
         }
@@ -1137,6 +1348,7 @@
       }
       document.getElementById('card-italian-el').textContent = verb.italian;
       document.getElementById('card-riddle-el').innerHTML = buildRiddleHtml(verb);
+      initSpellingForVerb(verb);
 
       // BACK
       document.getElementById('card-revealed-french').innerHTML = renderRevealedFrench(verb);
@@ -1182,17 +1394,7 @@
     }
 
     function speakFrench(text) {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'fr-FR';
-      utterance.rate = 0.85; // slightly slower for young learners
-
-      const voices = window.speechSynthesis.getVoices();
-      const frVoice = voices.find(v => v.lang.startsWith('fr') && (v.name.includes('Thomas') || v.name.includes('Amelie') || v.name.includes('Audrey') || v.name.includes('Google') || v.localService));
-      if (frVoice) utterance.voice = frVoice;
-
-      window.speechSynthesis.speak(utterance);
+      playFrenchAudio(text);
     }
 
     function nextCard() {
@@ -1295,9 +1497,10 @@
       const isRevealed = parentCard.classList.contains('revealed');
 
       if (isRevealed) {
+        const safeInf = String(verb.infinitive || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         targetBox.innerHTML = `
           <div class="grid-revealed-french">${renderRevealedFrench(verb)}</div>
-          <button class="audio-btn-large" style="width:36px; height:36px; font-size:1.1rem; margin: 4px auto;" onclick="event.stopPropagation(); speakFrench('${verb.infinitive}')">
+          <button class="audio-btn-large" style="width:36px; height:36px; font-size:1.1rem; margin: 4px auto;" onclick="event.stopPropagation(); speakFrench('${safeInf}')">
             🔊
           </button>
         `;
@@ -1329,15 +1532,325 @@
       }
     }
 
-    // KEYBOARD NAVIGATION
+    // =========================================================================
+    // INTERACTIVE KEYBOARD SPELLING & 4-COLOR GOOGLE ACCENT PAD
+    // =========================================================================
+    function setSpellingDifficulty(mode, btn) {
+      spellingDifficulty = mode;
+      document.querySelectorAll('.spelling-diff-btn').forEach(b => b.classList.remove('active'));
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        const el = document.querySelector(`.spelling-diff-btn[data-diff="${mode}"]`);
+        if (el) el.classList.add('active');
+      }
+      if (filteredVerbs.length) {
+        renderCurrentCard();
+      }
+    }
+
+    function initSpellingForVerb(verb) {
+      currentSlots = extractEditableSlots(verb.infinitive);
+      typedChars = new Array(currentSlots.length).fill('');
+      slotStates = new Array(currentSlots.length).fill('empty');
+      activeSlotIndex = 0;
+      lastVowelSlotIndex = -1;
+      wordCompleted = false;
+
+      const statusEl = document.getElementById('spelling-status-el');
+      if (statusEl) statusEl.innerHTML = '';
+
+      refreshSpellingTilesUI();
+      updateGoogleAccentPad();
+    }
+
+    function focusMobileKeyboard() {
+      const inp = document.getElementById('mobile-kbd-input');
+      if (inp) {
+        inp.value = '';
+        inp.focus();
+      }
+    }
+
+    function selectTileSlot(idx) {
+      if (idx < 0 || idx >= currentSlots.length) return;
+      activeSlotIndex = idx;
+      if (typedChars[idx] && isBaseVowel(typedChars[idx])) {
+        lastVowelSlotIndex = idx;
+      }
+      refreshSpellingTilesUI();
+      updateGoogleAccentPad();
+      focusMobileKeyboard();
+    }
+
+    function refreshSpellingTilesUI() {
+      for (let i = 0; i < currentSlots.length; i++) {
+        const tile = document.getElementById(`slot-tile-${i}`);
+        if (!tile) continue;
+
+        tile.classList.remove('active-cursor', 'tile-filled', 'tile-correct', 'tile-wrong');
+        const ch = typedChars[i];
+        tile.textContent = ch ? ch : '?';
+
+        const state = slotStates[i];
+        if (state === 'correct') {
+          tile.classList.add('tile-correct');
+        } else if (state === 'wrong') {
+          tile.classList.add('tile-wrong');
+        } else if (state === 'filled') {
+          tile.classList.add('tile-filled');
+        }
+
+        if (!wordCompleted && i === activeSlotIndex) {
+          tile.classList.add('active-cursor');
+        }
+      }
+    }
+
+    function updateGoogleAccentPad() {
+      const padEl = document.getElementById('google-accent-pad');
+      if (!padEl) return;
+
+      if (spellingDifficulty !== 'difficile' || wordCompleted) {
+        padEl.classList.remove('visible');
+        return;
+      }
+
+      // Check if active slot or lastVowelSlotIndex holds a vowel
+      let targetIdx = -1;
+      if (typedChars[activeSlotIndex] && isBaseVowel(typedChars[activeSlotIndex])) {
+        targetIdx = activeSlotIndex;
+      } else if (lastVowelSlotIndex >= 0 && typedChars[lastVowelSlotIndex] && isBaseVowel(typedChars[lastVowelSlotIndex])) {
+        targetIdx = lastVowelSlotIndex;
+      }
+
+      if (targetIdx === -1) {
+        padEl.classList.remove('visible');
+        return;
+      }
+
+      lastVowelSlotIndex = targetIdx;
+      const opts = getGoogleAccentOptions(typedChars[targetIdx]);
+      opts.forEach(opt => {
+        const span = document.getElementById(`gpad-char-${opt.code}`);
+        if (span) span.textContent = opt.char;
+      });
+      padEl.classList.add('visible');
+    }
+
+    function applyAccentFromPad(code) {
+      if (spellingDifficulty !== 'difficile' || wordCompleted) return;
+      let targetIdx = -1;
+      if (typedChars[activeSlotIndex] && isBaseVowel(typedChars[activeSlotIndex])) {
+        targetIdx = activeSlotIndex;
+      } else if (lastVowelSlotIndex >= 0 && typedChars[lastVowelSlotIndex] && isBaseVowel(typedChars[lastVowelSlotIndex])) {
+        targetIdx = lastVowelSlotIndex;
+      }
+      if (targetIdx === -1) return;
+
+      const updatedVowel = applyGoogleAccent(typedChars[targetIdx], code);
+      typedChars[targetIdx] = updatedVowel;
+
+      // If all slots are already filled, re-evaluate word immediately!
+      if (typedChars.every(c => c !== '')) {
+        runEndOfWordEvaluation();
+      } else {
+        slotStates[targetIdx] = 'filled';
+        refreshSpellingTilesUI();
+        updateGoogleAccentPad();
+      }
+    }
+
+    function findNextEditableSlot(fromIdx) {
+      for (let i = fromIdx; i < currentSlots.length; i++) {
+        if (slotStates[i] !== 'correct' && typedChars[i] === '') return i;
+      }
+      for (let i = 0; i < currentSlots.length; i++) {
+        if (slotStates[i] === 'wrong') return i;
+      }
+      return Math.min(fromIdx, currentSlots.length - 1);
+    }
+
+    function handleLetterInput(rawChar) {
+      if (isGridView || isFlipped || !currentSlots.length || wordCompleted) return;
+      const ch = rawChar.toLowerCase();
+      if (!/^[a-zàâéèêëîïôùûç]$/.test(ch)) return;
+
+      const statusEl = document.getElementById('spelling-status-el');
+      if (statusEl) statusEl.innerHTML = '';
+
+      if (spellingDifficulty === 'facile') {
+        const slot = currentSlots[activeSlotIndex];
+        const res = evaluateLetterFacile(slot, ch);
+        typedChars[activeSlotIndex] = res.displayChar;
+        if (res.isCorrect) {
+          slotStates[activeSlotIndex] = 'correct';
+          if (slotStates.every(s => s === 'correct')) {
+            onSpellingWordComplete();
+            return;
+          }
+          // Move to next non-correct slot
+          for (let i = activeSlotIndex + 1; i < currentSlots.length; i++) {
+            if (slotStates[i] !== 'correct') {
+              activeSlotIndex = i;
+              break;
+            }
+          }
+        } else {
+          slotStates[activeSlotIndex] = 'wrong';
+          if (statusEl) {
+            statusEl.innerHTML = `<span style="color:#dc2626;">❌ Riprova questa lettera!</span>`;
+          }
+        }
+        refreshSpellingTilesUI();
+        return;
+      }
+
+      // MEDIO or DIFFICILE: fill current slot without revealing green/red until word is full
+      typedChars[activeSlotIndex] = ch;
+      slotStates[activeSlotIndex] = 'filled';
+      if (isBaseVowel(ch)) {
+        lastVowelSlotIndex = activeSlotIndex;
+      } else {
+        lastVowelSlotIndex = -1;
+      }
+
+      // Check if all slots are now filled
+      if (typedChars.every(c => c !== '')) {
+        runEndOfWordEvaluation();
+      } else {
+        activeSlotIndex = findNextEditableSlot(activeSlotIndex + 1);
+        refreshSpellingTilesUI();
+        updateGoogleAccentPad();
+      }
+    }
+
+    function runEndOfWordEvaluation() {
+      const evalRes = evaluateWord(currentSlots, typedChars, spellingDifficulty);
+      for (let i = 0; i < currentSlots.length; i++) {
+        typedChars[i] = evalRes.resolvedChars[i];
+        slotStates[i] = evalRes.results[i];
+      }
+
+      if (evalRes.allCorrect) {
+        onSpellingWordComplete();
+      } else {
+        const firstWrong = slotStates.indexOf('wrong');
+        if (firstWrong !== -1) {
+          activeSlotIndex = firstWrong;
+          if (isBaseVowel(typedChars[firstWrong])) {
+            lastVowelSlotIndex = firstWrong;
+          }
+        }
+        const statusEl = document.getElementById('spelling-status-el');
+        if (statusEl) {
+          const hint = spellingDifficulty === 'difficile'
+            ? '❌ Controlla le caselle rosse (o usa i 4 colori Google 1-4 per gli accenti)!'
+            : '❌ Correggi le caselle rosse (premi Backspace o digita sopra)!';
+          statusEl.innerHTML = `<span style="color:#dc2626;">${hint}</span>`;
+        }
+        refreshSpellingTilesUI();
+        updateGoogleAccentPad();
+      }
+    }
+
+    function handleBackspace() {
+      if (isGridView || isFlipped || !currentSlots.length || wordCompleted) return;
+      const statusEl = document.getElementById('spelling-status-el');
+      if (statusEl) statusEl.innerHTML = '';
+
+      // If current slot has a wrong or filled char, clear it
+      if (typedChars[activeSlotIndex] !== '' && slotStates[activeSlotIndex] !== 'correct') {
+        typedChars[activeSlotIndex] = '';
+        slotStates[activeSlotIndex] = 'empty';
+      } else {
+        // Move backwards to previous non-correct slot and clear it
+        for (let i = activeSlotIndex - 1; i >= 0; i--) {
+          if (slotStates[i] !== 'correct') {
+            activeSlotIndex = i;
+            typedChars[i] = '';
+            slotStates[i] = 'empty';
+            break;
+          }
+        }
+      }
+      refreshSpellingTilesUI();
+      updateGoogleAccentPad();
+    }
+
+    function onSpellingWordComplete() {
+      wordCompleted = true;
+      refreshSpellingTilesUI();
+      updateGoogleAccentPad();
+      const verb = filteredVerbs[currentIndex];
+      const statusEl = document.getElementById('spelling-status-el');
+      if (statusEl && verb) {
+        statusEl.innerHTML = `<span style="color:#059669;">🎉 BRAVISSIMO ALESSANDRO! <strong>${verb.infinitive}</strong> ✨</span>`;
+      }
+      if (verb) {
+        speakFrench(verb.infinitive);
+      }
+    }
+
+    // Mobile virtual keyboard input listener
+    const mobileInp = document.getElementById('mobile-kbd-input');
+    if (mobileInp) {
+      mobileInp.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (val && val.length > 0) {
+          const ch = val[val.length - 1];
+          if (/^[1-4]$/.test(ch) && spellingDifficulty === 'difficile') {
+            applyAccentFromPad(parseInt(ch, 10));
+          } else {
+            handleLetterInput(ch);
+          }
+        }
+        e.target.value = '';
+      });
+    }
+
+    // KEYBOARD NAVIGATION & SPELLING
     document.addEventListener('keydown', (e) => {
       if (isGridView) return;
-      if (e.key === ' ' || e.key === 'Enter') {
-        flipCurrentCard();
-      } else if (e.key === 'ArrowRight') {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
         nextCard();
-      } else if (e.key === 'ArrowLeft') {
+        return;
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
         prevCard();
+        return;
+      }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        flipCurrentCard();
+        return;
+      }
+
+      if (!isFlipped) {
+        if (e.key === 'Backspace') {
+          e.preventDefault();
+          handleBackspace();
+          return;
+        }
+        if (['1', '2', '3', '4'].includes(e.key) && spellingDifficulty === 'difficile') {
+          e.preventDefault();
+          applyAccentFromPad(parseInt(e.key, 10));
+          return;
+        }
+        if (e.key.length === 1 && /^[a-zA-Zàâéèêëîïôùûç]$/.test(e.key)) {
+          e.preventDefault();
+          handleLetterInput(e.key);
+          return;
+        }
+      }
+
+      if (e.key === ' ') {
+        e.preventDefault();
+        flipCurrentCard();
       }
     });
   </script>

@@ -762,6 +762,7 @@
     </div>
   </div>
 
+  <script src="audio-player.js"></script>
   <script>
     let verbsData = [];
     let currentVerb = null;
@@ -884,7 +885,8 @@
       row.className = 'conj-row';
 
       let innerHtml = '<div class="row-left">';
-      innerHtml += `<button class="btn-speak-row" onclick="speakText('${conj.full}')" title="Ascolta pronuncia">🔊</button>`;
+      const safeFull = String(conj.full || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      innerHtml += `<button class="btn-speak-row" onclick="speakText('${safeFull}')" title="Ascolta pronuncia">🔊</button>`;
       innerHtml += '<div class="conj-text">';
       innerHtml += `<span class="part-pronoun">${simplifyPronoun(conj.pronoun)}</span>`;
 
@@ -957,19 +959,9 @@
       }
     }
 
-    // WEB SPEECH API PRONUNCIATION (French fr-FR)
+    // PRONUNCIATION VIA PRE-GENERATED GEMINI 3.8 FLASH TTS MP3
     function speakText(text) {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'fr-FR';
-      utterance.rate = 0.85;
-
-      const voices = window.speechSynthesis.getVoices();
-      const frVoice = voices.find(v => v.lang.startsWith('fr'));
-      if (frVoice) utterance.voice = frVoice;
-
-      window.speechSynthesis.speak(utterance);
+      playFrenchAudio(text);
     }
 
     function speakInfinitive() {

@@ -631,6 +631,7 @@
     </div>
   </main>
 
+  <script src="audio-player.js"></script>
   <script>
     let verbsData = [];
     let selectedIds = new Set();
@@ -720,9 +721,10 @@
         `;
 
         // Card Footer: Audio + Reveal + Link
+        const safeInf = String(verb.infinitive || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         let footerHtml = `
           <div class="card-footer" onclick="event.stopPropagation()">
-            <button class="btn-audio-mini" onclick="playVerbAudio('${verb.infinitive}')" title="Ascolta pronuncia">
+            <button class="btn-audio-mini" onclick="playVerbAudio('${safeInf}')" title="Ascolta pronuncia">
               🔊
             </button>
             <button class="btn-reveal-mini" onclick="toggleSingleReveal('${verb.id}')">
@@ -977,17 +979,7 @@
     }
 
     function playVerbAudio(text) {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'fr-FR';
-      utterance.rate = 0.85;
-
-      const voices = window.speechSynthesis.getVoices();
-      const frVoice = voices.find(v => v.lang.startsWith('fr') && (v.name.includes('Thomas') || v.name.includes('Amelie') || v.name.includes('Audrey') || v.name.includes('Google') || v.localService));
-      if (frVoice) utterance.voice = frVoice;
-
-      window.speechSynthesis.speak(utterance);
+      playFrenchAudio(text);
     }
 
     // Play all selected verbs in sequence for listening practice
@@ -999,7 +991,7 @@
       }
 
       if (isPlayingSequence) {
-        window.speechSynthesis.cancel();
+        stopFrenchAudio();
         isPlayingSequence = false;
         document.getElementById('btn-audio-seq').textContent = '🔊 Ascolta Selezionati';
         return;
@@ -1017,27 +1009,22 @@
         }
 
         const verb = list[idx];
-        const utterance = new SpeechSynthesisUtterance(verb.infinitive);
-        utterance.lang = 'fr-FR';
-        utterance.rate = 0.85;
-
         // highlight card temporarily
         const card = document.getElementById(`card-${verb.id}`);
         if (card) card.style.boxShadow = '0 0 0 4px #10b981';
 
-        utterance.onend = () => {
-          if (card) card.style.boxShadow = '';
-          idx++;
-          setTimeout(speakNext, 600); // 600ms pause between words
-        };
-
-        utterance.onerror = () => {
-          if (card) card.style.boxShadow = '';
-          idx++;
-          speakNext();
-        };
-
-        window.speechSynthesis.speak(utterance);
+        playFrenchAudio(verb.infinitive, {
+          onend: () => {
+            if (card) card.style.boxShadow = '';
+            idx++;
+            setTimeout(speakNext, 600); // 600ms pause between words
+          },
+          onerror: () => {
+            if (card) card.style.boxShadow = '';
+            idx++;
+            speakNext();
+          }
+        });
       }
 
       speakNext();
