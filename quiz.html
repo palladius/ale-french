@@ -1222,6 +1222,9 @@
       selectedPlayer = name;
       document.querySelectorAll('.player-chip').forEach(el => el.classList.remove('active'));
       element.classList.add('active');
+      if (name.includes('Alessandro')) speakFrench('Alessandro');
+      else if (name.includes('Sebastian')) speakFrench('Sebastian');
+      else if (name.includes('Papà')) speakFrench('mon papa');
     }
 
     function selectDifficulty(diff, element) {

@@ -215,13 +215,13 @@ test('4. All 5 HTML pages (including seby.html) load audio-player.js, escape apo
   );
 });
 
-test('5. All 242 phrases in seby-data.js (0-12 numbers, salutations, colors, shapes) and verbs.json have static gemini-3.8-flash-tts MP3s with ID3 metadata', async () => {
+test('5. All 246 phrases in seby-data.js, verbs.json, and identity/footer ("Alessandro", "Sebastian", "mon papa") have static gemini-3.8-flash-tts MP3s with ID3 metadata', async () => {
   const { phraseToSlug, getAudioPathForPhrase } = await import(path.join(ROOT_DIR, 'audio-player.js'));
   const manifestPath = path.join(ROOT_DIR, 'audio', 'manifest.json');
   assert.ok(fs.existsSync(manifestPath), 'audio/manifest.json must exist');
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
-  const allPhrases = new Set();
+  const allPhrases = new Set(['Alessandro', 'Sebastian', 'mon papa', 'Fait avec amour par mon papa']);
   for (const n of SEBY_DATA.nombres) allPhrases.add(n.fr);
   for (const s of SEBY_DATA.salutations) allPhrases.add(s.fr);
   for (const c of SEBY_DATA.couleurs) allPhrases.add(c.fr);
@@ -235,7 +235,7 @@ test('5. All 242 phrases in seby-data.js (0-12 numbers, salutations, colors, sha
     }
   }
 
-  assert.ok(allPhrases.size >= 242, `Expected at least 242 unique phrases, got ${allPhrases.size}`);
+  assert.ok(allPhrases.size >= 246, `Expected at least 246 unique phrases, got ${allPhrases.size}`);
 
   for (const phrase of allPhrases) {
     const slug = phraseToSlug(phrase);
@@ -268,5 +268,5 @@ test('6. scripts/generate-tts.mjs is strictly idempotent: second run says "Già 
     }
   );
   assert.match(out, /Già c'è \("zéro" -> audio\/zero\.mp3\), non la rigenero/);
-  assert.match(out, /Generated: 0, Skipped \(già c'è, non la rigenero\): 242/);
+  assert.match(out, /Generated: 0, Skipped \(già c'è, non la rigenero\): 246/);
 });

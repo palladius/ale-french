@@ -167,8 +167,8 @@ async function main() {
     for (const f of SEBY_DATA.formes || []) addPhrase(f.fr);
   }
 
-  // 2. Prioritize "je suis" and "un tableau"
-  for (const p of ['je suis', 'un tableau']) {
+  // 2. Prioritize "je suis", "un tableau", and family/identity phrases ("Alessandro", "Sebastian", "mon papa")
+  for (const p of ['je suis', 'un tableau', 'Alessandro', 'Sebastian', 'mon papa', 'Fait avec amour par mon papa']) {
     addPhrase(p);
   }
 

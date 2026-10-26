@@ -50,7 +50,10 @@
               <img src="images/avatar-ale.png" alt="Alessandro" class="profile-choice-img" onerror="this.src='images/s-habiller.jpg'">
               <div class="profile-choice-badge">🦁</div>
             </div>
-            <div class="profile-choice-name">Alessandro</div>
+            <div class="profile-choice-name">
+              Alessandro
+              <span class="profile-name-speaker" onclick="event.stopPropagation(); if (typeof playFrenchAudio === 'function') playFrenchAudio('Alessandro');" title="Ascolta Alessandro in francese">🔊</span>
+            </div>
             <span class="profile-choice-grade ale-grade">Primary 3 • 8 ans</span>
             <p class="profile-choice-desc">
               Verbi al presente, desinenze mute, vocabolario P3, carte 3D e quiz di coniugazione.
@@ -64,7 +67,10 @@
               <img src="images/avatar-seby.png" alt="Sebastian" class="profile-choice-img" onerror="this.src='images/aller.jpg'">
               <div class="profile-choice-badge">🎈</div>
             </div>
-            <div class="profile-choice-name">Sebastian</div>
+            <div class="profile-choice-name">
+              Sebastian
+              <span class="profile-name-speaker" onclick="event.stopPropagation(); if (typeof playFrenchAudio === 'function') playFrenchAudio('Sebastian');" title="Ascolta Sebastian in francese">🔊</span>
+            </div>
             <span class="profile-choice-grade seby-grade">Primary 1 • 6 ans • A1</span>
             <p class="profile-choice-desc">
               Saluti, Numeri da 0 a 12, Presentazione ("Je m'appelle Seby"), Colori e Forme per l'esame P1!
@@ -84,7 +90,31 @@
   }
 
   function selectUserProfile(user) {
+    const spokenName = user === 'ale' ? 'Alessandro' : 'Sebastian';
     closeProfileModal();
+
+    const currentPath = window.location.pathname;
+    const isSebyPage = currentPath.endsWith('seby.html');
+    const willRedirect =
+      (user === 'seby' && !isSebyPage) || (user === 'ale' && isSebyPage);
+
+    if (typeof window.playFrenchAudio === 'function') {
+      if (willRedirect) {
+        localStorage.setItem(STORAGE_KEY, user);
+        updateBadge();
+        let redirected = false;
+        const doRedirect = () => {
+          if (redirected) return;
+          redirected = true;
+          window.location.href = user === 'seby' ? 'seby.html' : 'index.html';
+        };
+        setTimeout(doRedirect, 950);
+        window.playFrenchAudio(spokenName, { onend: doRedirect, onerror: doRedirect });
+        return;
+      }
+      window.playFrenchAudio(spokenName);
+    }
+
     setActiveUser(user, true);
   }
 
@@ -101,6 +131,23 @@
         <span class="user-profile-change-hint">🔄 Cambia</span>
       `;
     });
+  }
+
+  function ensureLoveFooter() {
+    let footer = document.querySelector('footer');
+    if (!footer) {
+      footer = document.createElement('footer');
+      document.body.appendChild(footer);
+    }
+    footer.classList.add('site-love-footer');
+    footer.innerHTML = `
+      <span class="love-footer-phrase" onclick="if (typeof playFrenchAudio === 'function') playFrenchAudio('Fait avec amour par mon papa');" title="Ascolta in francese">
+        🇫🇷 Fait avec ❤️ par
+      </span>
+      <button type="button" class="papa-audio-btn" onclick="event.stopPropagation(); if (typeof playFrenchAudio === 'function') playFrenchAudio('mon papa');">
+        🔊 mon papa
+      </button>
+    `;
   }
 
   function initProfileSwitcher() {
@@ -120,6 +167,7 @@
     }
 
     updateBadge();
+    ensureLoveFooter();
   }
 
   // Esponi funzioni globali

@@ -1,7 +1,7 @@
 {
   "generator": "gemini-3.8-flash-tts",
   "note": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
-  "updatedAt": "2026-10-26T17:30:29.289Z",
+  "updatedAt": "2026-10-26T17:35:00.414Z",
   "clips": {
     "je suis": {
       "slug": "je-suis",
@@ -2422,6 +2422,46 @@
       "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
       "sha256": "fc4fba7b2dc8a2d9b62f53c80f16059c758a2198fc7e69aef182d124dd0aeadc",
       "createdAt": "2026-10-26T17:27:53.914Z"
+    },
+    "Alessandro": {
+      "slug": "alessandro",
+      "text": "Alessandro",
+      "file": "audio/alessandro.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "7951dbacf603ed29f3eb0dcc799c05eca48ba1fa5ad99d3c88a64cdc2006dfa4",
+      "createdAt": "2026-10-26T17:34:59.062Z"
+    },
+    "Sebastian": {
+      "slug": "sebastian",
+      "text": "Sebastian",
+      "file": "audio/sebastian.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "ac98a7a470a68715a35c47cf64656fb7d71971c57a0b10fe5843c84326b388d3",
+      "createdAt": "2026-10-26T17:34:59.159Z"
+    },
+    "mon papa": {
+      "slug": "mon-papa",
+      "text": "mon papa",
+      "file": "audio/mon-papa.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "2b73fc1bc726823ddc3e859e13d7d35202e8729a28d0b589bbd68b30d02ff43e",
+      "createdAt": "2026-10-26T17:34:59.404Z"
+    },
+    "Fait avec amour par mon papa": {
+      "slug": "fait-avec-amour-par-mon-papa",
+      "text": "Fait avec amour par mon papa",
+      "file": "audio/fait-avec-amour-par-mon-papa.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "comment": "Created with gemini 3.8 (gemini-3.8-flash-tts)",
+      "sha256": "6eec5509c54045979a27d16a4eda6c378a5313194725ccf71fc5f19f19ff8a9e",
+      "createdAt": "2026-10-26T17:35:00.413Z"
     }
   }
 }
