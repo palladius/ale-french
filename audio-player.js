@@ -178,9 +178,7 @@
       opts.knownMp3Slugs !== undefined ? opts.knownMp3Slugs : availableMp3Slugs;
     const shouldTryMp3 =
       Boolean(AudioCtor) &&
-      (opts.knownMp3Slugs !== undefined
-        ? knownSlugs.has(slug)
-        : knownSlugs.has(slug) || Boolean(opts.AudioCtor));
+      (opts.knownMp3Slugs !== undefined ? knownSlugs.has(slug) : true);
 
     if (!shouldTryMp3) {
       return speakWithWebSpeech(text, opts);

@@ -3,12 +3,15 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
+const require = createRequire(import.meta.url);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 
 const verbs = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'verbs.json'), 'utf8'));
+const SEBY_DATA = require('../seby-data.js');
 
 test('1. GEMINI.md exists and mandates gemini-3.8-flash-tts with MP3 metadata tracking', () => {
   const geminiMdPath = path.join(ROOT_DIR, 'GEMINI.md');
@@ -174,8 +177,8 @@ test('3. playFrenchAudio plays MP3 when available AND falls back to French speec
   assert.equal(fallbackEnded, true, 'onend callback must be fired after fallback speech completes');
 });
 
-test('4. All 4 HTML pages load audio-player.js, escape apostrophes in onclick handlers, and play audio on card/quiz actions', () => {
-  const htmlFiles = ['index.html', 'cards.html', 'grid.html', 'quiz.html'];
+test('4. All 5 HTML pages (including seby.html) load audio-player.js, escape apostrophes in onclick handlers, and play audio on card/quiz actions', () => {
+  const htmlFiles = ['index.html', 'cards.html', 'grid.html', 'quiz.html', 'seby.html'];
   for (const file of htmlFiles) {
     const fullPath = path.join(ROOT_DIR, file);
     const html = fs.readFileSync(fullPath, 'utf8');
@@ -209,4 +212,46 @@ test('4. All 4 HTML pages load audio-player.js, escape apostrophes in onclick ha
     /speakFrench\s*\(\s*q\.infinitive\s*\)/,
     'quiz.html handleAnswerSelect must speak the French word (speakFrench(q.infinitive)) so cards/questions are never silent!'
   );
+});
+
+test('5. All 242 phrases in seby-data.js (0-12 numbers, salutations, colors, shapes) and verbs.json have static gemini-3.8-flash-tts MP3s with ID3 metadata', async () => {
+  const { phraseToSlug, getAudioPathForPhrase } = await import(path.join(ROOT_DIR, 'audio-player.js'));
+  const manifestPath = path.join(ROOT_DIR, 'audio', 'manifest.json');
+  assert.ok(fs.existsSync(manifestPath), 'audio/manifest.json must exist');
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+  const allPhrases = new Set();
+  for (const n of SEBY_DATA.nombres) allPhrases.add(n.fr);
+  for (const s of SEBY_DATA.salutations) allPhrases.add(s.fr);
+  for (const c of SEBY_DATA.couleurs) allPhrases.add(c.fr);
+  for (const f of SEBY_DATA.formes) allPhrases.add(f.fr);
+  for (const item of verbs) {
+    allPhrases.add(item.infinitive);
+    if (Array.isArray(item.conjugation)) {
+      for (const conj of item.conjugation) {
+        allPhrases.add(conj.full);
+      }
+    }
+  }
+
+  assert.ok(allPhrases.size >= 242, `Expected at least 242 unique phrases, got ${allPhrases.size}`);
+
+  for (const phrase of allPhrases) {
+    const slug = phraseToSlug(phrase);
+    const relPath = getAudioPathForPhrase(phrase);
+    const fullMp3Path = path.join(ROOT_DIR, relPath);
+    assert.ok(fs.existsSync(fullMp3Path), `Missing MP3 file for "${phrase}" at ${relPath}`);
+    const stat = fs.statSync(fullMp3Path);
+    assert.ok(stat.size > 1000, `MP3 file too small for "${phrase}" (${stat.size} bytes)`);
+
+    const buf = fs.readFileSync(fullMp3Path).toString('latin1').toLowerCase();
+    assert.ok(
+      buf.includes('created with gemini 3.8') || buf.includes('gemini-3.8-flash-tts'),
+      `MP3 file ${relPath} for "${phrase}" is missing "Created with gemini 3.8" ID3 metadata`
+    );
+    assert.ok(
+      manifest.clips[phrase] && manifest.clips[phrase].slug === slug,
+      `Phrase "${phrase}" (slug="${slug}") missing from audio/manifest.json`
+    );
+  }
 });
