@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 
@@ -254,4 +255,18 @@ test('5. All 242 phrases in seby-data.js (0-12 numbers, salutations, colors, sha
       `Phrase "${phrase}" (slug="${slug}") missing from audio/manifest.json`
     );
   }
+});
+
+test('6. scripts/generate-tts.mjs is strictly idempotent: second run says "Già c\'è, non la rigenero" and generates 0 files without needing API key', () => {
+  const out = execFileSync(
+    process.execPath,
+    [path.join(ROOT_DIR, 'scripts', 'generate-tts.mjs'), '--verbose'],
+    {
+      cwd: ROOT_DIR,
+      env: { ...process.env, GEMINI_API_KEY: '', GOOGLE_API_KEY: '' },
+      encoding: 'utf8'
+    }
+  );
+  assert.match(out, /Già c'è \("zéro" -> audio\/zero\.mp3\), non la rigenero/);
+  assert.match(out, /Generated: 0, Skipped \(già c'è, non la rigenero\): 242/);
 });

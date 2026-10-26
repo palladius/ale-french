@@ -17,10 +17,6 @@ const AUDIO_DIR = path.join(ROOT_DIR, 'audio');
 const MANIFEST_PATH = path.join(AUDIO_DIR, 'manifest.json');
 
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-if (!API_KEY) {
-  console.error('ERROR: GEMINI_API_KEY or GOOGLE_API_KEY environment variable is required.');
-  process.exit(1);
-}
 
 const MODEL = 'gemini-3.8-flash-tts';
 const DEFAULT_VOICE = process.env.GEMINI_TTS_VOICE || 'Aoede';
@@ -42,6 +38,9 @@ function sha256File(filePath) {
 }
 
 async function synthesizePhrase(phrase, voiceName) {
+  if (!API_KEY) {
+    throw new Error('GEMINI_API_KEY or GOOGLE_API_KEY environment variable is required to generate new audio.');
+  }
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
   const payload = {
     contents: [
@@ -201,11 +200,17 @@ async function main() {
 
   const limitArg = process.argv.find((a) => a.startsWith('--limit='));
   const maxItems = limitArg ? parseInt(limitArg.split('=')[1], 10) : phrases.length;
+  const forceAll = process.argv.includes('--force-all');
+  const forceValues = process.argv
+    .filter((a) => a.startsWith('--force='))
+    .map((a) => a.slice('--force='.length).trim().toLowerCase());
+  const verboseSkip = process.argv.includes('--verbose');
   const concurrency = parseInt(process.env.TTS_CONCURRENCY || '4', 10);
 
   const toProcess = phrases.slice(0, maxItems);
   let skipped = 0;
   let generated = 0;
+  let manifestChanged = false;
 
   console.log(`🎙️ Checking ${toProcess.length} French phrases (model=${MODEL}, voice=${DEFAULT_VOICE}, concurrency=${concurrency})...`);
 
@@ -218,18 +223,29 @@ async function main() {
       const relFile = getAudioPathForPhrase(phrase);
       const absFile = path.join(ROOT_DIR, relFile);
 
-      if (hasGeminiMetadata(absFile)) {
+      const isForced =
+        forceAll ||
+        forceValues.includes(phrase.toLowerCase()) ||
+        forceValues.includes(slug);
+
+      if (!isForced && hasGeminiMetadata(absFile)) {
         skipped++;
-        manifest.clips[phrase] = {
-          slug,
-          text: phrase,
-          file: relFile,
-          model: MODEL,
-          voiceName: manifest.clips[phrase]?.voiceName || DEFAULT_VOICE,
-          comment: 'Created with gemini 3.8 (gemini-3.8-flash-tts)',
-          sha256: sha256File(absFile),
-          createdAt: manifest.clips[phrase]?.createdAt || new Date().toISOString()
-        };
+        if (verboseSkip) {
+          console.log(`  ⏭️ [${idx + 1}/${toProcess.length}] Già c'è ("${phrase}" -> ${relFile}), non la rigenero`);
+        }
+        if (!manifest.clips[phrase] || manifest.clips[phrase].slug !== slug) {
+          manifestChanged = true;
+          manifest.clips[phrase] = {
+            slug,
+            text: phrase,
+            file: relFile,
+            model: MODEL,
+            voiceName: manifest.clips[phrase]?.voiceName || DEFAULT_VOICE,
+            comment: 'Created with gemini 3.8 (gemini-3.8-flash-tts)',
+            sha256: sha256File(absFile),
+            createdAt: manifest.clips[phrase]?.createdAt || new Date().toISOString()
+          };
+        }
         continue;
       }
 
@@ -237,6 +253,7 @@ async function main() {
       convertToMp3WithMetadata(buffer, mimeType, absFile, phrase, DEFAULT_VOICE);
 
       generated++;
+      manifestChanged = true;
       manifest.clips[phrase] = {
         slug,
         text: phrase,
@@ -258,9 +275,13 @@ async function main() {
   const workers = Array.from({ length: Math.min(concurrency, toProcess.length) }, () => worker());
   await Promise.all(workers);
 
-  manifest.updatedAt = new Date().toISOString();
-  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n');
-  console.log(`🎉 Done! Generated: ${generated}, Skipped (already valid): ${skipped}, Total in manifest: ${Object.keys(manifest.clips).length}`);
+  if (manifestChanged) {
+    manifest.updatedAt = new Date().toISOString();
+    fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n');
+  }
+  console.log(
+    `🎉 Done! Generated: ${generated}, Skipped (già c'è, non la rigenero): ${skipped}, Total in manifest: ${Object.keys(manifest.clips).length}`
+  );
 }
 
 main().catch((err) => {
