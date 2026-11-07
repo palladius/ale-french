@@ -1,9 +1,18 @@
-// profile-switcher.js - Gestione profilo attivo (Ale vs Seby) e login "Chi sei?"
+// profile-switcher.js - Gestione profilo attivo (Ale vs Seby) e bridge con PuffinLogin
 
 (function() {
   const STORAGE_KEY = 'french_active_user';
 
   function getActiveUser() {
+    // 1. Check PuffinLogin session if available
+    try {
+      const puffinAuth = localStorage.getItem('puffin_auth_v2');
+      if (puffinAuth) {
+        const parsed = JSON.parse(puffinAuth);
+        const uid = parsed?.player_id || parsed?.userId;
+        if (uid) return uid;
+      }
+    } catch {}
     return localStorage.getItem(STORAGE_KEY);
   }
 
@@ -27,7 +36,14 @@
   }
 
   function showProfileModal(canClose = true) {
-    // Rimuovi eventuale modal esistente
+    // Prefer PuffinLogin modal if available on page
+    const puffin = document.querySelector('puffin-login');
+    if (puffin && typeof puffin.openModal === 'function') {
+      puffin.openModal();
+      return;
+    }
+
+    // Fallback modal
     const existing = document.getElementById('profile-modal-overlay');
     if (existing) existing.remove();
 
@@ -39,16 +55,16 @@
       <div class="profile-modal-card">
         ${canClose && getActiveUser() ? '<button class="profile-modal-close" onclick="closeProfileModal()">✕</button>' : ''}
         <div class="profile-modal-title">
-          <span>👋</span> Chi sei? / <i>Qui es-tu ?</i>
+          <span>🐧</span> Chi gioca? / <i>Qui es-tu ?</i>
         </div>
-        <p class="profile-modal-sub">Scegli il tuo profilo per iniziare la lezione di Francese!</p>
+        <p class="profile-modal-sub">Accedi con PuffinLogin per iniziare la lezione di Francese!</p>
 
         <div class="profile-choices">
           <!-- ALE -->
           <div class="profile-choice-btn ale-choice" onclick="selectUserProfile('ale')">
             <div class="profile-choice-img-wrap">
-              <img src="images/avatar-ale.png" alt="Alessandro" class="profile-choice-img" onerror="this.src='images/s-habiller.jpg'">
-              <div class="profile-choice-badge">🦁</div>
+              <img src="assets/avatars/ale.png" alt="Alessandro" class="profile-choice-img" onerror="this.src='images/avatar-ale.png'">
+              <div class="profile-choice-badge">🐉</div>
             </div>
             <div class="profile-choice-name">
               Alessandro
@@ -64,7 +80,7 @@
           <!-- SEBY -->
           <div class="profile-choice-btn seby-choice" onclick="selectUserProfile('seby')">
             <div class="profile-choice-img-wrap">
-              <img src="images/avatar-seby.png" alt="Sebastian" class="profile-choice-img" onerror="this.src='images/aller.jpg'">
+              <img src="assets/avatars/seby.png" alt="Sebastian" class="profile-choice-img" onerror="this.src='images/avatar-seby.png'">
               <div class="profile-choice-badge">🎈</div>
             </div>
             <div class="profile-choice-name">
@@ -92,6 +108,12 @@
   function selectUserProfile(user) {
     const spokenName = user === 'ale' ? 'Alessandro' : 'Sebastian';
     closeProfileModal();
+
+    const puffin = document.querySelector('puffin-login');
+    if (puffin && typeof puffin.openModal === 'function') {
+      puffin.openModal(user);
+      return;
+    }
 
     const currentPath = window.location.pathname;
     const isSebyPage = currentPath.endsWith('seby.html');
@@ -122,13 +144,14 @@
     const user = getActiveUser() || 'ale';
     const badges = document.querySelectorAll('.user-profile-badge');
     badges.forEach(badge => {
-      badge.className = `user-profile-badge ${user === 'ale' ? 'ale-active' : 'seby-active'}`;
-      const avatarSrc = user === 'ale' ? 'images/avatar-ale.png' : 'images/avatar-seby.png';
-      const name = user === 'ale' ? 'Ale (P3)' : 'Seby (P1)';
+      badge.className = `user-profile-badge ${user === 'ale' ? 'ale-active' : user === 'seby' ? 'seby-active' : ''}`;
+      const avatarSrc = user === 'ale' ? 'assets/avatars/ale.png' : user === 'seby' ? 'assets/avatars/seby.png' : `assets/avatars/${user}.png`;
+      const fallbackSrc = user === 'ale' ? 'images/avatar-ale.png' : 'images/avatar-seby.png';
+      const name = user === 'ale' ? 'Ale (P3)' : user === 'seby' ? 'Seby (P1)' : user;
       badge.innerHTML = `
-        <img src="${avatarSrc}" alt="${name}" class="user-profile-avatar" onerror="this.style.display='none'">
+        <img src="${avatarSrc}" alt="${name}" class="user-profile-avatar" onerror="this.src='${fallbackSrc}'; this.onerror=null;">
         <span>${name}</span>
-        <span class="user-profile-change-hint">🔄 Cambia</span>
+        <span class="user-profile-change-hint">🔄 Puffin</span>
       `;
     });
   }
@@ -150,19 +173,31 @@
     `;
   }
 
+  // Hook into PuffinLogin events
+  window.addEventListener('puffin-user-changed', (e) => {
+    const user = e.detail?.user;
+    if (user && user.id) {
+      localStorage.setItem(STORAGE_KEY, user.id);
+      updateBadge();
+
+      const currentPath = window.location.pathname;
+      const isSebyPage = currentPath.endsWith('seby.html');
+      if (user.id === 'seby' && !isSebyPage) {
+        window.location.href = 'seby.html';
+      } else if (user.id === 'ale' && isSebyPage) {
+        window.location.href = 'index.html';
+      }
+    }
+  });
+
   function initProfileSwitcher() {
     const currentUser = getActiveUser();
     const currentPath = window.location.pathname;
     const isSebyPage = currentPath.endsWith('seby.html');
 
-    // Se non ha mai scelto il profilo e non è specificato nell'URL
     if (!currentUser) {
-      // Se si trova già su seby.html, imposta seby di default
       if (isSebyPage) {
         localStorage.setItem(STORAGE_KEY, 'seby');
-      } else {
-        // Mostra il modal al primo avvio
-        showProfileModal(false);
       }
     }
 
@@ -170,14 +205,13 @@
     ensureLoveFooter();
   }
 
-  // Esponi funzioni globali
+  // Expose global methods
   window.showProfileModal = showProfileModal;
   window.closeProfileModal = closeProfileModal;
   window.selectUserProfile = selectUserProfile;
   window.getActiveFrenchUser = getActiveUser;
   window.setActiveFrenchUser = setActiveUser;
 
-  // Auto-init al caricamento
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initProfileSwitcher);
   } else {

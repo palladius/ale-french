@@ -21,6 +21,12 @@ Una mini web app per **Alessandro Carlesso (Primary 3 / 8 anni)** e **Sebastian 
   - 👂 *Ascolta e Trova:* Esercizio di ascolto con 4 opzioni illustrate (matching listening test).
   - ✍️ *Scrivi la Parola:* Bolle di lettere da toccare nell'ordine corretto per comporre la parola.
 
+### 🐧 PuffinLogin & Puffin Ring Integration
+* 🔑 **Zero-Plaintext PIN Auth:** Componente Web standard (`<puffin-login>`) con hash SHA-256 salati WebCrypto per tutta la famiglia Carlesso (`ale`, `seby`, `riccardo`, `kate`, `lucilla`, `guest`, `saga`).
+* 🔄 **Smart Route Mapping:** Login `ale` (PIN 2018) porta a `index.html` (Primary 3); login `seby` (PIN 2020) porta a `seby.html` (Primary 1).
+* 🏆 **Leaderboard & Cloud Scores:** Classifiche collegate via Firestore (`<puffin-leaderboard filter-game="ale-french">`) per quiz Ale e Seby.
+* 💍 **Puffin WebRing (`ring.html`):** Anello GeoCities-style che collega tutti i giochi e le app per bambini della famiglia Carlesso.
+
 ---
 
 ## 🔊 Sintesi Vocale & Zero Server
@@ -35,6 +41,7 @@ Una mini web app per **Alessandro Carlesso (Primary 3 / 8 anni)** e **Sebastian 
 👉 **Spazio Seby (A1):** [https://palladius.github.io/ale-french/seby.html](https://palladius.github.io/ale-french/seby.html)  
 👉 **Flashcards 3D:** [https://palladius.github.io/ale-french/cards.html](https://palladius.github.io/ale-french/cards.html)  
 👉 **Quiz Multiplo:** [https://palladius.github.io/ale-french/quiz.html](https://palladius.github.io/ale-french/quiz.html)  
+👉 **🔥💍 Puffin Ring:** [https://palladius.github.io/ale-french/ring.html](https://palladius.github.io/ale-french/ring.html)  
 
 ---
 
@@ -43,9 +50,11 @@ Una mini web app per **Alessandro Carlesso (Primary 3 / 8 anni)** e **Sebastian 
 * `index.html` — Coniugazione verbi per Alessandro (P3).
 * `seby.html` — Hub educativo A1 per Sebastian (P1).
 * `seby-data.js` — Database vocabolario, numeri 0-12, saluti e forme per P1.
-* `profile-switcher.js` & `profile-switcher.css` — Gestore profilo "Chi sei? Ale o Seby" con badge e modal.
+* `profile-switcher.js` & `profile-switcher.css` — Gestore profilo "Chi sei? Ale o Seby" con bridge per PuffinLogin.
+* `src/puffin-login.js` — Web Component `<puffin-login>`, `<puffin-leaderboard>`, `<puffin-ring>`.
+* `ring.html` — Hub WebRing dei giochi Carlesso.
 * `cards.html` — Flashcards vocabolario con flip 3D e indovinello lettere.
-* `quiz.html` — Quiz a scelta multipla con registro di papà.
+* `quiz.html` — Quiz a scelta multipla con classifica e registro di papà.
 * `grid.html` — Griglia 4x4 e selezione multipla.
 * `verbs.json` — Database 26 verbi coniugati.
 * `SPEC.md` — Specifiche didattiche, architettura e requisiti d'esame Tandem IMS.

@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="profile-switcher.css">
+  <script type="module" src="./src/puffin-login.js"></script>
   <style>
     :root {
       --bg-seby: #f0fdf4;
@@ -581,15 +582,12 @@
       <a href="index.html" class="nav-tab">📖 Verbi Ale (P3)</a>
       <a href="cards.html" class="nav-tab">🃏 Flashcards</a>
       <a href="quiz.html" class="nav-tab">🎯 Quiz Ale</a>
+      <a href="ring.html" class="nav-tab" style="color: #f59e0b; font-weight: 700;">🔥💍 Ring</a>
     </div>
 
     <!-- ACTIONS & USER BADGE -->
     <div class="nav-actions">
-      <button class="user-profile-badge seby-active" onclick="showProfileModal()">
-        <img src="images/avatar-seby.png" alt="Seby" class="user-profile-avatar" onerror="this.src='images/aller.jpg'">
-        <span>Seby (P1)</span>
-        <span class="user-profile-change-hint">🔄 Cambia</span>
-      </button>
+      <puffin-login id="puffin-widget" app-id="ale-french"></puffin-login>
 
       <button class="btn-toggle-it active" id="btn-toggle-italian" onclick="toggleItalianMode()">
         <span id="toggle-it-icon">👁️</span> <span id="toggle-it-label">Italiano</span>
@@ -835,6 +833,9 @@
           </div>
           <div id="quiz-question-box"></div>
         </div>
+        <div style="max-width: 700px; margin: 30px auto 0 auto;">
+          <puffin-leaderboard filter-game="ale-french"></puffin-leaderboard>
+        </div>
       `;
 
       if (quizMode === 'listen') {
@@ -900,6 +901,7 @@
         btn.classList.add('correct');
         spellScore += 10;
         document.getElementById('quiz-score-val').textContent = spellScore;
+        submitPuffinScore(spellScore, 'listen');
         fb.innerHTML = `<span style="color: #059669;">🎉 Bravissimo Sebastian! Très bien !</span>`;
         setTimeout(() => {
           currentQuizIndex++;
@@ -998,6 +1000,7 @@
         fb.innerHTML = `<span style="color: #059669;">🌟 Fantastico Sebastian! Scritto perfetto!</span>`;
         spellScore += 15;
         document.getElementById('quiz-score-val').textContent = spellScore;
+        submitPuffinScore(spellScore, 'spell');
         speakFr(currentSpellWord);
         setTimeout(() => {
           currentQuizIndex++;
@@ -1008,6 +1011,16 @@
         setTimeout(() => {
           resetSpell();
         }, 1500);
+      }
+    }
+
+    function submitPuffinScore(pts, mode) {
+      if (window.PuffinLogin && typeof window.PuffinLogin.submitScore === 'function') {
+        window.PuffinLogin.submitScore({
+          appId: 'ale-french',
+          score: pts,
+          extra: { mode: mode, player: 'seby' }
+        }).catch(err => console.debug('Puffin score sync:', err));
       }
     }
 
