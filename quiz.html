@@ -1569,16 +1569,31 @@
       document.getElementById('resume-banner').style.display = 'none';
 
       // Submit score to PuffinLogin Firestore Leaderboard
+      const endedIso = new Date().toISOString();
+      const startedIso = currentQuizState.startedAt || endedIso;
+      const durationSec = Math.max(1, Math.round((Date.parse(endedIso) - Date.parse(startedIso)) / 1000));
+      const audioHintsUsed = currentQuizState.questions.filter(q => q && q.audioUsed).length;
       if (window.PuffinLogin && typeof window.PuffinLogin.submitScore === 'function') {
         window.PuffinLogin.submitScore({
           appId: 'ale-french',
           score: points,
+          mode: currentQuizState.difficulty,
+          started_at: startedIso,
+          ended_at: endedIso,
+          duration_sec: durationSec,
           extra: {
             difficulty: currentQuizState.difficulty,
+            mode: currentQuizState.difficulty,
+            word_set: selectedWordSet || 'all',
             player: currentQuizState.player,
             correct: score,
             total: total,
-            percentage: pct
+            percentage: pct,
+            hints: audioHintsUsed,
+            audio_hints: audioHintsUsed,
+            moves: total,
+            seconds: durationSec,
+            duration_sec: durationSec
           }
         }).catch(err => console.debug('Puffin score submission:', err));
       }

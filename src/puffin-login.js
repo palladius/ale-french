@@ -1,5 +1,5 @@
 /**
- * 🐧 PuffinLogin (`src/puffin-login.js`) — v0.9.0
+ * 🐧 PuffinLogin (`src/puffin-login.js`) — v2.0.0
  *
  * Mandatory Family Login Gate (`identity = NULL` until login), Compact 6-Hero Selector,
  * Bilingual EN/IT Skin, Cutie `X X X X` PIN Pad (with 3-Strike Jam), and Top-10 Hall of Fame.
@@ -20,8 +20,151 @@
  *    - Instant toggle between English (`🇬🇧 EN`) and Italian (`🇮🇹 IT`) in the modal header.
  */
 
+import {
+  PUFFIN_CARD_BACK,
+  MTG_RARITY_INFO,
+  PUFFIN_CARDS_CATALOG,
+  DEFAULT_DUMMY_USER_CARDS,
+  normalizeCardRarity,
+  normalizeCardId,
+  cardIdToFirestoreDocId,
+  getPuffinCardsCatalog,
+  getCardById,
+  JACKPOT_MATCH_INTERVAL,
+  getGamePackCounter,
+  setGamePackCounter,
+  incrementGamePackCounter,
+  rollPuffinCardDrop,
+  rollGameBoosterPack,
+  validateAndNormalizeUserCardRecord,
+  buildCardsOwnershipMap,
+  computeFamilyInsights as computeFamilyInsightsRaw,
+  compareFamilyRivals,
+  playCardAudioOrFanfare,
+  playCardBackExplosion,
+  createPuffinCardsElementClass,
+  showPuffinCardRevealToast,
+  showPuffinBoosterDraftModal,
+} from './puffin-cards.js';
+
+export {
+  PUFFIN_CARD_BACK,
+  MTG_RARITY_INFO,
+  PUFFIN_CARDS_CATALOG,
+  DEFAULT_DUMMY_USER_CARDS,
+  normalizeCardRarity,
+  normalizeCardId,
+  cardIdToFirestoreDocId,
+  getPuffinCardsCatalog,
+  getCardById,
+  JACKPOT_MATCH_INTERVAL,
+  getGamePackCounter,
+  setGamePackCounter,
+  incrementGamePackCounter,
+  rollPuffinCardDrop,
+  rollGameBoosterPack,
+  validateAndNormalizeUserCardRecord,
+  buildCardsOwnershipMap,
+  compareFamilyRivals,
+  playCardAudioOrFanfare,
+  playCardBackExplosion,
+  showPuffinCardRevealToast,
+  showPuffinBoosterDraftModal,
+};
+
+export const PUFFIN_LOGIN_VERSION = '2.0.0';
 export const PUFFIN_SALT = 'puffin-salt-2026';
+export const PUFFIN_OFFLINE_SEED = 'puffin-airplane-seed-2026';
 export const DEFAULT_CLOUD_API_URL = 'https://puffin-login-932724269481.europe-west1.run.app/v1';
+
+/**
+ * Pure-JS RFC 1321 MD5 hex digest (`md5Hex(str)`).
+ * Zero external dependencies — works synchronously in ANY browser, WebView, `file://`,
+ * non-HTTPS LAN (`http://192.168.x.x`), Airplane Mode, or Node.js without `crypto.subtle`.
+ */
+export function md5Hex(str) {
+  const utf8 = new TextEncoder().encode(String(str ?? ''));
+  const bitLen = utf8.length * 8;
+  const padLen = ((56 - ((utf8.length + 1) % 64)) + 64) % 64;
+  const buf = new Uint8Array(utf8.length + 1 + padLen + 8);
+  buf.set(utf8);
+  buf[utf8.length] = 0x80;
+  const view = new DataView(buf.buffer);
+  view.setUint32(buf.length - 8, bitLen >>> 0, true);
+  view.setUint32(buf.length - 4, Math.floor(bitLen / 0x100000000) >>> 0, true);
+
+  const K = new Uint32Array(64);
+  for (let i = 0; i < 64; i++) {
+    K[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 0x100000000) >>> 0;
+  }
+  const S = [
+    7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+    5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,
+    4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
+    6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
+  ];
+
+  let a0 = 0x67452301;
+  let b0 = 0xefcdab89;
+  let c0 = 0x98badcfe;
+  let d0 = 0x10325476;
+
+  for (let offset = 0; offset < buf.length; offset += 64) {
+    let A = a0;
+    let B = b0;
+    let C = c0;
+    let D = d0;
+    for (let i = 0; i < 64; i++) {
+      let F;
+      let g;
+      if (i < 16) {
+        F = (B & C) | (~B & D);
+        g = i;
+      } else if (i < 32) {
+        F = (D & B) | (~D & C);
+        g = (5 * i + 1) % 16;
+      } else if (i < 48) {
+        F = B ^ C ^ D;
+        g = (3 * i + 5) % 16;
+      } else {
+        F = C ^ (B | ~D);
+        g = (7 * i) % 16;
+      }
+      const M = view.getUint32(offset + g * 4, true);
+      F = (F + A + K[i] + M) >>> 0;
+      A = D;
+      D = C;
+      C = B;
+      const rot = ((F << S[i]) | (F >>> (32 - S[i]))) >>> 0;
+      B = (B + rot) >>> 0;
+    }
+    a0 = (a0 + A) >>> 0;
+    b0 = (b0 + B) >>> 0;
+    c0 = (c0 + C) >>> 0;
+    d0 = (d0 + D) >>> 0;
+  }
+
+  const out = new Uint8Array(16);
+  const outView = new DataView(out.buffer);
+  outView.setUint32(0, a0, true);
+  outView.setUint32(4, b0, true);
+  outView.setUint32(8, c0, true);
+  outView.setUint32(12, d0, true);
+  return Array.from(out)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+/**
+ * Computes seeded local MD5 digest `MD5("<seed>:<userId>:<plainSecret>")`
+ * for offline / Airplane Mode authentication without plaintext passwords.
+ */
+export function computePuffinSecretMd5(userId, plainSecret, seed = PUFFIN_OFFLINE_SEED) {
+  const cleanUser = String(userId || '').trim().toLowerCase();
+  const cleanSec = String(plainSecret || '').trim();
+  const cleanSeed = String(seed || PUFFIN_OFFLINE_SEED).trim();
+  return md5Hex(`${cleanSeed}:${cleanUser}:${cleanSec}`);
+}
 
 /**
  * Computes salted SHA-256 hex digest `SHA-256("puffin-salt-2026:<userId>:<plainSecret>")`
@@ -37,8 +180,12 @@ export async function computePuffinSecretHash(userId, plainSecret) {
       .map((b) => b.toString(16).padStart(2, '0'))
       .join('');
   }
-  const { createHash } = await import('node:crypto');
-  return createHash('sha256').update(input).digest('hex');
+  try {
+    const { createHash } = await import('node:crypto');
+    return createHash('sha256').update(input).digest('hex');
+  } catch {
+    return computePuffinSecretMd5(userId, plainSecret, PUFFIN_OFFLINE_SEED);
+  }
 }
 
 export const PUFFIN_PROFILES = Object.freeze([
@@ -52,6 +199,7 @@ export const PUFFIN_PROFILES = Object.freeze([
     emoji: '👑',
     role: 'adult',
     authType: 'password',
+    secretMd5: '2cddba842da10bf318eb1bc37238c788',
     secretHash: 'bbad2523d48656e6eac389d4e69455244258b9be4c206dcf1cd1c9ac6cadc8f8',
     email: 'palladiusbonton@gmail.com',
     colorName: 'Giallo',
@@ -71,6 +219,7 @@ export const PUFFIN_PROFILES = Object.freeze([
     emoji: '💜',
     role: 'adult',
     authType: 'password',
+    secretMd5: '6b1268fa3ea254dadd3071a7b54faafa',
     secretHash: 'cc931f6c000b1450f5c5dd66c9fa43c602786a1bed164311b17a11900521f679',
     email: 'kateknight1981@gmail.com',
     colorName: 'Viola',
@@ -90,6 +239,7 @@ export const PUFFIN_PROFILES = Object.freeze([
     emoji: '🐉',
     role: 'kid',
     authType: 'pin4',
+    secretMd5: '25e95e98b024e8b502506007b2bb4dc7',
     secretHash: 'ac05dc85bcc7ab7b461a3c9f029d602d40e271715b131474282cef104ee19d23',
     email: 'alessandrocarlesso18@gmail.com',
     colorName: 'Rosso',
@@ -109,6 +259,7 @@ export const PUFFIN_PROFILES = Object.freeze([
     emoji: '🏎️',
     role: 'kid',
     authType: 'pin4',
+    secretMd5: 'b2486a0c46a84434ffde2c45c25b95b5',
     secretHash: 'c1052cf2c1eba8d67b240680e47243cb13e5f43a05e4fcbb33f72206f02266e6',
     email: 'sebastiancarlesso20@gmail.com',
     colorName: 'Blu',
@@ -128,6 +279,7 @@ export const PUFFIN_PROFILES = Object.freeze([
     emoji: '🌸',
     role: 'adult',
     authType: 'password',
+    secretMd5: '0cf77e476d15ef8a1a9fd2e370bf4f8f',
     secretHash: '01e66314c5c31aeda5ba8861abbbe79c31498fb76a31599cfd54c59f163c78d4',
     email: 'lucillagennari@gmail.com',
     colorName: 'Rosa',
@@ -147,6 +299,7 @@ export const PUFFIN_PROFILES = Object.freeze([
     emoji: '🐧',
     role: 'guest',
     authType: 'none',
+    secretMd5: '',
     secretHash: '',
     email: '',
     colorName: 'Grigio',
@@ -166,6 +319,7 @@ export const PUFFIN_PROFILES = Object.freeze([
     emoji: '♊',
     role: 'bot',
     authType: 'password',
+    secretMd5: 'e000aa67704291aed594d0daadf5c10a',
     secretHash: '5ac3918812d0e665b215336daca02dea39b9908ae3169b2cc2e7774c50706893',
     email: 'palladiusbonton+saga-uat@gmail.com',
     colorName: 'Ciano Cosmo',
@@ -199,6 +353,18 @@ export const I18N = Object.freeze({
     modalTitle: "Who's playing?",
     modalSub: '',
     logoutBtn: 'Logout',
+    tabLogin: 'Players',
+    tabScores: 'High Scores',
+    tabRing: 'Puffin Ring',
+    scopeCurrentGame: (gameId) => `🎮 This Game (${gameId})`,
+    scopeAllGames: '🌍 All Games (Global Ring)',
+    dockScoresBtn: '🏆 Top 10 High Scores',
+    dockRingBtn: (count) => `🔥💍 Puffin Ring (${count} Games)`,
+    offlineBannerTitle: '⚠️✈️ Airplane / Offline Mode Active (Local MD5 + Seed)',
+    offlineBannerBody: (seed) =>
+      `Internet unreachable: authenticating locally with MD5 + seed (${seed}). Scores are saved in local outbox and will sync when back online!`,
+    welcomeOfflineMsg: (name, seed) =>
+      `Welcome ${name}! ⚠️✈️ Logged in offline via local MD5 + seed (${seed}).`,
     attemptsLabel: (used, max, left) => `${left} tries left`,
     jammedPill: (sec) => `JAMMED (${sec}s)`,
     pwdPlaceholder: (name) => `${name}'s password...`,
@@ -209,6 +375,9 @@ export const I18N = Object.freeze({
     wrongPwdNoGuest: 'Wrong password! Try again.',
     wrongPinNoGuest: 'Wrong PIN! Try again.',
     playAsGuestBtn: 'Play as Guest',
+    playAsGuestNamedBtn: (name) => `Play as Guest (${name})`,
+    guestNameLabel: '🏆 Bragging Rights! Optional friend name:',
+    guestNamePlaceholder: 'e.g. Paolo (optional)',
     jamTitlePin: 'KEYPAD JAMMED! (3+ wrong tries)',
     jamTitlePwd: 'LOGIN JAMMED! (3+ wrong tries)',
     jamBody: (sec) =>
@@ -223,6 +392,18 @@ export const I18N = Object.freeze({
     modalTitle: 'Chi gioca?',
     modalSub: '',
     logoutBtn: 'Esci',
+    tabLogin: 'Giocatori',
+    tabScores: 'High Scores',
+    tabRing: 'Puffin Ring',
+    scopeCurrentGame: (gameId) => `🎮 Questo Gioco (${gameId})`,
+    scopeAllGames: '🌍 Tutti i Giochi (Global Ring)',
+    dockScoresBtn: '🏆 Top 10 High Scores',
+    dockRingBtn: (count) => `🔥💍 Puffin Ring (${count} Giochi)`,
+    offlineBannerTitle: '⚠️✈️ Modalità Aereo / Offline Attiva (MD5 + Seed Locale)',
+    offlineBannerBody: (seed) =>
+      `Internet non disponibile: autenticazione locale attiva tramite MD5 + seed (${seed}). I punteggi sono salvati in locale e verranno sincronizzati al ritorno online!`,
+    welcomeOfflineMsg: (name, seed) =>
+      `Ciao ${name}! ⚠️✈️ Login effettuato offline con MD5 + seed locale (${seed}).`,
     attemptsLabel: (used, max, left) => `${left} tentativi`,
     jammedPill: (sec) => `INCAGLIATO (${sec}s)`,
     pwdPlaceholder: (name) => `Password di ${name}...`,
@@ -233,8 +414,11 @@ export const I18N = Object.freeze({
     wrongPwdNoGuest: 'Password sbagliata! Riprova.',
     wrongPinNoGuest: 'PIN sbagliato! Riprova.',
     playAsGuestBtn: 'Gioca come Ospite',
+    playAsGuestNamedBtn: (name) => `Gioca come Ospite (${name})`,
+    guestNameLabel: '🏆 Bragging Rights! Nome amico opzionale:',
+    guestNamePlaceholder: 'es. Paolo (opzionale)',
     jamTitlePin: 'TASTIERINO INCAGLIATO! (3+ errori)',
-    jamTitlePwd: 'LOGIN INCAGLIATO! (3+ errori)',
+    jamTitlePwd: 'LOGIN JAMMED! (3+ errori)',
     jamBody: (sec) =>
       `Hai sbagliato 3 volte (${sec}s). Scegli Ospite se non la sai:`,
     unjamBtn: 'Sblocca',
@@ -253,7 +437,201 @@ export const STORAGE_KEYS = Object.freeze({
   STATES: 'puffin_states_v1',
   OUTBOX: 'puffin_outbox_v1',
   LOCKOUT: 'puffin_lockout_v1',
+  CARDS: 'puffin_cards_v1',
+  GUEST_NAME: 'puffin_guest_name_v1',
+  OFFLINE_SEED: 'puffin_offline_seed_v1',
+  AIRPLANE_MODE: 'puffin_airplane_mode_v1',
 });
+
+export const DEFAULT_OFFLINE_SEED_BUNDLE = Object.freeze({
+  version: '1.0.0',
+  seed: PUFFIN_OFFLINE_SEED,
+  salt: PUFFIN_SALT,
+  algorithm: 'md5(seed:userId:secret)',
+  fallbackWarning: {
+    it: I18N.it.offlineBannerBody(PUFFIN_OFFLINE_SEED),
+    en: I18N.en.offlineBannerBody(PUFFIN_OFFLINE_SEED),
+  },
+  profiles: Object.freeze(
+    Object.fromEntries(
+      PUFFIN_PROFILES.map((p) => [
+        p.id,
+        Object.freeze({
+          id: p.id,
+          displayName: p.displayName,
+          role: p.role,
+          authType: p.authType,
+          secretMd5: p.secretMd5 || '',
+          secretHash: p.secretHash || '',
+        }),
+      ])
+    )
+  ),
+});
+
+let _simulatedAirplaneMode = false;
+
+export function ensureOfflineSeedCached(forceReset = false) {
+  try {
+    if (typeof localStorage !== 'undefined') {
+      const existingRaw = localStorage.getItem(STORAGE_KEYS.OFFLINE_SEED);
+      if (!forceReset && existingRaw) {
+        const parsed = JSON.parse(existingRaw);
+        if (parsed && parsed.seed && parsed.profiles) {
+          return parsed;
+        }
+      }
+      localStorage.setItem(STORAGE_KEYS.OFFLINE_SEED, JSON.stringify(DEFAULT_OFFLINE_SEED_BUNDLE));
+    }
+  } catch {}
+  return DEFAULT_OFFLINE_SEED_BUNDLE;
+}
+
+export function isAirplaneModeActive(options = {}) {
+  if (options.forceOffline === true) return true;
+  if (options.forceOffline === false) return false;
+  if (_simulatedAirplaneMode) return true;
+  try {
+    if (typeof window !== 'undefined' && window.PUFFINLOGIN_ENV?.airplaneMode === true) {
+      return true;
+    }
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem(STORAGE_KEYS.AIRPLANE_MODE);
+      if (saved === 'true' || saved === '1') return true;
+    }
+  } catch {}
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+    return true;
+  }
+  return false;
+}
+
+export function setAirplaneModeState(enabled) {
+  _simulatedAirplaneMode = Boolean(enabled);
+  try {
+    if (typeof localStorage !== 'undefined') {
+      if (_simulatedAirplaneMode) {
+        localStorage.setItem(STORAGE_KEYS.AIRPLANE_MODE, 'true');
+      } else {
+        localStorage.removeItem(STORAGE_KEYS.AIRPLANE_MODE);
+      }
+    }
+  } catch {}
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(
+      new CustomEvent('puffin-connectivity-changed', {
+        detail: { airplaneMode: _simulatedAirplaneMode, online: !_simulatedAirplaneMode },
+      })
+    );
+  }
+  return _simulatedAirplaneMode;
+}
+
+/**
+ * Verifies family credentials (`password` or `pin4`) with automatic fallback to the
+ * local MD5 + seed (`puffin-airplane-seed-2026`) when in Airplane Mode or when internet/Cloud Run is unreachable.
+ */
+export async function verifyPuffinCredentials(userId, plainSecret, options = {}) {
+  const cleanUser = String(userId || '').trim().toLowerCase();
+  const profile = PUFFIN_PROFILES.find(
+    (p) => p.id === cleanUser || (Array.isArray(p.aliases) && p.aliases.includes(cleanUser))
+  );
+  if (!profile) {
+    return {
+      ok: false,
+      userId: null,
+      offline_verified: false,
+      auth_mode: 'unknown',
+      seed: PUFFIN_OFFLINE_SEED,
+      warning: null,
+    };
+  }
+
+  const seedBundle = ensureOfflineSeedCached(false);
+  const activeSeed = String(options.seed || seedBundle?.seed || PUFFIN_OFFLINE_SEED).trim();
+  const seedProfile = seedBundle?.profiles?.[profile.id] || profile;
+  const lang = String(options.lang || 'it').toLowerCase().startsWith('en') ? 'en' : 'it';
+  const tr = I18N[lang] || I18N.it;
+
+  if (profile.authType === 'none') {
+    const offlineNow = isAirplaneModeActive(options);
+    return {
+      ok: true,
+      userId: profile.id,
+      offline_verified: offlineNow,
+      auth_mode: offlineNow ? 'offline_md5_seed' : 'online',
+      seed: activeSeed,
+      secretMd5: '',
+      warning: offlineNow ? tr.offlineBannerBody(activeSeed) : null,
+      warningIt: I18N.it.offlineBannerBody(activeSeed),
+      warningEn: I18N.en.offlineBannerBody(activeSeed),
+    };
+  }
+
+  const cleanSec = String(plainSecret || '').trim();
+  const candidateMd5 = computePuffinSecretMd5(profile.id, cleanSec, activeSeed);
+  const expectedMd5 = String(seedProfile?.secretMd5 || profile.secretMd5 || '').toLowerCase();
+  const md5Match = Boolean(expectedMd5 && candidateMd5 === expectedMd5);
+
+  let shaMatch = false;
+  if (!md5Match && (seedProfile?.secretHash || profile.secretHash)) {
+    const candidateSha = await computePuffinSecretHash(profile.id, cleanSec);
+    shaMatch = candidateSha === (seedProfile?.secretHash || profile.secretHash);
+  }
+  const localSecretValid = md5Match || shaMatch;
+
+  const startOffline = isAirplaneModeActive(options);
+  let cloudReached = false;
+  let cloudVerified = null;
+
+  if (!startOffline && options.tryCloud === true && typeof fetch === 'function') {
+    const apiUrl = options.apiUrl || DEFAULT_CLOUD_API_URL;
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), options.timeoutMs || 1000);
+      const res = await fetch(`${apiUrl}/auth/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: profile.id,
+          secret: cleanSec,
+          app_id: options.appId || 'puffin-login',
+        }),
+        signal: ctrl.signal,
+      });
+      clearTimeout(timer);
+      if (res.status === 200 || res.status === 401) {
+        cloudReached = true;
+        const data = await res.json().catch(() => ({}));
+        cloudVerified = Boolean(res.ok && data?.ok);
+      }
+    } catch {
+      cloudReached = false;
+    }
+  }
+
+  const usedOfflineSeed = startOffline || (options.tryCloud === true && !cloudReached);
+  const ok = cloudReached && cloudVerified !== null ? cloudVerified : localSecretValid;
+  const dispName = lang === 'en' ? profile.displayNameEn || profile.displayName : profile.displayName;
+  const warningText = usedOfflineSeed
+    ? ok
+      ? tr.welcomeOfflineMsg(dispName, activeSeed)
+      : tr.offlineBannerBody(activeSeed)
+    : null;
+
+  return {
+    ok,
+    userId: profile.id,
+    offline_verified: Boolean(usedOfflineSeed && ok),
+    auth_mode: usedOfflineSeed ? 'offline_md5_seed' : 'online',
+    seed: activeSeed,
+    secretMd5: candidateMd5,
+    md5Matched: md5Match,
+    warning: warningText,
+    warningIt: I18N.it.welcomeOfflineMsg(profile.displayName, activeSeed),
+    warningEn: I18N.en.welcomeOfflineMsg(profile.displayNameEn || profile.displayName, activeSeed),
+  };
+}
 
 export const MAX_FAILED_ATTEMPTS = 3;
 export const JAM_COOLDOWN_MS = 45_000;
@@ -307,19 +685,23 @@ export const DEFAULT_DUMMY_SCORES = Object.freeze([
     id: 'scr_seed_03_lucilla_french',
     game_id: 'ale-french',
     player_id: 'lucilla',
-    score: 3100,
+    score: 18,
     started_at: '2026-11-02T16:30:00Z',
-    ended_at: '2026-11-02T16:39:50Z',
-    duration_sec: 590,
+    ended_at: '2026-11-02T16:31:35Z',
+    duration_sec: 95,
     hostname: 'ipad-nonna-lucilla.lan',
     ip_address: '192.168.1.88',
     device: 'iPadOS (Duolingo Owl Power)',
-    summary_text: 'Grandma Lucilla guessed 31 French words in a row with the green owl!',
+    summary_text: 'Grandma Lucilla scored 18/20 (9/10, 90%) in Difficile with the green owl!',
     extra: {
-      difficulty: 'b1_advanced',
-      schema_hash: 'fr_dict_2026_owl',
-      level: 42,
-      streak: 31,
+      difficulty: 'difficile',
+      mode: 'difficile',
+      word_set: 'semaine-actuelle',
+      correct: 9,
+      total: 10,
+      percentage: 90,
+      hints: 0,
+      moves: 10,
       duolingo_owl_boost: true,
     },
     is_dummy_seed: true,
@@ -509,6 +891,123 @@ export const DEFAULT_DUMMY_SCORES = Object.freeze([
     },
     is_dummy_seed: true,
   },
+  {
+    id: 'scr_seed_13_ale_jigsaw_7x7',
+    game_id: 'kids-jigsaw-puzzle',
+    player_id: 'ale',
+    score: 3180,
+    started_at: '2026-11-07T16:10:00Z',
+    ended_at: '2026-11-07T16:15:10Z',
+    duration_sec: 310,
+    hostname: 'ipad-ale.lan',
+    ip_address: '192.168.1.44',
+    device: 'iPad Air',
+    summary_text: 'Ale solved 7x7 (dragons_kingdom) in 310s!',
+    extra: {
+      difficulty: '7x7',
+      grid: '7x7',
+      grid_size: 7,
+      pieces: 49,
+      moves: 54,
+      tips_used: 0,
+      hints: 0,
+      schema_hash: 'jigsaw_dragons_kingdom_7x7',
+    },
+    is_dummy_seed: true,
+  },
+  {
+    id: 'scr_seed_14_seby_jigsaw_6x6',
+    game_id: 'kids-jigsaw-puzzle',
+    player_id: 'seby',
+    score: 1680,
+    started_at: '2026-11-07T16:20:00Z',
+    ended_at: '2026-11-07T16:23:20Z',
+    duration_sec: 200,
+    hostname: 'ipad-seby.lan',
+    ip_address: '192.168.1.45',
+    device: 'iPad Mini',
+    summary_text: 'Seby solved 6x6 (super_puffin) in 200s!',
+    extra: {
+      difficulty: '6x6',
+      grid: '6x6',
+      grid_size: 6,
+      pieces: 36,
+      moves: 39,
+      tips_used: 0,
+      hints: 0,
+      schema_hash: 'jigsaw_super_puffin_6x6',
+    },
+    is_dummy_seed: true,
+  },
+  {
+    id: 'scr_seed_15_ale_fotoquad_facile',
+    game_id: 'carlesso-fotoquad',
+    player_id: 'ale',
+    score: 1690,
+    started_at: '2026-11-07T17:01:00Z',
+    ended_at: '2026-11-07T17:01:28Z',
+    duration_sec: 28,
+    hostname: 'ipad-ale.lan',
+    ip_address: '192.168.1.44',
+    device: 'iPad Air',
+    summary_text: 'Ale completed FotoQuad Facile with 2 family photos in 28s!',
+    extra: {
+      difficulty: 'facile',
+      level: 'facile',
+      photos: 2,
+      moves: 10,
+      hints: 0,
+      seconds: 28,
+      new_record: true,
+    },
+    is_dummy_seed: true,
+  },
+  {
+    id: 'scr_seed_16_kate_fotoquad_medio',
+    game_id: 'carlesso-fotoquad',
+    player_id: 'kate',
+    score: 3480,
+    started_at: '2026-11-07T17:10:00Z',
+    ended_at: '2026-11-07T17:10:52Z',
+    duration_sec: 52,
+    hostname: 'macbook-di-kate.local',
+    ip_address: '192.168.1.42',
+    device: 'macOS Safari',
+    summary_text: 'Mum Kate conquered FotoQuad Medio with 3 photos in 52s!',
+    extra: {
+      difficulty: 'medio',
+      level: 'medio',
+      photos: 3,
+      moves: 18,
+      hints: 0,
+      seconds: 52,
+      new_record: true,
+    },
+    is_dummy_seed: true,
+  },
+  {
+    id: 'scr_seed_17_ricc_fotoquad_difficile',
+    game_id: 'carlesso-fotoquad',
+    player_id: 'riccardo',
+    score: 5890,
+    started_at: '2026-11-07T17:20:00Z',
+    ended_at: '2026-11-07T17:21:14Z',
+    duration_sec: 74,
+    hostname: 'pupurabbux.tailnet.lan',
+    ip_address: '100.94.27.10',
+    device: 'Linux RTX 5080 (Chrome)',
+    summary_text: 'Dad Riccardo mastered FotoQuad Difficile with 4 photos in 74s!',
+    extra: {
+      difficulty: 'difficile',
+      level: 'difficile',
+      photos: 4,
+      moves: 26,
+      hints: 0,
+      seconds: 74,
+      new_record: true,
+    },
+    is_dummy_seed: true,
+  },
 ]);
 
 export function normalizeProfileId(rawId, allowNull = false) {
@@ -522,6 +1021,16 @@ export function normalizeProfileId(rawId, allowNull = false) {
   return allowNull ? null : 'guest';
 }
 
+export function normalizeGuestName(rawName) {
+  if (rawName === null || rawName === undefined) return null;
+  const cleaned = String(rawName)
+    .replace(/[<>"'`\r\n\t]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 32);
+  return cleaned.length > 0 ? cleaned : null;
+}
+
 export function getProfileById(rawId) {
   const id = normalizeProfileId(rawId, true);
   if (id === null) return NULL_PLAYER_PROFILE;
@@ -529,10 +1038,11 @@ export function getProfileById(rawId) {
 }
 
 export function validateAndNormalizeScorePayload(raw = {}, fallbackTelemetry = {}) {
-  const gameId = String(raw.game_id || raw.gameId || raw.appId || '').trim();
-  if (!gameId) {
+  const rawGameId = String(raw.game_id || raw.gameId || raw.appId || '').trim();
+  if (!rawGameId) {
     throw new Error('[PuffinLogin] Guaranteed field `game_id` is required on every score record.');
   }
+  const gameId = rawGameId.toLowerCase() === 'fotoquad' ? 'carlesso-fotoquad' : rawGameId;
 
   const hasExplicitNull =
     raw.player_id === null ||
@@ -547,12 +1057,30 @@ export function validateAndNormalizeScorePayload(raw = {}, fallbackTelemetry = {
 
   const profile = getProfileById(resolvedPlayerId);
 
+  const rawExtra =
+    (raw.extra && typeof raw.extra === 'object' ? raw.extra : null) ||
+    (raw.metadata && typeof raw.metadata === 'object' ? raw.metadata : null) ||
+    {};
+  const extra = { ...rawExtra };
+
+  const explicitDurationRaw =
+    raw.duration_sec ??
+    raw.durationSec ??
+    extra.duration_sec ??
+    extra.durationSec ??
+    extra.seconds ??
+    extra.timeSeconds ??
+    extra.time_sec ??
+    (extra.durationMs !== undefined ? Math.round(Number(extra.durationMs) / 1000) : undefined);
+  const explicitDurationNum = Number(explicitDurationRaw);
+  const hasExplicitDuration = Number.isFinite(explicitDurationNum) && explicitDurationNum > 0;
+  const fallbackDur = hasExplicitDuration ? Math.max(1, Math.round(explicitDurationNum)) : 180;
+
   const nowIso = new Date().toISOString();
   const endedAtRaw = raw.ended_at || raw.endedAt || raw.playedAt || nowIso;
   const endedMs = Number.isNaN(Date.parse(endedAtRaw)) ? Date.now() : Date.parse(endedAtRaw);
   const endedAt = new Date(endedMs).toISOString();
 
-  const fallbackDur = Number(raw.duration_sec ?? raw.durationSec) || 180;
   const startedAtRaw =
     raw.started_at ||
     raw.startedAt ||
@@ -562,17 +1090,110 @@ export function validateAndNormalizeScorePayload(raw = {}, fallbackTelemetry = {
     : Math.min(endedMs, Date.parse(startedAtRaw));
   const startedAt = new Date(startedMs).toISOString();
 
-  const durationSec = Math.max(1, Math.round((endedMs - startedMs) / 1000));
+  const durationSec = hasExplicitDuration
+    ? Math.max(1, Math.round(explicitDurationNum))
+    : Math.max(1, Math.round((endedMs - startedMs) / 1000));
   const score = Number(raw.score) || 0;
 
-  const rawExtra =
-    (raw.extra && typeof raw.extra === 'object' ? raw.extra : null) ||
-    (raw.metadata && typeof raw.metadata === 'object' ? raw.metadata : null) ||
-    {};
-  const extra = { ...rawExtra };
-  if (raw.mode && !extra.difficulty && !extra.mode) {
-    extra.mode = raw.mode;
+  // Normalize canonical difficulty / mode / level
+  const rawDifficulty =
+    extra.difficulty ??
+    raw.difficulty ??
+    raw.mode ??
+    extra.mode ??
+    (typeof extra.level === 'string' && Number.isNaN(Number(extra.level)) ? extra.level : undefined);
+  if (rawDifficulty !== undefined && rawDifficulty !== null && String(rawDifficulty).trim() !== '') {
+    extra.difficulty = String(rawDifficulty).trim();
   }
+  if (raw.mode && !extra.mode) {
+    extra.mode = String(raw.mode).trim();
+  }
+
+  // Normalize grid & grid_size (e.g., 6x6, 7x7, easy_6x6, grid_size: 7)
+  const rawGridSize = Number(extra.grid_size ?? extra.gridSize ?? raw.grid_size ?? raw.gridSize);
+  if (Number.isInteger(rawGridSize) && rawGridSize > 0) {
+    extra.grid_size = rawGridSize;
+    if (!extra.grid) {
+      extra.grid = `${rawGridSize}x${rawGridSize}`;
+    }
+  } else if (typeof extra.grid === 'string' && /^\d+x\d+$/i.test(extra.grid.trim())) {
+    const cleanGrid = extra.grid.trim().toLowerCase();
+    extra.grid = cleanGrid;
+    const [gx, gy] = cleanGrid.split('x').map(Number);
+    if (gx === gy && gx > 0 && !extra.grid_size) {
+      extra.grid_size = gx;
+    }
+  } else if (typeof extra.difficulty === 'string') {
+    const gridMatch = extra.difficulty.match(/(?:^|_)(\d+)x(\d+)(?:$|_)/i);
+    if (gridMatch) {
+      const gx = Number(gridMatch[1]);
+      const gy = Number(gridMatch[2]);
+      extra.grid = `${gx}x${gy}`;
+      if (gx === gy && gx > 0) {
+        extra.grid_size = gx;
+      }
+    }
+  }
+
+  if (
+    Number.isInteger(extra.grid_size) &&
+    extra.grid_size > 0 &&
+    extra.pieces === undefined &&
+    (gameId === 'kids-jigsaw-puzzle' || String(extra.difficulty || '').includes('x'))
+  ) {
+    extra.pieces = extra.grid_size * extra.grid_size;
+  }
+
+  // Normalize efficiency metrics (moves, hints / tips_used, photos, and quiz correct/total/percentage)
+  if (extra.moves !== undefined && extra.moves !== null && !Number.isNaN(Number(extra.moves))) {
+    extra.moves = Number(extra.moves);
+  } else if (
+    gameId === 'ale-french' &&
+    extra.total !== undefined &&
+    extra.total !== null &&
+    !Number.isNaN(Number(extra.total))
+  ) {
+    extra.moves = Number(extra.total);
+  }
+  const rawHints =
+    extra.hints ?? extra.tips_used ?? extra.hints_used ?? extra.audio_hints ?? raw.hints ?? raw.tips_used;
+  if (rawHints !== undefined && rawHints !== null && !Number.isNaN(Number(rawHints))) {
+    extra.hints = Number(rawHints);
+  } else if (
+    gameId === 'ale-french' &&
+    extra.correct !== undefined &&
+    extra.correct !== null &&
+    !Number.isNaN(Number(extra.correct))
+  ) {
+    // In ale-french each correct answer is 2 pts without audio hint or 1 pt with audio hint
+    extra.hints = Math.max(0, Number(extra.correct) * 2 - score);
+  }
+  if (extra.photos !== undefined && extra.photos !== null && !Number.isNaN(Number(extra.photos))) {
+    extra.photos = Number(extra.photos);
+  }
+
+  // Optional Bragging Friend Guest Name (`guest_name: "Paolo"`)
+  const rawGuestName =
+    raw.guest_name ??
+    raw.guestName ??
+    extra.guest_name ??
+    extra.guestName ??
+    fallbackTelemetry.guest_name ??
+    fallbackTelemetry.guestName;
+  const guestName =
+    resolvedPlayerId === 'guest' || resolvedPlayerId === null
+      ? normalizeGuestName(rawGuestName)
+      : null;
+  if (guestName) {
+    extra.guest_name = guestName;
+  }
+
+  const effectiveDisplayName = guestName
+    ? `${profile.shortName} (${guestName})`
+    : profile.displayName;
+  const effectiveShortName = guestName
+    ? `${profile.shortName} (${guestName})`
+    : profile.shortName;
 
   const hostname = String(raw.hostname ?? fallbackTelemetry.hostname ?? '').trim();
   const ipAddress =
@@ -589,7 +1210,7 @@ export function validateAndNormalizeScorePayload(raw = {}, fallbackTelemetry = {
   const summaryText =
     raw.summary_text ||
     raw.summaryText ||
-    `${profile.displayName} scored ${score} pt in ${gameId}`;
+    `${effectiveDisplayName} scored ${score} pt in ${gameId}`;
 
   return {
     id: raw.id || `scr_${endedMs}_${resolvedPlayerId || 'null'}`,
@@ -598,6 +1219,8 @@ export function validateAndNormalizeScorePayload(raw = {}, fallbackTelemetry = {
     ended_at: endedAt,
     duration_sec: durationSec,
     player_id: resolvedPlayerId,
+    guest_name: guestName,
+    guestName,
     score,
     hostname,
     source_ip: ipAddress,
@@ -611,8 +1234,8 @@ export function validateAndNormalizeScorePayload(raw = {}, fallbackTelemetry = {
     playedAt: endedAt,
     durationSec,
     userId: resolvedPlayerId,
-    displayName: profile.displayName,
-    shortName: profile.shortName,
+    displayName: effectiveDisplayName,
+    shortName: effectiveShortName,
     rpgClass: profile.rpgClass,
     colorHex: profile.colorHex,
     emoji: profile.emoji,
@@ -620,6 +1243,228 @@ export function validateAndNormalizeScorePayload(raw = {}, fallbackTelemetry = {
     ipAddress,
     summaryText,
     metadata: extra,
+  };
+}
+
+function summarizeScoreGroup(items = [], key = 'all', label = 'All') {
+  if (!Array.isArray(items) || items.length === 0) {
+    return {
+      key,
+      label,
+      totalMatches: 0,
+      champion: null,
+      fastestPlayer: null,
+      podium: [],
+      durationStats: { avgSec: 0, minSec: 0, maxSec: 0, medianSec: 0, totalMatches: 0 },
+      efficiencyStats: {
+        totalMatches: 0,
+        minMoves: null,
+        avgMoves: null,
+        minHints: null,
+        avgHints: null,
+      },
+      byPlayer: {},
+    };
+  }
+
+  const byScore = [...items].sort((a, b) => b.score - a.score || a.duration_sec - b.duration_sec);
+  const byDuration = [...items].sort(
+    (a, b) => a.duration_sec - b.duration_sec || b.score - a.score
+  );
+
+  const toChampSummary = (rec) => ({
+    id: rec.id,
+    player_id: rec.player_id,
+    guest_name: rec.guest_name || rec.extra?.guest_name || null,
+    displayName: rec.displayName,
+    shortName: rec.shortName,
+    emoji: rec.emoji,
+    colorHex: rec.colorHex,
+    score: rec.score,
+    duration_sec: rec.duration_sec,
+    moves: rec.extra?.moves ?? null,
+    hints: rec.extra?.hints ?? null,
+    correct: rec.extra?.correct ?? null,
+    total: rec.extra?.total ?? null,
+    percentage: rec.extra?.percentage ?? null,
+    word_set: rec.extra?.word_set ?? null,
+    grid: rec.extra?.grid ?? null,
+    difficulty: rec.extra?.difficulty ?? null,
+    ended_at: rec.ended_at,
+  });
+
+  const champion = toChampSummary(byScore[0]);
+  const fastestPlayer = toChampSummary(byDuration[0]);
+
+  const seenPlayers = new Set();
+  const podium = [];
+  for (const rec of byScore) {
+    const guestSub = rec.guest_name || rec.extra?.guest_name;
+    const pid =
+      guestSub && (rec.player_id === 'guest' || !rec.player_id)
+        ? `guest:${String(guestSub).toLowerCase()}`
+        : rec.player_id || 'null';
+    if (!seenPlayers.has(pid)) {
+      seenPlayers.add(pid);
+      podium.push(toChampSummary(rec));
+      if (podium.length >= 3) break;
+    }
+  }
+
+  const durs = items
+    .map((s) => Number(s.duration_sec))
+    .filter((d) => Number.isFinite(d) && d > 0)
+    .sort((a, b) => a - b);
+  const sumDur = durs.reduce((acc, v) => acc + v, 0);
+  const mid = Math.floor(durs.length / 2);
+  const medianSec =
+    durs.length === 0
+      ? 0
+      : durs.length % 2 === 1
+      ? durs[mid]
+      : Math.round((durs[mid - 1] + durs[mid]) / 2);
+
+  const movesArr = items
+    .map((s) => Number(s.extra?.moves))
+    .filter((m) => Number.isFinite(m) && m >= 0);
+  const hintsArr = items
+    .map((s) => Number(s.extra?.hints))
+    .filter((h) => Number.isFinite(h) && h >= 0);
+
+  const byPlayer = {};
+  for (const rec of items) {
+    const guestSub = rec.guest_name || rec.extra?.guest_name;
+    const pid =
+      guestSub && (rec.player_id === 'guest' || !rec.player_id)
+        ? `guest:${String(guestSub).toLowerCase()}`
+        : rec.player_id || 'null';
+    if (!byPlayer[pid]) {
+      byPlayer[pid] = {
+        player_id: rec.player_id,
+        guest_name: guestSub || null,
+        displayName: rec.displayName,
+        shortName: rec.shortName,
+        emoji: rec.emoji,
+        colorHex: rec.colorHex,
+        matches: 0,
+        bestScore: 0,
+        _scoreSum: 0,
+        bestDurationSec: Infinity,
+        _durSum: 0,
+        minMoves: Infinity,
+        minHints: Infinity,
+      };
+    }
+    const p = byPlayer[pid];
+    p.matches += 1;
+    p._scoreSum += rec.score;
+    p._durSum += rec.duration_sec;
+    if (rec.score > p.bestScore) p.bestScore = rec.score;
+    if (rec.duration_sec < p.bestDurationSec) p.bestDurationSec = rec.duration_sec;
+    if (Number.isFinite(Number(rec.extra?.moves)) && Number(rec.extra.moves) < p.minMoves) {
+      p.minMoves = Number(rec.extra.moves);
+    }
+    if (Number.isFinite(Number(rec.extra?.hints)) && Number(rec.extra.hints) < p.minHints) {
+      p.minHints = Number(rec.extra.hints);
+    }
+  }
+
+  for (const p of Object.values(byPlayer)) {
+    p.avgScore = Math.round(p._scoreSum / p.matches);
+    p.avgDurationSec = Math.round(p._durSum / p.matches);
+    if (p.bestDurationSec === Infinity) p.bestDurationSec = 0;
+    if (p.minMoves === Infinity) p.minMoves = null;
+    if (p.minHints === Infinity) p.minHints = null;
+    delete p._scoreSum;
+    delete p._durSum;
+  }
+
+  return {
+    key,
+    label,
+    totalMatches: items.length,
+    champion,
+    fastestPlayer,
+    podium,
+    durationStats: {
+      avgSec: durs.length ? Math.round(sumDur / durs.length) : 0,
+      minSec: durs.length ? durs[0] : 0,
+      maxSec: durs.length ? durs[durs.length - 1] : 0,
+      medianSec,
+      totalMatches: items.length,
+    },
+    efficiencyStats: {
+      totalMatches: items.length,
+      minMoves: movesArr.length ? Math.min(...movesArr) : null,
+      avgMoves: movesArr.length
+        ? Math.round(movesArr.reduce((a, b) => a + b, 0) / movesArr.length)
+        : null,
+      minHints: hintsArr.length ? Math.min(...hintsArr) : null,
+      avgHints: hintsArr.length
+        ? Math.round((hintsArr.reduce((a, b) => a + b, 0) / hintsArr.length) * 10) / 10
+        : null,
+    },
+    byPlayer,
+  };
+}
+
+export function computePerGameDashboard(scores = [], gameId = '') {
+  const rawTarget = String(gameId || '').trim().toLowerCase();
+  const targetGameId = rawTarget === 'fotoquad' ? 'carlesso-fotoquad' : rawTarget;
+
+  const normalized = (Array.isArray(scores) ? scores : [])
+    .map((s) => {
+      try {
+        return validateAndNormalizeScorePayload(s);
+      } catch {
+        return null;
+      }
+    })
+    .filter((s) => s && (!targetGameId || s.game_id.toLowerCase() === targetGameId));
+
+  const subModeBuckets = new Map();
+  const gridBuckets = new Map();
+
+  for (const s of normalized) {
+    const rawSub = String(
+      s.extra?.difficulty ?? s.extra?.level ?? s.extra?.mode ?? 'standard'
+    )
+      .trim()
+      .toLowerCase();
+    const subKey = rawSub || 'standard';
+    if (!subModeBuckets.has(subKey)) subModeBuckets.set(subKey, []);
+    subModeBuckets.get(subKey).push(s);
+
+    if (s.extra?.grid) {
+      const gKey = String(s.extra.grid).trim().toLowerCase();
+      if (!gridBuckets.has(gKey)) gridBuckets.set(gKey, []);
+      gridBuckets.get(gKey).push(s);
+      if (gKey !== subKey) {
+        if (!subModeBuckets.has(gKey)) subModeBuckets.set(gKey, []);
+        subModeBuckets.get(gKey).push(s);
+      }
+    }
+  }
+
+  const bySubMode = {};
+  for (const [k, list] of subModeBuckets.entries()) {
+    bySubMode[k] = summarizeScoreGroup(list, k, k);
+  }
+
+  const byGrid = {};
+  for (const [k, list] of gridBuckets.entries()) {
+    byGrid[k] = summarizeScoreGroup(list, k, k);
+  }
+
+  const overall = summarizeScoreGroup(normalized, 'all', 'All Modes');
+
+  return {
+    game_id: targetGameId || 'ALL',
+    totalMatches: normalized.length,
+    overall,
+    bySubMode,
+    byGrid,
+    byPlayer: overall.byPlayer,
   };
 }
 
@@ -632,6 +1477,21 @@ export function validateAndNormalizeLoginPayload(raw = {}, fallbackTelemetry = {
     false
   );
   const profile = getProfileById(resolvedPlayerId);
+
+  const rawGuestName =
+    raw.guest_name ??
+    raw.guestName ??
+    raw.extra?.guest_name ??
+    fallbackTelemetry.guest_name ??
+    fallbackTelemetry.guestName;
+  const guestName =
+    resolvedPlayerId === 'guest' ? normalizeGuestName(rawGuestName) : null;
+  const effectiveDisplayName = guestName
+    ? `${profile.shortName} (${guestName})`
+    : profile.displayName;
+  const effectiveShortName = guestName
+    ? `${profile.shortName} (${guestName})`
+    : profile.shortName;
 
   const nowIso = new Date().toISOString();
   const loggedAtRaw = raw.logged_at || raw.loggedAt || raw.timestamp || nowIso;
@@ -650,11 +1510,23 @@ export function validateAndNormalizeLoginPayload(raw = {}, fallbackTelemetry = {
     ).trim() || '127.0.0.1';
   const device = String(raw.device ?? fallbackTelemetry.device ?? 'Browser').trim();
   const authMethod = String(raw.auth_method || raw.authMethod || profile.authType || 'none').trim();
+  const offlineVerified = Boolean(raw.offline_verified ?? raw.offlineVerified ?? false);
+  const authMode = String(
+    raw.auth_mode || raw.authMode || (offlineVerified ? 'offline_md5_seed' : 'online')
+  ).trim();
+  const seedUsed =
+    raw.seed_used || raw.seedUsed || (offlineVerified ? PUFFIN_OFFLINE_SEED : null);
+  const offlineWarning =
+    raw.offline_warning ||
+    raw.offlineWarning ||
+    (offlineVerified ? I18N.it.offlineBannerBody(seedUsed || PUFFIN_OFFLINE_SEED) : null);
 
   return {
     id: raw.id || `lgn_${loggedMs}_${resolvedPlayerId}`,
     player_id: resolvedPlayerId,
     userId: resolvedPlayerId,
+    guest_name: guestName,
+    guestName,
     app_id: appId,
     game_id: appId,
     appId,
@@ -666,8 +1538,16 @@ export function validateAndNormalizeLoginPayload(raw = {}, fallbackTelemetry = {
     hostname,
     device,
     auth_method: authMethod,
-    displayName: profile.displayName,
-    shortName: profile.shortName,
+    offline_verified: offlineVerified,
+    offlineVerified,
+    auth_mode: authMode,
+    authMode,
+    seed_used: seedUsed,
+    seedUsed,
+    offline_warning: offlineWarning,
+    offlineWarning,
+    displayName: effectiveDisplayName,
+    shortName: effectiveShortName,
     role: profile.role,
     colorHex: profile.colorHex,
     avatar: profile.avatar,
@@ -922,7 +1802,13 @@ const COMPONENT_CSS = `
   --puffin-radius: 50%;
 }
 
-/* 1. BIGGER, CUTER, MINIMALIST CORNER PILL BADGE (ONLY Icon + Name — No emoji, no subtitle!) */
+/* 1. BIGGER, CUTER, MINIMALIST CORNER PILL BADGE + ALWAYS-AVAILABLE HIGH SCORES & RING QUICK BAR */
+.puffin-widget-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+}
+
 .puffin-badge-btn {
   display: inline-flex;
   align-items: center;
@@ -947,6 +1833,57 @@ const COMPONENT_CSS = `
   scale: 1.06;
   box-shadow: 0 8px 24px var(--active-glow, rgba(250, 204, 21, 0.48)), inset 0 1px 0 rgba(255, 255, 255, 0.28);
   outline: none;
+}
+
+.puffin-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(24, 30, 58, 0.96), rgba(14, 18, 36, 0.98));
+  border: 2px solid rgba(250, 204, 21, 0.55);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  color: #fde047;
+  font-size: 1.05rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: scale 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+  scale: 1;
+}
+
+.puffin-quick-btn:hover,
+.puffin-quick-btn:focus-visible {
+  scale: 1.12;
+  border-color: #facc15;
+  box-shadow: 0 6px 18px rgba(250, 204, 21, 0.45);
+  outline: none;
+}
+
+.puffin-quick-ring-btn {
+  border-color: rgba(249, 115, 22, 0.65);
+  color: #fb923c;
+}
+
+.puffin-quick-ring-btn:hover,
+.puffin-quick-ring-btn:focus-visible {
+  border-color: #fb923c;
+  box-shadow: 0 6px 18px rgba(249, 115, 22, 0.55);
+}
+
+.badge-offline-icon {
+  font-size: 0.88rem;
+  line-height: 1;
+  background: rgba(245, 158, 11, 0.24);
+  border: 1px solid rgba(251, 191, 36, 0.65);
+  border-radius: 999px;
+  padding: 0.1rem 0.32rem;
+  color: #fde68a;
+}
+
+.badge-offline-icon[hidden] {
+  display: none;
 }
 
 .badge-avatar-wrap {
@@ -1006,15 +1943,21 @@ const COMPONENT_CSS = `
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
 }
 
-/* 2. COMPACT FAMILY SELECTOR DIALOG (2 rows x 4 cols + 3x3 Hero Spotlight Stage) */
+/* 2. COMPACT FAMILY SELECTOR DIALOG + EMBEDDED HIGH SCORES & PUFFIN RING */
 dialog {
   border: none;
   padding: 0;
   background: transparent;
   color: var(--puffin-text);
-  max-width: min(96vw, 520px);
+  max-width: min(96vw, 560px);
   width: 100%;
   margin: auto;
+  transition: max-width 0.22s ease;
+}
+
+dialog[data-active-tab="ring"],
+dialog[data-active-tab="scores"] {
+  max-width: min(96vw, 620px);
 }
 
 dialog:modal {
@@ -1652,6 +2595,20 @@ dialog::backdrop {
   width: 100%;
 }
 
+.guest-brag-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+  width: 100%;
+}
+
+.guest-brag-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #cbd5e1;
+  text-align: left;
+}
+
 .pwd-input {
   flex: 1;
   min-width: 0;
@@ -1717,6 +2674,165 @@ dialog::backdrop {
 .feedback-msg.ok {
   color: #86efac;
 }
+
+.feedback-msg.offline-warn {
+  color: #fde68a;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  border-radius: 0.65rem;
+  padding: 0.32rem 0.55rem;
+}
+
+/* 4. OFFLINE / AIRPLANE MODE WARNING BANNER */
+.offline-warning-banner {
+  background: linear-gradient(135deg, rgba(120, 53, 15, 0.45), rgba(69, 26, 3, 0.62));
+  border: 1.5px solid rgba(251, 191, 36, 0.65);
+  border-radius: 0.9rem;
+  padding: 0.55rem 0.78rem;
+  margin-bottom: 0.65rem;
+  color: #fef3c7;
+  font-size: 0.74rem;
+  line-height: 1.38;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.18);
+}
+
+.offline-warning-banner[hidden] {
+  display: none;
+}
+
+.offline-warning-banner strong {
+  display: block;
+  color: #fde047;
+  font-size: 0.8rem;
+  margin-bottom: 0.14rem;
+}
+
+/* 5. ALWAYS-AVAILABLE MODAL TABS (👤 Players | 🏆 High Scores | 🔥💍 Puffin Ring) */
+.puffin-modal-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.38rem;
+  margin-bottom: 0.68rem;
+  background: rgba(10, 13, 26, 0.72);
+  padding: 0.28rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.modal-tab-btn {
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: #cbd5e1;
+  border-radius: 0.72rem;
+  padding: 0.42rem 0.45rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
+  white-space: nowrap;
+  transition: all 0.16s ease;
+}
+
+.modal-tab-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.modal-tab-btn.active {
+  background: linear-gradient(135deg, #252d58 0%, #1a2040 100%);
+  color: #fde047;
+  border-color: rgba(250, 204, 21, 0.65);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45), 0 0 12px rgba(250, 204, 21, 0.22);
+}
+
+.modal-tab-panel[hidden] {
+  display: none;
+}
+
+.modal-tab-panel[data-tab-panel="scores"],
+.modal-tab-panel[data-tab-panel="ring"] {
+  max-height: min(68vh, 560px);
+  overflow-y: auto;
+  padding-right: 0.15rem;
+}
+
+.scores-scope-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-bottom: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.scores-scope-btn {
+  cursor: pointer;
+  padding: 0.34rem 0.78rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  background: rgba(15, 23, 42, 0.85);
+  color: #cbd5e1;
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  transition: all 0.16s ease;
+}
+
+.scores-scope-btn.active,
+.scores-scope-btn:hover {
+  background: rgba(250, 204, 21, 0.18);
+  color: #fde047;
+  border-color: #facc15;
+}
+
+/* 6. LOGIN BOTTOM DOCK (Quick jump to High Scores + Puffin Ring from Login screen) */
+.login-bottom-dock {
+  margin-top: 0.72rem;
+  padding-top: 0.62rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.42rem;
+}
+
+.dock-pill-btn {
+  flex: 1;
+  min-width: 135px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.42rem 0.65rem;
+  border-radius: 0.75rem;
+  background: rgba(17, 23, 45, 0.9);
+  border: 1.5px solid rgba(250, 204, 21, 0.4);
+  color: #fef08a;
+  font-size: 0.74rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.16s ease;
+}
+
+.dock-pill-btn:hover {
+  background: rgba(250, 204, 21, 0.16);
+  border-color: #facc15;
+  transform: translateY(-1px);
+}
+
+.dock-pill-btn.ring-accent {
+  border-color: rgba(249, 115, 22, 0.55);
+  color: #fed7aa;
+}
+
+.dock-pill-btn.ring-accent:hover {
+  background: rgba(249, 115, 22, 0.22);
+  border-color: #fb923c;
+}
 `;
 
 const KEY_DECORATIONS = {
@@ -1744,15 +2860,20 @@ function getSharedStyleSheet() {
 const template = typeof document !== 'undefined' ? document.createElement('template') : null;
 if (template) {
   template.innerHTML = `
-    <button type="button" class="puffin-badge-btn" part="badge" aria-label="PuffinLogin Profile">
-      <div class="badge-avatar-wrap">
-        <img class="badge-avatar-img" src="" alt="" hidden />
-        <span class="badge-lock-icon">🔒</span>
-      </div>
-      <span class="badge-name"></span>
-    </button>
+    <div class="puffin-widget-bar" part="widget-bar">
+      <button type="button" class="puffin-badge-btn" part="badge" aria-label="PuffinLogin Profile">
+        <div class="badge-avatar-wrap">
+          <img class="badge-avatar-img" src="" alt="" hidden />
+          <span class="badge-lock-icon">🔒</span>
+        </div>
+        <span class="badge-name"></span>
+        <span class="badge-offline-icon" hidden title="Airplane / Offline Mode (Local MD5 + Seed)">✈️</span>
+      </button>
+      <button type="button" class="puffin-quick-btn puffin-quick-scores-btn" part="scores-btn" title="Top 10 High Scores (Hall of Fame)" aria-label="Top 10 High Scores">🏆</button>
+      <button type="button" class="puffin-quick-btn puffin-quick-ring-btn" part="ring-btn" title="Puffin Login Ring (All Family Games)" aria-label="Puffin Login Ring">💍</button>
+    </div>
 
-    <dialog closedby="any" aria-labelledby="puffin-dialog-title">
+    <dialog closedby="any" data-active-tab="login" aria-labelledby="puffin-dialog-title">
       <div class="modal-shell">
         <div class="modal-header">
           <div class="modal-title-wrap">
@@ -1767,18 +2888,58 @@ if (template) {
           </div>
         </div>
 
-        <div class="profiles-strip" role="listbox" aria-label="Carlesso Family Profiles"></div>
+        <div class="offline-warning-banner" role="alert" hidden>
+          <strong class="offline-banner-title"></strong>
+          <span class="offline-banner-body"></span>
+        </div>
 
-        <div class="auth-drawer" hidden>
-          <div class="drawer-stage-row">
-            <div class="drawer-hero-spotlight"></div>
-            <div class="drawer-auth-col">
-              <div class="drawer-header"></div>
-              <div class="drawer-body"></div>
-              <div class="feedback-msg" role="status" aria-live="polite"></div>
-              <button type="button" class="forgot-link" hidden></button>
+        <div class="puffin-modal-tabs" role="tablist" aria-label="PuffinLogin Sections">
+          <button type="button" role="tab" class="modal-tab-btn active" data-modal-tab="login" aria-selected="true">
+            👤 <span class="tab-label-login">Giocatori</span>
+          </button>
+          <button type="button" role="tab" class="modal-tab-btn" data-modal-tab="scores" aria-selected="false">
+            🏆 <span class="tab-label-scores">High Scores</span>
+          </button>
+          <button type="button" role="tab" class="modal-tab-btn" data-modal-tab="ring" aria-selected="false">
+            🔥💍 <span class="tab-label-ring">Puffin Ring</span>
+          </button>
+        </div>
+
+        <div class="modal-tab-panel" data-tab-panel="login">
+          <div class="profiles-strip" role="listbox" aria-label="Carlesso Family Profiles"></div>
+
+          <div class="auth-drawer" hidden>
+            <div class="drawer-stage-row">
+              <div class="drawer-hero-spotlight"></div>
+              <div class="drawer-auth-col">
+                <div class="drawer-header"></div>
+                <div class="drawer-body"></div>
+                <div class="feedback-msg" role="status" aria-live="polite"></div>
+                <button type="button" class="forgot-link" hidden></button>
+              </div>
             </div>
           </div>
+
+          <div class="login-bottom-dock">
+            <button type="button" class="dock-pill-btn" data-dock-action="open-scores">
+              🏆 <span class="dock-scores-label">Top 10 High Scores</span>
+            </button>
+            <button type="button" class="dock-pill-btn ring-accent" data-dock-action="open-ring">
+              🔥💍 <span class="dock-ring-label">Puffin Ring</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-tab-panel" data-tab-panel="scores" hidden>
+          <div class="scores-scope-bar">
+            <button type="button" class="scores-scope-btn active" data-scores-scope="game"></button>
+            <button type="button" class="scores-scope-btn" data-scores-scope="ALL"></button>
+          </div>
+          <puffin-leaderboard class="modal-embedded-leaderboard"></puffin-leaderboard>
+        </div>
+
+        <div class="modal-tab-panel" data-tab-panel="ring" hidden>
+          <puffin-ring class="modal-embedded-ring"></puffin-ring>
         </div>
       </div>
     </dialog>
@@ -1819,6 +2980,8 @@ export class PuffinLoginElement extends BaseElement {
     this.pinBuffer = '';
     this.showPassword = false;
     this.highlightGuest = false;
+    this.activeTab = 'login';
+    this.scoresScope = 'game';
     this.listeners = new Set();
     this._jamTimer = null;
 
@@ -1826,12 +2989,28 @@ export class PuffinLoginElement extends BaseElement {
     this.$badgeImg = this.shadowRoot.querySelector('.badge-avatar-img');
     this.$badgeLock = this.shadowRoot.querySelector('.badge-lock-icon');
     this.$badgeName = this.shadowRoot.querySelector('.badge-name');
+    this.$badgeOfflineIcon = this.shadowRoot.querySelector('.badge-offline-icon');
+    this.$quickScoresBtn = this.shadowRoot.querySelector('.puffin-quick-scores-btn');
+    this.$quickRingBtn = this.shadowRoot.querySelector('.puffin-quick-ring-btn');
     this.$dialog = this.shadowRoot.querySelector('dialog');
     this.$title = this.shadowRoot.querySelector('#puffin-dialog-title');
     this.$sub = this.shadowRoot.querySelector('#puffin-dialog-sub');
     this.$langBtn = this.shadowRoot.querySelector('.lang-btn');
     this.$logoutBtn = this.shadowRoot.querySelector('.logout-btn');
     this.$closeBtn = this.shadowRoot.querySelector('.close-btn');
+    this.$offlineBanner = this.shadowRoot.querySelector('.offline-warning-banner');
+    this.$offlineBannerTitle = this.shadowRoot.querySelector('.offline-banner-title');
+    this.$offlineBannerBody = this.shadowRoot.querySelector('.offline-banner-body');
+    this.$tabBtns = Array.from(this.shadowRoot.querySelectorAll('[data-modal-tab]'));
+    this.$tabPanels = Array.from(this.shadowRoot.querySelectorAll('[data-tab-panel]'));
+    this.$tabLabelLogin = this.shadowRoot.querySelector('.tab-label-login');
+    this.$tabLabelScores = this.shadowRoot.querySelector('.tab-label-scores');
+    this.$tabLabelRing = this.shadowRoot.querySelector('.tab-label-ring');
+    this.$dockScoresLabel = this.shadowRoot.querySelector('.dock-scores-label');
+    this.$dockRingLabel = this.shadowRoot.querySelector('.dock-ring-label');
+    this.$scoresScopeBtns = Array.from(this.shadowRoot.querySelectorAll('[data-scores-scope]'));
+    this.$embeddedLeaderboard = this.shadowRoot.querySelector('.modal-embedded-leaderboard');
+    this.$embeddedRing = this.shadowRoot.querySelector('.modal-embedded-ring');
     this.$grid = this.shadowRoot.querySelector('.profiles-strip');
     this.$pills = this.shadowRoot.querySelector('.policy-pills');
     this.$drawer = this.shadowRoot.querySelector('.auth-drawer');
@@ -1840,6 +3019,14 @@ export class PuffinLoginElement extends BaseElement {
     this.$drawerBody = this.shadowRoot.querySelector('.drawer-body');
     this.$feedback = this.shadowRoot.querySelector('.feedback-msg');
     this.$forgotBtn = this.shadowRoot.querySelector('.forgot-link');
+
+    this._onConnectivityChange = () => {
+      this.renderBadge();
+      this.renderOfflineBanner();
+      if (!isAirplaneModeActive()) {
+        PuffinLogin.flushOfflineOutbox().catch(() => {});
+      }
+    };
   }
 
   t() {
@@ -1848,13 +3035,44 @@ export class PuffinLoginElement extends BaseElement {
 
   connectedCallback() {
     ensureDummyScoresSeeded(false);
+    ensureOfflineSeedCached(false);
     this.syncConfigFromAttributes();
     detectClientTelemetry(this.config).catch(() => {});
     this.ensureActiveSession();
     this.renderBadge();
     this.renderModalContent();
 
-    this.$badgeBtn.addEventListener('click', () => this.openModal());
+    if (typeof window !== 'undefined') {
+      window.addEventListener('online', this._onConnectivityChange);
+      window.addEventListener('offline', this._onConnectivityChange);
+      window.addEventListener('puffin-connectivity-changed', this._onConnectivityChange);
+    }
+
+    this.$badgeBtn.addEventListener('click', () => this.openModal({ tab: 'login' }));
+    this.$quickScoresBtn?.addEventListener('click', () => this.openScores());
+    this.$quickRingBtn?.addEventListener('click', () => this.openRing());
+
+    this.$tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.getAttribute('data-modal-tab') || 'login';
+        this.switchModalTab(targetTab);
+      });
+    });
+
+    this.shadowRoot.querySelector('[data-dock-action="open-scores"]')?.addEventListener('click', () => {
+      this.switchModalTab('scores');
+    });
+    this.shadowRoot.querySelector('[data-dock-action="open-ring"]')?.addEventListener('click', () => {
+      this.switchModalTab('ring');
+    });
+
+    this.$scoresScopeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.scoresScope = btn.getAttribute('data-scores-scope') === 'ALL' ? 'ALL' : 'game';
+        this._syncEmbeddedWidgets();
+      });
+    });
+
     this.$langBtn.addEventListener('click', () => {
       const nextLang = this.config.lang === 'en' ? 'it' : 'en';
       this.setLang(nextLang);
@@ -1878,7 +3096,7 @@ export class PuffinLoginElement extends BaseElement {
     if (this.getCurrentUser() === null && this.config.requireLogin) {
       setTimeout(() => {
         if (this.getCurrentUser() === null && !this.$dialog.open) {
-          this.openModal();
+          this.openModal({ tab: 'login' });
         }
       }, 40);
     }
@@ -1886,6 +3104,11 @@ export class PuffinLoginElement extends BaseElement {
 
   disconnectedCallback() {
     if (this._jamTimer) clearInterval(this._jamTimer);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('online', this._onConnectivityChange);
+      window.removeEventListener('offline', this._onConnectivityChange);
+      window.removeEventListener('puffin-connectivity-changed', this._onConnectivityChange);
+    }
   }
 
   attributeChangedCallback() {
@@ -2052,8 +3275,13 @@ export class PuffinLoginElement extends BaseElement {
       if (session?.userId) {
         const found = PUFFIN_PROFILES.find((p) => p.id === session.userId);
         if (found) {
+          const guestName = found.id === 'guest' ? normalizeGuestName(session.guest_name) : null;
           return {
             ...found,
+            guest_name: guestName,
+            guestName,
+            displayName: guestName ? `${found.shortName} (${guestName})` : found.displayName,
+            shortName: guestName ? `${found.shortName} (${guestName})` : found.shortName,
             loggedAt: session.loggedAt,
             logged_at: session.logged_at,
             appId: session.appId,
@@ -2063,6 +3291,11 @@ export class PuffinLoginElement extends BaseElement {
             ipAddress: session.ipAddress,
             hostname: session.hostname,
             device: session.device,
+            offline_verified: Boolean(session.offline_verified),
+            offlineVerified: Boolean(session.offline_verified),
+            auth_mode: session.auth_mode || 'online',
+            seed_used: session.seed_used || null,
+            offline_warning: session.offline_warning || null,
           };
         }
       }
@@ -2173,7 +3406,7 @@ export class PuffinLoginElement extends BaseElement {
     }
   }
 
-  saveActiveSession(userId, emitEvent = true) {
+  saveActiveSession(userId, emitEvent = true, options = {}) {
     const prev = this.getCurrentUser();
     const id = normalizeProfileId(userId, true);
     if (!id) {
@@ -2181,6 +3414,19 @@ export class PuffinLoginElement extends BaseElement {
       return null;
     }
     const baseProfile = PUFFIN_PROFILES.find((p) => p.id === id) || PUFFIN_PROFILES[0];
+    const guestName =
+      baseProfile.id === 'guest'
+        ? normalizeGuestName(options.guest_name ?? options.guestName ?? this.guestNameBuffer)
+        : null;
+    if (baseProfile.id === 'guest') {
+      try {
+        if (guestName) {
+          localStorage.setItem(STORAGE_KEYS.GUEST_NAME, guestName);
+        } else {
+          localStorage.removeItem(STORAGE_KEYS.GUEST_NAME);
+        }
+      } catch {}
+    }
     const nowIso = new Date().toISOString();
     const initialIp =
       this.config.ipAddress ||
@@ -2198,9 +3444,18 @@ export class PuffinLoginElement extends BaseElement {
         (navigator.userAgentData?.platform || navigator.platform)) ||
       'Browser';
 
+    const offlineNow = Boolean(options.offline_verified ?? isAirplaneModeActive());
+    const seedUsed =
+      options.seed_used || options.seedUsed || (offlineNow ? PUFFIN_OFFLINE_SEED : null);
+    const offlineWarning =
+      options.offline_warning ||
+      options.offlineWarning ||
+      (offlineNow ? this.t().offlineBannerBody(seedUsed || PUFFIN_OFFLINE_SEED) : null);
+
     const session = validateAndNormalizeLoginPayload({
       id: `lgn_${Date.now()}_${baseProfile.id}`,
       player_id: baseProfile.id,
+      guest_name: guestName,
       app_id: this.config.appId,
       logged_at: nowIso,
       source_ip: initialIp,
@@ -2208,13 +3463,23 @@ export class PuffinLoginElement extends BaseElement {
       hostname: initialHost === 'localhost' || initialHost === '127.0.0.1' ? '' : initialHost,
       device: initialDevice,
       auth_method: baseProfile.authType || 'none',
+      offline_verified: offlineNow,
+      auth_mode: offlineNow ? 'offline_md5_seed' : 'online',
+      seed_used: seedUsed,
+      offline_warning: offlineWarning,
     });
 
     this._persistLocalLoginSession(session);
-    this._syncLoginTelemetry(session);
+    if (!offlineNow) {
+      this._syncLoginTelemetry(session);
+    }
 
     const next = this.getCurrentUser() || {
       ...baseProfile,
+      guest_name: guestName,
+      guestName,
+      displayName: guestName ? `${baseProfile.shortName} (${guestName})` : baseProfile.displayName,
+      shortName: guestName ? `${baseProfile.shortName} (${guestName})` : baseProfile.shortName,
       loggedAt: session.loggedAt,
       logged_at: session.logged_at,
       appId: session.appId,
@@ -2224,6 +3489,11 @@ export class PuffinLoginElement extends BaseElement {
       ipAddress: session.ipAddress,
       hostname: session.hostname,
       device: session.device,
+      offline_verified: offlineNow,
+      offlineVerified: offlineNow,
+      auth_mode: session.auth_mode,
+      seed_used: session.seed_used,
+      offline_warning: session.offline_warning,
     };
 
     this.highlightGuest = false;
@@ -2253,6 +3523,10 @@ export class PuffinLoginElement extends BaseElement {
   renderBadge() {
     const user = this.getCurrentUser();
     const tr = this.t();
+    const isOffline = isAirplaneModeActive() || Boolean(user?.offline_verified);
+    if (this.$badgeOfflineIcon) {
+      this.$badgeOfflineIcon.hidden = !isOffline;
+    }
     if (!user) {
       // Unauthenticated (identity === NULL)
       this.$badgeBtn.dataset.userId = 'null';
@@ -2263,7 +3537,7 @@ export class PuffinLoginElement extends BaseElement {
       this.$badgeName.textContent = tr.badgeLogin;
       return;
     }
-    // Ultra-minimalist badge: ONLY Icon + Name (no emoji, no subtitles!)
+    // Ultra-minimalist badge: ONLY Icon + Name (plus ✈️ indicator if offline!)
     this.$badgeBtn.dataset.userId = user.id;
     this.$badgeBtn.style.setProperty('--active-color', user.colorHex);
     this.$badgeBtn.style.setProperty('--active-glow', user.glowHex);
@@ -2276,6 +3550,83 @@ export class PuffinLoginElement extends BaseElement {
     } else {
       this.$badgeName.textContent = user.shortName;
     }
+  }
+
+  renderOfflineBanner() {
+    if (!this.$offlineBanner) return;
+    const tr = this.t();
+    const session = this.getAuthSession();
+    const offlineActive = isAirplaneModeActive() || Boolean(session?.offline_verified);
+    const seedBundle = ensureOfflineSeedCached(false);
+    const seedName = session?.seed_used || seedBundle?.seed || PUFFIN_OFFLINE_SEED;
+    this.$offlineBanner.hidden = !offlineActive;
+    if (offlineActive) {
+      if (this.$offlineBannerTitle) {
+        this.$offlineBannerTitle.textContent = tr.offlineBannerTitle;
+      }
+      if (this.$offlineBannerBody) {
+        this.$offlineBannerBody.textContent = tr.offlineBannerBody(seedName);
+      }
+    }
+  }
+
+  _syncEmbeddedWidgets() {
+    const tr = this.t();
+    const gameId = this.config?.appId || 'puffin-login';
+    if (this.$scoresScopeBtns?.length) {
+      this.$scoresScopeBtns.forEach((btn) => {
+        const sc = btn.getAttribute('data-scores-scope');
+        const isAct = sc === this.scoresScope;
+        btn.classList.toggle('active', isAct);
+        btn.textContent = sc === 'ALL' ? tr.scopeAllGames : tr.scopeCurrentGame(gameId);
+      });
+    }
+    if (this.$embeddedLeaderboard) {
+      const targetFilter = this.scoresScope === 'ALL' ? 'ALL' : gameId;
+      if (this.$embeddedLeaderboard.getAttribute('filter-game') !== targetFilter) {
+        this.$embeddedLeaderboard.setAttribute('filter-game', targetFilter);
+      }
+      if (typeof this.$embeddedLeaderboard.refresh === 'function') {
+        this.$embeddedLeaderboard.refresh();
+      }
+    }
+    if (this.$embeddedRing) {
+      const ringBg = `${this.config.assetBaseUrl}/assets/puffin-ring.png`.replace(/\/\//g, '/');
+      if (this.$embeddedRing.getAttribute('bg-src') !== ringBg) {
+        this.$embeddedRing.setAttribute('bg-src', ringBg);
+      }
+      if (typeof this.$embeddedRing.render === 'function') {
+        this.$embeddedRing.render();
+      }
+    }
+  }
+
+  switchModalTab(tabName = 'login') {
+    const cleanTab =
+      tabName === 'scores' || tabName === 'ring' ? tabName : 'login';
+    this.activeTab = cleanTab;
+    this.$dialog?.setAttribute('data-active-tab', cleanTab);
+    this.$tabBtns?.forEach((btn) => {
+      const isMatch = btn.getAttribute('data-modal-tab') === cleanTab;
+      btn.classList.toggle('active', isMatch);
+      btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+    });
+    this.$tabPanels?.forEach((panel) => {
+      const isMatch = panel.getAttribute('data-tab-panel') === cleanTab;
+      panel.hidden = !isMatch;
+    });
+    this._syncEmbeddedWidgets();
+  }
+
+  openScores(scope = null) {
+    if (scope === 'ALL' || scope === 'game') {
+      this.scoresScope = scope;
+    }
+    this.openModal({ tab: 'scores', scoresScope: this.scoresScope });
+  }
+
+  openRing() {
+    this.openModal({ tab: 'ring' });
   }
 
   _startCardVideo(card) {
@@ -2325,12 +3676,29 @@ export class PuffinLoginElement extends BaseElement {
     this.$closeBtn.hidden = !activeUser && this.config.requireLogin;
     this.$dialog.setAttribute('closedby', !activeUser && this.config.requireLogin ? 'none' : 'any');
 
-    const pills = [];
+    if (this.$tabLabelLogin) this.$tabLabelLogin.textContent = tr.tabLogin;
+    if (this.$tabLabelScores) this.$tabLabelScores.textContent = tr.tabScores;
+    if (this.$tabLabelRing) this.$tabLabelRing.textContent = tr.tabRing;
+    if (this.$dockScoresLabel) {
+      this.$dockScoresLabel.textContent = tr.dockScoresBtn.replace(/^🏆\s*/, '');
+    }
+    if (this.$dockRingLabel) {
+      const ringCount = getPuffinRingApps({ includeCandidates: true }).length;
+      this.$dockRingLabel.textContent = tr.dockRingBtn(ringCount).replace(/^🔥💍\s*/, '');
+    }
+
+    const pills = [`<span class="policy-pill">🐧 v${PUFFIN_LOGIN_VERSION}</span>`];
+    if (isAirplaneModeActive() || activeUser?.offline_verified) {
+      pills.push(`<span class="policy-pill warn">✈️ Offline MD5+Seed</span>`);
+    }
     if (!this.config.acceptGuest) pills.push(`<span class="policy-pill warn">No Guest</span>`);
     if (this.config.requireStrongAuth) pills.push(`<span class="policy-pill warn">Strong Auth</span>`);
     if (this.config.matureOnly) pills.push(`<span class="policy-pill warn">Adults Only</span>`);
     this.$pills.innerHTML = pills.join('');
     this.$pills.hidden = pills.length === 0;
+
+    this.renderOfflineBanner();
+    this._syncEmbeddedWidgets();
 
     this.$grid.innerHTML = '';
 
@@ -2417,7 +3785,23 @@ export class PuffinLoginElement extends BaseElement {
     }
   }
 
-  openModal(preselectUserId = null) {
+  openModal(preselectOrOptions = null) {
+    let targetTab = 'login';
+    let preselectUserId = null;
+    if (preselectOrOptions && typeof preselectOrOptions === 'object') {
+      targetTab = preselectOrOptions.tab || 'login';
+      preselectUserId = preselectOrOptions.userId || null;
+      if (preselectOrOptions.scoresScope) {
+        this.scoresScope = preselectOrOptions.scoresScope;
+      }
+    } else if (typeof preselectOrOptions === 'string') {
+      if (preselectOrOptions === 'scores' || preselectOrOptions === 'ring') {
+        targetTab = preselectOrOptions;
+      } else {
+        preselectUserId = preselectOrOptions;
+      }
+    }
+
     if (preselectUserId) {
       const found = PUFFIN_PROFILES.find((p) => p.id === normalizeProfileId(preselectUserId));
       if (found && found.role !== 'bot' && this.evaluatePolicy(found).allowed) {
@@ -2429,6 +3813,7 @@ export class PuffinLoginElement extends BaseElement {
       this.$feedback.textContent = '';
       this.renderModalContent();
     }
+    this.switchModalTab(targetTab);
     if (typeof this.$dialog.showModal === 'function' && !this.$dialog.open) {
       this.$dialog.showModal();
     }
@@ -2487,21 +3872,58 @@ export class PuffinLoginElement extends BaseElement {
     }
 
     if (profile.authType === 'none') {
+      let savedGuestName = '';
+      try {
+        savedGuestName =
+          this.getAuthSession()?.guest_name ||
+          localStorage.getItem(STORAGE_KEYS.GUEST_NAME) ||
+          '';
+      } catch {}
+      const cleanInitialGuest = normalizeGuestName(savedGuestName) || '';
+      const initialBtnText = cleanInitialGuest
+        ? tr.playAsGuestNamedBtn(cleanInitialGuest)
+        : tr.playAsGuestBtn;
+
       this.$drawerHeader.innerHTML = `
         <span><strong>${profile.shortName}</strong></span>
-        <span class="attempts-pill">1-Click</span>
+        <span class="attempts-pill">1-Click + Bragging</span>
       `;
       this.$forgotBtn.hidden = true;
       this.$drawerBody.innerHTML = `
-        <button type="button" class="action-btn" id="confirm-guest-btn" style="width:100%;padding:0.65rem 1rem;font-size:0.95rem;">
-          🐧 ${tr.playAsGuestBtn}
-        </button>
+        <form class="guest-brag-form" id="guest-login-form">
+          <label class="guest-brag-label" for="guest-name-input">${tr.guestNameLabel}</label>
+          <input
+            type="text"
+            id="guest-name-input"
+            name="guest_name"
+            class="pwd-input guest-name-input"
+            placeholder="${tr.guestNamePlaceholder}"
+            maxlength="32"
+            autocomplete="nickname"
+          />
+          <button type="submit" class="action-btn" id="confirm-guest-btn" style="width:100%;padding:0.65rem 1rem;font-size:0.95rem;">
+            🐧 <span id="confirm-guest-btn-label">${initialBtnText}</span>
+          </button>
+        </form>
       `;
-      const $gBtn = this.$drawerBody.querySelector('#confirm-guest-btn');
-      setTimeout(() => $gBtn?.focus(), 30);
-      $gBtn?.addEventListener('click', () => {
+      const $gForm = this.$drawerBody.querySelector('#guest-login-form');
+      const $gInput = this.$drawerBody.querySelector('#guest-name-input');
+      const $gLabel = this.$drawerBody.querySelector('#confirm-guest-btn-label');
+      if ($gInput) {
+        $gInput.value = cleanInitialGuest;
+        setTimeout(() => $gInput.focus(), 30);
+        $gInput.addEventListener('input', () => {
+          const typed = normalizeGuestName($gInput.value);
+          if ($gLabel) {
+            $gLabel.textContent = typed ? tr.playAsGuestNamedBtn(typed) : tr.playAsGuestBtn;
+          }
+        });
+      }
+      $gForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
         playTone(660, 90, 'triangle');
-        this.saveActiveSession(profile.id, true);
+        const guestName = normalizeGuestName($gInput?.value);
+        this.saveActiveSession(profile.id, true, { guest_name: guestName });
         this.$dialog.close();
       });
       return;
@@ -2715,17 +4137,31 @@ export class PuffinLoginElement extends BaseElement {
     }
 
     const clean = String(inputSecret || '').trim();
-    const inputHash = await computePuffinSecretHash(profile.id, clean);
-    if (inputHash === profile.secretHash) {
+    const authRes = await verifyPuffinCredentials(profile.id, clean, {
+      lang: this.config.lang,
+      appId: this.config.appId,
+      apiUrl: this.config.apiUrl,
+    });
+    if (authRes.ok) {
       this.resetLockout(profile.id);
       playTone(587.33, 80, 'triangle');
       setTimeout(() => playTone(880, 140, 'triangle'), 85);
       const dispName =
         this.config.lang === 'en' ? profile.displayNameEn || profile.displayName : profile.displayName;
-      this.$feedback.textContent = tr.welcomeMsg(dispName);
-      this.$feedback.className = 'feedback-msg ok';
-      this.saveActiveSession(profile.id, true);
-      setTimeout(() => this.$dialog.close(), 260);
+      if (authRes.offline_verified) {
+        this.$feedback.textContent =
+          authRes.warning || tr.welcomeOfflineMsg(dispName, authRes.seed || PUFFIN_OFFLINE_SEED);
+        this.$feedback.className = 'feedback-msg offline-warn';
+      } else {
+        this.$feedback.textContent = tr.welcomeMsg(dispName);
+        this.$feedback.className = 'feedback-msg ok';
+      }
+      this.saveActiveSession(profile.id, true, {
+        offline_verified: authRes.offline_verified,
+        seed_used: authRes.seed,
+        offline_warning: authRes.warning,
+      });
+      setTimeout(() => this.$dialog.close(), authRes.offline_verified ? 520 : 260);
     } else {
       const newLock = this.recordFailedAttempt(profile.id);
       this.pinBuffer = '';
@@ -3288,18 +4724,6 @@ export const PUFFIN_LOGIN_RING_DEFAULT = [
     supports_puffin_login: true,
     status: 'live',
   },
-  {
-    id: 'ale-french',
-    puffin_game_id: 'ale-french',
-    title: '🇫🇷 Ale & Seby French',
-    shortTitle: 'Ale French',
-    emoji: '🇫🇷',
-    play_url: 'https://palladius.github.io/ale-french/',
-    repo_url: 'https://github.com/palladius/ale-french',
-    screenshot: 'https://palladius.github.io/vetrina/assets/screenshots/ale-french.png',
-    supports_puffin_login: true,
-    status: 'live',
-  },
 ];
 
 export const PUFFIN_LOGIN_RING_CANDIDATES = [
@@ -3312,6 +4736,18 @@ export const PUFFIN_LOGIN_RING_CANDIDATES = [
     play_url: 'https://palladius.github.io/family-mahjong-3d/',
     repo_url: 'https://github.com/palladius/family-mahjong-3d',
     screenshot: 'https://palladius.github.io/vetrina/assets/screenshots/family-mahjong-3d.jpg',
+    supports_puffin_login: false,
+    status: 'candidate',
+  },
+  {
+    id: 'ale-french',
+    puffin_game_id: 'ale-french',
+    title: '🇫🇷 Ale & Seby French',
+    shortTitle: 'Ale French',
+    emoji: '🇫🇷',
+    play_url: 'https://palladius.github.io/ale-french/',
+    repo_url: 'https://github.com/palladius/ale-french',
+    screenshot: 'https://palladius.github.io/vetrina/assets/screenshots/ale-french.png',
     supports_puffin_login: false,
     status: 'candidate',
   },
@@ -3459,7 +4895,7 @@ export class PuffinLeaderboardElement extends BaseElement {
   async syncFromCloud() {
     try {
       const cfg = resolvePuffinConfig();
-      const res = await fetch(`${cfg.apiUrl}/scores?limit=50`);
+      const res = await fetch(`${cfg.apiUrl}/scores?limit=250`);
       if (!res.ok) return;
       const data = await res.json();
       if (!Array.isArray(data?.scores) || data.scores.length === 0) return;
@@ -3550,7 +4986,7 @@ export class PuffinLeaderboardElement extends BaseElement {
       const nameHtml =
         profile.role === 'bot'
           ? `<tt class="robot-tt">${profile.shortName}</tt>`
-          : profile.shortName;
+          : entry.shortName || profile.shortName;
 
       const rolePillHtml = `<span class="hof-role-pill">${profile.emoji || ''} ${profile.rpgClass || ''}</span>`;
       const summaryHtml = entry.summary_text
@@ -3681,6 +5117,8 @@ export class PuffinLeaderboardElement extends BaseElement {
 const _activeGameStarts = new Map();
 
 export const PuffinLogin = {
+  version: PUFFIN_LOGIN_VERSION,
+  VERSION: PUFFIN_LOGIN_VERSION,
   /**
    * Dedicated programmatic login for Antigravity UAT Bot ('bot' / 'saga').
    * Never selectable via human UI ("This is for bots not for you!").
@@ -3700,11 +5138,35 @@ export const PuffinLogin = {
     }
     return botProfile;
   },
+  /**
+   * Programmatic login as Guest with an optional bragging friend name (`guest_name: "Paolo"`).
+   */
+  loginAsGuest(guestName = null) {
+    const cleanGuest = normalizeGuestName(guestName);
+    const el = typeof document !== 'undefined' ? document.querySelector('puffin-login') : null;
+    if (el) {
+      el.saveActiveSession('guest', true, { guest_name: cleanGuest });
+      if (el.$dialog?.open) el.$dialog.close();
+      return el.getCurrentUser();
+    }
+    const session = validateAndNormalizeLoginPayload({
+      player_id: 'guest',
+      guest_name: cleanGuest,
+    });
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(session));
+        if (cleanGuest) localStorage.setItem(STORAGE_KEYS.GUEST_NAME, cleanGuest);
+      }
+    } catch {}
+    return this.getCurrentUser();
+  },
   init(options = {}) {
     if (typeof window !== 'undefined') {
       window.PUFFINLOGIN_ENV = { ...(window.PUFFINLOGIN_ENV || {}), ...options };
     }
     ensureDummyScoresSeeded(false);
+    ensureOfflineSeedCached(false);
     const cfg = resolvePuffinConfig(options);
     _activeGameStarts.set(cfg.appId, new Date().toISOString());
 
@@ -3759,20 +5221,24 @@ export const PuffinLogin = {
     const session = this.getAuthSession();
     if (!session?.userId) return null;
     const found = PUFFIN_PROFILES.find((p) => p.id === session.userId);
-    return found
-      ? {
-          ...found,
-          loggedAt: session.loggedAt,
-          logged_at: session.logged_at,
-          appId: session.appId,
-          app_id: session.app_id,
-          source_ip: session.source_ip,
-          ip_address: session.ip_address,
-          ipAddress: session.ipAddress,
-          hostname: session.hostname,
-          device: session.device,
-        }
-      : null;
+    if (!found) return null;
+    const guestName = found.id === 'guest' ? normalizeGuestName(session.guest_name) : null;
+    return {
+      ...found,
+      guest_name: guestName,
+      guestName,
+      displayName: guestName ? `${found.shortName} (${guestName})` : found.displayName,
+      shortName: guestName ? `${found.shortName} (${guestName})` : found.shortName,
+      loggedAt: session.loggedAt,
+      logged_at: session.logged_at,
+      appId: session.appId,
+      app_id: session.app_id,
+      source_ip: session.source_ip,
+      ip_address: session.ip_address,
+      ipAddress: session.ipAddress,
+      hostname: session.hostname,
+      device: session.device,
+    };
   },
 
   /**
@@ -3884,12 +5350,32 @@ export const PuffinLogin = {
         ? activeUser.id
         : null;
 
+    const explicitGuestName =
+      payload.guest_name ??
+      payload.guestName ??
+      (payload.extra && (payload.extra.guest_name ?? payload.extra.guestName)) ??
+      (payload.metadata && (payload.metadata.guest_name ?? payload.metadata.guestName)) ??
+      (activeUser?.id === 'guest' ? activeUser.guest_name : null);
+
     const endIso = payload.ended_at || payload.endedAt || new Date().toISOString();
-    const fallbackDurSec = Number(payload.duration_sec ?? payload.durationSec) || 210;
+    const rawMeta = payload.extra || payload.metadata || {};
+    const explicitDurSec = Number(
+      payload.duration_sec ??
+        payload.durationSec ??
+        rawMeta.duration_sec ??
+        rawMeta.durationSec ??
+        rawMeta.seconds ??
+        rawMeta.timeSeconds ??
+        (rawMeta.durationMs !== undefined ? Math.round(Number(rawMeta.durationMs) / 1000) : NaN)
+    );
+    const hasExplicitDur = Number.isFinite(explicitDurSec) && explicitDurSec > 0;
+    const fallbackDurSec = hasExplicitDur ? Math.max(1, Math.round(explicitDurSec)) : 210;
     const startIso =
       payload.started_at ||
       payload.startedAt ||
-      _activeGameStarts.get(cfg.appId) ||
+      (hasExplicitDur
+        ? new Date(Date.parse(endIso) - fallbackDurSec * 1000).toISOString()
+        : _activeGameStarts.get(cfg.appId)) ||
       new Date(Date.parse(endIso) - fallbackDurSec * 1000).toISOString();
 
     _activeGameStarts.set(cfg.appId, new Date().toISOString());
@@ -3899,6 +5385,8 @@ export const PuffinLogin = {
         ...payload,
         game_id: cfg.appId,
         player_id: explicitPlayerId,
+        guest_name: explicitGuestName,
+        duration_sec: hasExplicitDur ? fallbackDurSec : payload.duration_sec,
         started_at: startIso,
         ended_at: endIso,
       },
@@ -3924,7 +5412,32 @@ export const PuffinLogin = {
       }).catch(() => {});
     } catch {}
 
-    window.dispatchEvent(new CustomEvent('puffin-score-recorded', { detail: normalized }));
+    if (!payload.skipCardDrop && (Number(normalized.score) || 0) > 0) {
+      if (payload.interactivePack) {
+        this.openGameBoosterPack({
+          player_id: normalized.player_id || 'guest',
+          game_id: normalized.game_id,
+          score: normalized.score,
+          difficulty: normalized.extra?.difficulty || normalized.extra?.mode || payload.mode || '',
+          extra: normalized.extra,
+          interactive: true,
+        }).catch(() => {});
+      } else {
+        this.unlockCard({
+          player_id: normalized.player_id || 'guest',
+          game_id: normalized.game_id,
+          score: normalized.score,
+          difficulty: normalized.extra?.difficulty || normalized.extra?.mode || payload.mode || '',
+          extra: normalized.extra,
+          autoIncrementCounter: true,
+          showToast: payload.showCardToast !== false,
+        }).catch(() => {});
+      }
+    }
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('puffin-score-recorded', { detail: normalized }));
+    }
     return normalized;
   },
 
@@ -4005,7 +5518,411 @@ export const PuffinLogin = {
   syncRingFromVetrina() {
     return syncPuffinRingFromVetrina();
   },
+
+  getGameDashboard(gameId) {
+    const targetGame = gameId || resolvePuffinConfig().appId;
+    const list = ensureDummyScoresSeeded(false);
+    return computePerGameDashboard(list, targetGame);
+  },
+
+  async fetchCloudGameDashboard(gameId) {
+    const targetGame = gameId || resolvePuffinConfig().appId;
+    try {
+      const cfg = resolvePuffinConfig({ appId: targetGame });
+      const res = await fetch(
+        `${cfg.apiUrl}/dashboard?game_id=${encodeURIComponent(targetGame)}`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.ok && data.dashboard) return data.dashboard;
+      }
+    } catch {}
+    return this.getGameDashboard(targetGame);
+  },
+
+  getCardsCatalog(options = {}) {
+    return getPuffinCardsCatalog(options);
+  },
+
+  getUserCards({ player_id, playerId, userId, game_id, gameId } = {}) {
+    const targetPlayer = player_id || playerId || userId;
+    const targetGame = game_id || gameId;
+    const all = ensureDummyUserCardsSeeded(false);
+    return all.filter((uc) => {
+      if (
+        targetPlayer &&
+        targetPlayer !== 'ALL' &&
+        uc.player_id !== normalizeProfileId(targetPlayer)
+      ) {
+        return false;
+      }
+      if (
+        targetGame &&
+        targetGame !== 'ALL' &&
+        uc.game_id.toLowerCase() !== String(targetGame).toLowerCase()
+      ) {
+        return false;
+      }
+      return true;
+    });
+  },
+
+  async fetchCloudCards({ player_id, playerId, game_id, gameId } = {}) {
+    const targetPlayer = player_id || playerId;
+    const targetGame = game_id || gameId;
+    const localList = this.getUserCards({ player_id: targetPlayer, game_id: targetGame });
+    try {
+      const cfg = resolvePuffinConfig({ appId: targetGame });
+      const q = new URLSearchParams();
+      if (targetPlayer && targetPlayer !== 'ALL') q.set('player_id', normalizeProfileId(targetPlayer));
+      if (targetGame && targetGame !== 'ALL') q.set('game_id', targetGame);
+      const res = await fetch(`${cfg.apiUrl}/cards?${q.toString()}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data?.userCards) && data.userCards.length > 0) {
+          const byId = new Map();
+          for (const item of [...data.userCards, ...localList]) {
+            if (item && item.id && !byId.has(item.id)) {
+              byId.set(item.id, validateAndNormalizeUserCardRecord(item, normalizeProfileId));
+            }
+          }
+          const merged = Array.from(byId.values());
+          try {
+            if (typeof localStorage !== 'undefined' && !targetPlayer && !targetGame) {
+              localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(merged));
+            }
+          } catch {}
+          return merged;
+        }
+      }
+    } catch {}
+    return localList;
+  },
+
+  async unlockCard(payload = {}) {
+    const activeUser = this.getCurrentUser();
+    const resolvedPlayer =
+      normalizeProfileId(
+        payload.player_id ?? payload.playerId ?? payload.userId ?? activeUser?.id ?? 'guest',
+        false
+      ) || 'guest';
+    const gameId = String(
+      payload.game_id || payload.gameId || payload.appId || resolvePuffinConfig().appId || 'tubature'
+    )
+      .trim()
+      .toLowerCase();
+
+    let dropMeta = null;
+    let targetCardId = payload.card_id || payload.cardId || '';
+    const matchNumber =
+      payload.matchNumber !== undefined && payload.matchNumber !== null
+        ? Number(payload.matchNumber)
+        : payload.autoIncrementCounter
+        ? incrementGamePackCounter(resolvedPlayer, gameId, 1)
+        : null;
+    if (!targetCardId) {
+      dropMeta = rollPuffinCardDrop({
+        game_id: gameId,
+        score: payload.score,
+        difficulty: payload.difficulty || payload.mode,
+        extra: payload.extra,
+        matchNumber,
+        strict98Mode: Boolean(payload.strict98Mode),
+      });
+      targetCardId = dropMeta.card.card_id;
+    }
+
+    const localResult = unlockPuffinCardLocal({
+      player_id: resolvedPlayer,
+      card_id: targetCardId,
+      game_id: gameId,
+      score: payload.score,
+    });
+
+    try {
+      const cfg = resolvePuffinConfig({ appId: gameId });
+      fetch(`${cfg.apiUrl}/cards/unlock`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          player_id: resolvedPlayer,
+          card_id: targetCardId,
+          game_id: gameId,
+          score: payload.score || 0,
+          difficulty: payload.difficulty || '',
+        }),
+      }).catch(() => {});
+    } catch {}
+
+    const fullResult = {
+      ok: true,
+      ...localResult,
+      matchNumber: dropMeta?.matchNumber || matchNumber || null,
+      isJackpot98: Boolean(dropMeta?.isJackpot98),
+      meritDowngraded: Boolean(dropMeta?.meritDowngraded),
+      rolledRarity: dropMeta?.rolledRarity || localResult.card.rarity,
+    };
+
+    if (payload.showToast !== false && typeof window !== 'undefined') {
+      showPuffinCardRevealToast(fullResult);
+    }
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('puffin-card-unlocked', { detail: fullResult }));
+    }
+    return fullResult;
+  },
+
+  /**
+   * Opens a 3-Card Booster Pack for `game_id` (`tubature`, `carchess3d`, etc.) so the player
+   * can pick 1 card of their choice ("una carta a scelta di quel pacco").
+   * Tracks match count (`1..97` Commons -> `98th` Rare / Super-Rare Mythic Jackpot!).
+   */
+  async openGameBoosterPack(payload = {}) {
+    const activeUser = this.getCurrentUser();
+    const resolvedPlayer =
+      normalizeProfileId(
+        payload.player_id ?? payload.playerId ?? payload.userId ?? activeUser?.id ?? 'guest',
+        false
+      ) || 'guest';
+    const gameId = String(
+      payload.game_id || payload.gameId || payload.appId || resolvePuffinConfig().appId || 'tubature'
+    )
+      .trim()
+      .toLowerCase();
+
+    const packResult = rollGameBoosterPack({
+      game_id: gameId,
+      player_id: resolvedPlayer,
+      score: payload.score || 1800,
+      difficulty: payload.difficulty || payload.mode || 'medium',
+      extra: payload.extra,
+      matchNumber: payload.matchNumber,
+      packSize: payload.packSize || 3,
+      strict98Mode: Boolean(payload.strict98Mode),
+      autoIncrementCounter: payload.matchNumber === undefined || payload.matchNumber === null,
+    });
+
+    if (payload.interactive !== false && typeof document !== 'undefined' && document.body) {
+      return new Promise((resolve) => {
+        showPuffinBoosterDraftModal({
+          packResult,
+          onPick: async (pickedChoice) => {
+            const unlocked = await this.unlockCard({
+              player_id: resolvedPlayer,
+              game_id: gameId,
+              card_id: pickedChoice.card.card_id,
+              score: payload.score || 1800,
+              matchNumber: packResult.matchNumber,
+              showToast: true,
+            });
+            resolve({ ...packResult, picked: unlocked });
+          },
+        });
+      });
+    }
+
+    const firstChoice = packResult.choices[0];
+    const unlocked = await this.unlockCard({
+      player_id: resolvedPlayer,
+      game_id: gameId,
+      card_id: firstChoice.card.card_id,
+      score: payload.score || 1800,
+      matchNumber: packResult.matchNumber,
+      showToast: payload.showToast !== false,
+    });
+    return { ...packResult, picked: unlocked };
+  },
+
+  getGamePackCounter,
+  setGamePackCounter,
+  incrementGamePackCounter,
+  rollGameBoosterPack,
+
+  resetDummyCards() {
+    return ensureDummyUserCardsSeeded(true);
+  },
+
+  getFamilyInsights(options = {}) {
+    const scores = options.scores || ensureDummyScoresSeeded(false);
+    const userCards = options.userCards || ensureDummyUserCardsSeeded(false);
+    return computeFamilyInsights({
+      scores,
+      userCards,
+      profiles: PUFFIN_PROFILES,
+      ringApps: getPuffinRingApps({ includeCandidates: true }),
+    });
+  },
+
+  async fetchCloudInsights() {
+    try {
+      const cfg = resolvePuffinConfig();
+      const res = await fetch(`${cfg.apiUrl}/insights`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.ok && data.insights) return data.insights;
+      }
+    } catch {}
+    return this.getFamilyInsights();
+  },
+
+  comparePlayers(playerAId = 'ale', playerBId = 'seby', customInsights = null) {
+    const insights = customInsights || this.getFamilyInsights();
+    return compareFamilyRivals(insights, playerAId, playerBId);
+  },
+
+  md5Hex,
+  computePuffinSecretMd5,
+  verifyPuffinCredentials,
+  OFFLINE_SEED: PUFFIN_OFFLINE_SEED,
+
+  getOfflineSeed(forceReset = false) {
+    return ensureOfflineSeedCached(forceReset);
+  },
+
+  setAirplaneMode(enabled) {
+    return setAirplaneModeState(enabled);
+  },
+
+  isAirplaneMode(options = {}) {
+    return isAirplaneModeActive(options);
+  },
+
+  async flushOfflineOutbox() {
+    if (isAirplaneModeActive()) {
+      return { ok: false, flushed: 0, reason: 'airplane_mode' };
+    }
+    try {
+      const raw = typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_KEYS.OUTBOX);
+      const outbox = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(outbox) || outbox.length === 0) {
+        return { ok: true, flushed: 0 };
+      }
+      const cfg = resolvePuffinConfig();
+      const remaining = [];
+      let flushed = 0;
+      for (const scoreItem of outbox) {
+        try {
+          const res = await fetch(`${cfg.apiUrl}/scores`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(scoreItem),
+          });
+          if (res.ok) {
+            flushed += 1;
+          } else {
+            remaining.push(scoreItem);
+          }
+        } catch {
+          remaining.push(scoreItem);
+        }
+      }
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEYS.OUTBOX, JSON.stringify(remaining));
+      }
+      return { ok: true, flushed, remaining: remaining.length };
+    } catch {
+      return { ok: false, flushed: 0 };
+    }
+  },
+
+  openScores(scope = null) {
+    const el = typeof document !== 'undefined' ? document.querySelector('puffin-login') : null;
+    if (el && typeof el.openScores === 'function') {
+      el.openScores(scope);
+    }
+  },
+
+  openRing() {
+    const el = typeof document !== 'undefined' ? document.querySelector('puffin-login') : null;
+    if (el && typeof el.openRing === 'function') {
+      el.openRing();
+    }
+  },
+
+  playCardBackExplosion,
+  playCardAudioOrFanfare,
 };
+
+export function computeFamilyInsights(options = {}) {
+  return computeFamilyInsightsRaw({
+    scores: options.scores || DEFAULT_DUMMY_SCORES,
+    userCards: options.userCards || DEFAULT_DUMMY_USER_CARDS,
+    profiles: options.profiles || PUFFIN_PROFILES,
+    ringApps: options.ringApps || getPuffinRingApps({ includeCandidates: true }),
+  });
+}
+
+export function ensureDummyUserCardsSeeded(forceReset = false) {
+  const seeds = DEFAULT_DUMMY_USER_CARDS.map((uc) =>
+    validateAndNormalizeUserCardRecord(uc, normalizeProfileId)
+  );
+  try {
+    if (typeof localStorage === 'undefined') return seeds;
+    const raw = localStorage.getItem(STORAGE_KEYS.CARDS);
+    const existing = raw ? JSON.parse(raw) : [];
+    if (forceReset || !Array.isArray(existing) || existing.length === 0) {
+      localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(seeds));
+      return seeds;
+    }
+    return existing.map((uc) => validateAndNormalizeUserCardRecord(uc, normalizeProfileId));
+  } catch {
+    return seeds;
+  }
+}
+
+export function unlockPuffinCardLocal({
+  player_id = 'guest',
+  card_id = 'tubature:ruby',
+  game_id = 'tubature',
+  score = 0,
+} = {}) {
+  const cleanPlayer = normalizeProfileId(player_id, false) || 'guest';
+  const cleanCardId = normalizeCardId(card_id, game_id);
+  const cardMeta = getCardById(cleanCardId, game_id);
+  const nowIso = new Date().toISOString();
+  const list = ensureDummyUserCardsSeeded(false);
+
+  const idx = list.findIndex(
+    (item) => item.player_id === cleanPlayer && item.card_id === cardMeta.card_id
+  );
+  let record;
+  let isNew = true;
+  if (idx >= 0) {
+    isNew = false;
+    const prev = list[idx];
+    record = {
+      ...prev,
+      count: (Number(prev.count) || 1) + 1,
+      last_unlocked_at: nowIso,
+      best_score_context: Math.max(Number(prev.best_score_context) || 0, Number(score) || 0),
+    };
+    list[idx] = record;
+  } else {
+    record = validateAndNormalizeUserCardRecord(
+      {
+        player_id: cleanPlayer,
+        card_id: cardMeta.card_id,
+        game_id: cardMeta.game_id,
+        rarity: cardMeta.rarity,
+        count: 1,
+        first_unlocked_at: nowIso,
+        last_unlocked_at: nowIso,
+        best_score_context: Number(score) || 0,
+      },
+      normalizeProfileId
+    );
+    list.push(record);
+  }
+
+  try {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(list));
+    }
+  } catch {}
+
+  return { card: cardMeta, ownership: record, isNew };
+}
 
 const RING_CSS = `
 :host {
@@ -4482,15 +6399,470 @@ export class PuffinRingElement extends BaseElement {
   }
 }
 
-if (typeof customElements !== 'undefined') {
-  if (!customElements.get('puffin-login')) {
-    customElements.define('puffin-login', PuffinLoginElement);
+export const PuffinCardsElement = createPuffinCardsElementClass({
+  BaseElementClass: BaseElement,
+  getPuffinLoginApi: () => PuffinLogin,
+  getProfileByIdFn: getProfileById,
+});
+
+const GAME_DASHBOARD_CSS = `
+:host {
+  display: block;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #f8fafc;
+}
+.gd-wrap {
+  background: #13182e;
+  border: 1.5px solid rgba(255, 255, 255, 0.13);
+  border-radius: 1.2rem;
+  padding: 1.15rem;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
+}
+.gd-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.gd-title {
+  margin: 0;
+  font-size: 1.18rem;
+  font-weight: 900;
+}
+.gd-sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+.gd-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.gd-pill {
+  background: #0b0e1d;
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 0.36rem 0.78rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.gd-pill:hover {
+  border-color: #facc15;
+  color: #fff;
+}
+.gd-pill.active {
+  background: #facc15;
+  color: #090b14;
+  border-color: #facc15;
+  box-shadow: 0 2px 12px rgba(250, 204, 21, 0.4);
+}
+.gd-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+}
+.gd-kpi {
+  background: rgba(11, 14, 29, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 0.9rem;
+  padding: 0.75rem 0.9rem;
+}
+.gd-kpi-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.gd-kpi-val {
+  margin-top: 0.25rem;
+  font-size: 1.02rem;
+  font-weight: 900;
+  color: #fef08a;
+}
+.gd-section-title {
+  margin: 1.1rem 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #fde047;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.gd-table-wrap {
+  overflow-x: auto;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: #0b0e1d;
+}
+table.gd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.81rem;
+  text-align: left;
+}
+table.gd-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  font-weight: 800;
+  padding: 0.58rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+table.gd-table td {
+  padding: 0.58rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  vertical-align: middle;
+}
+table.gd-table tr:last-child td {
+  border-bottom: none;
+}
+.gd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.16rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--hero-color, #facc15);
+  color: #fff;
+}
+.gd-mode-tag {
+  font-family: monospace;
+  font-weight: 900;
+  font-size: 0.82rem;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  padding: 0.18rem 0.5rem;
+  border-radius: 0.45rem;
+}
+`;
+
+export function renderPerGameDashboardHtml(dashboard, activeGameId = 'carlesso-fotoquad') {
+  const dash =
+    dashboard && dashboard.bySubMode
+      ? dashboard
+      : computePerGameDashboard(ensureDummyScoresSeeded(false), activeGameId);
+  const diffOrder = {
+    facile: 1,
+    easy: 1,
+    '3x3': 2,
+    '4x4': 3,
+    medio: 4,
+    moyen: 4,
+    medium: 4,
+    '5x5': 5,
+    '6x6': 6,
+    easy_6x6: 6,
+    difficile: 7,
+    hard: 7,
+    '7x7': 8,
+    '8x8': 9,
+  };
+  const sortBuckets = (arr) =>
+    [...arr].sort(
+      (a, b) =>
+        (diffOrder[a.key] ?? 50) - (diffOrder[b.key] ?? 50) ||
+        String(a.key).localeCompare(String(b.key))
+    );
+  const subEntries = sortBuckets(Object.values(dash.bySubMode || {}));
+  const gridEntries = sortBuckets(Object.values(dash.byGrid || {}));
+  const timeRows = gridEntries.length > 0 ? gridEntries : subEntries;
+  const playerEntries = Object.values(dash.byPlayer || {}).sort(
+    (a, b) => b.bestScore - a.bestScore
+  );
+
+  const fmtSec = (sec) => {
+    const s = Number(sec) || 0;
+    if (s <= 0) return '—';
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return m > 0 ? `${m}m ${r}s (${s}s)` : `${s}s`;
+  };
+
+  const champRowsHtml = subEntries
+    .map((b) => {
+      const c = b.champion;
+      const f = b.fastestPlayer;
+      const cAcc =
+        c && c.correct !== null && c.total !== null
+          ? ` <span style="opacity:0.85;font-weight:700;">(${c.correct}/${c.total}${
+              c.percentage !== null ? ` • ${c.percentage}%` : ''
+            })</span>`
+          : '';
+      const podiumStr = (b.podium || [])
+        .map((p, i) => {
+          const acc =
+            p.percentage !== null && p.percentage !== undefined ? ` • ${p.percentage}%` : '';
+          return `${i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'} ${p.shortName} (${p.score} pt${acc})`;
+        })
+        .join(' • ');
+      return `
+        <tr data-submode="${b.key}">
+          <td><span class="gd-mode-tag">${b.label.toUpperCase()}</span></td>
+          <td>${
+            c
+              ? `<span class="gd-badge" style="--hero-color:${c.colorHex}">👑 ${c.emoji} ${c.shortName} — <strong>${c.score} pt</strong>${cAcc}</span>`
+              : '—'
+          }</td>
+          <td>${
+            f
+              ? `<span class="gd-badge" style="--hero-color:${f.colorHex}">⚡ ${f.emoji} ${f.shortName} — <strong>${fmtSec(f.duration_sec)}</strong></span>`
+              : '—'
+          }</td>
+          <td>${podiumStr || '—'}</td>
+          <td><strong>${b.totalMatches}</strong></td>
+        </tr>
+      `;
+    })
+    .join('');
+
+  const timeRowsHtml = timeRows
+    .map((b) => {
+      const d = b.durationStats || {};
+      const f = b.fastestPlayer;
+      const perHeroStr = Object.values(b.byPlayer || {})
+        .map((p) => `${p.emoji} ${p.shortName}: avg ${p.avgDurationSec}s (best ${p.bestDurationSec}s)`)
+        .join(' • ');
+      return `
+        <tr data-time-row="${b.key}">
+          <td><span class="gd-mode-tag">${b.label.toUpperCase()}</span></td>
+          <td><strong>${fmtSec(d.avgSec)}</strong></td>
+          <td>${
+            f
+              ? `⚡ <strong>${fmtSec(d.minSec)}</strong> (${f.emoji} ${f.shortName})`
+              : fmtSec(d.minSec)
+          }</td>
+          <td>${fmtSec(d.medianSec)}</td>
+          <td>${b.efficiencyStats?.minMoves ?? '—'} / ${b.efficiencyStats?.minHints ?? '—'}</td>
+          <td style="font-size:0.74rem;color:#cbd5e1;">${perHeroStr || '—'}</td>
+        </tr>
+      `;
+    })
+    .join('');
+
+  const playerRowsHtml = playerEntries
+    .map(
+      (p) => `
+        <tr data-player-row="${p.player_id || 'null'}">
+          <td><span class="gd-badge" style="--hero-color:${p.colorHex}">${p.emoji} ${p.shortName}</span></td>
+          <td><strong>${p.matches}</strong></td>
+          <td><strong>${p.bestScore} pt</strong></td>
+          <td>${p.avgScore} pt</td>
+          <td>⚡ ${fmtSec(p.bestDurationSec)}</td>
+          <td>${fmtSec(p.avgDurationSec)}</td>
+          <td>${p.minMoves ?? '—'}</td>
+          <td>${p.minHints ?? '—'}</td>
+        </tr>
+      `
+    )
+    .join('');
+
+  const overallChamp = dash.overall?.champion;
+  const overallFastest = dash.overall?.fastestPlayer;
+
+  return `
+    <div class="gd-highlights">
+      <div class="gd-kpi">
+        <div class="gd-kpi-label">🎮 Gioco Selezionato</div>
+        <div class="gd-kpi-val">${dash.game_id} (${dash.totalMatches} partite)</div>
+      </div>
+      <div class="gd-kpi">
+        <div class="gd-kpi-label">👑 Campione Assoluto</div>
+        <div class="gd-kpi-val">${
+          overallChamp
+            ? `${overallChamp.emoji} ${overallChamp.shortName} (${overallChamp.score} pt)`
+            : '—'
+        }</div>
+      </div>
+      <div class="gd-kpi">
+        <div class="gd-kpi-label">⚡ Record Velocità</div>
+        <div class="gd-kpi-val">${
+          overallFastest
+            ? `${overallFastest.emoji} ${overallFastest.shortName} (${fmtSec(overallFastest.duration_sec)})`
+            : '—'
+        }</div>
+      </div>
+      <div class="gd-kpi">
+        <div class="gd-kpi-label">⏱️ Tempo Medio Globale</div>
+        <div class="gd-kpi-val">${fmtSec(dash.overall?.durationStats?.avgSec)}</div>
+      </div>
+    </div>
+
+    <div class="gd-section-title">🏆 Tabella 1 — Campioni per Difficoltà / Modalità (es. FotoQuad Facile vs Medio vs Difficile)</div>
+    <div class="gd-table-wrap">
+      <table class="gd-table" id="gd-champions-table">
+        <thead>
+          <tr>
+            <th>Difficoltà / Griglia</th>
+            <th>👑 Campione Punteggio (#1)</th>
+            <th>⚡ Campione Velocità (Min Tempo)</th>
+            <th>Podio Famiglia (🥇 🥈 🥉)</th>
+            <th>Partite</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${champRowsHtml || '<tr><td colspan="5">Nessuna partita registrata</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gd-section-title">⏱️ Tabella 2 — Tempi di Completamento Medi, Minimi e Mediani per Griglia / Livello (es. Kids Jigsaw 6x6 vs 7x7)</div>
+    <div class="gd-table-wrap">
+      <table class="gd-table" id="gd-times-table">
+        <thead>
+          <tr>
+            <th>Griglia / Modalità</th>
+            <th>⏱️ Tempo Medio</th>
+            <th>⚡ Tempo Minimo (Record)</th>
+            <th>📊 Mediana</th>
+            <th>🎯 Min Mosse / Min Hints</th>
+            <th>👨‍👩‍👦‍👦 Tempi Medi per Giocatore</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${timeRowsHtml || '<tr><td colspan="6">Nessun dato temporale</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gd-section-title">🎯 Tabella 3 — Efficienza & Statistiche per Eroe di Famiglia</div>
+    <div class="gd-table-wrap">
+      <table class="gd-table" id="gd-players-table">
+        <thead>
+          <tr>
+            <th>Eroe</th>
+            <th>Partite</th>
+            <th>Best Score</th>
+            <th>Media Score</th>
+            <th>Miglior Tempo</th>
+            <th>Tempo Medio</th>
+            <th>Min Mosse</th>
+            <th>Min Aiuti (Hints)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${playerRowsHtml || '<tr><td colspan="8">Nessun giocatore</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+export class PuffinGameDashboardElement extends BaseElement {
+  static get observedAttributes() {
+    return ['game-id'];
   }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    const styleEl = document.createElement('style');
+    styleEl.textContent = GAME_DASHBOARD_CSS;
+    this.shadowRoot.append(styleEl);
+    this.$root = document.createElement('div');
+    this.$root.className = 'gd-wrap';
+    this.shadowRoot.append(this.$root);
+    this.activeGameId = this.getAttribute('game-id') || 'carlesso-fotoquad';
+    this._onUpdate = () => this.refresh();
+  }
+
+  connectedCallback() {
+    this.activeGameId = this.getAttribute('game-id') || 'carlesso-fotoquad';
+    window.addEventListener('puffin-score-recorded', this._onUpdate);
+    this.refresh();
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('puffin-score-recorded', this._onUpdate);
+  }
+
+  attributeChangedCallback(name, _oldVal, newVal) {
+    if (name === 'game-id' && newVal && this.isConnected) {
+      this.activeGameId = newVal;
+      this.refresh();
+    }
+  }
+
+  async refresh() {
+    const dash = await PuffinLogin.fetchCloudGameDashboard(this.activeGameId);
+    this.render(dash);
+  }
+
+  render(dashData) {
+    const games = [
+      { id: 'ale-french', label: '🇫🇷 Ale French (Facile / Moyen / Difficile)' },
+      { id: 'carlesso-fotoquad', label: '📸 FotoQuad (Facile / Medio / Difficile)' },
+      { id: 'kids-jigsaw-puzzle', label: '🧩 Kids Jigsaw (6x6 / 7x7 / Griglie)' },
+      { id: 'tubature', label: '🚰 Tubature' },
+      { id: 'puffin-snake', label: '🐍 Puffin Snake' },
+      { id: 'carchess3d', label: '♟️ CarChess 3D' },
+      { id: 'smurfs-and-dragons', label: '🐉 Smurfs & Dragons' },
+      { id: 'family-mahjong-3d', label: '🀄 3D Mahjong' },
+      { id: 'pupurabbu-3d', label: '🐰 Pupurabbu 3D' },
+    ];
+
+    const pillsHtml = games
+      .map(
+        (g) => `
+          <button type="button" class="gd-pill ${
+            g.id === this.activeGameId ? 'active' : ''
+          }" data-game-pill="${g.id}">
+            ${g.label}
+          </button>
+        `
+      )
+      .join('');
+
+    const bodyHtml = renderPerGameDashboardHtml(dashData, this.activeGameId);
+
+    this.$root.innerHTML = `
+      <div class="gd-header">
+        <div>
+          <h2 class="gd-title">📊 Per-Game Family Dashboard & Deep Telemetry</h2>
+          <p class="gd-sub">Campioni per difficoltà (FotoQuad facile/medio/difficile) & tempi medi per griglia (Kids Jigsaw 6x6 vs 7x7)</p>
+        </div>
+      </div>
+      <div class="gd-pills" role="tablist" aria-label="Seleziona gioco">
+        ${pillsHtml}
+      </div>
+      ${bodyHtml}
+    `;
+
+    this.$root.querySelectorAll('[data-game-pill]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.activeGameId = btn.getAttribute('data-game-pill');
+        this.setAttribute('game-id', this.activeGameId);
+      });
+    });
+  }
+}
+
+if (typeof customElements !== 'undefined') {
   if (!customElements.get('puffin-leaderboard')) {
     customElements.define('puffin-leaderboard', PuffinLeaderboardElement);
   }
   if (!customElements.get('puffin-ring')) {
     customElements.define('puffin-ring', PuffinRingElement);
+  }
+  if (!customElements.get('puffin-cards')) {
+    customElements.define('puffin-cards', PuffinCardsElement);
+  }
+  if (!customElements.get('puffin-game-dashboard')) {
+    customElements.define('puffin-game-dashboard', PuffinGameDashboardElement);
+  }
+  if (!customElements.get('puffin-login')) {
+    customElements.define('puffin-login', PuffinLoginElement);
   }
 }
 
