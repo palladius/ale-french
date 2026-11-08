@@ -47,6 +47,8 @@ export const MTG_RARITY_INFO = Object.freeze({
     accentHex: '#94A3B8',
     probability: 0.65,
     probabilityPct: '65.0%',
+    veoMode: 'none',
+    veoBadge: null,
     meritRule: 'Qualsiasi partita completata (score > 0)',
   },
   uncommon: {
@@ -58,29 +60,35 @@ export const MTG_RARITY_INFO = Object.freeze({
     accentHex: '#E2E8F0',
     probability: 0.25,
     probabilityPct: '25.0%',
+    veoMode: 'none',
+    veoBadge: null,
     meritRule: 'Qualsiasi partita completata (score > 0)',
   },
   rare: {
     id: 'rare',
     label: 'Rare',
-    labelIt: 'Rara (Oro)',
+    labelIt: 'Rara (Oro • Veo Muta)',
     gem: '🟡',
     borderHex: '#FACC15',
     accentHex: '#FDE047',
     probability: 0.085,
     probabilityPct: '8.5%',
-    meritRule: 'Richiede difficoltà Media/Difficile o punteggio >= 1500',
+    veoMode: 'silent',
+    veoBadge: '🔇✨ Veo 3.1 Muta',
+    meritRule: 'Richiede difficoltà Media/Difficile o punteggio >= 1500 (o 98ª Partita)',
   },
   mythic: {
     id: 'mythic',
     label: 'Mythic Rare',
-    labelIt: 'Mitica (Arancio Holo)',
+    labelIt: 'Mitica (Arancio Holo • Veo + Musica)',
     gem: '🟠',
     borderHex: '#FF6D00',
     accentHex: '#FB923C',
     probability: 0.015,
     probabilityPct: '1.5%',
-    meritRule: 'Richiede modalità Difficile/Nightmare, Boss sconfitto o Record >= 3000',
+    veoMode: 'musical',
+    veoBadge: '🎵🔥 Veo 3.1 + Musica',
+    meritRule: 'Richiede modalità Difficile/Nightmare, Boss sconfitto, Record >= 3000 o 98ª Partita',
   },
 });
 
@@ -417,6 +425,8 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     category: 'Goodie Sonoro — Ferrara',
     description: 'Leggenda metropolitana ferrarese con audio originale: "Magnat al canal!"',
     image_url: `${TUBATURE_BASE}/assets/goodies/motorino.png`,
+    video_url: 'assets/cards/front/tubature_motorino.mp4',
+    video_muted: true,
     audio_url: `${TUBATURE_BASE}/assets/sounds/good-quality/magnat_al_canal.mp3`,
     stats: { atk: 8, def: 6 },
   },
@@ -432,6 +442,9 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     description:
       'Il leggendario spirito arcobaleno delle Tubature! Appare solo ai veri maestri idraulici in modalità Difficile.',
     image_url: `${TUBATURE_BASE}/assets/goodies/schmoogle.png`,
+    video_url: 'assets/cards/front/tubature_schmoogle.mp4',
+    video_muted: false,
+    music_url: 'assets/cards/mythic-theme.mp3',
     audio_url: null,
     stats: { atk: 10, def: 10 },
   },
@@ -534,6 +547,9 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     category: 'Serpente Mitico — Puffin Snake',
     description: 'Serpente leggendario lungo 25+ segmenti forgiato in modalità Hard.',
     image_url: 'assets/cards/front/puffin_snake_golden_apple_wyrm.png',
+    video_url: 'assets/cards/front/puffin_snake_golden_apple_wyrm.mp4',
+    video_muted: false,
+    music_url: 'assets/cards/mythic-theme.mp3',
     audio_url: null,
     stats: { atk: 9, def: 9 },
   },
@@ -547,7 +563,7 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     rarity: 'rare',
     category: 'Serpente Raro — Puffin Snake',
     description: 'Scatta sulla griglia 20x13 senza mai sfiorare i bordi incandescenti.',
-    image_url: 'assets/ring/puffin-snake.png',
+    image_url: 'assets/cards/front/puffin_snake_turbo_emerald_viper.png',
     audio_url: null,
     stats: { atk: 7, def: 6 },
   },
@@ -561,7 +577,7 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     rarity: 'uncommon',
     category: 'Abilità — Puffin Snake',
     description: 'Doppia mela divorata in curva stretta a filo della propria coda!',
-    image_url: 'assets/ring/puffin-snake.png',
+    image_url: 'assets/cards/front/puffin_snake_twin_dragon_coil.png',
     audio_url: null,
     stats: { atk: 5, def: 5 },
   },
@@ -575,7 +591,7 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     rarity: 'common',
     category: 'Tesoro — Puffin Snake',
     description: '+100 punti istantanei e un anello in più per il serpente di famiglia.',
-    image_url: 'assets/ring/puffin-snake.png',
+    image_url: 'assets/cards/front/puffin_snake_pixel_apple_sprout.png',
     audio_url: null,
     stats: { atk: 3, def: 2 },
   },
@@ -592,6 +608,9 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     category: 'Mossa Magistrale — CarChess 3D',
     description: 'Il bacio letale della Regina sulla casa h7: vittoria senza appello!',
     image_url: 'assets/cards/front/carchess3d_queen_h7_checkmate.png',
+    video_url: 'assets/cards/front/carchess3d_queen_h7_checkmate.mp4',
+    video_muted: false,
+    music_url: 'assets/cards/mythic-theme.mp3',
     audio_url: null,
     stats: { atk: 10, def: 8 },
   },
@@ -606,6 +625,8 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     category: 'Tattica — CarChess 3D',
     description: 'Salto a L che minaccia contemporaneamente Re e Torre avversaria.',
     image_url: 'assets/cards/front/carchess3d_grandmaster_knight_fork.png',
+    video_url: 'assets/cards/front/carchess3d_grandmaster_knight_fork.mp4',
+    video_muted: true,
     audio_url: null,
     stats: { atk: 8, def: 6 },
   },
@@ -650,6 +671,9 @@ export const PUFFIN_CARDS_CATALOG = Object.freeze([
     category: 'Boss Mitico — Smurfs & Dragons',
     description: 'Sconfitto da Ale in modalità Nightmare senza perdere nemmeno una torre!',
     image_url: 'assets/cards/front/smurfs_emerald_dragon_lord.png',
+    video_url: 'assets/cards/front/smurfs_emerald_dragon_lord.mp4',
+    video_muted: false,
+    music_url: 'assets/cards/mythic-theme.mp3',
     audio_url: null,
     stats: { atk: 10, def: 10 },
   },
@@ -1085,6 +1109,60 @@ export function getCardById(rawCardId, fallbackGameId = 'tubature') {
       stats: null,
     }
   );
+}
+
+/**
+ * Resolves the Front Veo 3.1 Animation & Music policy for any card:
+ * - `common` / `uncommon` -> Static illustration (`hasFrontVideo: false`, `veoMode: 'none'`)
+ * - `rare` (🟡) -> SILENT Veo 3.1 animation (`hasFrontVideo: true`, `video_muted: true`, `veoMode: 'silent'`, `veoBadge: '🔇✨ Veo 3.1 Muta'`)
+ * - `mythic` (🟠) -> MUSICAL Veo 3.1 animation (`hasFrontVideo: true`, `video_muted: false`, `music_url: 'assets/cards/mythic-theme.mp3'`, `veoMode: 'musical'`, `veoBadge: '🎵🔥 Veo 3.1 + Musica'`)
+ */
+export function resolveCardFrontMedia(card = {}) {
+  const rarity = normalizeCardRarity(card?.rarity);
+  const gameId = String(card?.game_id || '').trim().toLowerCase();
+
+  if (rarity === 'rare') {
+    const defaultRareVideo =
+      gameId === 'tubature'
+        ? 'assets/cards/front/tubature_motorino.mp4'
+        : 'assets/cards/front/carchess3d_grandmaster_knight_fork.mp4';
+    return {
+      hasFrontVideo: true,
+      veoMode: 'silent',
+      video_url: card?.video_url || defaultRareVideo,
+      video_muted: true,
+      music_url: null,
+      veoBadge: '🔇✨ Veo 3.1 Muta',
+    };
+  }
+
+  if (rarity === 'mythic') {
+    let defaultMythicVideo = 'assets/cards/front/carchess3d_queen_h7_checkmate.mp4';
+    if (gameId === 'tubature') {
+      defaultMythicVideo = 'assets/cards/front/tubature_schmoogle.mp4';
+    } else if (gameId === 'puffin-snake') {
+      defaultMythicVideo = 'assets/cards/front/puffin_snake_golden_apple_wyrm.mp4';
+    } else if (gameId === 'smurfs-and-dragons' || gameId === 'family-mahjong-3d' || gameId === 'kids-jigsaw-puzzle') {
+      defaultMythicVideo = 'assets/cards/front/smurfs_emerald_dragon_lord.mp4';
+    }
+    return {
+      hasFrontVideo: true,
+      veoMode: 'musical',
+      video_url: card?.video_url || defaultMythicVideo,
+      video_muted: false,
+      music_url: card?.music_url || 'assets/cards/mythic-theme.mp3',
+      veoBadge: '🎵🔥 Veo 3.1 + Musica',
+    };
+  }
+
+  return {
+    hasFrontVideo: false,
+    veoMode: 'none',
+    video_url: null,
+    video_muted: true,
+    music_url: null,
+    veoBadge: null,
+  };
 }
 
 export const JACKPOT_MATCH_INTERVAL = 98;
@@ -1830,6 +1908,44 @@ export function playCardBackExplosion({ force = false } = {}) {
   } catch {}
 }
 
+/**
+ * Plays the Mythic Rare soundtrack (`assets/cards/mythic-theme.mp3` — Grand Piano + Medieval Choir & Brass)
+ * when a Mythic Rare (`🟠`) card's Veo 3.1 animation plays!
+ */
+export function playMythicCardMusic(musicUrl = 'assets/cards/mythic-theme.mp3', { force = false } = {}) {
+  if (typeof window === 'undefined') return;
+  const now = Date.now();
+  if (!force && playMythicCardMusic._lastAt && now - playMythicCardMusic._lastAt < 1200) {
+    return;
+  }
+  playMythicCardMusic._lastAt = now;
+
+  if (typeof Audio !== 'undefined' && musicUrl) {
+    try {
+      if (!playMythicCardMusic._audio || playMythicCardMusic._src !== musicUrl) {
+        playMythicCardMusic._audio = new Audio(musicUrl);
+        playMythicCardMusic._src = musicUrl;
+      }
+      const audio = playMythicCardMusic._audio;
+      audio.currentTime = 0;
+      audio.volume = 0.85;
+      audio.play().catch(() => {});
+      return;
+    } catch {}
+  }
+
+  // Web Audio API fallback if Audio playback is restricted
+  playCardAudioOrFanfare({ rarity: 'mythic' });
+}
+
+export function stopMythicCardMusic() {
+  try {
+    if (playMythicCardMusic._audio) {
+      playMythicCardMusic._audio.pause();
+    }
+  } catch {}
+}
+
 export const CARDS_CSS = `
 :host {
   display: block;
@@ -2038,6 +2154,12 @@ export const CARDS_CSS = `
   transition: transform 0.24s ease;
 }
 
+.mtg-art-img[src*="assets/cards/front/"],
+.mtg-art-img[src*="assets/ring/"] {
+  object-fit: cover;
+  padding: 0;
+}
+
 .mtg-card-scene:hover .mtg-art-img {
   transform: scale(1.06);
 }
@@ -2045,6 +2167,45 @@ export const CARDS_CSS = `
 .mtg-art-fallback {
   font-size: 3.1rem;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+}
+
+.mtg-front-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mtg-art-box.front-video-playing .mtg-front-video {
+  opacity: 1;
+}
+
+.mtg-veo-front-badge {
+  position: absolute;
+  bottom: 5px;
+  right: 6px;
+  z-index: 4;
+  background: rgba(9, 13, 24, 0.88);
+  color: #fde047;
+  border: 1px solid rgba(250, 204, 21, 0.65);
+  border-radius: 999px;
+  font-size: 0.56rem;
+  font-weight: 900;
+  padding: 0.1rem 0.42rem;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.mtg-card-scene[data-rarity="mythic"] .mtg-veo-front-badge {
+  color: #ffedd5;
+  background: rgba(154, 52, 18, 0.92);
+  border-color: #fb923c;
+  box-shadow: 0 0 10px rgba(255, 109, 0, 0.6);
 }
 
 .mtg-flip-mini-btn,
@@ -2260,6 +2421,80 @@ export function attachCardBackHoverVideo(containerEl, { isSoundEnabledFn = () =>
   });
 }
 
+/**
+ * Attaches Veo 3.1 Front Animation playback on `.mtg-art-box[data-has-front-video="1"]`:
+ * - Rare (`🟡` `data-veo-mode="silent"`): Plays Veo 3.1 animation SILENTLY (`vid.muted = true`)
+ * - Mythic (`🟠` `data-veo-mode="musical"`): Plays Veo 3.1 animation WITH MUSIC (`vid.muted = false` + `playMythicCardMusic`)
+ */
+export function attachCardFrontHoverVideo(
+  containerEl,
+  { isSoundEnabledFn = () => true, autoPlayAll = false } = {}
+) {
+  if (!containerEl) return;
+  containerEl.querySelectorAll('.mtg-art-box[data-has-front-video="1"]').forEach((artBox) => {
+    const veoMode = artBox.getAttribute('data-veo-mode') || 'none';
+    const musicUrl = artBox.getAttribute('data-music-url') || 'assets/cards/mythic-theme.mp3';
+
+    const startFrontVid = () => {
+      const vid = artBox.querySelector('.mtg-front-video');
+      if (!vid || vid.dataset.failed === '1') return;
+      const isMythicMusical = veoMode === 'musical';
+      const allowAudio = Boolean(isMythicMusical && isSoundEnabledFn());
+
+      // Enforce Rare = strictly silent (muted = true); Mythic = with music when sound is enabled!
+      vid.muted = !allowAudio;
+      if (allowAudio) {
+        playMythicCardMusic(musicUrl);
+      }
+
+      if (!vid.src && vid.dataset.src) {
+        vid.src = vid.dataset.src;
+        vid.addEventListener(
+          'error',
+          () => {
+            vid.dataset.failed = '1';
+            artBox.classList.remove('front-video-playing');
+          },
+          { once: true }
+        );
+        vid.addEventListener('playing', () => {
+          artBox.classList.add('front-video-playing');
+        });
+      }
+      const p = vid.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => {
+          // If browser blocks unmuted autoplay on hover, fall back to muted video + WebAudio/Audio track
+          vid.muted = true;
+          const p2 = vid.play();
+          if (p2 && typeof p2.catch === 'function') p2.catch(() => {});
+        });
+      }
+    };
+
+    const stopFrontVid = () => {
+      if (autoPlayAll) return;
+      const vid = artBox.querySelector('.mtg-front-video');
+      if (!vid) return;
+      artBox.classList.remove('front-video-playing');
+      try {
+        vid.pause();
+      } catch {}
+      if (veoMode === 'musical') {
+        stopMythicCardMusic();
+      }
+    };
+
+    artBox.addEventListener('mouseenter', startFrontVid);
+    artBox.addEventListener('mouseleave', stopFrontVid);
+    artBox.addEventListener('touchstart', startFrontVid, { passive: true });
+
+    if (autoPlayAll) {
+      startFrontVid();
+    }
+  });
+}
+
 export function createPuffinCardsElementClass({
   BaseElementClass,
   getPuffinLoginApi,
@@ -2376,6 +2611,7 @@ export function createPuffinCardsElementClass({
           const ptLabel = card.stats
             ? `⚔️${card.stats.atk}/🛡️${card.stats.def}`
             : `#${card.number} • ${rMeta.probabilityPct}`;
+          const frontMedia = resolveCardFrontMedia(card);
 
           return `
             <div class="mtg-card-scene ${isFlipped ? 'is-flipped' : ''} ${!isOwned ? 'is-locked' : ''} ${this.spoilerPreview ? 'spoiler-on' : ''}" data-card-id="${card.card_id}" data-rarity="${card.rarity}">
@@ -2386,7 +2622,7 @@ export function createPuffinCardsElementClass({
                     <span class="mtg-title">${card.emoji} ${card.title}</span>
                     <span class="mtg-game-pill">${card.game_id}</span>
                   </div>
-                  <div class="mtg-art-box" data-inspect-card="${card.card_id}">
+                  <div class="mtg-art-box" data-inspect-card="${card.card_id}" data-has-front-video="${frontMedia.hasFrontVideo ? '1' : '0'}" data-veo-mode="${frontMedia.veoMode}" data-music-url="${frontMedia.music_url || ''}">
                     ${
                       card.audio_url
                         ? `<button type="button" class="mtg-audio-mini-btn" data-play-audio="${card.card_id}" title="Ascolta effetto sonoro originale!">🔊 Audio</button>`
@@ -2395,6 +2631,11 @@ export function createPuffinCardsElementClass({
                     <button type="button" class="mtg-flip-mini-btn" data-flip-card="${card.card_id}" title="Gira sul Retro Puffin (Veo 3.1)">🔄 Retro</button>
                     <img class="mtg-art-img" src="${card.image_url}" alt="${card.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
                     <div class="mtg-art-fallback" style="display:none;">${card.emoji}</div>
+                    ${
+                      frontMedia.hasFrontVideo
+                        ? `<video class="mtg-front-video" data-src="${frontMedia.video_url}" ${frontMedia.video_muted ? 'muted' : ''} loop playsinline preload="none"></video><span class="mtg-veo-front-badge">${frontMedia.veoBadge}</span>`
+                        : ''
+                    }
                   </div>
                   <div class="mtg-type-bar">
                     <span>${card.category}</span>
@@ -2427,6 +2668,7 @@ export function createPuffinCardsElementClass({
             const rMeta = MTG_RARITY_INFO[inspectedCard.rarity] || MTG_RARITY_INFO.common;
             const own = ownershipMap[inspectedCard.card_id] || { totalCount: 0, byPlayer: {} };
             const isFlipped = this.flippedCardIds.has(inspectedCard.card_id);
+            const inspectedMedia = resolveCardFrontMedia(inspectedCard);
             return `
               <div class="binder-modal-backdrop" data-close-modal="1">
                 <div class="binder-modal-box" onclick="event.stopPropagation()">
@@ -2438,8 +2680,13 @@ export function createPuffinCardsElementClass({
                           <span class="mtg-title">${inspectedCard.emoji} ${inspectedCard.title}</span>
                           <span class="mtg-game-pill">${inspectedCard.game_id}</span>
                         </div>
-                        <div class="mtg-art-box">
+                        <div class="mtg-art-box" data-has-front-video="${inspectedMedia.hasFrontVideo ? '1' : '0'}" data-veo-mode="${inspectedMedia.veoMode}" data-music-url="${inspectedMedia.music_url || ''}">
                           <img class="mtg-art-img" src="${inspectedCard.image_url}" alt="${inspectedCard.title}" />
+                          ${
+                            inspectedMedia.hasFrontVideo
+                              ? `<video class="mtg-front-video" data-src="${inspectedMedia.video_url}" ${inspectedMedia.video_muted ? 'muted' : ''} loop playsinline preload="none"></video><span class="mtg-veo-front-badge">${inspectedMedia.veoBadge}</span>`
+                              : ''
+                          }
                         </div>
                         <div class="mtg-type-bar">
                           <span>${inspectedCard.category}</span>
@@ -2649,6 +2896,10 @@ export function createPuffinCardsElementClass({
       attachCardBackHoverVideo(this.$root, {
         isSoundEnabledFn: () => Boolean(this.backSoundEnabled),
       });
+      attachCardFrontHoverVideo(this.$root, {
+        isSoundEnabledFn: () => Boolean(this.backSoundEnabled),
+        autoPlayAll: Boolean(this.inspectedCardId),
+      });
     }
   };
 }
@@ -2663,6 +2914,7 @@ export function showPuffinCardRevealToast({ card, ownership, isNew = true, merit
   if (existing) existing.remove();
 
   const rMeta = MTG_RARITY_INFO[card.rarity] || MTG_RARITY_INFO.common;
+  const frontMedia = resolveCardFrontMedia(card);
   const host = document.createElement('div');
   host.id = 'puffin-card-reveal-toast';
   const shadow = host.attachShadow({ mode: 'open' });
@@ -2711,8 +2963,14 @@ export function showPuffinCardRevealToast({ card, ownership, isNew = true, merit
             <span class="mtg-title">${card.emoji} ${card.title}</span>
             <span class="mtg-game-pill">${card.game_id}</span>
           </div>
-          <div class="mtg-art-box">
-            <img class="mtg-art-img" src="${card.image_url}" alt="${card.title}" />
+          <div class="mtg-art-box" data-has-front-video="${frontMedia.hasFrontVideo ? '1' : '0'}" data-veo-mode="${frontMedia.veoMode}" data-music-url="${frontMedia.music_url || ''}">
+            <img class="mtg-art-img" src="${card.image_url}" alt="${card.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+            <div class="mtg-art-fallback" style="display:none;">${card.emoji}</div>
+            ${
+              frontMedia.hasFrontVideo
+                ? `<video class="mtg-front-video" data-src="${frontMedia.video_url}" ${frontMedia.video_muted ? 'muted' : ''} loop playsinline preload="none"></video><span class="mtg-veo-front-badge">${frontMedia.veoBadge}</span>`
+                : ''
+            }
           </div>
           <div class="mtg-type-bar">
             <span>${card.category}</span>
@@ -2741,14 +2999,212 @@ export function showPuffinCardRevealToast({ card, ownership, isNew = true, merit
 
   playCardAudioOrFanfare(card);
   attachCardBackHoverVideo(box);
+  attachCardFrontHoverVideo(box, { autoPlayAll: true });
 
   setTimeout(() => {
     const scene = box.querySelector('#reveal-scene');
     if (scene) scene.classList.remove('is-flipped');
   }, 420);
 
-  box.querySelector('#close-toast')?.addEventListener('click', () => host.remove());
+  box.querySelector('#close-toast')?.addEventListener('click', () => {
+    stopMythicCardMusic();
+    host.remove();
+  });
   setTimeout(() => {
-    if (host.isConnected) host.remove();
+    if (host.isConnected) {
+      stopMythicCardMusic();
+      host.remove();
+    }
   }, 8500);
+}
+
+/**
+ * Displays an interactive 3-Card Game Booster Pack Draft Modal ("Scegli 1 Carta dal Pacco di `<game_id>`!")
+ * when a match finishes or when opening a game booster pack.
+ */
+export function showPuffinBoosterDraftModal({
+  packResult,
+  onPick = () => {},
+} = {}) {
+  if (typeof document === 'undefined' || !document.body || !packResult) return null;
+  const existing = document.getElementById('puffin-booster-draft-modal');
+  if (existing) existing.remove();
+
+  const choices = Array.isArray(packResult.choices) ? packResult.choices : [];
+  if (choices.length === 0) return null;
+
+  const isJackpot98 = Boolean(packResult.isJackpot98);
+  const host = document.createElement('div');
+  host.id = 'puffin-booster-draft-modal';
+  const shadow = host.attachShadow({ mode: 'open' });
+
+  const style = document.createElement('style');
+  style.textContent =
+    CARDS_CSS +
+    `
+    .draft-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100001;
+      background: rgba(5, 8, 18, 0.9);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: #f8fafc;
+    }
+    .draft-box {
+      background: linear-gradient(160deg, #161d36 0%, #090d1b 100%);
+      border: 2.5px solid ${isJackpot98 ? '#ff6d00' : '#facc15'};
+      border-radius: 1.4rem;
+      max-width: 880px;
+      width: 100%;
+      padding: 1.25rem;
+      box-shadow: 0 28px 72px rgba(0, 0, 0, 0.92), 0 0 38px ${isJackpot98 ? 'rgba(255, 109, 0, 0.55)' : 'rgba(250, 204, 21, 0.35)'};
+    }
+    .draft-cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .draft-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .draft-pick-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ea580c, #d97706);
+      color: #fff;
+      border: 1.5px solid #fde047;
+      border-radius: 0.75rem;
+      padding: 0.55rem 0.8rem;
+      font-weight: 900;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .draft-pick-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 22px rgba(249, 115, 22, 0.6);
+    }
+  `;
+  shadow.append(style);
+
+  const slotsHtml = choices
+    .map((choice, idx) => {
+      const card = choice.card;
+      const rMeta = MTG_RARITY_INFO[card.rarity] || MTG_RARITY_INFO.common;
+      const frontMedia = resolveCardFrontMedia(card);
+      const ptLabel = card.stats
+        ? `⚔️${card.stats.atk}/🛡️${card.stats.def}`
+        : `#${card.number} • ${rMeta.probabilityPct}`;
+      return `
+        <div class="draft-slot">
+          <div class="mtg-card-scene is-flipped spoiler-on" data-draft-idx="${idx}" data-rarity="${card.rarity}">
+            <div class="mtg-card-flipper">
+              <div class="mtg-face mtg-front">
+                <div class="mtg-holo-glare"></div>
+                <div class="mtg-header">
+                  <span class="mtg-title">${card.emoji} ${card.title}</span>
+                  <span class="mtg-game-pill">${card.game_id}</span>
+                </div>
+                <div class="mtg-art-box" data-has-front-video="${frontMedia.hasFrontVideo ? '1' : '0'}" data-veo-mode="${frontMedia.veoMode}" data-music-url="${frontMedia.music_url || ''}">
+                  <img class="mtg-art-img" src="${card.image_url}" alt="${card.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+                  <div class="mtg-art-fallback" style="display:none;">${card.emoji}</div>
+                  ${
+                    frontMedia.hasFrontVideo
+                      ? `<video class="mtg-front-video" data-src="${frontMedia.video_url}" ${frontMedia.video_muted ? 'muted' : ''} loop playsinline preload="none"></video><span class="mtg-veo-front-badge">${frontMedia.veoBadge}</span>`
+                      : ''
+                  }
+                </div>
+                <div class="mtg-type-bar">
+                  <span>${card.category}</span>
+                  <span>${rMeta.gem} ${rMeta.labelIt}</span>
+                </div>
+                <div class="mtg-lore-box">${card.description}</div>
+                <div class="mtg-footer">
+                  <span>Opzione #${idx + 1}</span>
+                  <span class="mtg-pt-box">${ptLabel}</span>
+                </div>
+              </div>
+              <div class="mtg-face mtg-back">
+                <img class="mtg-back-img" src="${PUFFIN_CARD_BACK.image_url}" alt="Puffin Card Back" />
+                <video class="mtg-back-video" data-src="${PUFFIN_CARD_BACK.video_url}" muted loop playsinline preload="none"></video>
+                <span class="mtg-back-badge">✨ Pacco ${packResult.game_id} #${idx + 1}</span>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="draft-pick-btn" data-pick-idx="${idx}">
+            ✨ Scegli "${card.title}" (${rMeta.gem} ${rMeta.labelIt})
+          </button>
+        </div>
+      `;
+    })
+    .join('');
+
+  const wrap = document.createElement('div');
+  wrap.className = 'draft-backdrop';
+  wrap.innerHTML = `
+    <div class="draft-box">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
+        <div>
+          <div style="font-size:0.76rem;font-weight:900;color:${isJackpot98 ? '#fb923c' : '#fde047'};text-transform:uppercase;letter-spacing:0.06em;">
+            ${
+              isJackpot98
+                ? `🔥🎉 COLPO GOBBO DELLA ${packResult.matchNumber}ª PARTITA! RARA / SUPER RARA SBLOCCATA!`
+                : `🎁 Pacco Fine Partita (${packResult.game_id}) • Partita #${packResult.matchNumber} (Mancano ${packResult.matchesUntilJackpot98} partite al Jackpot della 98ª!)`
+            }
+          </div>
+          <h2 style="margin:0.25rem 0 0.2rem;font-size:1.3rem;">
+            🃏 Scegli 1 Carta dal Pacco di <code style="color:#fde047;">${packResult.game_id}</code>!
+          </h2>
+          <p style="margin:0;font-size:0.84rem;color:#cbd5e1;">
+            Ogni partita completata ti apre un pacchetto di <b>${packResult.game_id}</b>: nelle prime 97 partite trovi soprattutto Comuni (doppioni!), ma alla <b>98ª partita</b> scatta il Colpo Gobbo Rara / Super Rara Mitica!
+          </p>
+        </div>
+        <button type="button" id="close-draft" style="background:none;border:none;color:#94a3b8;font-size:1.2rem;cursor:pointer;font-weight:900;">✖</button>
+      </div>
+      <div class="draft-cards-row">
+        ${slotsHtml}
+      </div>
+    </div>
+  `;
+  shadow.append(wrap);
+  document.body.appendChild(host);
+
+  if (isJackpot98) {
+    playCardBackExplosion({ force: true });
+  } else {
+    playCardAudioOrFanfare(choices[0].card);
+  }
+  attachCardBackHoverVideo(wrap);
+  attachCardFrontHoverVideo(wrap, { autoPlayAll: isJackpot98 });
+
+  // Flip all 3 cards face-up with a staggered cascade
+  choices.forEach((_, idx) => {
+    setTimeout(() => {
+      const scene = wrap.querySelector(`[data-draft-idx="${idx}"]`);
+      if (scene) scene.classList.remove('is-flipped');
+    }, 340 + idx * 180);
+  });
+
+  wrap.querySelectorAll('[data-pick-idx]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.getAttribute('data-pick-idx')) || 0;
+      const picked = choices[idx] || choices[0];
+      stopMythicCardMusic();
+      host.remove();
+      onPick(picked);
+    });
+  });
+
+  wrap.querySelector('#close-draft')?.addEventListener('click', () => {
+    stopMythicCardMusic();
+    host.remove();
+  });
+  return host;
 }

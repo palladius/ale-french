@@ -30,6 +30,7 @@ import {
   cardIdToFirestoreDocId,
   getPuffinCardsCatalog,
   getCardById,
+  resolveCardFrontMedia,
   JACKPOT_MATCH_INTERVAL,
   getGamePackCounter,
   setGamePackCounter,
@@ -42,6 +43,9 @@ import {
   compareFamilyRivals,
   playCardAudioOrFanfare,
   playCardBackExplosion,
+  playMythicCardMusic,
+  stopMythicCardMusic,
+  attachCardFrontHoverVideo,
   createPuffinCardsElementClass,
   showPuffinCardRevealToast,
   showPuffinBoosterDraftModal,
@@ -57,6 +61,7 @@ export {
   cardIdToFirestoreDocId,
   getPuffinCardsCatalog,
   getCardById,
+  resolveCardFrontMedia,
   JACKPOT_MATCH_INTERVAL,
   getGamePackCounter,
   setGamePackCounter,
@@ -68,11 +73,14 @@ export {
   compareFamilyRivals,
   playCardAudioOrFanfare,
   playCardBackExplosion,
+  playMythicCardMusic,
+  stopMythicCardMusic,
+  attachCardFrontHoverVideo,
   showPuffinCardRevealToast,
   showPuffinBoosterDraftModal,
 };
 
-export const PUFFIN_LOGIN_VERSION = '2.0.0';
+export const PUFFIN_LOGIN_VERSION = '2.0.2';
 export const PUFFIN_SALT = 'puffin-salt-2026';
 export const PUFFIN_OFFLINE_SEED = 'puffin-airplane-seed-2026';
 export const DEFAULT_CLOUD_API_URL = 'https://puffin-login-932724269481.europe-west1.run.app/v1';
@@ -1279,6 +1287,7 @@ function summarizeScoreGroup(items = [], key = 'all', label = 'All') {
     displayName: rec.displayName,
     shortName: rec.shortName,
     emoji: rec.emoji,
+    avatar: rec.avatar,
     colorHex: rec.colorHex,
     score: rec.score,
     duration_sec: rec.duration_sec,
@@ -1345,6 +1354,7 @@ function summarizeScoreGroup(items = [], key = 'all', label = 'All') {
         displayName: rec.displayName,
         shortName: rec.shortName,
         emoji: rec.emoji,
+        avatar: rec.avatar,
         colorHex: rec.colorHex,
         matches: 0,
         bestScore: 0,
@@ -1465,6 +1475,7 @@ export function computePerGameDashboard(scores = [], gameId = '') {
     bySubMode,
     byGrid,
     byPlayer: overall.byPlayer,
+    matches: normalized,
   };
 }
 
@@ -5738,6 +5749,9 @@ export const PuffinLogin = {
   setGamePackCounter,
   incrementGamePackCounter,
   rollGameBoosterPack,
+  resolveCardFrontMedia,
+  playMythicCardMusic,
+  stopMythicCardMusic,
 
   resetDummyCards() {
     return ensureDummyUserCardsSeeded(true);
@@ -6408,143 +6422,159 @@ export const PuffinCardsElement = createPuffinCardsElementClass({
 const GAME_DASHBOARD_CSS = `
 :host {
   display: block;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: #f8fafc;
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: #e2e8f0;
+}
+:host([hidden]) {
+  display: none !important;
 }
 .gd-wrap {
-  background: #13182e;
-  border: 1.5px solid rgba(255, 255, 255, 0.13);
-  border-radius: 1.2rem;
-  padding: 1.15rem;
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
+  background: #0f1115;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 14px 18px;
 }
 .gd-header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.9rem;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 .gd-title {
   margin: 0;
-  font-size: 1.18rem;
-  font-weight: 900;
-}
-.gd-sub {
-  margin: 0.2rem 0 0;
-  font-size: 0.8rem;
-  color: #94a3b8;
+  font-size: 15px;
+  font-weight: 700;
+  color: #f8fafc;
 }
 .gd-pills {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
+  background: #111319;
+  padding: 2px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 10px;
 }
 .gd-pill {
-  background: #0b0e1d;
-  color: #cbd5e1;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 999px;
-  padding: 0.36rem 0.78rem;
-  font-size: 0.78rem;
-  font-weight: 800;
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
-}
-.gd-pill:hover {
-  border-color: #facc15;
-  color: #fff;
 }
 .gd-pill.active {
-  background: #facc15;
-  color: #090b14;
-  border-color: #facc15;
-  box-shadow: 0 2px 12px rgba(250, 204, 21, 0.4);
-}
-.gd-highlights {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1.1rem;
-}
-.gd-kpi {
-  background: rgba(11, 14, 29, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 0.9rem;
-  padding: 0.75rem 0.9rem;
-}
-.gd-kpi-label {
-  font-size: 0.72rem;
-  color: #94a3b8;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.gd-kpi-val {
-  margin-top: 0.25rem;
-  font-size: 1.02rem;
-  font-weight: 900;
-  color: #fef08a;
+  background: #252b38;
+  color: #f8fafc;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 .gd-section-title {
-  margin: 1.1rem 0 0.5rem;
-  font-size: 0.95rem;
-  font-weight: 900;
-  color: #fde047;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  margin: 14px 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #cbd5e1;
 }
 .gd-table-wrap {
   overflow-x: auto;
-  border-radius: 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  background: #0b0e1d;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 table.gd-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.81rem;
+  font-size: 13px;
   text-align: left;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
 }
 table.gd-table th {
-  background: rgba(255, 255, 255, 0.05);
+  background: #12151c;
   color: #94a3b8;
-  font-weight: 800;
-  padding: 0.58rem 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  padding: 7px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   white-space: nowrap;
 }
-table.gd-table td {
-  padding: 0.58rem 0.75rem;
+table.gd-table tbody tr {
+  background: #15181f;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+table.gd-table tbody tr:nth-child(even) {
+  background: #191d26;
+}
+table.gd-table tbody tr:hover {
+  background: #212632;
+}
+table.gd-table td {
+  padding: 6px 10px;
+  height: 36px;
   vertical-align: middle;
+  white-space: nowrap;
 }
-table.gd-table tr:last-child td {
-  border-bottom: none;
-}
-.gd-badge {
+.gd-hero-cell {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  padding: 0.16rem 0.55rem;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 0.75rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--hero-color, #facc15);
-  color: #fff;
+  gap: 7px;
+}
+.gd-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--hero-color, #94a3b8);
+  background: #1e2430;
+}
+.num-chip {
+  display: inline-block;
+  min-width: 48px;
+  text-align: center;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.num-chip--ok {
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #34d399;
+}
+.num-chip--warn {
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  color: #fbbf24;
+}
+.num-chip--bad {
+  background: rgba(244, 63, 94, 0.14);
+  border: 1px solid rgba(244, 63, 94, 0.28);
+  color: #fb7185;
 }
 .gd-mode-tag {
-  font-family: monospace;
-  font-weight: 900;
-  font-size: 0.82rem;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.12);
-  padding: 0.18rem 0.5rem;
-  border-radius: 0.45rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  border-left: 3px solid #38bdf8;
+  padding-left: 8px;
+}
+.icon-svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -2px;
 }
 `;
 
@@ -6585,43 +6615,48 @@ export function renderPerGameDashboardHtml(dashboard, activeGameId = 'carlesso-f
   const fmtSec = (sec) => {
     const s = Number(sec) || 0;
     if (s <= 0) return '—';
-    const m = Math.floor(s / 60);
-    const r = s % 60;
-    return m > 0 ? `${m}m ${r}s (${s}s)` : `${s}s`;
+    return `${s}s`;
   };
+
+  const renderHeroAvatar = (hero) => {
+    if (!hero) return '—';
+    const av = hero.avatar || `assets/avatars/${hero.player_id || 'guest'}.png`;
+    return `<span class="gd-hero-cell" title="${hero.displayName || hero.shortName}">
+      <img class="gd-avatar" src="${av}" alt="${hero.shortName}" style="--hero-color:${hero.colorHex || '#94a3b8'}" />
+      <span>${hero.shortName}</span>
+    </span>`;
+  };
+
+  const svgTrophy = `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`;
+  const svgClock = `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
 
   const champRowsHtml = subEntries
     .map((b) => {
       const c = b.champion;
       const f = b.fastestPlayer;
-      const cAcc =
-        c && c.correct !== null && c.total !== null
-          ? ` <span style="opacity:0.85;font-weight:700;">(${c.correct}/${c.total}${
-              c.percentage !== null ? ` • ${c.percentage}%` : ''
-            })</span>`
-          : '';
+      const pctTone =
+        c && c.percentage !== null
+          ? c.percentage >= 80
+            ? 'num-chip--ok'
+            : c.percentage >= 60
+            ? 'num-chip--warn'
+            : 'num-chip--bad'
+          : 'num-chip--ok';
+      const scoreChip = c
+        ? `<span class="num-chip ${pctTone}">${c.score} pt${
+            c.percentage !== null && c.percentage !== undefined ? ` · ${c.percentage}%` : ''
+          }</span>`
+        : '—';
       const podiumStr = (b.podium || [])
-        .map((p, i) => {
-          const acc =
-            p.percentage !== null && p.percentage !== undefined ? ` • ${p.percentage}%` : '';
-          return `${i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'} ${p.shortName} (${p.score} pt${acc})`;
-        })
-        .join(' • ');
+        .map((p, i) => `#${i + 1} ${p.shortName} (${p.score})`)
+        .join(' · ');
       return `
         <tr data-submode="${b.key}">
           <td><span class="gd-mode-tag">${b.label.toUpperCase()}</span></td>
-          <td>${
-            c
-              ? `<span class="gd-badge" style="--hero-color:${c.colorHex}">👑 ${c.emoji} ${c.shortName} — <strong>${c.score} pt</strong>${cAcc}</span>`
-              : '—'
-          }</td>
-          <td>${
-            f
-              ? `<span class="gd-badge" style="--hero-color:${f.colorHex}">⚡ ${f.emoji} ${f.shortName} — <strong>${fmtSec(f.duration_sec)}</strong></span>`
-              : '—'
-          }</td>
+          <td>${c ? `${renderHeroAvatar(c)} ${scoreChip}` : '—'}</td>
+          <td>${f ? `${renderHeroAvatar(f)} <span class="num-chip num-chip--ok">${fmtSec(f.duration_sec)}</span>` : '—'}</td>
           <td>${podiumStr || '—'}</td>
-          <td><strong>${b.totalMatches}</strong></td>
+          <td><span class="num-chip num-chip--ok">${b.totalMatches}</span></td>
         </tr>
       `;
     })
@@ -6632,20 +6667,17 @@ export function renderPerGameDashboardHtml(dashboard, activeGameId = 'carlesso-f
       const d = b.durationStats || {};
       const f = b.fastestPlayer;
       const perHeroStr = Object.values(b.byPlayer || {})
-        .map((p) => `${p.emoji} ${p.shortName}: avg ${p.avgDurationSec}s (best ${p.bestDurationSec}s)`)
-        .join(' • ');
+        .slice(0, 3)
+        .map((p) => `${p.shortName}: ${p.avgDurationSec}s`)
+        .join(' · ');
       return `
         <tr data-time-row="${b.key}">
           <td><span class="gd-mode-tag">${b.label.toUpperCase()}</span></td>
-          <td><strong>${fmtSec(d.avgSec)}</strong></td>
-          <td>${
-            f
-              ? `⚡ <strong>${fmtSec(d.minSec)}</strong> (${f.emoji} ${f.shortName})`
-              : fmtSec(d.minSec)
-          }</td>
+          <td><span class="num-chip num-chip--warn">${fmtSec(d.avgSec)}</span></td>
+          <td>${f ? `${svgClock} <span class="num-chip num-chip--ok">${fmtSec(d.minSec)}</span> (${f.shortName})` : fmtSec(d.minSec)}</td>
           <td>${fmtSec(d.medianSec)}</td>
           <td>${b.efficiencyStats?.minMoves ?? '—'} / ${b.efficiencyStats?.minHints ?? '—'}</td>
-          <td style="font-size:0.74rem;color:#cbd5e1;">${perHeroStr || '—'}</td>
+          <td>${perHeroStr || '—'}</td>
         </tr>
       `;
     })
@@ -6655,11 +6687,11 @@ export function renderPerGameDashboardHtml(dashboard, activeGameId = 'carlesso-f
     .map(
       (p) => `
         <tr data-player-row="${p.player_id || 'null'}">
-          <td><span class="gd-badge" style="--hero-color:${p.colorHex}">${p.emoji} ${p.shortName}</span></td>
-          <td><strong>${p.matches}</strong></td>
-          <td><strong>${p.bestScore} pt</strong></td>
+          <td>${renderHeroAvatar(p)}</td>
+          <td>${p.matches}</td>
+          <td><span class="num-chip num-chip--ok">${p.bestScore} pt</span></td>
           <td>${p.avgScore} pt</td>
-          <td>⚡ ${fmtSec(p.bestDurationSec)}</td>
+          <td><span class="num-chip num-chip--ok">${fmtSec(p.bestDurationSec)}</span></td>
           <td>${fmtSec(p.avgDurationSec)}</td>
           <td>${p.minMoves ?? '—'}</td>
           <td>${p.minHints ?? '—'}</td>
@@ -6668,75 +6700,45 @@ export function renderPerGameDashboardHtml(dashboard, activeGameId = 'carlesso-f
     )
     .join('');
 
-  const overallChamp = dash.overall?.champion;
-  const overallFastest = dash.overall?.fastestPlayer;
-
   return `
-    <div class="gd-highlights">
-      <div class="gd-kpi">
-        <div class="gd-kpi-label">🎮 Gioco Selezionato</div>
-        <div class="gd-kpi-val">${dash.game_id} (${dash.totalMatches} partite)</div>
-      </div>
-      <div class="gd-kpi">
-        <div class="gd-kpi-label">👑 Campione Assoluto</div>
-        <div class="gd-kpi-val">${
-          overallChamp
-            ? `${overallChamp.emoji} ${overallChamp.shortName} (${overallChamp.score} pt)`
-            : '—'
-        }</div>
-      </div>
-      <div class="gd-kpi">
-        <div class="gd-kpi-label">⚡ Record Velocità</div>
-        <div class="gd-kpi-val">${
-          overallFastest
-            ? `${overallFastest.emoji} ${overallFastest.shortName} (${fmtSec(overallFastest.duration_sec)})`
-            : '—'
-        }</div>
-      </div>
-      <div class="gd-kpi">
-        <div class="gd-kpi-label">⏱️ Tempo Medio Globale</div>
-        <div class="gd-kpi-val">${fmtSec(dash.overall?.durationStats?.avgSec)}</div>
-      </div>
-    </div>
-
-    <div class="gd-section-title">🏆 Tabella 1 — Campioni per Difficoltà / Modalità (es. FotoQuad Facile vs Medio vs Difficile)</div>
+    <h3 class="gd-section-title">${svgTrophy} Campioni</h3>
     <div class="gd-table-wrap">
       <table class="gd-table" id="gd-champions-table">
         <thead>
           <tr>
-            <th>Difficoltà / Griglia</th>
-            <th>👑 Campione Punteggio (#1)</th>
-            <th>⚡ Campione Velocità (Min Tempo)</th>
-            <th>Podio Famiglia (🥇 🥈 🥉)</th>
+            <th>Livello</th>
+            <th>Campione Punteggio</th>
+            <th>Record Tempo</th>
+            <th>Podio</th>
             <th>Partite</th>
           </tr>
         </thead>
         <tbody>
-          ${champRowsHtml || '<tr><td colspan="5">Nessuna partita registrata</td></tr>'}
+          ${champRowsHtml || '<tr><td colspan="5">Nessuna partita</td></tr>'}
         </tbody>
       </table>
     </div>
 
-    <div class="gd-section-title">⏱️ Tabella 2 — Tempi di Completamento Medi, Minimi e Mediani per Griglia / Livello (es. Kids Jigsaw 6x6 vs 7x7)</div>
+    <h3 class="gd-section-title">${svgClock} Tempi</h3>
     <div class="gd-table-wrap">
       <table class="gd-table" id="gd-times-table">
         <thead>
           <tr>
-            <th>Griglia / Modalità</th>
-            <th>⏱️ Tempo Medio</th>
-            <th>⚡ Tempo Minimo (Record)</th>
-            <th>📊 Mediana</th>
-            <th>🎯 Min Mosse / Min Hints</th>
-            <th>👨‍👩‍👦‍👦 Tempi Medi per Giocatore</th>
+            <th>Livello</th>
+            <th>Tempo Medio</th>
+            <th>Tempo Minimo</th>
+            <th>Mediana</th>
+            <th>Mosse / Aiuti</th>
+            <th>Medie Giocatori</th>
           </tr>
         </thead>
         <tbody>
-          ${timeRowsHtml || '<tr><td colspan="6">Nessun dato temporale</td></tr>'}
+          ${timeRowsHtml || '<tr><td colspan="6">Nessun dato</td></tr>'}
         </tbody>
       </table>
     </div>
 
-    <div class="gd-section-title">🎯 Tabella 3 — Efficienza & Statistiche per Eroe di Famiglia</div>
+    <h3 class="gd-section-title">Eroi</h3>
     <div class="gd-table-wrap">
       <table class="gd-table" id="gd-players-table">
         <thead>
@@ -6748,7 +6750,7 @@ export function renderPerGameDashboardHtml(dashboard, activeGameId = 'carlesso-f
             <th>Miglior Tempo</th>
             <th>Tempo Medio</th>
             <th>Min Mosse</th>
-            <th>Min Aiuti (Hints)</th>
+            <th>Min Aiuti</th>
           </tr>
         </thead>
         <tbody>
@@ -6773,12 +6775,12 @@ export class PuffinGameDashboardElement extends BaseElement {
     this.$root = document.createElement('div');
     this.$root.className = 'gd-wrap';
     this.shadowRoot.append(this.$root);
-    this.activeGameId = this.getAttribute('game-id') || 'carlesso-fotoquad';
+    this.activeGameId = this.getAttribute('game-id') || 'ale-french';
     this._onUpdate = () => this.refresh();
   }
 
   connectedCallback() {
-    this.activeGameId = this.getAttribute('game-id') || 'carlesso-fotoquad';
+    this.activeGameId = this.getAttribute('game-id') || 'ale-french';
     window.addEventListener('puffin-score-recorded', this._onUpdate);
     this.refresh();
   }
@@ -6801,15 +6803,15 @@ export class PuffinGameDashboardElement extends BaseElement {
 
   render(dashData) {
     const games = [
-      { id: 'ale-french', label: '🇫🇷 Ale French (Facile / Moyen / Difficile)' },
-      { id: 'carlesso-fotoquad', label: '📸 FotoQuad (Facile / Medio / Difficile)' },
-      { id: 'kids-jigsaw-puzzle', label: '🧩 Kids Jigsaw (6x6 / 7x7 / Griglie)' },
-      { id: 'tubature', label: '🚰 Tubature' },
-      { id: 'puffin-snake', label: '🐍 Puffin Snake' },
-      { id: 'carchess3d', label: '♟️ CarChess 3D' },
-      { id: 'smurfs-and-dragons', label: '🐉 Smurfs & Dragons' },
-      { id: 'family-mahjong-3d', label: '🀄 3D Mahjong' },
-      { id: 'pupurabbu-3d', label: '🐰 Pupurabbu 3D' },
+      { id: 'ale-french', label: '🇫🇷 Ale French' },
+      { id: 'carlesso-fotoquad', label: 'FotoQuad' },
+      { id: 'kids-jigsaw-puzzle', label: 'Kids Jigsaw' },
+      { id: 'tubature', label: 'Tubature' },
+      { id: 'puffin-snake', label: 'Puffin Snake' },
+      { id: 'carchess3d', label: 'CarChess 3D' },
+      { id: 'smurfs-and-dragons', label: 'Smurfs & Dragons' },
+      { id: 'family-mahjong-3d', label: '3D Mahjong' },
+      { id: 'pupurabbu-3d', label: 'Pupurabbu 3D' },
     ];
 
     const pillsHtml = games
@@ -6828,13 +6830,10 @@ export class PuffinGameDashboardElement extends BaseElement {
 
     this.$root.innerHTML = `
       <div class="gd-header">
-        <div>
-          <h2 class="gd-title">📊 Per-Game Family Dashboard & Deep Telemetry</h2>
-          <p class="gd-sub">Campioni per difficoltà (FotoQuad facile/medio/difficile) & tempi medi per griglia (Kids Jigsaw 6x6 vs 7x7)</p>
+        <h2 class="gd-title">Sinottica</h2>
+        <div class="gd-pills" role="radiogroup" aria-label="Gioco">
+          ${pillsHtml}
         </div>
-      </div>
-      <div class="gd-pills" role="tablist" aria-label="Seleziona gioco">
-        ${pillsHtml}
       </div>
       ${bodyHtml}
     `;
