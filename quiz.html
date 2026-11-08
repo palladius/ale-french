@@ -1128,6 +1128,7 @@
 
   <!-- SCRIPT DATA & LOGIC -->
   <script src="audio-player.js"></script>
+  <script src="telemetry.js"></script>
   <script src="quiz-data.js"></script>
   <script>
     /* ==========================================================================
@@ -1224,7 +1225,11 @@
     function selectPlayer(name, element) {
       selectedPlayer = name;
       document.querySelectorAll('.player-chip').forEach(el => el.classList.remove('active'));
-      element.classList.add('active');
+      const targetEl = element || (name.includes('Sebastian') 
+        ? document.querySelector('.player-chip:nth-child(2)') 
+        : (name.includes('Papà') ? document.querySelector('.player-chip:nth-child(3)') : document.querySelector('.player-chip:nth-child(1)')));
+      if (targetEl) targetEl.classList.add('active');
+
       if (name.includes('Alessandro')) speakFrench('Alessandro');
       else if (name.includes('Sebastian')) speakFrench('Sebastian');
       else if (name.includes('Papà')) speakFrench('mon papa');
@@ -1233,8 +1238,24 @@
     function selectDifficulty(diff, element) {
       selectedDifficulty = diff;
       document.querySelectorAll('.difficulty-card').forEach(el => el.classList.remove('active'));
-      element.classList.add('active');
+      const targetEl = element || document.querySelector(`.difficulty-card.${diff}`);
+      if (targetEl) targetEl.classList.add('active');
     }
+
+    function applyQuizProfileDefaults() {
+      if (typeof getFrenchProfileDefaults === 'function') {
+        const conf = getFrenchProfileDefaults();
+        if (conf.user === 'seby') {
+          selectPlayer('Sebastiano 🐻');
+          selectDifficulty('facile');
+        } else if (conf.user === 'ale') {
+          selectPlayer('Alessandro 🦁');
+          selectDifficulty('moyen');
+        }
+      }
+    }
+    window.addEventListener('french-profile-updated', applyQuizProfileDefaults);
+    window.addEventListener('DOMContentLoaded', applyQuizProfileDefaults);
 
     function setWordSet(setMode, element) {
       selectedWordSet = setMode;
@@ -1372,6 +1393,10 @@
       const total = currentQuizState.questions.length;
       const curNum = currentQuizState.currentIndex + 1;
 
+      // Telemetry timing
+      q.startTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+      q.hintsUsed = 0;
+
       // Update HUD
       document.getElementById('hud-player').textContent = currentQuizState.player;
       
@@ -1430,6 +1455,7 @@
       if (!currentQuizState) return;
       const q = currentQuizState.questions[currentQuizState.currentIndex];
       q.audioUsed = true;
+      q.hintsUsed = (q.hintsUsed || 0) + 1;
       speakFrench(q.infinitive);
       const audioBtn = document.getElementById('btn-audio-hint');
       if (audioBtn) {
@@ -1451,6 +1477,22 @@
       q.userAnswer = selectedOption;
       const isCorrect = (selectedOption === q.infinitive);
       q.isCorrect = isCorrect;
+
+      if (typeof recordFrenchTelemetry === 'function') {
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        const durationMs = q.startTime ? Math.round(now - q.startTime) : 0;
+        const playerKey = selectedPlayer.includes('Sebastian') ? 'seby' : (selectedPlayer.includes('Papà') ? 'riccardo' : 'ale');
+        recordFrenchTelemetry({
+          user: playerKey,
+          exercise: 'quiz_multiple_choice',
+          mode: selectedDifficulty,
+          target: q.infinitive,
+          userInput: selectedOption,
+          correct: isCorrect,
+          durationMs,
+          hintsUsed: q.hintsUsed || 0
+        });
+      }
 
       // Disable all buttons
       const allBtns = document.querySelectorAll('.answer-btn');

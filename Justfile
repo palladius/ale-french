@@ -2,7 +2,7 @@
 
 # Run TDD test suite
 test:
-    node --test tests/audio.test.mjs tests/card-spelling.test.mjs
+    node --test tests/audio.test.mjs tests/card-spelling.test.mjs tests/telemetry.test.mjs tests/profile-defaults.test.mjs
 
 # Generate missing French TTS audio clips via gemini-3.8-flash-tts (incremental, skips existing valid MP3s)
 tts *args:

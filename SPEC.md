@@ -114,5 +114,28 @@ Aggiunto in risposta alla comunicazione della scuola Tandem IMS (`alert_pr1-fren
 * **Quiz Diretto:** https://palladius.github.io/ale-french/quiz.html
 * **Mazzo Flashcard:** https://palladius.github.io/ale-french/cards.html
 * **Griglia Selezione:** https://palladius.github.io/ale-french/grid.html
+* **Puffin Ring Hub:** https://palladius.github.io/ale-french/ring.html
 * **Codice Sorgente:** https://github.com/palladius/ale-french
+
+---
+
+## 👥 7. Role-Based Access Control (RBAC) & Telemetria Quiz
+
+### A. Matrice di Visibilità:
+* 🦁 **Alessandro (`ale`):** visualizza unicamente le attività P3 (Coniugazioni, Flashcards 3D, Griglia 4x4, Quiz P3). Lo spazio Seby è escluso dai tab di navigazione per evitare distrazioni.
+* 🎈 **Sebastian (`seby`):** visualizza unicamente le attività P1 (Saluti, Numeri 0-12, Colori & Forme, Quiz & Scrittura A1). La navigazione è bloccata sul perimetro A1.
+* 👑 **Papà (`riccardo`) & Mamma (`kate`):** visualizzano tutte le sezioni contemporaneamente, con toggle di simulazione ("Vedi come Ale", "Vedi come Seby") e accesso alla Dashboard Genitori.
+
+### B. Telemetria Cognitiva Quiz (`ale_french_telemetry_v1`):
+* **Tempo per singola domanda (ms):** misurato con `performance.now()`.
+* **Indice di esitazione:** calcolato sul tempo di risposta e sul numero di richieste audio (click su altoparlante 🔊).
+* **Tracciamento errori:** risposta digitata/selezionata vs risposta corretta, per individuare confusioni fonetiche o desinenze mute omesse (`tu mange` vs `tu manges`).
+* **Sincronizzazione duale:** salvataggio ad alta densità in `localStorage` + aggregato su Firestore tramite PuffinLogin.
+
+---
+
+## ⌨️ 8. [RADAR] Tastiera On-Screen & Accenti Semplificati (Track Conductor)
+
+* **Tolleranza Accenti (Fuzzy Accent Matching):** se il bambino digita `fenetre`, l'algoritmo (già predisposto in `card-spelling.js`) accetta la parola come valida, premiando la memoria di base ed evidenziando visivamente la versione canonica `fenêtre`.
+* **Tastiera Virtuale a Schermo (On-Screen Accent Bar):** pulsanti dedicati per i caratteri speciali francesi (`é`, `è`, `ê`, `ë`, `à`, `â`, `ù`, `û`, `ô`, `ç`) con palette a 4 colori Google (`applyGoogleAccent`), per consentire l'esercizio sia con tastiera fisica che da iPad / touch screen.
 

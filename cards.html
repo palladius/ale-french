@@ -973,10 +973,10 @@
 
       <!-- 3-LEVEL KEYBOARD SPELLING DIFFICULTY SELECTOR -->
       <div class="spelling-diff-bar">
-        <span class="spelling-diff-label">⌨️ Tastiera:</span>
-        <button class="spelling-diff-btn" data-diff="facile" onclick="setSpellingDifficulty('facile', this)" title="Verde/Rosso subito ad ogni lettera, accenti automatici">🟢 Facile (Lettera)</button>
-        <button class="spelling-diff-btn active" data-diff="moyen" onclick="setSpellingDifficulty('moyen', this)" title="Verde/Rosso a fine parola, accenti automatici">🟡 Medio (Parola)</button>
-        <button class="spelling-diff-btn" data-diff="difficile" onclick="setSpellingDifficulty('difficile', this)" title="Verde/Rosso a fine parola + Pulsantiera Accenti 4 colori Google">🔴 Difficile (+ Accenti Google)</button>
+        <span class="spelling-diff-label">⌨️ Modalità:</span>
+        <button class="spelling-diff-btn" data-diff="facile" onclick="setSpellingDifficulty('facile', this)" title="Seby: tocca le tessere, accenti automatici">🟢 Facile (Seby 🎈 • Tessere)</button>
+        <button class="spelling-diff-btn active" data-diff="moyen" onclick="setSpellingDifficulty('moyen', this)" title="Ale: digita a mente, accenti automatici">🟡 Medio (Ale 🦁 • Tastiera)</button>
+        <button class="spelling-diff-btn" data-diff="difficile" onclick="setSpellingDifficulty('difficile', this)" title="Ale Esperto: pulsantiera accenti 4 colori Google">🔴 Difficile (+ Accenti Google)</button>
       </div>
 
       <!-- Hidden input to allow mobile/tablet virtual keyboard trigger when tapping tiles -->
@@ -1018,6 +1018,11 @@
             </div>
 
             <div class="spelling-status-msg" id="spelling-status-el"></div>
+
+            <!-- ON-SCREEN LETTER BUBBLES (FACILE / SEBY MODE) -->
+            <div id="card-letter-bubbles-el" class="letter-bubbles" style="display: none; margin: 12px 0 6px 0; gap: 8px; justify-content: center; flex-wrap: wrap;" onclick="event.stopPropagation()">
+              <!-- Populated by JS -->
+            </div>
 
             <div class="tap-hint" id="card-tap-hint-el">
               <span>⌨️ Digita con la tastiera o ✨ tocca per scoprire</span>
@@ -1077,6 +1082,7 @@
 
   <script src="audio-player.js"></script>
   <script src="card-spelling.js"></script>
+  <script src="telemetry.js"></script>
   <script>
     let allVerbs = [];
     let filteredVerbs = [];
@@ -1385,8 +1391,12 @@
       }
     }
 
+    let cardSpellingStartTime = 0;
+    let cardHintsUsed = 0;
+
     function playCurrentAudio() {
       if (!filteredVerbs.length) return;
+      cardHintsUsed++;
       const verb = filteredVerbs[currentIndex];
       speakFrench(verb.infinitive);
     }
@@ -1554,12 +1564,46 @@
       activeSlotIndex = 0;
       lastVowelSlotIndex = -1;
       wordCompleted = false;
+      cardSpellingStartTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+      cardHintsUsed = 0;
 
       const statusEl = document.getElementById('spelling-status-el');
       if (statusEl) statusEl.innerHTML = '';
 
       refreshSpellingTilesUI();
       updateGoogleAccentPad();
+      updateLetterBubbles(verb);
+    }
+
+    function updateLetterBubbles(verb) {
+      const bubbleContainer = document.getElementById('card-letter-bubbles-el');
+      const hintEl = document.getElementById('card-tap-hint-el');
+      if (!bubbleContainer) return;
+
+      if (spellingDifficulty !== 'facile' || wordCompleted) {
+        bubbleContainer.style.display = 'none';
+        if (hintEl) hintEl.innerHTML = '<span>⌨️ Digita con la tastiera o ✨ tocca per scoprire</span>';
+        return;
+      }
+
+      bubbleContainer.style.display = 'flex';
+      if (hintEl) hintEl.innerHTML = '<span>🎈 Tocca le bolle con le lettere nell\'ordine giusto!</span>';
+
+      const letters = currentSlots.map(s => s.baseChar);
+      const distractors = ['a', 'e', 'i', 'r', 's', 't', 'o'].filter(c => !letters.includes(c)).sort(() => 0.5 - Math.random()).slice(0, 2);
+      const scrambled = [...letters, ...distractors].sort(() => 0.5 - Math.random());
+
+      bubbleContainer.innerHTML = scrambled.map((char, idx) => `
+        <button class="bubble-btn" id="card-bubble-${idx}" onclick="event.stopPropagation(); handleBubbleClick('${char}', ${idx})">
+          ${char}
+        </button>
+      `).join('');
+    }
+
+    function handleBubbleClick(char, idx) {
+      handleLetterInput(char);
+      const btn = document.getElementById(`card-bubble-${idx}`);
+      if (btn) btn.classList.add('used');
     }
 
     function focusMobileKeyboard() {
@@ -1783,8 +1827,22 @@
       const verb = filteredVerbs[currentIndex];
       const statusEl = document.getElementById('spelling-status-el');
       if (statusEl && verb) {
-        statusEl.innerHTML = `<span style="color:#059669;">🎉 BRAVISSIMO ALESSANDRO! <strong>${verb.infinitive}</strong> ✨</span>`;
+        statusEl.innerHTML = `<span style="color:#059669;">🎉 BRAVISSIMO! <strong>${verb.infinitive}</strong> ✨</span>`;
       }
+
+      if (typeof recordFrenchTelemetry === 'function' && verb) {
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        recordFrenchTelemetry({
+          exercise: 'card_spelling',
+          mode: spellingDifficulty,
+          target: verb.infinitive,
+          userInput: typedChars.join(''),
+          correct: true,
+          durationMs: cardSpellingStartTime ? Math.round(now - cardSpellingStartTime) : 0,
+          hintsUsed: cardHintsUsed
+        });
+      }
+
       if (verb) {
         speakFrench(verb.infinitive);
       }
@@ -1851,6 +1909,20 @@
         flipCurrentCard();
       }
     });
+
+    // Smart Profile Defaults (Seby = facile • Ale = moyen)
+    function applyCardProfileDefaults() {
+      if (typeof getFrenchProfileDefaults === 'function') {
+        const conf = getFrenchProfileDefaults();
+        if (conf.user === 'seby') {
+          setSpellingDifficulty('facile');
+        } else if (conf.user === 'ale') {
+          setSpellingDifficulty('moyen');
+        }
+      }
+    }
+    window.addEventListener('french-profile-updated', applyCardProfileDefaults);
+    document.addEventListener('DOMContentLoaded', applyCardProfileDefaults);
   </script>
   <script src="profile-switcher.js"></script>
 </body>

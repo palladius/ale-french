@@ -569,6 +569,53 @@
       color: #991b1b;
     }
 
+    .quiz-choice-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: white;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.04);
+      text-align: left;
+    }
+    .quiz-choice-btn:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(59, 130, 246, 0.15);
+    }
+    .quiz-choice-btn.correct {
+      border-color: #10b981;
+      background: #ecfdf5;
+      color: #065f46;
+    }
+    .quiz-choice-btn.wrong {
+      border-color: #ef4444;
+      background: #fef2f2;
+      color: #991b1b;
+    }
+    .quiz-choice-speaker {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .quiz-choice-speaker:hover {
+      background: #e2e8f0;
+    }
+
     .feedback-msg {
       margin-top: 14px;
       font-size: 1.2rem;
@@ -739,21 +786,36 @@
       <!-- PRACTICE / TEST VIEW -->
       <div class="practice-container" id="practice-card" style="display: none;">
         <div class="practice-header">
-          <h2>✍️ Test di Scrittura per Alessandro</h2>
-          <p class="practice-prompt">Scrivi la forma corretta con la giusta ortografia!</p>
+          <h2 id="practice-title-el">✍️ Allenamento Coniugazioni</h2>
+          <p class="practice-prompt">Fai l'esercizio con i verbi francesi!</p>
         </div>
+
+        <!-- EXERCISE MODE SELECTOR -->
+        <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+          <button class="btn-mode" id="btn-verb-choice" onclick="setVerbExerciseMode('choice')">🎈 Facile (Scelta Multipla • Seby)</button>
+          <button class="btn-mode active" id="btn-verb-typing" onclick="setVerbExerciseMode('typing')">🦁 Scrittura (Ortografia • Ale)</button>
+        </div>
+
         <div class="practice-target" id="quiz-question-el">
           tu + s'habiller = ?
         </div>
-        <div>
+
+        <!-- MULTIPLE CHOICE OPTIONS (FOR SEBY & EASY MODE) -->
+        <div id="quiz-choice-options" style="display: none; max-width: 520px; margin: 16px auto; grid-template-columns: 1fr; gap: 10px;"></div>
+
+        <!-- TYPING INPUT (FOR ALE & HARD MODE) -->
+        <div id="quiz-typing-container">
           <input type="text" id="quiz-input-el" class="input-box" placeholder="Scrivi qui..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         </div>
+
         <div class="feedback-msg" id="quiz-feedback-el"></div>
-        <div>
+
+        <div id="quiz-typing-actions">
           <button class="btn-submit-test" id="quiz-btn-el" onclick="checkQuizAnswer()">Verifica ✨</button>
           <button class="btn-submit-test" style="background: #e2e8f0; color: #334155; margin-left: 10px;" onclick="nextQuiz()">Salta ➡️</button>
         </div>
-        <div>
+
+        <div style="margin-top: 14px;">
           <span class="score-badge" id="quiz-score-el">Punteggio: 0 punti ⭐</span>
         </div>
       </div>
@@ -761,6 +823,8 @@
   </div>
 
   <script src="audio-player.js"></script>
+  <script src="card-spelling.js"></script>
+  <script src="telemetry.js"></script>
   <script>
     let verbsData = [];
     let currentVerb = null;
@@ -959,6 +1023,7 @@
 
     // PRONUNCIATION VIA PRE-GENERATED GEMINI 3.8 FLASH TTS MP3
     function speakText(text) {
+      if (quizTracker) quizTracker.markHint();
       playFrenchAudio(text);
     }
 
@@ -967,11 +1032,52 @@
     }
 
     // QUIZ / TEST MODE
+    let verbExerciseMode = 'typing'; // 'choice' (Seby) | 'typing' (Ale)
+    let quizTracker = null;
+
+    function setVerbExerciseMode(mode) {
+      verbExerciseMode = mode;
+      const btnChoice = document.getElementById('btn-verb-choice');
+      const btnTyping = document.getElementById('btn-verb-typing');
+      if (btnChoice) btnChoice.classList.toggle('active', mode === 'choice');
+      if (btnTyping) btnTyping.classList.toggle('active', mode === 'typing');
+
+      const isChoice = mode === 'choice';
+      const choiceBox = document.getElementById('quiz-choice-options');
+      const typingBox = document.getElementById('quiz-typing-container');
+      const typingActs = document.getElementById('quiz-typing-actions');
+      if (choiceBox) choiceBox.style.display = isChoice ? 'grid' : 'none';
+      if (typingBox) typingBox.style.display = isChoice ? 'none' : 'block';
+      if (typingActs) typingActs.style.display = isChoice ? 'none' : 'block';
+
+      if (quizCurrent) {
+        renderQuizQuestion();
+      }
+    }
+
+    function applyVerbProfileDefaults() {
+      if (typeof getFrenchProfileDefaults === 'function') {
+        const conf = getFrenchProfileDefaults();
+        if (conf.user === 'seby') {
+          setVerbExerciseMode('choice');
+          const titleEl = document.getElementById('practice-title-el');
+          if (titleEl) titleEl.textContent = '🎈 Allenamento Verbi per Seby (A1)';
+        } else if (conf.user === 'ale') {
+          setVerbExerciseMode('typing');
+          const titleEl = document.getElementById('practice-title-el');
+          if (titleEl) titleEl.textContent = '🦁 Allenamento Scrittura per Ale (P3)';
+        }
+      }
+    }
+    window.addEventListener('french-profile-updated', applyVerbProfileDefaults);
+    document.addEventListener('DOMContentLoaded', applyVerbProfileDefaults);
+
     function startQuiz() {
       nextQuiz();
     }
 
     function nextQuiz() {
+      if (!verbsData || !verbsData.length) return;
       const verb = verbsData[Math.floor(Math.random() * verbsData.length)];
       const conj = verb.conjugation[Math.floor(Math.random() * verb.conjugation.length)];
       quizCurrent = { verb, conj };
@@ -983,13 +1089,113 @@
         <div style="font-size: 1.05rem; color: #64748b; margin-top: 4px;">👉 <em>${conj.italian || verb.italian}</em></div>
       `;
 
-      const input = document.getElementById('quiz-input-el');
-      input.value = '';
-      input.className = 'input-box';
-      input.focus();
-      document.getElementById('quiz-feedback-el').textContent = '';
-      document.getElementById('quiz-btn-el').textContent = 'Verifica ✨';
-      document.getElementById('quiz-btn-el').onclick = checkQuizAnswer;
+      if (typeof startFrenchQuestionTelemetry === 'function') {
+        quizTracker = startFrenchQuestionTelemetry({
+          exercise: 'verb_quiz',
+          mode: verbExerciseMode,
+          target: conj.full
+        });
+      } else {
+        quizTracker = null;
+      }
+
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      if (!quizCurrent) return;
+      const { verb, conj } = quizCurrent;
+      const feedback = document.getElementById('quiz-feedback-el');
+      if (feedback) feedback.textContent = '';
+
+      if (verbExerciseMode === 'choice') {
+        renderQuizChoiceOptions(verb, conj);
+      } else {
+        const input = document.getElementById('quiz-input-el');
+        if (input) {
+          input.value = '';
+          input.className = 'input-box';
+          input.focus();
+        }
+        const btnVerifica = document.getElementById('quiz-btn-el');
+        if (btnVerifica) {
+          btnVerifica.textContent = 'Verifica ✨';
+          btnVerifica.onclick = checkQuizAnswer;
+        }
+      }
+    }
+
+    function renderQuizChoiceOptions(verb, conj) {
+      const choiceContainer = document.getElementById('quiz-choice-options');
+      if (!choiceContainer) return;
+      choiceContainer.innerHTML = '';
+
+      const correctText = conj.full;
+      const distractors = [];
+
+      // Collect distractors from same verb
+      verb.conjugation.forEach(c => {
+        if (c.full !== correctText && !distractors.includes(c.full)) {
+          distractors.push(c.full);
+        }
+      });
+
+      // If needed, supplement with other verbs
+      if (distractors.length < 2) {
+        verbsData.forEach(v => {
+          if (v.id !== verb.id) {
+            v.conjugation.forEach(c => {
+              if (c.full !== correctText && !distractors.includes(c.full)) {
+                distractors.push(c.full);
+              }
+            });
+          }
+        });
+      }
+
+      distractors.sort(() => Math.random() - 0.5);
+      const options = [correctText, distractors[0], distractors[1]];
+      options.sort(() => Math.random() - 0.5);
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-choice-btn';
+        const safeOpt = opt.replace(/'/g, "\\'");
+        btn.innerHTML = `
+          <span>${opt}</span>
+          <span class="quiz-choice-speaker" onclick="event.stopPropagation(); speakText('${safeOpt}')" title="Ascolta pronuncia">🔊</span>
+        `;
+        btn.onclick = () => chooseQuizOption(opt, btn, correctText);
+        choiceContainer.appendChild(btn);
+      });
+    }
+
+    function chooseQuizOption(selected, btnEl, correctText) {
+      const isCorrect = (selected === correctText);
+      const feedback = document.getElementById('quiz-feedback-el');
+      const allBtns = document.querySelectorAll('.quiz-choice-btn');
+
+      if (quizTracker) {
+        quizTracker.finish(isCorrect, selected);
+      }
+
+      if (isCorrect) {
+        btnEl.classList.add('correct');
+        allBtns.forEach(b => b.disabled = true);
+        feedback.innerHTML = `<span style="color: #059669;">Bravo! C'est parfait! 🎉 <strong>${correctText}</strong></span>`;
+        speakText(correctText);
+        quizScore += 10;
+        document.getElementById('quiz-score-el').textContent = `Punteggio: ${quizScore} punti ⭐`;
+
+        setTimeout(() => {
+          nextQuiz();
+        }, 1300);
+      } else {
+        btnEl.classList.add('wrong');
+        feedback.innerHTML = `<span style="color: #dc2626;">Riprova! Ascolta bene la pronuncia 🔊</span>`;
+        speakText(correctText);
+      }
     }
 
     function checkQuizAnswer() {
@@ -998,7 +1204,20 @@
       const targetFull = quizCurrent.conj.full.toLowerCase().replace(/’/g, "'");
       const verbOnly = targetFull.replace(quizCurrent.conj.pronoun + ' ', '').trim();
 
-      const isMatch = (userText === targetFull || userText === verbOnly);
+      let isMatch = false;
+      const conf = (typeof getFrenchProfileDefaults === 'function') ? getFrenchProfileDefaults() : { accentsStrict: true };
+      if (!conf.accentsStrict) {
+        const normUser = (typeof stripAccent === 'function') ? stripAccent(userText) : userText.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const normTarget = (typeof stripAccent === 'function') ? stripAccent(targetFull) : targetFull.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const normVerbOnly = (typeof stripAccent === 'function') ? stripAccent(verbOnly) : verbOnly.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        isMatch = (normUser === normTarget || normUser === normVerbOnly);
+      } else {
+        isMatch = (userText === targetFull || userText === verbOnly);
+      }
+
+      if (quizTracker) {
+        quizTracker.finish(isMatch, userText);
+      }
 
       const feedback = document.getElementById('quiz-feedback-el');
       if (isMatch) {
@@ -1018,8 +1237,10 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && currentMode === 'quiz') {
-        const btn = document.getElementById('quiz-btn-el');
-        btn.click();
+        if (verbExerciseMode === 'typing') {
+          const btn = document.getElementById('quiz-btn-el');
+          if (btn) btn.click();
+        }
       }
     });
   </script>

@@ -564,6 +564,261 @@
       display: inline-block;
       margin-bottom: 16px;
     }
+
+    /* GAMIFICATION SUITE FOR SEBY & ALE */
+    .game-hero-banner {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 3px solid #10b981;
+      border-radius: 24px;
+      padding: 16px 22px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+    }
+    .game-hero-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .game-hero-icon {
+      font-size: 2.8rem;
+      animation: floatBadge 2.4s ease-in-out infinite;
+    }
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .game-hero-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #065f46;
+    }
+    .game-hero-sub {
+      font-size: 0.92rem;
+      color: #047857;
+      margin-top: 2px;
+    }
+    .game-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-game-toggle {
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 2px solid #059669;
+      background: #059669;
+      color: white;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-game-toggle:hover {
+      transform: scale(1.05);
+      background: #047857;
+    }
+    .btn-game-toggle.secondary {
+      background: white;
+      color: #047857;
+      border-color: #a7f3d0;
+      box-shadow: none;
+    }
+    .btn-game-toggle.secondary:hover {
+      background: #f0fdf4;
+    }
+    .diff-pill-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+      padding: 4px;
+      border-radius: 999px;
+      border: 2px solid #cbd5e1;
+    }
+    .diff-pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      transition: all 0.15s;
+    }
+    .diff-pill.active {
+      background: #2563eb;
+      color: white;
+    }
+    .diff-pill.active.facile {
+      background: #10b981;
+      color: white;
+    }
+
+    /* GAME STAGE BOX */
+    .game-stage-card {
+      background: white;
+      border: 3.5px solid #10b981;
+      border-radius: 28px;
+      padding: 26px 20px;
+      max-width: 760px;
+      margin: 0 auto 30px auto;
+      text-align: center;
+      box-shadow: 0 16px 36px -8px rgba(16, 185, 129, 0.2);
+      position: relative;
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .game-score-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px dashed #e2e8f0;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .game-stars-badge {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1.5px solid #fde68a;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+    .game-step-badge {
+      background: #eff6ff;
+      color: #1e40af;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .big-number-choices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .big-num-opt-btn {
+      background: white;
+      border: 3.5px solid #cbd5e1;
+      border-radius: 22px;
+      padding: 16px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+      min-height: 140px;
+      user-select: none;
+    }
+    .big-num-opt-btn:hover {
+      transform: translateY(-5px) scale(1.04);
+      border-color: #3b82f6;
+      box-shadow: 0 14px 28px rgba(59, 130, 246, 0.2);
+    }
+    .big-num-opt-btn .opt-digit {
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #2563eb;
+      line-height: 1;
+    }
+    .big-num-opt-btn .opt-dots {
+      display: flex;
+      gap: 3px;
+      margin: 8px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 100px;
+    }
+    .big-num-opt-btn .opt-word {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .big-num-opt-btn.correct {
+      border-color: #10b981 !important;
+      background: #ecfdf5 !important;
+      animation: bounceWin 0.6s ease;
+    }
+    .big-num-opt-btn.wrong {
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+      animation: wobbleShake 0.45s ease;
+    }
+    @keyframes bounceWin {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+    @keyframes wobbleShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    /* COUNTING GAME */
+    .counting-basket-stage {
+      background: #f0fdf4;
+      border: 2px dashed #86efac;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 16px 0;
+      min-height: 150px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .bouncy-item {
+      font-size: 3.4rem;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+    .bouncy-item:hover {
+      transform: scale(1.2) rotate(10deg);
+    }
+    .bouncy-item.popped {
+      transform: scale(1.3) rotate(-10deg);
+      filter: drop-shadow(0 8px 12px rgba(16, 185, 129, 0.4));
+    }
+    .bouncy-item-num {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #2563eb;
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 800;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
   </style>
 </head>
 <body>
@@ -617,24 +872,108 @@
   </main>
 
   <script src="audio-player.js"></script>
+  <script src="telemetry.js"></script>
   <script src="seby-data.js"></script>
   <script src="profile-switcher.js"></script>
   <script>
-    // State
-    let currentCategory = 'salutations';
+    // =========================================================================
+    // STATE & CONFIG
+    // =========================================================================
+    let currentCategory = 'nombres'; // Default directly to Numbers game
+    let viewMode = 'game'; // 'game' | 'study'
+    let currentDifficulty = 'facile'; // 'facile' (Seby) | 'campione' (Ale)
     let italianMode = 'visible'; // 'visible' | 'covered' | 'hidden'
-    let quizMode = 'listen'; // 'listen' | 'spell'
-    let currentQuizIndex = 0;
-    let quizQuestions = [];
-    let currentSpellWord = null;
-    let spellUserLetters = [];
+    let numbersGameSubMode = 'listen'; // 'listen' | 'count' | 'spell'
+    let questionStartTime = 0;
+    let questionHintsUsed = 0;
     let spellScore = 0;
 
-    // Audio player (static gemini-3.8-flash-tts MP3 + French fallback)
-    function speakFr(text) {
-      playFrenchAudio(text);
+    // Active Game Session State
+    let currentQuestionIndex = 0;
+    const TOTAL_QUESTIONS_PER_ROUND = 5;
+    let roundQuestions = [];
+    let currentQuestion = null;
+    let countedCroissants = 0;
+    let targetCroissantsCount = 0;
+    let currentSpellWord = null;
+    let spellUserLetters = [];
+    let questionAnswered = false;
+
+    // Web Audio Synthesizer (Instant kid-friendly sounds)
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function playTone(type) {
+      try {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (type === 'correct') {
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.08);
+            gain.gain.setValueAtTime(0.2, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.35);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + i * 0.08);
+            osc.stop(now + i * 0.08 + 0.35);
+          });
+        } else if (type === 'pop') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400 + Math.random() * 200, now);
+          osc.frequency.exponentialRampToValueAtTime(800, now + 0.09);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.09);
+        } else if (type === 'wrong') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.28);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.28);
+        } else if (type === 'fanfare') {
+          [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.1);
+            gain.gain.setValueAtTime(0.25, now + i * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.5);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + i * 0.1);
+            osc.stop(now + i * 0.1 + 0.5);
+          });
+        }
+      } catch (e) {}
     }
 
+    // Audio helper using audio-player.js
+    function speakFr(text, isAutoPrompt = false) {
+      if (!isAutoPrompt) {
+        questionHintsUsed++;
+      }
+      if (typeof playFrenchAudio === 'function') {
+        playFrenchAudio(text);
+      }
+    }
+
+    // Toggle Italian translations visibility
     function toggleItalianMode() {
       if (italianMode === 'visible') {
         italianMode = 'covered';
@@ -656,323 +995,453 @@
       el.classList.remove('covered');
     }
 
+    // Switch active Category Tab
     function setCategory(cat) {
       currentCategory = cat;
       document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById(`cat-${cat}`);
       if (activeBtn) activeBtn.classList.add('active');
+      currentQuestionIndex = 0;
+      questionAnswered = false;
       renderCategory();
     }
 
+    // Toggle View Mode: Game vs Study Table
+    function setViewMode(mode) {
+      viewMode = mode;
+      currentQuestionIndex = 0;
+      questionAnswered = false;
+      renderCategory();
+    }
+
+    // Toggle Difficulty: Facile (Seby) vs Campione (Ale)
+    function setDifficulty(diff) {
+      currentDifficulty = diff;
+      currentQuestionIndex = 0;
+      questionAnswered = false;
+      renderCategory();
+    }
+
+    // Set Numbers Sub-Game
+    function setNumbersSubMode(sub) {
+      numbersGameSubMode = sub;
+      currentQuestionIndex = 0;
+      questionAnswered = false;
+      renderCategory();
+    }
+
+    // Main render router
     function renderCategory() {
       const container = document.getElementById('content-container');
-      if (currentCategory === 'salutations') {
-        renderSalutations(container);
-      } else if (currentCategory === 'nombres') {
+      if (currentCategory === 'nombres') {
         renderNombres(container);
+      } else if (currentCategory === 'salutations') {
+        renderSalutations(container);
       } else if (currentCategory === 'couleurs') {
         renderCouleurs(container);
       } else if (currentCategory === 'quiz') {
-        renderQuiz(container);
+        renderGrandQuiz(container);
       }
     }
 
-    // 1. SALUTATIONS & PRESENTATION
-    function renderSalutations(container) {
-      let html = `
-        <div class="section-hero">
-          <h2><span>👋</span> Salutations & Présentation</h2>
-          <p>Impara a salutare e a presentarti: <i>"Bonjour, je m'appelle Sebastian, j'ai 6 ans !"</i></p>
-        </div>
-        <div class="cards-grid">
-      `;
-
-      SEBY_DATA.salutations.forEach(item => {
-        let itClass = 'seby-card-it';
-        if (italianMode === 'covered') itClass += ' covered';
-        else if (italianMode === 'hidden') itClass += ' hidden';
-
-        html += `
-          <div class="seby-card" onclick="speakFr('${escapeSingleQuotes(item.fr)}')">
-            <div class="seby-card-icon">${item.icon}</div>
-            <div class="seby-card-fr">${item.fr}</div>
-            <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
-            <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
-              ${item.it}
+    // Hero banner template for all categories
+    function buildHeroBanner(icon, title, sub, hasSubModes = false) {
+      const isSeby = currentDifficulty === 'facile';
+      return `
+        <div class="game-hero-banner">
+          <div class="game-hero-info">
+            <span class="game-hero-icon">${icon}</span>
+            <div>
+              <div class="game-hero-title">${title}</div>
+              <div class="game-hero-sub">${sub}</div>
             </div>
-            <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${escapeSingleQuotes(item.fr)}')">
-              🔊
+          </div>
+
+          <div class="game-hero-actions">
+            <!-- DIFFICULTY PILLS -->
+            <div class="diff-pill-group">
+              <button class="diff-pill ${isSeby ? 'active facile' : ''}" onclick="setDifficulty('facile')">
+                🟢 Facile (Seby 🎈)
+              </button>
+              <button class="diff-pill ${!isSeby ? 'active' : ''}" onclick="setDifficulty('campione')">
+                🦁 Campione (Ale)
+              </button>
+            </div>
+
+            <!-- VIEW MODE TOGGLE -->
+            <button class="btn-game-toggle ${viewMode === 'game' ? '' : 'secondary'}" onclick="setViewMode('${viewMode === 'game' ? 'study' : 'game'}')">
+              ${viewMode === 'game' ? '🎮 Modalità Gioco Attiva' : '📖 Tavola di Studio'}
             </button>
           </div>
-        `;
-      });
+        </div>
 
-      html += `</div>`;
-      container.innerHTML = html;
+        ${hasSubModes && viewMode === 'game' ? `
+          <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+            <button class="quiz-mode-btn ${numbersGameSubMode === 'listen' ? 'active' : ''}" onclick="setNumbersSubMode('listen')">
+              👂 Ascolta e Tocca il Numero
+            </button>
+            <button class="quiz-mode-btn ${numbersGameSubMode === 'count' ? 'active' : ''}" onclick="setNumbersSubMode('count')">
+              🥐 Conta i Cornetti!
+            </button>
+            <button class="quiz-mode-btn ${numbersGameSubMode === 'spell' ? 'active' : ''}" onclick="setNumbersSubMode('spell')">
+              ✍️ Scrivi con le Bolle
+            </button>
+          </div>
+        ` : ''}
+      `;
     }
 
-    // 2. NOMBRES 0 À 12
+    // =========================================================================
+    // 1. NOMBRES (0 à 12)
+    // =========================================================================
     function renderNombres(container) {
-      let html = `
-        <div class="section-hero">
-          <h2><span>🔢</span> Les Nombres (0 à 12)</h2>
-          <p>Tocca ciascun numero per ascoltare la pronuncia e contare i pallini!</p>
-        </div>
-        <div class="numbers-grid">
-      `;
+      let html = buildHeroBanner('🔢', 'Les Nombres (0 à 12)', 'Impara a contare e a riconoscere i numeri francesi con audio e giochi!', true);
 
-      SEBY_DATA.nombres.forEach(item => {
-        let itClass = 'seby-card-it';
-        if (italianMode === 'covered') itClass += ' covered';
-        else if (italianMode === 'hidden') itClass += ' hidden';
-
-        let dotsHtml = '';
-        for (let i = 0; i < item.dots; i++) {
-          dotsHtml += '<span class="dot"></span>';
+      if (viewMode === 'game') {
+        html += `<div id="nombres-game-stage"></div>`;
+        container.innerHTML = html;
+        if (numbersGameSubMode === 'listen') {
+          initNumbersListenRound();
+        } else if (numbersGameSubMode === 'count') {
+          initNumbersCountRound();
+        } else {
+          initNumbersSpellRound();
         }
-
-        html += `
-          <div class="num-card" onclick="speakFr('${item.fr}')">
-            <div class="num-digit">${item.num}</div>
-            <div class="num-word-fr">${item.fr}</div>
-            <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
-            <div class="num-dots">${dotsHtml}</div>
-            <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
-              ${item.it}
-            </div>
-            <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">
-              🔊
-            </button>
-          </div>
-        `;
-      });
-
-      html += `</div>`;
-      container.innerHTML = html;
-    }
-
-    // 3. COULEURS & FORMES
-    function renderCouleurs(container) {
-      let html = `
-        <div class="section-hero">
-          <h2><span>🎨</span> Les Couleurs & Les Formes</h2>
-          <p>Le forme geometriche e i colori dal programma del test con Mme Conde!</p>
-        </div>
-
-        <h3 style="font-size: 1.4rem; color: #065f46; margin: 20px 0 14px 0;">🌈 Couleurs</h3>
-        <div class="cards-grid">
-      `;
-
-      SEBY_DATA.couleurs.forEach(item => {
-        let itClass = 'seby-card-it';
-        if (italianMode === 'covered') itClass += ' covered';
-        else if (italianMode === 'hidden') itClass += ' hidden';
-
-        html += `
-          <div class="seby-card" onclick="speakFr('${item.fr}')">
-            <div class="color-swatch-box" style="background: ${item.hex}; ${item.border ? 'border: 3px solid ' + item.border : ''}"></div>
-            <div class="seby-card-fr">${item.fr}</div>
-            <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
-            <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
-              ${item.it}
-            </div>
-            <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">
-              🔊
-            </button>
-          </div>
-        `;
-      });
-
-      html += `</div>`;
-
-      html += `
-        <h3 style="font-size: 1.4rem; color: #065f46; margin: 34px 0 14px 0;">📐 Formes Géométriques</h3>
-        <div class="cards-grid">
-      `;
-
-      SEBY_DATA.formes.forEach(item => {
-        let itClass = 'seby-card-it';
-        if (italianMode === 'covered') itClass += ' covered';
-        else if (italianMode === 'hidden') itClass += ' hidden';
-
-        html += `
-          <div class="seby-card" onclick="speakFr('${item.fr}')">
-            <div class="seby-card-icon">${item.icon}</div>
-            <div class="seby-card-fr">${item.fr}</div>
-            <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
-            <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
-              ${item.it}
-            </div>
-            <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">
-              🔊
-            </button>
-          </div>
-        `;
-      });
-
-      html += `</div>`;
-      container.innerHTML = html;
-    }
-
-    // 4. QUIZ & SPELLING
-    function renderQuiz(container) {
-      if (quizQuestions.length === 0) {
-        initQuizQuestions();
-      }
-
-      container.innerHTML = `
-        <div class="quiz-seby-container">
-          <div class="score-banner">🏆 Punti: <span id="quiz-score-val">${spellScore}</span></div>
-          <div class="quiz-mode-selector">
-            <button class="quiz-mode-btn ${quizMode === 'listen' ? 'active' : ''}" onclick="switchQuizMode('listen')">
-              👂 Ascolta e Trova
-            </button>
-            <button class="quiz-mode-btn ${quizMode === 'spell' ? 'active' : ''}" onclick="switchQuizMode('spell')">
-              ✍️ Scrivi la Parola
-            </button>
-          </div>
-          <div id="quiz-question-box"></div>
-        </div>
-        <div style="max-width: 700px; margin: 30px auto 0 auto;">
-          <puffin-leaderboard filter-game="ale-french"></puffin-leaderboard>
-        </div>
-      `;
-
-      if (quizMode === 'listen') {
-        renderListenQuestion();
       } else {
-        renderSpellQuestion();
+        // Study Table View
+        html += `<div class="numbers-grid">`;
+        SEBY_DATA.nombres.forEach(item => {
+          let itClass = 'seby-card-it';
+          if (italianMode === 'covered') itClass += ' covered';
+          else if (italianMode === 'hidden') itClass += ' hidden';
+
+          let dotsHtml = '';
+          for (let i = 0; i < item.dots; i++) {
+            dotsHtml += '<span class="dot"></span>';
+          }
+
+          html += `
+            <div class="num-card" onclick="speakFr('${item.fr}')">
+              <div class="num-digit">${item.num}</div>
+              <div class="num-word-fr">${item.fr}</div>
+              <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
+              <div class="num-dots">${dotsHtml}</div>
+              <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
+                ${item.it}
+              </div>
+              <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">
+                🔊
+              </button>
+            </div>
+          `;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
       }
     }
 
-    function switchQuizMode(mode) {
-      quizMode = mode;
-      currentQuizIndex = 0;
-      renderQuiz(document.getElementById('content-container'));
-    }
+    // Subgame 1A: Listen & Tap the Big Number
+    function initNumbersListenRound() {
+      const stage = document.getElementById('nombres-game-stage');
+      if (!stage) return;
 
-    function initQuizQuestions() {
-      // Unisci numeri e saluti per quiz
-      const pool = [
-        ...SEBY_DATA.nombres.map(n => ({ fr: n.fr, it: n.it, icon: n.icon, type: 'numero' })),
-        ...SEBY_DATA.salutations.map(s => ({ fr: s.fr, it: s.it, icon: s.icon, type: 'saluto' }))
-      ];
-      // Mescola
-      quizQuestions = pool.sort(() => 0.5 - Math.random());
-    }
+      if (currentQuestionIndex === 0 || roundQuestions.length === 0) {
+        // Shuffle pool
+        roundQuestions = [...SEBY_DATA.nombres].sort(() => 0.5 - Math.random()).slice(0, TOTAL_QUESTIONS_PER_ROUND);
+      }
 
-    function renderListenQuestion() {
-      const q = quizQuestions[currentQuizIndex % quizQuestions.length];
-      const box = document.getElementById('quiz-question-box');
+      if (currentQuestionIndex >= roundQuestions.length) {
+        renderRoundVictory(stage, 'i Numeri da 0 a 12');
+        return;
+      }
 
-      // Trova 3 distrattori casuali
-      const others = quizQuestions.filter(x => x.fr !== q.fr).sort(() => 0.5 - Math.random()).slice(0, 3);
-      const options = [q, ...others].sort(() => 0.5 - Math.random());
+      currentQuestion = roundQuestions[currentQuestionIndex];
+      questionAnswered = false;
+      questionStartTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+      questionHintsUsed = 0;
 
-      box.innerHTML = `
-        <h3 style="font-size: 1.4rem; color: #1e293b; margin-bottom: 8px;">Ascolta attentamente e tocca la risposta!</h3>
-        <p style="color: #64748b; font-size: 0.95rem;">(Come nel test di ascolto di Mme Conde)</p>
+      // Select distractors
+      const optionCount = currentDifficulty === 'facile' ? 3 : 4;
+      const otherNumbers = SEBY_DATA.nombres.filter(n => n.num !== currentQuestion.num).sort(() => 0.5 - Math.random()).slice(0, optionCount - 1);
+      const options = [currentQuestion, ...otherNumbers].sort(() => 0.5 - Math.random());
 
-        <button class="quiz-audio-prompt-btn" onclick="speakFr('${escapeSingleQuotes(q.fr)}')">
-          🔊
-        </button>
-        <div><small style="color: #94a3b8;">Tocca l'altoparlante per riascoltare</small></div>
+      stage.innerHTML = `
+        <div class="game-stage-card">
+          <div class="game-score-bar">
+            <span class="game-stars-badge">🏆 Punti: <span id="game-score-val">${spellScore}</span> ⭐</span>
+            <span class="game-step-badge">Sfida ${currentQuestionIndex + 1} di ${TOTAL_QUESTIONS_PER_ROUND} 🎯</span>
+          </div>
 
-        <div class="quiz-options-grid">
-          ${options.map(opt => `
-            <button class="quiz-opt-btn" onclick="checkListenAnswer(this, '${escapeSingleQuotes(opt.fr)}', '${escapeSingleQuotes(q.fr)}')">
-              <span>${opt.icon}</span> <span>${opt.fr}</span>
-            </button>
-          `).join('')}
+          <h3 style="font-size: 1.45rem; color: #065f46; margin-bottom: 4px;">Ascolta la voce e tocca il numero giusto!</h3>
+          <p style="color: #64748b; font-size: 0.95rem;">Tocca l'altoparlante se vuoi riascoltare:</p>
+
+          <button class="quiz-audio-prompt-btn" onclick="speakFr('${currentQuestion.fr}')">
+            🔊
+          </button>
+
+          <div class="big-number-choices-grid">
+            ${options.map(opt => {
+              let dotsHtml = '';
+              if (currentDifficulty === 'facile') {
+                for (let d = 0; d < opt.dots; d++) dotsHtml += '<span class="dot"></span>';
+              }
+              return `
+                <button class="big-num-opt-btn" onclick="checkNumberAnswer(this, ${opt.num}, ${currentQuestion.num})">
+                  <div class="opt-digit">${opt.num}</div>
+                  ${dotsHtml ? `<div class="opt-dots">${dotsHtml}</div>` : ''}
+                  <div class="opt-word">${opt.fr}</div>
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <div id="game-feedback-msg" style="margin-top: 18px; font-size: 1.25rem; font-weight: 800; min-height: 32px;"></div>
         </div>
-        <div id="quiz-feedback" style="margin-top: 18px; font-size: 1.2rem; font-weight: 700; min-height: 30px;"></div>
       `;
 
-      // Auto-pronuncia la domanda
-      setTimeout(() => speakFr(q.fr), 400);
+      // Auto-speak target after short delay
+      setTimeout(() => speakFr(currentQuestion.fr, true), 350);
     }
 
-    function checkListenAnswer(btn, chosen, correct) {
-      const fb = document.getElementById('quiz-feedback');
-      const allBtns = document.querySelectorAll('.quiz-opt-btn');
-      allBtns.forEach(b => b.style.pointerEvents = 'none');
+    function checkNumberAnswer(btn, chosenNum, correctNum) {
+      if (questionAnswered) return;
+      const fb = document.getElementById('game-feedback-msg');
+      const isCorrect = (chosenNum === correctNum);
 
-      if (chosen === correct) {
+      if (typeof recordFrenchTelemetry === 'function') {
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        recordFrenchTelemetry({
+          user: (typeof getActiveFrenchUser === 'function') ? getActiveFrenchUser() : 'seby',
+          exercise: 'numbers_listen',
+          mode: currentDifficulty,
+          target: currentQuestion.fr,
+          userInput: chosenNum,
+          correct: isCorrect,
+          durationMs: questionStartTime ? Math.round(now - questionStartTime) : 0,
+          hintsUsed: questionHintsUsed
+        });
+      }
+
+      if (isCorrect) {
+        questionAnswered = true;
         btn.classList.add('correct');
+        playTone('correct');
         spellScore += 10;
-        document.getElementById('quiz-score-val').textContent = spellScore;
-        submitPuffinScore(spellScore, 'listen');
-        fb.innerHTML = `<span style="color: #059669;">🎉 Bravissimo Sebastian! Très bien !</span>`;
+        document.getElementById('game-score-val').textContent = spellScore;
+        submitPuffinScore(spellScore, 'numbers');
+        fb.innerHTML = `<span style="color: #059669;">🌟 Bravo! C'est parfait ! (${currentQuestion.fr.toUpperCase()})</span>`;
+        speakFr(`Bravo ! C'est ${currentQuestion.fr}`);
+
         setTimeout(() => {
-          currentQuizIndex++;
-          renderListenQuestion();
-        }, 1200);
+          currentQuestionIndex++;
+          initNumbersListenRound();
+        }, 1300);
       } else {
         btn.classList.add('wrong');
-        allBtns.forEach(b => {
-          if (b.textContent.includes(correct)) b.classList.add('correct');
-        });
-        fb.innerHTML = `<span style="color: #dc2626;">Quasi! Era: <b>${correct}</b></span>`;
+        playTone('wrong');
+        fb.innerHTML = `<span style="color: #dc2626;">Quasi! Riascolta bene e riprova!</span>`;
+        speakFr(currentQuestion.fr);
         setTimeout(() => {
-          currentQuizIndex++;
-          renderListenQuestion();
-        }, 1800);
+          btn.classList.remove('wrong');
+        }, 700);
       }
     }
 
-    // SPELLING QUESTION
-    function renderSpellQuestion() {
-      const q = SEBY_DATA.nombres[currentQuizIndex % SEBY_DATA.nombres.length];
-      currentSpellWord = q.fr.toLowerCase();
-      spellUserLetters = [];
+    // Subgame 1B: Count the Croissants (Interactive Count & Tap)
+    function initNumbersCountRound() {
+      const stage = document.getElementById('nombres-game-stage');
+      if (!stage) return;
 
-      const box = document.getElementById('quiz-question-box');
+      if (currentQuestionIndex === 0 || roundQuestions.length === 0) {
+        // Pick 5 random numbers between 1 and 10
+        const pool = SEBY_DATA.nombres.filter(n => n.num >= 1 && n.num <= 10).sort(() => 0.5 - Math.random());
+        roundQuestions = pool.slice(0, TOTAL_QUESTIONS_PER_ROUND);
+      }
+
+      if (currentQuestionIndex >= roundQuestions.length) {
+        renderRoundVictory(stage, 'il Conteggio dei Cornetti');
+        return;
+      }
+
+      currentQuestion = roundQuestions[currentQuestionIndex];
+      targetCroissantsCount = currentQuestion.num;
+      countedCroissants = 0;
+      questionAnswered = false;
+      questionStartTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+      questionHintsUsed = 0;
+
+      // Distractors
+      const optionCount = currentDifficulty === 'facile' ? 3 : 4;
+      const otherNumbers = SEBY_DATA.nombres.filter(n => n.num >= 1 && n.num <= 12 && n.num !== targetCroissantsCount).sort(() => 0.5 - Math.random()).slice(0, optionCount - 1);
+      const options = [currentQuestion, ...otherNumbers].sort(() => 0.5 - Math.random());
+
+      let itemsHtml = '';
+      for (let i = 1; i <= targetCroissantsCount; i++) {
+        itemsHtml += `
+          <div class="bouncy-item" id="croissant-${i}" onclick="tapCountItem(${i})">
+            🥐
+            <span class="bouncy-item-num" id="item-badge-${i}" style="display: none;">${i}</span>
+          </div>
+        `;
+      }
+
+      stage.innerHTML = `
+        <div class="game-stage-card">
+          <div class="game-score-bar">
+            <span class="game-stars-badge">🏆 Punti: <span id="game-score-val">${spellScore}</span> ⭐</span>
+            <span class="game-step-badge">Sfida ${currentQuestionIndex + 1} di ${TOTAL_QUESTIONS_PER_ROUND} 🥐</span>
+          </div>
+
+          <h3 style="font-size: 1.45rem; color: #065f46; margin-bottom: 4px;">Combien de croissants ? (Quanti cornetti?)</h3>
+          <p style="color: #64748b; font-size: 0.95rem;">Tocca ciascun cornetto per contare a voce alta, poi tocca la risposta!</p>
+
+          <div class="counting-basket-stage">
+            ${itemsHtml}
+          </div>
+
+          <div class="big-number-choices-grid">
+            ${options.map(opt => `
+              <button class="big-num-opt-btn" onclick="checkCountAnswer(this, ${opt.num}, ${targetCroissantsCount})">
+                <div class="opt-digit">${opt.num}</div>
+                <div class="opt-word">${opt.fr}</div>
+              </button>
+            `).join('')}
+          </div>
+
+          <div id="game-feedback-msg" style="margin-top: 18px; font-size: 1.25rem; font-weight: 800; min-height: 32px;"></div>
+        </div>
+      `;
+
+      speakFr(`Combien de croissants ?`, true);
+    }
+
+    function tapCountItem(idx) {
+      const el = document.getElementById(`croissant-${idx}`);
+      const badge = document.getElementById(`item-badge-${idx}`);
+      if (!el) return;
+
+      playTone('pop');
+      el.classList.add('popped');
+      if (badge) badge.style.display = 'flex';
+
+      // Speak French number for this tap
+      const itemData = SEBY_DATA.nombres.find(n => n.num === idx);
+      if (itemData) {
+        speakFr(itemData.fr, true);
+      }
+    }
+
+    function checkCountAnswer(btn, chosenNum, correctNum) {
+      if (questionAnswered) return;
+      const fb = document.getElementById('game-feedback-msg');
+      const isCorrect = (chosenNum === correctNum);
+
+      if (typeof recordFrenchTelemetry === 'function') {
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        recordFrenchTelemetry({
+          user: (typeof getActiveFrenchUser === 'function') ? getActiveFrenchUser() : 'seby',
+          exercise: 'croissants_count',
+          mode: currentDifficulty,
+          target: currentQuestion.fr,
+          userInput: chosenNum,
+          correct: isCorrect,
+          durationMs: questionStartTime ? Math.round(now - questionStartTime) : 0,
+          hintsUsed: questionHintsUsed
+        });
+      }
+
+      if (isCorrect) {
+        questionAnswered = true;
+        btn.classList.add('correct');
+        playTone('correct');
+        spellScore += 10;
+        document.getElementById('game-score-val').textContent = spellScore;
+        submitPuffinScore(spellScore, 'counting');
+        fb.innerHTML = `<span style="color: #059669;">🌟 Esatto! C'est parfait : il y a ${currentQuestion.fr} croissants !</span>`;
+        speakFr(`Très bien ! ${currentQuestion.fr} croissants !`);
+
+        setTimeout(() => {
+          currentQuestionIndex++;
+          initNumbersCountRound();
+        }, 1400);
+      } else {
+        btn.classList.add('wrong');
+        playTone('wrong');
+        fb.innerHTML = `<span style="color: #dc2626;">Conta di nuovo i cornetti e tocca il numero giusto!</span>`;
+        setTimeout(() => {
+          btn.classList.remove('wrong');
+        }, 700);
+      }
+    }
+
+    // Subgame 1C: Spell Number with Bubbles
+    function initNumbersSpellRound() {
+      const stage = document.getElementById('nombres-game-stage');
+      if (!stage) return;
+
+      if (currentQuestionIndex === 0 || roundQuestions.length === 0) {
+        roundQuestions = SEBY_DATA.nombres.filter(n => n.num >= 1 && n.num <= 10).sort(() => 0.5 - Math.random()).slice(0, TOTAL_QUESTIONS_PER_ROUND);
+      }
+
+      if (currentQuestionIndex >= roundQuestions.length) {
+        renderRoundVictory(stage, 'la Scrittura dei Numeri');
+        return;
+      }
+
+      currentQuestion = roundQuestions[currentQuestionIndex];
+      currentSpellWord = currentQuestion.fr.toLowerCase();
+      spellUserLetters = [];
+      questionAnswered = false;
+      questionStartTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+      questionHintsUsed = 0;
+
       const letters = currentSpellWord.split('');
       const scrambled = [...letters].sort(() => 0.5 - Math.random());
 
-      box.innerHTML = `
-        <div style="font-size: 3.5rem; line-height: 1; margin: 10px 0;">${q.icon}</div>
-        <h3 style="font-size: 1.5rem; color: #1e293b; margin-bottom: 4px;">Come si scrive "${q.it}" in Francese?</h3>
-        <p style="color: #64748b; font-size: 0.95rem;">Tocca le lettere nell'ordine giusto:</p>
+      stage.innerHTML = `
+        <div class="game-stage-card">
+          <div class="game-score-bar">
+            <span class="game-stars-badge">🏆 Punti: <span id="game-score-val">${spellScore}</span> ⭐</span>
+            <span class="game-step-badge">Sfida ${currentQuestionIndex + 1} di ${TOTAL_QUESTIONS_PER_ROUND} ✍️</span>
+          </div>
 
-        <button class="btn-audio-seby" style="margin: 10px auto;" onclick="speakFr('${q.fr}')">
-          🔊
-        </button>
+          <div style="font-size: 3.5rem; line-height: 1; margin: 10px 0;">${currentQuestion.icon}</div>
+          <h3 style="font-size: 1.45rem; color: #1e293b; margin-bottom: 4px;">Come si scrive "${currentQuestion.num} (${currentQuestion.it})" in Francese?</h3>
+          <p style="color: #64748b; font-size: 0.95rem;">Tocca le bolle con le lettere nell'ordine giusto:</p>
 
-        <div class="letter-slots" id="letter-slots-box">
-          ${letters.map(() => `<div class="letter-slot">?</div>`).join('')}
+          <button class="btn-audio-seby" style="margin: 10px auto;" onclick="speakFr('${currentQuestion.fr}')">
+            🔊
+          </button>
+
+          <div class="letter-slots" id="letter-slots-box">
+            ${letters.map(() => `<div class="letter-slot">?</div>`).join('')}
+          </div>
+
+          <div class="letter-bubbles" id="letter-bubbles-box">
+            ${scrambled.map((char, idx) => `
+              <button class="bubble-btn" id="bubble-${idx}" onclick="pickLetterBubble('${char}', ${idx})">${char}</button>
+            `).join('')}
+          </div>
+
+          <div style="margin-top: 16px;">
+            <button class="cat-btn" style="display: inline-flex;" onclick="resetSpellBubble()">🔄 Riprova</button>
+          </div>
+
+          <div id="spell-feedback-msg" style="margin-top: 16px; font-size: 1.25rem; font-weight: 700; min-height: 32px;"></div>
         </div>
-
-        <div class="letter-bubbles" id="letter-bubbles-box">
-          ${scrambled.map((char, idx) => `
-            <button class="bubble-btn" id="bubble-${idx}" onclick="pickLetter('${char}', ${idx})">${char}</button>
-          `).join('')}
-        </div>
-
-        <div style="margin-top: 16px;">
-          <button class="cat-btn" style="display: inline-flex;" onclick="resetSpell()">🔄 Riprova</button>
-        </div>
-
-        <div id="spell-feedback" style="margin-top: 16px; font-size: 1.2rem; font-weight: 700; min-height: 30px;"></div>
       `;
 
-      setTimeout(() => speakFr(q.fr), 400);
+      setTimeout(() => speakFr(currentQuestion.fr, true), 350);
     }
 
-    function pickLetter(char, bubbleIdx) {
+    function pickLetterBubble(char, bubbleIdx) {
       if (spellUserLetters.length >= currentSpellWord.length) return;
 
+      playTone('pop');
       spellUserLetters.push({ char, bubbleIdx });
       document.getElementById(`bubble-${bubbleIdx}`).classList.add('used');
 
-      updateSlots();
-
-      if (spellUserLetters.length === currentSpellWord.length) {
-        checkSpellResult();
-      }
-    }
-
-    function updateSlots() {
+      // Update slot display
       const slots = document.querySelectorAll('.letter-slot');
       slots.forEach((slot, i) => {
         if (i < spellUserLetters.length) {
@@ -983,53 +1452,456 @@
           slot.classList.remove('filled');
         }
       });
-    }
 
-    function resetSpell() {
-      spellUserLetters = [];
-      document.querySelectorAll('.bubble-btn').forEach(b => b.classList.remove('used'));
-      document.getElementById('spell-feedback').innerHTML = '';
-      updateSlots();
-    }
-
-    function checkSpellResult() {
-      const userWord = spellUserLetters.map(x => x.char).join('');
-      const fb = document.getElementById('spell-feedback');
-
-      if (userWord === currentSpellWord) {
-        fb.innerHTML = `<span style="color: #059669;">🌟 Fantastico Sebastian! Scritto perfetto!</span>`;
-        spellScore += 15;
-        document.getElementById('quiz-score-val').textContent = spellScore;
-        submitPuffinScore(spellScore, 'spell');
-        speakFr(currentSpellWord);
-        setTimeout(() => {
-          currentQuizIndex++;
-          renderSpellQuestion();
-        }, 1400);
-      } else {
-        fb.innerHTML = `<span style="color: #dc2626;">Oops! La parola giusta era: <b>${currentSpellWord}</b></span>`;
-        setTimeout(() => {
-          resetSpell();
-        }, 1500);
+      if (spellUserLetters.length === currentSpellWord.length) {
+        checkSpellBubbleResult();
       }
     }
 
+    function resetSpellBubble() {
+      spellUserLetters = [];
+      document.querySelectorAll('.bubble-btn').forEach(b => b.classList.remove('used'));
+      const slots = document.querySelectorAll('.letter-slot');
+      slots.forEach(s => { s.textContent = '?'; s.classList.remove('filled'); });
+      document.getElementById('spell-feedback-msg').innerHTML = '';
+    }
+
+    function checkSpellBubbleResult() {
+      const userWord = spellUserLetters.map(x => x.char).join('');
+      const fb = document.getElementById('spell-feedback-msg');
+      const isCorrect = (userWord === currentSpellWord);
+
+      if (typeof recordFrenchTelemetry === 'function') {
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        recordFrenchTelemetry({
+          user: (typeof getActiveFrenchUser === 'function') ? getActiveFrenchUser() : 'seby',
+          exercise: 'numbers_bubble_spell',
+          mode: currentDifficulty,
+          target: currentSpellWord,
+          userInput: userWord,
+          correct: isCorrect,
+          durationMs: questionStartTime ? Math.round(now - questionStartTime) : 0,
+          hintsUsed: questionHintsUsed
+        });
+      }
+
+      if (isCorrect) {
+        playTone('correct');
+        fb.innerHTML = `<span style="color: #059669;">🌟 Fantastico! C'est parfait : ${currentSpellWord.toUpperCase()} !</span>`;
+        spellScore += 15;
+        document.getElementById('game-score-val').textContent = spellScore;
+        submitPuffinScore(spellScore, 'spell');
+        speakFr(currentSpellWord);
+
+        setTimeout(() => {
+          currentQuestionIndex++;
+          initNumbersSpellRound();
+        }, 1400);
+      } else {
+        playTone('wrong');
+        fb.innerHTML = `<span style="color: #dc2626;">Oops! La parola giusta era: <b>${currentSpellWord}</b></span>`;
+        setTimeout(() => {
+          resetSpellBubble();
+        }, 1400);
+      }
+    }
+
+    // =========================================================================
+    // 2. SALUTATIONS & PRESENTATION
+    // =========================================================================
+    function renderSalutations(container) {
+      let html = buildHeroBanner('👋', 'Salutations & Présentation', 'Impara a salutare e a presentarti in francese!', false);
+
+      if (viewMode === 'game') {
+        html += `<div id="salutations-game-stage"></div>`;
+        container.innerHTML = html;
+        initSalutationsRound();
+      } else {
+        html += `<div class="cards-grid">`;
+        SEBY_DATA.salutations.forEach(item => {
+          let itClass = 'seby-card-it';
+          if (italianMode === 'covered') itClass += ' covered';
+          else if (italianMode === 'hidden') itClass += ' hidden';
+
+          html += `
+            <div class="seby-card" onclick="speakFr('${escapeSingleQuotes(item.fr)}')">
+              <div class="seby-card-icon">${item.icon}</div>
+              <div class="seby-card-fr">${item.fr}</div>
+              <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
+              <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">
+                ${item.it}
+              </div>
+              <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${escapeSingleQuotes(item.fr)}')">
+                🔊
+              </button>
+            </div>
+          `;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
+      }
+    }
+
+    function initSalutationsRound() {
+      const stage = document.getElementById('salutations-game-stage');
+      if (!stage) return;
+
+      if (currentQuestionIndex === 0 || roundQuestions.length === 0) {
+        roundQuestions = [...SEBY_DATA.salutations].sort(() => 0.5 - Math.random()).slice(0, TOTAL_QUESTIONS_PER_ROUND);
+      }
+
+      if (currentQuestionIndex >= roundQuestions.length) {
+        renderRoundVictory(stage, 'i Saluti e la Presentazione');
+        return;
+      }
+
+      currentQuestion = roundQuestions[currentQuestionIndex];
+      questionAnswered = false;
+      questionStartTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+      questionHintsUsed = 0;
+
+      const optionCount = currentDifficulty === 'facile' ? 3 : 4;
+      const otherSaluts = SEBY_DATA.salutations.filter(s => s.id !== currentQuestion.id).sort(() => 0.5 - Math.random()).slice(0, optionCount - 1);
+      const options = [currentQuestion, ...otherSaluts].sort(() => 0.5 - Math.random());
+
+      stage.innerHTML = `
+        <div class="game-stage-card">
+          <div class="game-score-bar">
+            <span class="game-stars-badge">🏆 Punti: <span id="game-score-val">${spellScore}</span> ⭐</span>
+            <span class="game-step-badge">Sfida ${currentQuestionIndex + 1} di ${TOTAL_QUESTIONS_PER_ROUND} 👋</span>
+          </div>
+
+          <h3 style="font-size: 1.45rem; color: #065f46; margin-bottom: 4px;">Ascolta attentamente e tocca la risposta giusta!</h3>
+          <p style="color: #64748b; font-size: 0.95rem;">(Come nel test con Mme Conde)</p>
+
+          <button class="quiz-audio-prompt-btn" onclick="speakFr('${escapeSingleQuotes(currentQuestion.fr)}')">
+            🔊
+          </button>
+
+          <div class="quiz-options-grid">
+            ${options.map(opt => `
+              <button class="quiz-opt-btn" onclick="checkSalutationAnswer(this, '${escapeSingleQuotes(opt.fr)}', '${escapeSingleQuotes(currentQuestion.fr)}')">
+                <span style="font-size: 2rem;">${opt.icon}</span>
+                <div style="text-align: left;">
+                  <div style="font-size: 1.25rem;">${opt.fr}</div>
+                  <div style="font-size: 0.85rem; color: #64748b; font-weight: normal;">${opt.it}</div>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+
+          <div id="game-feedback-msg" style="margin-top: 18px; font-size: 1.25rem; font-weight: 800; min-height: 32px;"></div>
+        </div>
+      `;
+
+      setTimeout(() => speakFr(currentQuestion.fr, true), 350);
+    }
+
+    function checkSalutationAnswer(btn, chosen, correct) {
+      if (questionAnswered) return;
+      const fb = document.getElementById('game-feedback-msg');
+      const isCorrect = (chosen === correct);
+
+      if (typeof recordFrenchTelemetry === 'function') {
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        recordFrenchTelemetry({
+          user: (typeof getActiveFrenchUser === 'function') ? getActiveFrenchUser() : 'seby',
+          exercise: 'salutations_listen',
+          mode: currentDifficulty,
+          target: correct,
+          userInput: chosen,
+          correct: isCorrect,
+          durationMs: questionStartTime ? Math.round(now - questionStartTime) : 0,
+          hintsUsed: questionHintsUsed
+        });
+      }
+
+      if (isCorrect) {
+        questionAnswered = true;
+        btn.classList.add('correct');
+        playTone('correct');
+        spellScore += 10;
+        document.getElementById('game-score-val').textContent = spellScore;
+        submitPuffinScore(spellScore, 'salutations');
+        fb.innerHTML = `<span style="color: #059669;">🎉 Très bien ! C'est parfait !</span>`;
+
+        setTimeout(() => {
+          currentQuestionIndex++;
+          initSalutationsRound();
+        }, 1300);
+      } else {
+        btn.classList.add('wrong');
+        playTone('wrong');
+        fb.innerHTML = `<span style="color: #dc2626;">Quasi! Riascolta bene e tocca la carta corretta!</span>`;
+        speakFr(correct);
+        setTimeout(() => btn.classList.remove('wrong'), 700);
+      }
+    }
+
+    // =========================================================================
+    // 3. COULEURS & FORMES
+    // =========================================================================
+    function renderCouleurs(container) {
+      let html = buildHeroBanner('🎨', 'Les Couleurs & Les Formes', 'Riconosci i colori e le forme geometriche dal programma di Primary 1!', false);
+
+      if (viewMode === 'game') {
+        html += `<div id="couleurs-game-stage"></div>`;
+        container.innerHTML = html;
+        initCouleursRound();
+      } else {
+        html += `
+          <h3 style="font-size: 1.4rem; color: #065f46; margin: 10px 0 14px 0;">🎨 Les Couleurs</h3>
+          <div class="cards-grid">
+        `;
+        SEBY_DATA.couleurs.forEach(item => {
+          let itClass = 'seby-card-it';
+          if (italianMode === 'covered') itClass += ' covered';
+          else if (italianMode === 'hidden') itClass += ' hidden';
+
+          html += `
+            <div class="seby-card" onclick="speakFr('${item.fr}')">
+              <div class="color-swatch-box" style="background: ${item.hex}; ${item.border ? 'border: 2px solid ' + item.border : ''}"></div>
+              <div class="seby-card-fr">${item.fr}</div>
+              <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
+              <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">${item.it}</div>
+              <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">🔊</button>
+            </div>
+          `;
+        });
+        html += `</div>`;
+
+        html += `
+          <h3 style="font-size: 1.4rem; color: #065f46; margin: 34px 0 14px 0;">📐 Formes Géométriques</h3>
+          <div class="cards-grid">
+        `;
+        SEBY_DATA.formes.forEach(item => {
+          let itClass = 'seby-card-it';
+          if (italianMode === 'covered') itClass += ' covered';
+          else if (italianMode === 'hidden') itClass += ' hidden';
+
+          html += `
+            <div class="seby-card" onclick="speakFr('${item.fr}')">
+              <div class="seby-card-icon">${item.icon}</div>
+              <div class="seby-card-fr">${item.fr}</div>
+              <div class="seby-card-phonetic">🗣️ ${item.phonetic}</div>
+              <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">${item.it}</div>
+              <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${item.fr}')">🔊</button>
+            </div>
+          `;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
+      }
+    }
+
+    function initCouleursRound() {
+      const stage = document.getElementById('couleurs-game-stage');
+      if (!stage) return;
+
+      if (currentQuestionIndex === 0 || roundQuestions.length === 0) {
+        const pool = [
+          ...SEBY_DATA.couleurs.map(c => ({ id: c.id, fr: c.fr, it: c.it, icon: c.icon, hex: c.hex, type: 'colore' })),
+          ...SEBY_DATA.formes.map(f => ({ id: f.id, fr: f.fr, it: f.it, icon: f.icon, type: 'forma' }))
+        ];
+        roundQuestions = pool.sort(() => 0.5 - Math.random()).slice(0, TOTAL_QUESTIONS_PER_ROUND);
+      }
+
+      if (currentQuestionIndex >= roundQuestions.length) {
+        renderRoundVictory(stage, 'i Colori e le Forme');
+        return;
+      }
+
+      currentQuestion = roundQuestions[currentQuestionIndex];
+      questionAnswered = false;
+      questionStartTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+      questionHintsUsed = 0;
+
+      const otherItems = [
+        ...SEBY_DATA.couleurs.map(c => ({ id: c.id, fr: c.fr, it: c.it, icon: c.icon, hex: c.hex, type: 'colore' })),
+        ...SEBY_DATA.formes.map(f => ({ id: f.id, fr: f.fr, it: f.it, icon: f.icon, type: 'forma' }))
+      ].filter(x => x.id !== currentQuestion.id).sort(() => 0.5 - Math.random()).slice(0, 3);
+
+      const options = [currentQuestion, ...otherItems].sort(() => 0.5 - Math.random());
+
+      stage.innerHTML = `
+        <div class="game-stage-card">
+          <div class="game-score-bar">
+            <span class="game-stars-badge">🏆 Punti: <span id="game-score-val">${spellScore}</span> ⭐</span>
+            <span class="game-step-badge">Sfida ${currentQuestionIndex + 1} di ${TOTAL_QUESTIONS_PER_ROUND} 🎨</span>
+          </div>
+
+          <h3 style="font-size: 1.45rem; color: #065f46; margin-bottom: 4px;">Ascolta e trova il colore o la forma!</h3>
+          <p style="color: #64748b; font-size: 0.95rem;">Tocca per ascoltare la voce:</p>
+
+          <button class="quiz-audio-prompt-btn" onclick="speakFr('${escapeSingleQuotes(currentQuestion.fr)}')">
+            🔊
+          </button>
+
+          <div class="quiz-options-grid">
+            ${options.map(opt => `
+              <button class="quiz-opt-btn" onclick="checkCouleurAnswer(this, '${escapeSingleQuotes(opt.fr)}', '${escapeSingleQuotes(currentQuestion.fr)}')">
+                <span style="font-size: 2.4rem;">${opt.icon}</span>
+                <div style="text-align: left;">
+                  <div style="font-size: 1.25rem;">${opt.fr}</div>
+                  <div style="font-size: 0.85rem; color: #64748b; font-weight: normal;">${opt.it}</div>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+
+          <div id="game-feedback-msg" style="margin-top: 18px; font-size: 1.25rem; font-weight: 800; min-height: 32px;"></div>
+        </div>
+      `;
+
+      setTimeout(() => speakFr(currentQuestion.fr, true), 350);
+    }
+
+    function checkCouleurAnswer(btn, chosen, correct) {
+      if (questionAnswered) return;
+      const fb = document.getElementById('game-feedback-msg');
+      const isCorrect = (chosen === correct);
+
+      if (typeof recordFrenchTelemetry === 'function') {
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        recordFrenchTelemetry({
+          user: (typeof getActiveFrenchUser === 'function') ? getActiveFrenchUser() : 'seby',
+          exercise: 'couleurs_listen',
+          mode: currentDifficulty,
+          target: correct,
+          userInput: chosen,
+          correct: isCorrect,
+          durationMs: questionStartTime ? Math.round(now - questionStartTime) : 0,
+          hintsUsed: questionHintsUsed
+        });
+      }
+
+      if (isCorrect) {
+        questionAnswered = true;
+        btn.classList.add('correct');
+        playTone('correct');
+        spellScore += 10;
+        document.getElementById('game-score-val').textContent = spellScore;
+        submitPuffinScore(spellScore, 'colors');
+        fb.innerHTML = `<span style="color: #059669;">🎉 Super! Bravissimo! C'est ${correct} !</span>`;
+
+        setTimeout(() => {
+          currentQuestionIndex++;
+          initCouleursRound();
+        }, 1300);
+      } else {
+        btn.classList.add('wrong');
+        playTone('wrong');
+        fb.innerHTML = `<span style="color: #dc2626;">Quasi! Riprova a toccare quello giusto!</span>`;
+        speakFr(correct);
+        setTimeout(() => btn.classList.remove('wrong'), 700);
+      }
+    }
+
+    // =========================================================================
+    // 4. ROUND VICTORY MODAL & LEADERBOARD
+    // =========================================================================
+    function renderRoundVictory(stageEl, categoryName) {
+      playTone('fanfare');
+
+      stageEl.innerHTML = `
+        <div class="game-stage-card" style="border-color: #f59e0b; background: linear-gradient(180deg, #fffbeb 0%, #ffffff 100%);">
+          <div style="font-size: 4.5rem; animation: bounceWin 1s ease infinite;">🏆</div>
+          <h2 style="font-size: 2rem; color: #92400e; margin: 10px 0 6px 0;">INCROYABLE ! CAMPIONE ! 🌟</h2>
+          <p style="font-size: 1.15rem; color: #b45309;">Hai completato alla grande la sfida su <strong>${categoryName}</strong>!</p>
+
+          <div style="margin: 20px 0;">
+            <span class="game-stars-badge" style="font-size: 1.4rem; padding: 10px 24px;">
+              Punteggio Totale: ${spellScore} Punti ⭐
+            </span>
+          </div>
+
+          <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 24px;">
+            <button class="btn-game-toggle" onclick="currentQuestionIndex = 0; roundQuestions = []; renderCategory();">
+              🔄 Gioca Ancora!
+            </button>
+            <button class="btn-game-toggle secondary" onclick="setViewMode('study')">
+              📖 Guarda la Tavola di Studio
+            </button>
+          </div>
+
+          <div style="margin-top: 30px;">
+            <puffin-leaderboard filter-game="ale-french"></puffin-leaderboard>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 5. GRAND QUIZ (MASTER QUIZ & PUFFIN LEADERBOARD)
+    // =========================================================================
+    function renderGrandQuiz(container) {
+      let html = buildHeroBanner('🏆', 'Gran Quiz & Classifica di Famiglia', 'Tutte le domande A1 riunite in un unico grande quiz!', false);
+      html += `
+        <div class="quiz-seby-container">
+          <div class="score-banner">🏆 Punti Totali: <span id="quiz-score-val">${spellScore}</span></div>
+          <div class="quiz-mode-selector">
+            <button class="quiz-mode-btn ${numbersGameSubMode === 'listen' ? 'active' : ''}" onclick="setNumbersSubMode('listen'); setCategory('nombres');">
+              👂 Ascolta i Numeri
+            </button>
+            <button class="quiz-mode-btn" onclick="setNumbersSubMode('count'); setCategory('nombres');">
+              🥐 Conta i Cornetti
+            </button>
+            <button class="quiz-mode-btn" onclick="setCategory('salutations');">
+              👋 Saluti & Presentazione
+            </button>
+            <button class="quiz-mode-btn" onclick="setCategory('couleurs');">
+              🎨 Colori & Forme
+            </button>
+          </div>
+          <div style="margin: 20px 0;">
+            <button class="btn-game-toggle" style="font-size: 1.1rem; padding: 12px 26px;" onclick="setCategory('nombres');">
+              🚀 Inizia la Sfida dei Numeri!
+            </button>
+          </div>
+        </div>
+        <div style="max-width: 760px; margin: 30px auto 0 auto;">
+          <puffin-leaderboard filter-game="ale-french"></puffin-leaderboard>
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    // Score persistence with PuffinLogin
     function submitPuffinScore(pts, mode) {
       if (window.PuffinLogin && typeof window.PuffinLogin.submitScore === 'function') {
+        const user = (typeof getActiveFrenchUser === 'function' ? getActiveFrenchUser() : 'seby') || 'seby';
         window.PuffinLogin.submitScore({
           appId: 'ale-french',
           score: pts,
-          extra: { mode: mode, player: 'seby' }
+          extra: { mode: mode, player: user, difficulty: currentDifficulty }
         }).catch(err => console.debug('Puffin score sync:', err));
       }
     }
 
     function escapeSingleQuotes(str) {
-      return str.replace(/'/g, "\\'");
+      return String(str || '').replace(/'/g, "\\'");
     }
+
+    // Adapt difficulty based on active user
+    function applyProfileDefaults() {
+      if (typeof getFrenchProfileDefaults === 'function') {
+        const conf = getFrenchProfileDefaults();
+        if (conf.user === 'ale') {
+          currentDifficulty = 'campione';
+        } else {
+          currentDifficulty = 'facile';
+        }
+      }
+    }
+
+    window.addEventListener('french-profile-updated', (e) => {
+      applyProfileDefaults();
+      renderCategory();
+    });
 
     // Init page
     document.addEventListener('DOMContentLoaded', () => {
+      applyProfileDefaults();
       const params = new URLSearchParams(window.location.search);
       const catParam = params.get('cat') || window.location.hash.replace('#', '');
       if (catParam && ['salutations', 'nombres', 'couleurs', 'quiz'].includes(catParam)) {

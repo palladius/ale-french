@@ -16,9 +16,12 @@
     return localStorage.getItem(STORAGE_KEY);
   }
 
-  function setActiveUser(user, redirectIfNeeded = true) {
+  function setActiveUser(user, redirectIfNeeded = false) {
     localStorage.setItem(STORAGE_KEY, user);
     updateBadge();
+
+    const defaults = getFrenchProfileDefaults();
+    window.dispatchEvent(new CustomEvent('french-profile-updated', { detail: { user, defaults } }));
 
     const currentPath = window.location.pathname;
     const isSebyPage = currentPath.endsWith('seby.html');
@@ -32,6 +35,41 @@
         window.location.href = 'index.html';
         return;
       }
+    }
+  }
+
+  function getFrenchProfileDefaults() {
+    const user = getActiveUser() || 'ale';
+    if (user === 'seby') {
+      return {
+        user: 'seby',
+        name: 'Sebastian',
+        grade: 'Primary 1 • 6 ans',
+        difficulty: 'facile',
+        accentsStrict: false, // "per Seby l'accento chi se ne frega"
+        verbQuizMode: 'choice', // Scelta multipla con audio
+        numberMode: 'game'
+      };
+    } else if (user === 'ale') {
+      return {
+        user: 'ale',
+        name: 'Alessandro',
+        grade: 'Primary 3 • 8 ans',
+        difficulty: 'moyen',
+        accentsStrict: true, // "per l'Ale l'accento importa"
+        verbQuizMode: 'typing', // Scrittura desinenze
+        numberMode: 'game'
+      };
+    } else {
+      return {
+        user: user,
+        name: user === 'riccardo' ? 'Papà Riccardo' : (user === 'kate' ? 'Mamma Kate' : user),
+        grade: 'Genitori / Super',
+        difficulty: 'moyen',
+        accentsStrict: true,
+        verbQuizMode: 'typing',
+        numberMode: 'game'
+      };
     }
   }
 
@@ -180,13 +218,8 @@
       localStorage.setItem(STORAGE_KEY, user.id);
       updateBadge();
 
-      const currentPath = window.location.pathname;
-      const isSebyPage = currentPath.endsWith('seby.html');
-      if (user.id === 'seby' && !isSebyPage) {
-        window.location.href = 'seby.html';
-      } else if (user.id === 'ale' && isSebyPage) {
-        window.location.href = 'index.html';
-      }
+      const defaults = getFrenchProfileDefaults();
+      window.dispatchEvent(new CustomEvent('french-profile-updated', { detail: { user: user.id, defaults } }));
     }
   });
 
@@ -203,6 +236,8 @@
 
     updateBadge();
     ensureLoveFooter();
+    const defaults = getFrenchProfileDefaults();
+    window.dispatchEvent(new CustomEvent('french-profile-updated', { detail: { user: getActiveUser(), defaults } }));
   }
 
   // Expose global methods
@@ -211,6 +246,7 @@
   window.selectUserProfile = selectUserProfile;
   window.getActiveFrenchUser = getActiveUser;
   window.setActiveFrenchUser = setActiveUser;
+  window.getFrenchProfileDefaults = getFrenchProfileDefaults;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initProfileSwitcher);
