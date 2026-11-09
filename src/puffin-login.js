@@ -5958,7 +5958,38 @@ export function ensureDummyUserCardsSeeded(forceReset = false) {
       localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(seeds));
       return seeds;
     }
-    return existing.map((uc) => validateAndNormalizeUserCardRecord(uc, normalizeProfileId));
+    const byId = new Map();
+    for (const s of seeds) {
+      byId.set(s.id, s);
+    }
+    let addedNewSeed = false;
+    const existingIds = new Set();
+    for (const rawItem of existing) {
+      const norm = validateAndNormalizeUserCardRecord(rawItem, normalizeProfileId);
+      existingIds.add(norm.id);
+      const prev = byId.get(norm.id);
+      if (prev) {
+        byId.set(norm.id, {
+          ...prev,
+          ...norm,
+          count: Math.max(Number(prev.count) || 1, Number(norm.count) || 1),
+          best_score_context: Math.max(
+            Number(prev.best_score_context) || 0,
+            Number(norm.best_score_context) || 0
+          ),
+        });
+      } else {
+        byId.set(norm.id, norm);
+      }
+    }
+    for (const s of seeds) {
+      if (!existingIds.has(s.id)) addedNewSeed = true;
+    }
+    const merged = Array.from(byId.values());
+    if (addedNewSeed) {
+      localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(merged));
+    }
+    return merged;
   } catch {
     return seeds;
   }
