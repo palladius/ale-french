@@ -80,7 +80,7 @@ export {
   showPuffinBoosterDraftModal,
 };
 
-export const PUFFIN_LOGIN_VERSION = '2.0.2';
+export const PUFFIN_LOGIN_VERSION = '2.0.3';
 export const PUFFIN_SALT = 'puffin-salt-2026';
 export const PUFFIN_OFFLINE_SEED = 'puffin-airplane-seed-2026';
 export const DEFAULT_CLOUD_API_URL = 'https://puffin-login-932724269481.europe-west1.run.app/v1';

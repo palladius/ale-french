@@ -2905,10 +2905,35 @@ export function createPuffinCardsElementClass({
 }
 
 /**
- * Displays a celebratory MTG 3D Flip Card Reveal Toast when a player unlocks a card!
- * Starts face-down on the Veo 3.1 Puffin Card Back and flips 180 degrees to reveal the front face.
+ * Promotes a `popover="manual"` host to the topmost slot of the browser's HTML5 Top Layer
+ * so it ALWAYS renders ABOVE any `<dialog open>` (like Hall of Fame `.showModal()`) and ABOVE `dialog::backdrop`!
  */
-export function showPuffinCardRevealToast({ card, ownership, isNew = true, meritDowngraded = false } = {}) {
+function promoteHostToTopLayer(host) {
+  if (!host || typeof host.showPopover !== 'function') return;
+  try {
+    if (!host.hasAttribute('popover')) {
+      host.setAttribute('popover', 'manual');
+    }
+    if (host.matches(':popover-open')) {
+      host.hidePopover();
+    }
+    host.showPopover();
+  } catch {}
+}
+
+/**
+ * Displays a celebratory MTG 3D Flip Card Reveal Spotlight when a player unlocks a card!
+ * Renders in the HTML5 Top Layer (`popover="manual"`) ABOVE any `<dialog>` (e.g. Hall of Fame modal),
+ * starting center-stage as a large Hero Card Reveal and allowing the user to dock it crisp & unblurred
+ * right beside the Hall of Fame (`📌 Affianca alla Classifica`) or close it (`✨ Riscatta & Chiudi`).
+ */
+export function showPuffinCardRevealToast({
+  card,
+  ownership,
+  isNew = true,
+  meritDowngraded = false,
+  startDocked = false,
+} = {}) {
   if (typeof document === 'undefined' || !document.body || !card) return;
   const existing = document.getElementById('puffin-card-reveal-toast');
   if (existing) existing.remove();
@@ -2917,43 +2942,182 @@ export function showPuffinCardRevealToast({ card, ownership, isNew = true, merit
   const frontMedia = resolveCardFrontMedia(card);
   const host = document.createElement('div');
   host.id = 'puffin-card-reveal-toast';
+  host.setAttribute('popover', 'manual');
+  host.style.cssText =
+    'position:fixed;inset:0;width:100vw;height:100vh;margin:0;padding:0;border:none;background:transparent;overflow:visible;pointer-events:none;z-index:2147483645;';
   const shadow = host.attachShadow({ mode: 'open' });
 
   const style = document.createElement('style');
   style.textContent =
     CARDS_CSS +
     `
-    .reveal-toast-wrap {
+    :host {
       position: fixed;
-      bottom: 18px;
-      right: 18px;
-      z-index: 100000;
-      width: 268px;
-      background: rgba(11, 15, 29, 0.96);
-      border: 2px solid ${rMeta.borderHex};
-      border-radius: 1.15rem;
-      padding: 0.8rem;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.88), 0 0 28px ${rMeta.borderHex}66;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      pointer-events: none;
+      z-index: 2147483645;
+    }
+    .reveal-stage-backdrop {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: radial-gradient(circle at center, ${rMeta.borderHex}33 0%, rgba(4, 7, 16, 0.82) 70%);
+      backdrop-filter: blur(4px);
+      pointer-events: auto;
+      transition: all 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-stage-backdrop.is-docked {
+      background: transparent;
+      backdrop-filter: none;
+      pointer-events: none;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 1.15rem;
+    }
+    .reveal-toast-wrap {
+      position: relative;
+      pointer-events: auto;
+      width: min(92vw, 370px);
+      background: linear-gradient(165deg, rgba(17, 24, 46, 0.99) 0%, rgba(8, 11, 24, 0.99) 100%);
+      border: 2.5px solid ${rMeta.borderHex};
+      border-radius: 1.35rem;
+      padding: 1rem 1.05rem;
+      box-shadow:
+        0 28px 75px rgba(0, 0, 0, 0.95),
+        0 0 48px ${rMeta.borderHex}88,
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
       color: #f8fafc;
       font-family: 'Nunito', system-ui, sans-serif;
-      animation: puffinToastIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: puffinHeroIn 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s ease, box-shadow 0.35s ease;
     }
-    @keyframes puffinToastIn {
-      from { transform: translateY(24px) scale(0.92); opacity: 0; }
+    .reveal-stage-backdrop.is-docked .reveal-toast-wrap {
+      width: min(88vw, 316px);
+      padding: 0.85rem 0.9rem;
+      box-shadow:
+        0 22px 55px rgba(0, 0, 0, 0.95),
+        0 0 34px ${rMeta.borderHex}77;
+    }
+    .reveal-toast-wrap .mtg-card-scene {
+      height: 430px;
+      transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-stage-backdrop.is-docked .reveal-toast-wrap .mtg-card-scene {
+      height: 375px;
+    }
+    .reveal-toast-wrap .mtg-title {
+      font-size: 0.92rem;
+    }
+    .reveal-toast-wrap .mtg-art-box {
+      min-height: 195px;
+    }
+    .reveal-stage-backdrop.is-docked .reveal-toast-wrap .mtg-art-box {
+      min-height: 162px;
+    }
+    .reveal-toast-wrap .mtg-lore-box {
+      font-size: 0.78rem;
+      line-height: 1.35;
+      -webkit-line-clamp: 3;
+    }
+    .reveal-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+    .reveal-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: #fde047;
+      text-shadow: 0 2px 10px rgba(250, 204, 21, 0.45);
+      letter-spacing: 0.02em;
+    }
+    .reveal-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .reveal-icon-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e2e8f0;
+      border-radius: 0.55rem;
+      padding: 0.24rem 0.52rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .reveal-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+    .reveal-cta-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+    }
+    .reveal-cta-btn {
+      flex: 1;
+      border-radius: 0.75rem;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+    }
+    .reveal-cta-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+    .reveal-cta-btn.primary {
+      background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%);
+      color: #0f172a;
+      border-color: #fef08a;
+      box-shadow: 0 6px 18px rgba(250, 204, 21, 0.35);
+    }
+    .reveal-cta-btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      color: #e2e8f0;
+    }
+    @keyframes puffinHeroIn {
+      from { transform: translateY(22px) scale(0.88); opacity: 0; }
       to { transform: translateY(0) scale(1); opacity: 1; }
     }
   `;
   shadow.append(style);
 
   const count = ownership?.count || 1;
+  const ptLabel = card.stats ? `⚔️${card.stats.atk}/🛡️${card.stats.def} • #${card.number}` : `#${card.number}`;
+  const stage = document.createElement('div');
+  stage.className = `reveal-stage-backdrop${startDocked ? ' is-docked' : ''}`;
+  stage.id = 'reveal-stage-backdrop';
+
   const box = document.createElement('div');
   box.className = 'reveal-toast-wrap';
   box.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.45rem;">
-      <span style="font-size:0.74rem;font-weight:900;color:#fde047;">
-        ${isNew ? '✨ NUOVA CARTA SBLOCCATA!' : `🃏 CARTA DOPPIONE (x${count})!`}
+    <div class="reveal-header-bar">
+      <span class="reveal-badge-pill">
+        ${isNew ? '✨ NUOVA CARTA MAGIC SBLOCCATA!' : `🃏 CARTA DOPPIONE (x${count})!`}
       </span>
-      <button type="button" id="close-toast" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-weight:900;">✖</button>
+      <div class="reveal-top-actions">
+        <button type="button" class="reveal-icon-btn" id="flip-toast-card" title="Gira Fronte / Retro Puffin">🔄 Gira</button>
+        <button type="button" class="reveal-icon-btn" id="close-toast" title="Chiudi">✖</button>
+      </div>
     </div>
     <div class="mtg-card-scene is-flipped spoiler-on" id="reveal-scene" data-rarity="${card.rarity}">
       <div class="mtg-card-flipper">
@@ -2979,7 +3143,7 @@ export function showPuffinCardRevealToast({ card, ownership, isNew = true, merit
           <div class="mtg-lore-box">${card.description}</div>
           <div class="mtg-footer">
             <span>Copie: x${count}</span>
-            <span class="mtg-pt-box">#${card.number}</span>
+            <span class="mtg-pt-box">${ptLabel}</span>
           </div>
         </div>
         <div class="mtg-face mtg-back">
@@ -2990,12 +3154,29 @@ export function showPuffinCardRevealToast({ card, ownership, isNew = true, merit
     </div>
     ${
       meritDowngraded
-        ? `<div style="margin-top:0.4rem;font-size:0.65rem;color:#cbd5e1;">🛡️ Merit Gate: gioca a difficoltà Media/Difficile per sbloccare Rare/Mythic!</div>`
+        ? `<div style="margin-top:0.45rem;font-size:0.68rem;color:#cbd5e1;">🛡️ Merit Gate: gioca a difficoltà Media/Difficile per sbloccare Rare/Mythic!</div>`
         : ''
     }
+    <div class="reveal-cta-row">
+      <button type="button" class="reveal-cta-btn secondary" id="dock-toast-btn">
+        ${startDocked ? '🔍 Ingrandisci al Centro' : '📌 Affianca alla Classifica'}
+      </button>
+      <button type="button" class="reveal-cta-btn primary" id="claim-toast-btn">
+        ✨ Riscatta Carta!
+      </button>
+    </div>
   `;
-  shadow.append(box);
+  stage.appendChild(box);
+  shadow.append(stage);
   document.body.appendChild(host);
+
+  // Promote immediately + re-promote after any <dialog>.showModal() (e.g. Hall of Fame on Game Over!)
+  promoteHostToTopLayer(host);
+  const repromoteTimers = [80, 260, 650, 1200].map((ms) =>
+    setTimeout(() => {
+      if (host.isConnected) promoteHostToTopLayer(host);
+    }, ms)
+  );
 
   playCardAudioOrFanfare(card);
   attachCardBackHoverVideo(box);
@@ -3006,16 +3187,55 @@ export function showPuffinCardRevealToast({ card, ownership, isNew = true, merit
     if (scene) scene.classList.remove('is-flipped');
   }, 420);
 
-  box.querySelector('#close-toast')?.addEventListener('click', () => {
-    stopMythicCardMusic();
-    host.remove();
+  const sceneEl = box.querySelector('#reveal-scene');
+  box.querySelector('#flip-toast-card')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    sceneEl?.classList.toggle('is-flipped');
   });
-  setTimeout(() => {
-    if (host.isConnected) {
-      stopMythicCardMusic();
-      host.remove();
+  sceneEl?.addEventListener('click', () => {
+    sceneEl.classList.toggle('is-flipped');
+  });
+
+  const dockBtn = box.querySelector('#dock-toast-btn');
+  const toggleDockMode = () => {
+    const nowDocked = stage.classList.toggle('is-docked');
+    if (dockBtn) {
+      dockBtn.textContent = nowDocked ? '🔍 Ingrandisci al Centro' : '📌 Affianca alla Classifica';
     }
-  }, 8500);
+  };
+  dockBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDockMode();
+  });
+
+  // Clicking on the dark backdrop outside the card docks it beside the Hall of Fame so you can see both!
+  stage.addEventListener('click', (e) => {
+    if (e.target === stage && !stage.classList.contains('is-docked')) {
+      toggleDockMode();
+    }
+  });
+
+  const cleanupAndClose = () => {
+    repromoteTimers.forEach((t) => clearTimeout(t));
+    stopMythicCardMusic();
+    try {
+      if (typeof host.hidePopover === 'function' && host.matches(':popover-open')) {
+        host.hidePopover();
+      }
+    } catch {}
+    host.remove();
+  };
+
+  box.querySelector('#close-toast')?.addEventListener('click', cleanupAndClose);
+  box.querySelector('#claim-toast-btn')?.addEventListener('click', cleanupAndClose);
+
+  // After 9s in center Hero mode, gently dock beside the Hall of Fame instead of disappearing abruptly!
+  setTimeout(() => {
+    if (host.isConnected && !stage.classList.contains('is-docked')) {
+      stage.classList.add('is-docked');
+      if (dockBtn) dockBtn.textContent = '🔍 Ingrandisci al Centro';
+    }
+  }, 9000);
 }
 
 /**
@@ -3036,6 +3256,9 @@ export function showPuffinBoosterDraftModal({
   const isJackpot98 = Boolean(packResult.isJackpot98);
   const host = document.createElement('div');
   host.id = 'puffin-booster-draft-modal';
+  host.setAttribute('popover', 'manual');
+  host.style.cssText =
+    'position:fixed;inset:0;width:100vw;height:100vh;margin:0;padding:0;border:none;background:transparent;overflow:visible;z-index:2147483646;';
   const shadow = host.attachShadow({ mode: 'open' });
 
   const style = document.createElement('style');
@@ -3175,6 +3398,12 @@ export function showPuffinBoosterDraftModal({
   `;
   shadow.append(wrap);
   document.body.appendChild(host);
+  promoteHostToTopLayer(host);
+  [80, 260, 650].forEach((ms) =>
+    setTimeout(() => {
+      if (host.isConnected) promoteHostToTopLayer(host);
+    }, ms)
+  );
 
   if (isJackpot98) {
     playCardBackExplosion({ force: true });
@@ -3192,19 +3421,25 @@ export function showPuffinBoosterDraftModal({
     }, 340 + idx * 180);
   });
 
+  const closeDraft = () => {
+    stopMythicCardMusic();
+    try {
+      if (typeof host.hidePopover === 'function' && host.matches(':popover-open')) {
+        host.hidePopover();
+      }
+    } catch {}
+    host.remove();
+  };
+
   wrap.querySelectorAll('[data-pick-idx]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const idx = Number(btn.getAttribute('data-pick-idx')) || 0;
       const picked = choices[idx] || choices[0];
-      stopMythicCardMusic();
-      host.remove();
+      closeDraft();
       onPick(picked);
     });
   });
 
-  wrap.querySelector('#close-draft')?.addEventListener('click', () => {
-    stopMythicCardMusic();
-    host.remove();
-  });
+  wrap.querySelector('#close-draft')?.addEventListener('click', closeDraft);
   return host;
 }
