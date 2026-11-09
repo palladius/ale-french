@@ -80,7 +80,7 @@ export {
   showPuffinBoosterDraftModal,
 };
 
-export const PUFFIN_LOGIN_VERSION = '2.0.3';
+export const PUFFIN_LOGIN_VERSION = '2.0.4';
 export const PUFFIN_SALT = 'puffin-salt-2026';
 export const PUFFIN_OFFLINE_SEED = 'puffin-airplane-seed-2026';
 export const DEFAULT_CLOUD_API_URL = 'https://puffin-login-932724269481.europe-west1.run.app/v1';
@@ -363,10 +363,12 @@ export const I18N = Object.freeze({
     logoutBtn: 'Logout',
     tabLogin: 'Players',
     tabScores: 'High Scores',
+    tabCards: 'Magic Cards',
     tabRing: 'Puffin Ring',
     scopeCurrentGame: (gameId) => `🎮 This Game (${gameId})`,
     scopeAllGames: '🌍 All Games (Global Ring)',
     dockScoresBtn: '🏆 Top 10 High Scores',
+    dockCardsBtn: '🃏 Magic Cards Album',
     dockRingBtn: (count) => `🔥💍 Puffin Ring (${count} Games)`,
     offlineBannerTitle: '⚠️✈️ Airplane / Offline Mode Active (Local MD5 + Seed)',
     offlineBannerBody: (seed) =>
@@ -402,10 +404,12 @@ export const I18N = Object.freeze({
     logoutBtn: 'Esci',
     tabLogin: 'Giocatori',
     tabScores: 'High Scores',
+    tabCards: 'Carte Magic',
     tabRing: 'Puffin Ring',
     scopeCurrentGame: (gameId) => `🎮 Questo Gioco (${gameId})`,
     scopeAllGames: '🌍 Tutti i Giochi (Global Ring)',
     dockScoresBtn: '🏆 Top 10 High Scores',
+    dockCardsBtn: '🃏 Album Carte Magic',
     dockRingBtn: (count) => `🔥💍 Puffin Ring (${count} Giochi)`,
     offlineBannerTitle: '⚠️✈️ Modalità Aereo / Offline Attiva (MD5 + Seed Locale)',
     offlineBannerBody: (seed) =>
@@ -1971,6 +1975,10 @@ dialog[data-active-tab="scores"] {
   max-width: min(96vw, 620px);
 }
 
+dialog[data-active-tab="cards"] {
+  max-width: min(96vw, 980px);
+}
+
 dialog:modal {
   overscroll-behavior: contain;
 }
@@ -2718,16 +2726,22 @@ dialog::backdrop {
   margin-bottom: 0.14rem;
 }
 
-/* 5. ALWAYS-AVAILABLE MODAL TABS (👤 Players | 🏆 High Scores | 🔥💍 Puffin Ring) */
+/* 5. ALWAYS-AVAILABLE MODAL TABS (👤 Players | 🏆 High Scores | 🃏 Magic Cards | 🔥💍 Puffin Ring) */
 .puffin-modal-tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.38rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.35rem;
   margin-bottom: 0.68rem;
   background: rgba(10, 13, 26, 0.72);
   padding: 0.28rem;
   border-radius: 0.95rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 520px) {
+  .puffin-modal-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .modal-tab-btn {
@@ -2881,6 +2895,7 @@ if (template) {
         <span class="badge-offline-icon" hidden title="Airplane / Offline Mode (Local MD5 + Seed)">✈️</span>
       </button>
       <button type="button" class="puffin-quick-btn puffin-quick-scores-btn" part="scores-btn" title="Top 10 High Scores (Hall of Fame)" aria-label="Top 10 High Scores">🏆</button>
+      <button type="button" class="puffin-quick-btn puffin-quick-cards-btn" part="cards-btn" title="Magic Collectible Cards Album (Collezione Carte)" aria-label="Magic Collectible Cards Album">🃏</button>
       <button type="button" class="puffin-quick-btn puffin-quick-ring-btn" part="ring-btn" title="Puffin Login Ring (All Family Games)" aria-label="Puffin Login Ring">💍</button>
     </div>
 
@@ -2911,6 +2926,9 @@ if (template) {
           <button type="button" role="tab" class="modal-tab-btn" data-modal-tab="scores" aria-selected="false">
             🏆 <span class="tab-label-scores">High Scores</span>
           </button>
+          <button type="button" role="tab" class="modal-tab-btn" data-modal-tab="cards" aria-selected="false">
+            🃏 <span class="tab-label-cards">Carte Magic</span>
+          </button>
           <button type="button" role="tab" class="modal-tab-btn" data-modal-tab="ring" aria-selected="false">
             🔥💍 <span class="tab-label-ring">Puffin Ring</span>
           </button>
@@ -2935,6 +2953,9 @@ if (template) {
             <button type="button" class="dock-pill-btn" data-dock-action="open-scores">
               🏆 <span class="dock-scores-label">Top 10 High Scores</span>
             </button>
+            <button type="button" class="dock-pill-btn" data-dock-action="open-cards">
+              🃏 <span class="dock-cards-label">Album Carte Magic</span>
+            </button>
             <button type="button" class="dock-pill-btn ring-accent" data-dock-action="open-ring">
               🔥💍 <span class="dock-ring-label">Puffin Ring</span>
             </button>
@@ -2947,6 +2968,10 @@ if (template) {
             <button type="button" class="scores-scope-btn" data-scores-scope="ALL"></button>
           </div>
           <puffin-leaderboard class="modal-embedded-leaderboard"></puffin-leaderboard>
+        </div>
+
+        <div class="modal-tab-panel" data-tab-panel="cards" hidden style="max-height:74vh;overflow-y:auto;">
+          <puffin-cards class="modal-embedded-cards"></puffin-cards>
         </div>
 
         <div class="modal-tab-panel" data-tab-panel="ring" hidden>
@@ -3002,6 +3027,7 @@ export class PuffinLoginElement extends BaseElement {
     this.$badgeName = this.shadowRoot.querySelector('.badge-name');
     this.$badgeOfflineIcon = this.shadowRoot.querySelector('.badge-offline-icon');
     this.$quickScoresBtn = this.shadowRoot.querySelector('.puffin-quick-scores-btn');
+    this.$quickCardsBtn = this.shadowRoot.querySelector('.puffin-quick-cards-btn');
     this.$quickRingBtn = this.shadowRoot.querySelector('.puffin-quick-ring-btn');
     this.$dialog = this.shadowRoot.querySelector('dialog');
     this.$title = this.shadowRoot.querySelector('#puffin-dialog-title');
@@ -3016,11 +3042,14 @@ export class PuffinLoginElement extends BaseElement {
     this.$tabPanels = Array.from(this.shadowRoot.querySelectorAll('[data-tab-panel]'));
     this.$tabLabelLogin = this.shadowRoot.querySelector('.tab-label-login');
     this.$tabLabelScores = this.shadowRoot.querySelector('.tab-label-scores');
+    this.$tabLabelCards = this.shadowRoot.querySelector('.tab-label-cards');
     this.$tabLabelRing = this.shadowRoot.querySelector('.tab-label-ring');
     this.$dockScoresLabel = this.shadowRoot.querySelector('.dock-scores-label');
+    this.$dockCardsLabel = this.shadowRoot.querySelector('.dock-cards-label');
     this.$dockRingLabel = this.shadowRoot.querySelector('.dock-ring-label');
     this.$scoresScopeBtns = Array.from(this.shadowRoot.querySelectorAll('[data-scores-scope]'));
     this.$embeddedLeaderboard = this.shadowRoot.querySelector('.modal-embedded-leaderboard');
+    this.$embeddedCards = this.shadowRoot.querySelector('.modal-embedded-cards');
     this.$embeddedRing = this.shadowRoot.querySelector('.modal-embedded-ring');
     this.$grid = this.shadowRoot.querySelector('.profiles-strip');
     this.$pills = this.shadowRoot.querySelector('.policy-pills');
@@ -3061,6 +3090,7 @@ export class PuffinLoginElement extends BaseElement {
 
     this.$badgeBtn.addEventListener('click', () => this.openModal({ tab: 'login' }));
     this.$quickScoresBtn?.addEventListener('click', () => this.openScores());
+    this.$quickCardsBtn?.addEventListener('click', () => this.openCards());
     this.$quickRingBtn?.addEventListener('click', () => this.openRing());
 
     this.$tabBtns.forEach((btn) => {
@@ -3072,6 +3102,9 @@ export class PuffinLoginElement extends BaseElement {
 
     this.shadowRoot.querySelector('[data-dock-action="open-scores"]')?.addEventListener('click', () => {
       this.switchModalTab('scores');
+    });
+    this.shadowRoot.querySelector('[data-dock-action="open-cards"]')?.addEventListener('click', () => {
+      this.switchModalTab('cards');
     });
     this.shadowRoot.querySelector('[data-dock-action="open-ring"]')?.addEventListener('click', () => {
       this.switchModalTab('ring');
@@ -3610,11 +3643,14 @@ export class PuffinLoginElement extends BaseElement {
         this.$embeddedRing.render();
       }
     }
+    if (this.$embeddedCards && typeof this.$embeddedCards.render === 'function') {
+      this.$embeddedCards.render();
+    }
   }
 
   switchModalTab(tabName = 'login') {
     const cleanTab =
-      tabName === 'scores' || tabName === 'ring' ? tabName : 'login';
+      tabName === 'scores' || tabName === 'cards' || tabName === 'ring' ? tabName : 'login';
     this.activeTab = cleanTab;
     this.$dialog?.setAttribute('data-active-tab', cleanTab);
     this.$tabBtns?.forEach((btn) => {
@@ -3634,6 +3670,14 @@ export class PuffinLoginElement extends BaseElement {
       this.scoresScope = scope;
     }
     this.openModal({ tab: 'scores', scoresScope: this.scoresScope });
+  }
+
+  openCards({ playerId = null, gameId = null } = {}) {
+    if (this.$embeddedCards) {
+      if (playerId) this.$embeddedCards.setAttribute('player-id', playerId);
+      if (gameId) this.$embeddedCards.setAttribute('game-id', gameId);
+    }
+    this.openModal({ tab: 'cards' });
   }
 
   openRing() {
@@ -3689,9 +3733,13 @@ export class PuffinLoginElement extends BaseElement {
 
     if (this.$tabLabelLogin) this.$tabLabelLogin.textContent = tr.tabLogin;
     if (this.$tabLabelScores) this.$tabLabelScores.textContent = tr.tabScores;
+    if (this.$tabLabelCards) this.$tabLabelCards.textContent = tr.tabCards;
     if (this.$tabLabelRing) this.$tabLabelRing.textContent = tr.tabRing;
     if (this.$dockScoresLabel) {
       this.$dockScoresLabel.textContent = tr.dockScoresBtn.replace(/^🏆\s*/, '');
+    }
+    if (this.$dockCardsLabel) {
+      this.$dockCardsLabel.textContent = tr.dockCardsBtn.replace(/^🃏\s*/, '');
     }
     if (this.$dockRingLabel) {
       const ringCount = getPuffinRingApps({ includeCandidates: true }).length;
@@ -3806,7 +3854,11 @@ export class PuffinLoginElement extends BaseElement {
         this.scoresScope = preselectOrOptions.scoresScope;
       }
     } else if (typeof preselectOrOptions === 'string') {
-      if (preselectOrOptions === 'scores' || preselectOrOptions === 'ring') {
+      if (
+        preselectOrOptions === 'scores' ||
+        preselectOrOptions === 'cards' ||
+        preselectOrOptions === 'ring'
+      ) {
         targetTab = preselectOrOptions;
       } else {
         preselectUserId = preselectOrOptions;
@@ -5073,6 +5125,9 @@ export class PuffinLeaderboardElement extends BaseElement {
           <a class="hof-ring-hub-link" href="${ringHubUrl}" title="Open the Glorious Puffin Login Ring of Fire Hub!">
             🔥💍 Puffin Login Ring (${ringApps.length} Apps)
           </a>
+          <button type="button" class="hof-ring-hub-link" data-open-magic-cards="${curGameId}" style="cursor:pointer;" title="Apri il tuo Album delle Carte Magic Collezionabili!">
+            🃏 Album Carte Magic
+          </button>
           <a class="hof-ring-step-btn" href="${nextApp.play_url}" target="_blank" rel="noopener" title="Next App in Ring: ${nextApp.title}">
             ${nextApp.emoji} ${nextApp.shortTitle} ➡️
           </a>
@@ -5087,6 +5142,21 @@ export class PuffinLeaderboardElement extends BaseElement {
     `;
 
     this.$list.innerHTML = adminHeaderHtml + rowsHtml.join('') + ringFooterHtml;
+
+    this.$list.querySelector('[data-open-magic-cards]')?.addEventListener('click', () => {
+      // Close any surrounding game Hall of Fame <dialog> (like #hof-dialog in Puffin Snake) and open the Magic Cards Album!
+      const parentDialog = this.closest('dialog');
+      if (parentDialog && parentDialog.open && !parentDialog.hasAttribute('data-active-tab')) {
+        try {
+          parentDialog.close();
+        } catch {}
+      }
+      if (typeof window !== 'undefined' && window.PuffinLogin && typeof window.PuffinLogin.openCards === 'function') {
+        window.PuffinLogin.openCards();
+      } else {
+        window.open('./cards.html', '_blank', 'noopener');
+      }
+    });
 
     this.$list.querySelectorAll('.hof-row').forEach((row) => {
       const startVid = () => {
@@ -5844,6 +5914,15 @@ export const PuffinLogin = {
     const el = typeof document !== 'undefined' ? document.querySelector('puffin-login') : null;
     if (el && typeof el.openScores === 'function') {
       el.openScores(scope);
+    }
+  },
+
+  openCards(opts = {}) {
+    const el = typeof document !== 'undefined' ? document.querySelector('puffin-login') : null;
+    if (el && typeof el.openCards === 'function') {
+      el.openCards(opts);
+    } else if (typeof window !== 'undefined') {
+      window.open('./cards.html', '_blank', 'noopener');
     }
   },
 

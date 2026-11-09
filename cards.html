@@ -1,1929 +1,319 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🇫🇷 Ale French — Flashcards Vocabulaire</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="profile-switcher.css">
-  <script type="module" src="./src/puffin-login.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🃏 Puffin Cards — Raccoglitore Universale MTG & Retro Animato Veo 3.1</title>
   <style>
     :root {
-      --bg-main: #f1f5f9;
-      --card-bg: #ffffff;
-      --primary: #2563eb;
-      --purple: #7c3aed;
-      --red-dark: #991b1b;
-      --red-light: #ef4444;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #cbd5e1;
-      --shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.08), 0 6px 12px -4px rgba(0, 0, 0, 0.03);
+      color-scheme: dark;
+      --bg: #080b16;
+      --panel: #12172b;
+      --border: rgba(250, 204, 21, 0.25);
+      --text: #f8fafc;
+      --muted: #94a3b8;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Fredoka', 'Lexend', system-ui, sans-serif;
-      background: var(--bg-main);
+      margin: 0;
+      font-family: 'Nunito', 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #1f1938 0%, #080b16 72%);
       color: var(--text);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      padding: 1.2rem;
     }
-
+    header, main {
+      max-width: 1280px;
+      margin: 0 auto 1.25rem;
+    }
     header {
-      background: white;
-      border-bottom: 2px solid var(--border);
-      padding: 10px 20px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
       flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .brand {
-      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 1rem;
+      background: var(--panel);
+      border: 1.5px solid var(--border);
+      padding: 1rem 1.3rem;
+      border-radius: 1.2rem;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65);
     }
-
     .brand h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1e3a8a;
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #fef08a;
     }
-
-    .badge-ale {
-      background: #fef08a;
-      color: #854d0e;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      border: 1px solid #facc15;
-    }
-
-    .nav-tabs {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: #f1f5f9;
-      padding: 4px;
-      border-radius: 999px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .nav-tab {
-      padding: 6px 16px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-decoration: none;
-      color: #475569;
-      transition: all 0.2s;
-    }
-
-    .nav-tab:hover {
-      color: #1e3a8a;
-    }
-
-    .nav-tab.active {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      font-weight: 700;
-    }
-
-    .top-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 16px 20px 4px 20px;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      background: white;
-      border: 2px solid #cbd5e1;
-      color: #334155;
-      padding: 7px 15px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover {
-      border-color: #94a3b8;
-    }
-
-    .filter-btn.active {
-      background: #e0f2fe;
-      border-color: #0284c7;
-      color: #0369a1;
-      font-weight: 700;
-    }
-
-    .view-toggle-btn {
-      background: white;
-      border: 2px solid #818cf8;
-      color: #4f46e5;
-      padding: 7px 15px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-
-    .view-toggle-btn:hover {
-      background: #e0e7ff;
-    }
-
-    .main-content {
-      flex: 1;
-      padding: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* DECK SINGLE CARD VIEW */
-    .deck-container {
-      width: 100%;
-      max-width: 580px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .progress-bar-wrap {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #64748b;
-    }
-
-    .progress-track {
-      flex: 1;
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: 999px;
-      margin: 0 14px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-      border-radius: 999px;
-      width: 5%;
-      transition: width 0.3s ease;
-    }
-
-    /* 3D FLIP CARD EFFECT */
-    .card-scene {
-      width: 100%;
-      max-width: 440px;
-      height: 560px;
-      perspective: 1200px;
-      cursor: pointer;
-      margin: 0 auto;
-    }
-
-    .flip-card {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 26px;
-    }
-
-    .flip-card.is-flipped {
-      transform: rotateY(180deg);
-    }
-
-    .card-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 26px;
-      background: var(--card-bg);
-      border: 3px solid #e2e8f0;
-      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.12), 0 6px 16px -4px rgba(0, 0, 0, 0.05);
-      padding: 18px 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      overflow: hidden;
-    }
-
-    .card-back {
-      transform: rotateY(180deg);
-      background: #f8fafc;
-      border-color: #cbd5e1;
-    }
-
-    .card-tag {
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .tag-reflexive {
-      background: #ede9fe;
-      color: #6d28d9;
-    }
-
-    .tag-common {
-      background: #e0f2fe;
-      color: #0369a1;
-    }
-
-    .tag-school {
-      background: #fef3c7;
-      color: #b45309;
-    }
-
-    .tag-objects {
-      background: #e0e7ff;
-      color: #3730a3;
-    }
-
-    /* GENDER BADGES: Blue for masculine, Pink for feminine, Green for plural */
-    .article-badge-m {
-      background: #eff6ff;
-      color: #1d4ed8;
-      padding: 4px 14px;
-      border-radius: 10px;
-      font-weight: 700;
-      border: 2.5px solid #60a5fa;
-      display: inline-block;
-      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.12);
-    }
-
-    .article-badge-f {
-      background: #fdf2f8;
-      color: #db2777;
-      padding: 4px 14px;
-      border-radius: 10px;
-      font-weight: 700;
-      border: 2.5px solid #f472b6;
-      display: inline-block;
-      box-shadow: 0 2px 6px rgba(219, 39, 119, 0.12);
-    }
-
-    .article-badge-pl {
-      background: #f0fdf4;
-      color: #16a34a;
-      padding: 4px 14px;
-      border-radius: 10px;
-      font-weight: 700;
-      border: 2.5px solid #4ade80;
-      display: inline-block;
-      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.12);
-    }
-
-    /* RIDDLE QUESTION TILES COLORED BY GENDER */
-    .riddle-tile.tile-m {
-      background: #eff6ff;
-      border: 2.5px solid #60a5fa;
-      color: #1d4ed8;
-      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.18);
-    }
-
-    .riddle-tile.tile-f {
-      background: #fdf2f8;
-      border: 2.5px solid #f472b6;
-      color: #db2777;
-      box-shadow: 0 3px 8px rgba(219, 39, 119, 0.18);
-    }
-
-    .riddle-tile.tile-pl {
-      background: #f0fdf4;
-      border: 2.5px solid #4ade80;
-      color: #16a34a;
-      box-shadow: 0 3px 8px rgba(22, 163, 74, 0.18);
-    }
-
-    /* GLORIOUS HERO IMAGE BOX (FULL WIDTH OF CARD) */
-    .card-image-box {
-      width: 100%;
-      height: 260px;
-      margin: 6px 0 10px 0;
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 10px 24px -4px rgba(0,0,0,0.15);
-      border: 3.5px solid #ffffff;
-      background: #f1f5f9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.25s ease;
-    }
-
-    .card-scene:hover .card-image-box {
-      transform: scale(1.02);
-    }
-
-    .card-thumb-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 16px;
-    }
-
-    .card-thumb-img-small {
-      width: 100%;
-      max-height: 180px;
-      object-fit: cover;
-      border-radius: 18px;
-      border: 3px solid #ffffff;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-      display: block;
-      margin: 6px auto;
-    }
-
-    .prompt-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .italian-title {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #1e3a8a;
-      margin: 4px 0 14px 0;
-    }
-
-    /* RIDDLE QUESTION MARK TILES */
-    .riddle-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin: 10px 0;
-      padding: 10px 16px;
-      background: #f8fafc;
-      border-radius: 14px;
-      border: 1px dashed #cbd5e1;
-      max-width: 100%;
-    }
-
-    .riddle-word {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .riddle-tile {
-      width: 34px;
-      height: 42px;
-      background: #ffffff;
-      border: 2px solid #94a3b8;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #64748b;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      animation: pulseRiddle 2s infinite ease-in-out;
-    }
-
-    .riddle-text {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #7c3aed;
-      margin-right: 4px;
-    }
-
-    @keyframes pulseRiddle {
-      0%, 100% { transform: scale(1); border-color: #94a3b8; }
-      50% { transform: scale(1.04); border-color: #3b82f6; }
-    }
-
-    /* INTERACTIVE SPELLING TILE STATES */
-    .riddle-tile {
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.15s ease;
-      position: relative;
-    }
-
-    .riddle-tile.active-cursor {
-      animation: none;
-      border: 3px solid #2563eb !important;
-      background: #ffffff !important;
-      color: #1e3a8a !important;
-      transform: translateY(-3px) scale(1.06);
-      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28) !important;
-    }
-
-    .riddle-tile.tile-filled {
-      animation: none;
-      background: #ffffff !important;
-      border: 2.5px solid #3b82f6 !important;
-      color: #0f172a !important;
-    }
-
-    .riddle-tile.tile-correct {
-      animation: popTile 0.25s ease;
-      background: #d1fae5 !important;
-      border: 2.5px solid #10b981 !important;
-      color: #047857 !important;
-      box-shadow: 0 3px 8px rgba(16, 185, 129, 0.22) !important;
-    }
-
-    .riddle-tile.tile-wrong {
-      animation: shakeTile 0.35s ease;
-      background: #fee2e2 !important;
-      border: 2.5px solid #ef4444 !important;
-      color: #b91c1c !important;
-      box-shadow: 0 3px 8px rgba(239, 68, 68, 0.25) !important;
-    }
-
-    @keyframes popTile {
-      0% { transform: scale(0.85); }
-      60% { transform: scale(1.12); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes shakeTile {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-
-    /* SPELLING DIFFICULTY BAR */
-    .spelling-diff-bar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: #ffffff;
-      padding: 5px 8px;
-      border-radius: 999px;
-      border: 2px solid #e2e8f0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      flex-wrap: wrap;
-    }
-
-    .spelling-diff-label {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #64748b;
-      padding: 0 6px;
-    }
-
-    .spelling-diff-btn {
-      border: 1.5px solid transparent;
-      background: #f1f5f9;
-      color: #475569;
-      padding: 5px 12px;
-      border-radius: 999px;
+    .brand p {
+      margin: 0.25rem 0 0;
       font-size: 0.84rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s;
+      color: var(--muted);
     }
-
-    .spelling-diff-btn:hover {
-      background: #e2e8f0;
-    }
-
-    .spelling-diff-btn.active[data-diff="facile"] {
-      background: #d1fae5;
-      border-color: #10b981;
-      color: #047857;
-    }
-
-    .spelling-diff-btn.active[data-diff="moyen"] {
-      background: #fef3c7;
-      border-color: #f59e0b;
-      color: #b45309;
-    }
-
-    .spelling-diff-btn.active[data-diff="difficile"] {
-      background: #fee2e2;
-      border-color: #ef4444;
-      color: #b91c1c;
-    }
-
-    /* 4-COLOR GOOGLE ACCENT PAD */
-    .google-accent-pad {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin: 4px 0;
-      padding: 6px 10px;
-      background: #ffffff;
-      border-radius: 14px;
-      border: 2px solid #e2e8f0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      flex-wrap: wrap;
-    }
-
-    .google-accent-pad.visible {
-      display: flex;
-    }
-
-    .google-accent-btn {
-      border: none;
-      color: #ffffff;
-      padding: 5px 11px;
-      border-radius: 10px;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-      transition: transform 0.12s, filter 0.12s;
-    }
-
-    .google-accent-btn:hover {
-      transform: translateY(-2px) scale(1.04);
-      filter: brightness(1.06);
-    }
-
-    .google-accent-btn:active {
-      transform: scale(0.97);
-    }
-
-    .google-key-badge {
-      background: rgba(255, 255, 255, 0.25);
-      padding: 1px 6px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-    }
-
-    .spelling-status-msg {
-      font-size: 0.9rem;
-      font-weight: 700;
-      min-height: 22px;
-      text-align: center;
-    }
-
-    .tap-hint {
-      font-size: 0.95rem;
-      color: #64748b;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      background: #eff6ff;
-      padding: 6px 16px;
-      border-radius: 999px;
-      color: #2563eb;
-    }
-
-    /* CARD BACK STYLING */
-    .french-infinitive-revealed {
-      font-size: 2.3rem;
-      font-weight: 700;
-      margin: 10px 0;
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-      gap: 0;
-      white-space: nowrap;
-    }
-
-    .back-refl {
-      color: #7c3aed;
-      margin-right: 8px;
-    }
-
-    .back-stem {
-      color: var(--red-dark);
-      font-weight: 600;
-    }
-
-    .back-ending {
-      color: var(--red-light);
-      font-weight: 700;
-      text-decoration: underline;
-      text-decoration-color: #fca5a5;
-      text-underline-offset: 4px;
-    }
-
-    .back-extra {
-      color: #475569;
-      margin-left: 8px;
-      font-size: 1.8rem;
-    }
-
-    .audio-btn-large {
-      background: #eff6ff;
-      border: 2px solid #93c5fd;
-      color: #1d4ed8;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      font-size: 1.6rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      margin: 10px 0;
-      transition: all 0.2s;
-    }
-
-    .audio-btn-large:hover {
-      background: #2563eb;
-      color: white;
-      transform: scale(1.12);
-    }
-
-    .letters-count-info {
-      font-size: 0.95rem;
-      color: #64748b;
-      background: #f1f5f9;
-      padding: 4px 14px;
-      border-radius: 999px;
-      font-weight: 600;
-    }
-
-    .link-to-study {
-      background: white;
-      border: 2px solid #cbd5e1;
-      color: #1e3a8a;
+    .nav-links a {
+      color: #fde047;
+      font-weight: 800;
       text-decoration: none;
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      display: inline-flex;
+      margin-right: 0.85rem;
+    }
+    .hero-showcase {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 1.35rem;
+      background: linear-gradient(135deg, rgba(180, 83, 9, 0.2), rgba(18, 23, 43, 0.96));
+      border: 1.5px solid rgba(250, 204, 21, 0.45);
+      border-radius: 1.25rem;
+      padding: 1.2rem;
+      margin-bottom: 1.25rem;
       align-items: center;
-      gap: 6px;
-      transition: all 0.15s;
     }
-
-    .link-to-study:hover {
-      border-color: #3b82f6;
-      background: #eff6ff;
+    @media (max-width: 720px) {
+      .hero-showcase { grid-template-columns: 1fr; justify-items: center; }
     }
-
-    /* DECK CONTROLS */
-    .deck-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      width: 100%;
-    }
-
-    .ctrl-btn {
-      background: white;
-      border: 2px solid #cbd5e1;
-      color: #334155;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.15s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    }
-
-    .ctrl-btn:hover {
-      background: #f8fafc;
-      border-color: #94a3b8;
-      transform: translateY(-2px);
-    }
-
-    .ctrl-btn-primary {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 0 24px;
-      width: auto;
-      border-radius: 999px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-    }
-
-    .ctrl-btn-primary:hover {
-      background: #1d4ed8;
-      transform: translateY(-2px);
-    }
-
-    /* GRID VIEW */
-    .grid-container {
-      display: none;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-      width: 100%;
-    }
-
-    /* COLLECTIBLE TRADING CARD STYLE FOR GRID */
-    .grid-card {
-      background: white;
-      border: 2.5px solid #e2e8f0;
-      border-radius: 22px;
-      overflow: hidden;
-      padding: 0;
-      text-align: center;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
-      cursor: pointer;
-      transition: all 0.25s;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 290px;
-    }
-
-    .grid-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 14px 28px rgba(0,0,0,0.08);
-      border-color: #93c5fd;
-    }
-
-    .grid-card.revealed {
-      border-color: #3b82f6;
-      background: #f8fafc;
-    }
-
-    .grid-card-media {
+    .card-back-preview {
       position: relative;
-      width: 100%;
-      height: 155px;
-      background: #f1f5f9;
+      width: 210px;
+      aspect-ratio: 5 / 7;
+      border-radius: 1rem;
       overflow: hidden;
-      border-bottom: 2px solid #e2e8f0;
+      border: 4px solid #d97706;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.85), 0 0 24px rgba(245, 158, 11, 0.45);
+      cursor: pointer;
     }
-
-    .grid-overlay-tag {
+    .card-back-preview img,
+    .card-back-preview video {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 2;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-
-    .grid-thumb-img {
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      transition: transform 0.3s ease;
     }
-
-    .grid-card:hover .grid-thumb-img {
-      transform: scale(1.06);
+    .card-back-preview video {
+      opacity: 0;
+      transition: opacity 0.28s ease;
     }
-
-    .grid-icon-placeholder {
-      width: 100%;
-      height: 100%;
+    .card-back-preview:hover video,
+    .card-back-preview.playing video {
+      opacity: 1;
+    }
+    .sim-bar {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      background: #f8fafc;
-    }
-
-    .grid-card-content {
-      padding: 12px 14px 14px 14px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex-grow: 1;
-      justify-content: space-between;
-      width: 100%;
-    }
-
-    /* GENDER TILES FOR GRID */
-    .grid-tile.grid-tile-m {
-      background: #eff6ff;
-      border: 1.5px solid #60a5fa;
-      color: #1d4ed8;
-    }
-
-    .grid-tile.grid-tile-f {
-      background: #fdf2f8;
-      border: 1.5px solid #f472b6;
-      color: #db2777;
-    }
-
-    .grid-tile.grid-tile-pl {
-      background: #f0fdf4;
-      border: 1.5px solid #4ade80;
-      color: #16a34a;
-    }
-
-    .grid-italian {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #1e3a8a;
-      margin-bottom: 8px;
-    }
-
-    .grid-mystery {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
       flex-wrap: wrap;
-      margin: 6px 0;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
     }
-
-    .grid-tile {
-      width: 20px;
-      height: 26px;
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #64748b;
+    button.pack-btn {
+      background: linear-gradient(135deg, #ea580c, #d97706);
+      color: #fff;
+      border: 1.5px solid #fde047;
+      border-radius: 0.75rem;
+      padding: 0.55rem 0.95rem;
+      font-weight: 900;
+      font-size: 0.82rem;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.4);
     }
-
-    .grid-revealed-french {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--red-dark);
-      margin: 6px 0;
-    }
-
-    @media(max-width: 600px) {
-      .card-scene {
-        height: 520px;
-      }
-      .card-image-box {
-        height: 230px;
-      }
-      .card-face {
-        padding: 12px;
-      }
-      .italian-title {
-        font-size: 1.6rem;
-      }
-      .riddle-tile {
-        width: 30px;
-        height: 38px;
-        font-size: 1.25rem;
-      }
-      .french-infinitive-revealed {
-        font-size: 1.8rem;
-      }
-      .grid-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-      }
-      .grid-card-media {
-        height: 125px;
-      }
+    button.pack-btn.secondary {
+      background: #1e293b;
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: none;
     }
   </style>
 </head>
 <body>
-
   <header>
     <div class="brand">
-      <span style="font-size: 1.8rem;">🥖</span>
-      <h1>Ale French</h1>
-      <span class="badge-ale">Pour Alessandro 🦁</span>
+      <h1>🃏 Puffin Cards — Album Collezionabile Universale MTG (46 Carte • 9 Giochi)</h1>
+      <p class="nav-links">
+        <a href="./explorer.html">👑 Multi-Hall of Fame & Insights Explorer</a>
+        <a href="./index.html">🐧 Home PuffinLogin</a>
+        <a href="./ring.html">🔥💍 Puffin Ring</a>
+        <a href="./hall-of-fame.html">🏆 Top 10 Globale</a>
+      </p>
     </div>
-
-    <!-- MAIN NAVIGATION TABS -->
-    <div class="nav-tabs">
-      <a href="index.html" class="nav-tab">📖 Coniugazioni</a>
-      <a href="cards.html" class="nav-tab active">🃏 Flashcards</a>
-      <a href="grid.html" class="nav-tab">🔲 Griglia 4x4</a>
-      <a href="quiz.html" class="nav-tab">🎯 Quiz Ale</a>
-      <a href="seby.html" class="nav-tab" style="color: #059669; font-weight: 700;">🧒 Spazio Seby (A1)</a>
-      <a href="ring.html" class="nav-tab" style="color: #f59e0b; font-weight: 700;">🔥💍 Ring</a>
-    </div>
-
-    <div class="nav-actions">
-      <puffin-login id="puffin-widget" app-id="ale-french"></puffin-login>
-    </div>
+    <puffin-login id="puffin-widget" app-id="tubature" require-login="false"></puffin-login>
   </header>
 
-  <div class="top-controls">
-    <button class="filter-btn active" onclick="setFilter('objects', this)" id="btn-filter-objects">🏫 Oggetti Scuola (<span id="count-objects">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('verbs', this)" id="btn-filter-verbs">🗣️ Solo Verbi (<span id="count-verbs">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('all', this)" id="btn-filter-all">🌟 Tutti (<span id="count-all">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('reflexive', this)" id="btn-filter-reflexive">🧴 Riflessivi (<span id="count-reflexive">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('school', this)" id="btn-filter-school">🎒 Simboli (<span id="count-school">0</span>)</button>
-    <button class="filter-btn" onclick="setFilter('common', this)" id="btn-filter-common">🍽️ Comuni (<span id="count-common">0</span>)</button>
-    <button class="view-toggle-btn" id="btn-toggle-view" onclick="toggleView()">🔲 Vista Griglia</button>
-  </div>
-
-  <main class="main-content">
-
-    <!-- SINGLE DECK FLASHCARD VIEW -->
-    <div class="deck-container" id="deck-view">
-      <div class="progress-bar-wrap">
-        <span id="deck-index-label">Carta 1 di 18</span>
-        <div class="progress-track">
-          <div class="progress-fill" id="progress-fill-el"></div>
+  <main>
+    <section class="hero-showcase">
+      <div class="card-back-preview" id="hero-card-back" title="Passa il mouse per animare con Veo 3.1!">
+        <img src="./assets/cards/card-back.png" alt="Puffin Card Back V1 — Carlesso Deckmaster" />
+        <video src="./assets/cards/card-back.mp4" muted loop playsinline preload="metadata"></video>
+      </div>
+      <div>
+        <div style="font-size:0.76rem;font-weight:900;color:#fde047;text-transform:uppercase;letter-spacing:0.06em;">
+          ✨ Retro Ufficiale V1 • Carlesso Deckmaster + Animazione Hover Veo 3.1
         </div>
-        <span id="deck-known-count">⭐ 0/18</span>
-      </div>
-
-      <!-- 3-LEVEL KEYBOARD SPELLING DIFFICULTY SELECTOR -->
-      <div class="spelling-diff-bar">
-        <span class="spelling-diff-label">⌨️ Modalità:</span>
-        <button class="spelling-diff-btn" data-diff="facile" onclick="setSpellingDifficulty('facile', this)" title="Seby: tocca le tessere, accenti automatici">🟢 Facile (Seby 🎈 • Tessere)</button>
-        <button class="spelling-diff-btn active" data-diff="moyen" onclick="setSpellingDifficulty('moyen', this)" title="Ale: digita a mente, accenti automatici">🟡 Medio (Ale 🦁 • Tastiera)</button>
-        <button class="spelling-diff-btn" data-diff="difficile" onclick="setSpellingDifficulty('difficile', this)" title="Ale Esperto: pulsantiera accenti 4 colori Google">🔴 Difficile (+ Accenti Google)</button>
-      </div>
-
-      <!-- Hidden input to allow mobile/tablet virtual keyboard trigger when tapping tiles -->
-      <input type="text" id="mobile-kbd-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="position:fixed; opacity:0; pointer-events:none; width:1px; height:1px; left:-9999px;">
-
-      <div class="card-scene" onclick="flipCurrentCard()">
-        <div class="flip-card" id="active-flip-card">
-          
-          <!-- FRONT: IL MISTERO (PUNTI DI DOMANDA) -->
-          <div class="card-face card-front">
-            <span class="card-tag" id="card-tag-el">Riflessivo</span>
-            
-            <div class="card-image-box" id="card-icon-el">🪥</div>
-            
-            <div>
-              <div class="prompt-subtitle">Come si dice in francese?</div>
-              <div class="italian-title" id="card-italian-el">lavarsi i denti</div>
-            </div>
-
-            <!-- RIDDLE QUESTION BOXES -->
-            <div class="riddle-container" id="card-riddle-el" onclick="event.stopPropagation(); focusMobileKeyboard()">
-              <!-- Populated by JS -->
-            </div>
-
-            <!-- 4-COLOR GOOGLE ACCENT PAD (ACTIVE IN DIFFICILE MODE) -->
-            <div class="google-accent-pad" id="google-accent-pad" onclick="event.stopPropagation()">
-              <button type="button" class="google-accent-btn" id="gpad-btn-1" style="background:#4285F4;" onclick="applyAccentFromPad(1)">
-                <span class="google-key-badge">1</span> <span id="gpad-char-1">e</span>
-              </button>
-              <button type="button" class="google-accent-btn" id="gpad-btn-2" style="background:#EA4335;" onclick="applyAccentFromPad(2)">
-                <span class="google-key-badge">2</span> <span id="gpad-char-2">é</span>
-              </button>
-              <button type="button" class="google-accent-btn" id="gpad-btn-3" style="background:#FBBC05; color:#0f172a;" onclick="applyAccentFromPad(3)">
-                <span class="google-key-badge" style="background:rgba(0,0,0,0.12);">3</span> <span id="gpad-char-3">è</span>
-              </button>
-              <button type="button" class="google-accent-btn" id="gpad-btn-4" style="background:#34A853;" onclick="applyAccentFromPad(4)">
-                <span class="google-key-badge">4</span> <span id="gpad-char-4">ê</span>
-              </button>
-            </div>
-
-            <div class="spelling-status-msg" id="spelling-status-el"></div>
-
-            <!-- ON-SCREEN LETTER BUBBLES (FACILE / SEBY MODE) -->
-            <div id="card-letter-bubbles-el" class="letter-bubbles" style="display: none; margin: 12px 0 6px 0; gap: 8px; justify-content: center; flex-wrap: wrap;" onclick="event.stopPropagation()">
-              <!-- Populated by JS -->
-            </div>
-
-            <div class="tap-hint" id="card-tap-hint-el">
-              <span>⌨️ Digita con la tastiera o ✨ tocca per scoprire</span>
-            </div>
-          </div>
-
-          <!-- BACK: LA RISPOSTA RIVELATA CON AUDIO -->
-          <div class="card-face card-back" onclick="event.stopPropagation()">
-            <span class="card-tag" id="card-tag-back-el">Riflessivo</span>
-
-            <div class="card-image-box" id="card-icon-back-el" style="font-size: 3.5rem;">🪥</div>
-
-            <div class="prompt-subtitle">All'infinito si dice:</div>
-
-            <div class="french-infinitive-revealed" id="card-revealed-french">
-              <!-- e.g. se brosser les dents -->
-            </div>
-
-            <button class="audio-btn-large" onclick="playCurrentAudio()" title="Riascolta pronuncia">
-              🔊
-            </button>
-
-            <div class="letters-count-info" id="card-count-info-el">
-              Totale lettere: 14
-            </div>
-
-            <div style="display: flex; gap: 10px; margin-top: 6px;">
-              <button class="link-to-study" onclick="flipCurrentCard()">
-                🔄 Gira carta
-              </button>
-              <a href="#" id="link-to-conj-el" class="link-to-study" style="background: #2563eb; color: white; border: none;">
-                📖 Coniuga ➔
-              </a>
-            </div>
-          </div>
-
+        <h2 style="margin:0.3rem 0 0.5rem;font-size:1.35rem;">
+          Omaggio MTG Anni ’90: Il Puffin Incoronato & Il Trittico di Ale, Seby e Papino!
+        </h2>
+        <p style="margin:0;color:#cbd5e1;font-size:0.9rem;line-height:1.48;">
+          Passa il mouse sul retro della carta qui a sinistra (o clicca <b>"🔄 Retro"</b> su qualsiasi carta dell’album) per vedere il video magico generato con <b>Veo 3.1</b> prendere vita! Include tutte le <b>22 carte originali di Tubature</b> (con gli audio ferraresi <i>"Majjal!"</i> e <i>"Magnat al canal!"</i>) più le carte degli altri giochi di famiglia.
+        </p>
+        <div class="sim-bar" style="align-items:center;">
+          <select id="sim-game-select" style="background:#0b1021;color:#fde047;border:1.5px solid #facc15;border-radius:0.75rem;padding:0.52rem 0.75rem;font-weight:900;font-size:0.82rem;">
+            <option value="tubature">🚰 Pacco: Tubature (22 Carte)</option>
+            <option value="carchess3d">♟️ Pacco: CarChess 3D (4 Carte MTG)</option>
+            <option value="puffin-snake">🐍 Pacco: Puffin Snake (4 Carte)</option>
+            <option value="smurfs-and-dragons">🐉 Pacco: Smurfs &amp; Dragons (4 Carte)</option>
+            <option value="pupurabbu-3d">🐰 Pacco: Pupurabbu 3D (6 Carte)</option>
+          </select>
+          <button type="button" class="pack-btn" id="btn-open-draft-pack">
+            🎁 Fine Partita: Scegli 1 Carta dal Pacco (Pick 1 of 3)
+          </button>
+          <button type="button" class="pack-btn" id="btn-sim-98-matches" style="background:linear-gradient(135deg,#7c3aed,#db2777);border-color:#f472b6;">
+            🎰 Simula 98 Partite (97 Comuni → 98ª Rara / Super Rara!)
+          </button>
         </div>
+        <div class="sim-bar">
+          <button type="button" class="pack-btn secondary" id="btn-roll-hard">
+            🎲 Roll Veloce Tubature (Hard 4200pt)
+          </button>
+          <button type="button" class="pack-btn secondary" id="btn-unlock-schmoogle">
+            👻 Sblocca Schmoogle Mitico (1.5% Orange Holo)
+          </button>
+          <button type="button" class="pack-btn secondary" id="btn-unlock-motorino">
+            🛵 Sblocca Motorino nel Canale (🔊 Magnat al canal!)
+          </button>
+          <button type="button" class="pack-btn secondary" id="btn-unlock-majjal">
+            🐷 Sblocca Majjal! (🔊 Audio Ferrarese)
+          </button>
+          <button type="button" class="pack-btn secondary" id="btn-play-card-back-sfx" style="border-color:#38bdf8;color:#7dd3fc;">
+            🔊 Boom! Esplosione Medieval-Futuristica &amp; Grand Piano (⚔️🎹🚀)
+          </button>
+        </div>
+        <div id="sim-98-log" style="margin-top:0.65rem;padding:0.55rem 0.85rem;border-radius:0.75rem;background:rgba(9,13,26,0.85);border:1px solid rgba(250,204,21,0.3);font-size:0.8rem;color:#fde68a;display:none;"></div>
       </div>
+    </section>
 
-      <!-- DECK CONTROLS -->
-      <div class="deck-controls">
-        <button class="ctrl-btn" onclick="prevCard()" title="Carta precedente">⬅️</button>
-        <button class="ctrl-btn" onclick="shuffleDeck()" title="Mescola le carte">🔀</button>
-        <button class="ctrl-btn-primary ctrl-btn" onclick="flipCurrentCard()" id="btn-deck-flip">
-          💡 Rivela
-        </button>
-        <button class="ctrl-btn" onclick="nextCard()" title="Carta successiva">➡️</button>
-      </div>
-    </div>
-
-    <!-- GRID VIEW FOR ALL CARDS -->
-    <div class="grid-container" id="grid-view">
-      <!-- Populated by JS -->
-    </div>
-
+    <puffin-cards id="cards-binder"></puffin-cards>
   </main>
 
-  <script src="audio-player.js"></script>
-  <script src="card-spelling.js"></script>
-  <script src="telemetry.js"></script>
-  <script>
-    let allVerbs = [];
-    let filteredVerbs = [];
-    let currentIndex = 0;
-    let isFlipped = false;
-    let isGridView = false;
-    let currentFilter = 'objects';
-
-    // Interactive Keyboard Spelling State
-    let spellingDifficulty = 'moyen'; // 'facile' | 'moyen' | 'difficile'
-    let currentSlots = [];
-    let typedChars = [];
-    let slotStates = []; // 'empty' | 'filled' | 'correct' | 'wrong'
-    let activeSlotIndex = 0;
-    let lastVowelSlotIndex = -1;
-    let wordCompleted = false;
-
-    fetch('verbs.json')
-      .then(res => res.json())
-      .then(data => {
-        allVerbs = data;
-        const urlParams = new URLSearchParams(window.location.search);
-        const idsParam = urlParams.get('ids');
-        const catParam = urlParams.get('cat') || urlParams.get('category') || urlParams.get('mode');
-
-        if (idsParam) {
-          const targetIds = new Set(idsParam.split(','));
-          allVerbs = allVerbs.filter(v => targetIds.has(v.id));
-        }
-
-        updateCounts();
-
-        let initialFilter = 'objects';
-        if (catParam === 'verbs') {
-          initialFilter = 'verbs';
-        } else if (catParam === 'all') {
-          initialFilter = 'all';
-        } else if (catParam && ['reflexive', 'school', 'objects', 'common'].includes(catParam)) {
-          initialFilter = catParam;
-        } else if (idsParam) {
-          initialFilter = 'all';
-        }
-
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        const activeBtn = document.getElementById(`btn-filter-${initialFilter}`) || document.querySelector(`[onclick*="setFilter('${initialFilter}'"]`);
-        if (activeBtn) activeBtn.classList.add('active');
-
-        applyFilter(initialFilter);
-      })
-      .catch(err => console.error("Error loading verbs:", err));
-
-    function updateCounts() {
-      document.getElementById('count-all').textContent = allVerbs.length;
-      if (document.getElementById('count-verbs')) {
-        document.getElementById('count-verbs').textContent = allVerbs.filter(v => v.category !== 'objects').length;
-      }
-      document.getElementById('count-reflexive').textContent = allVerbs.filter(v => v.category === 'reflexive').length;
-      if (document.getElementById('count-school')) {
-        document.getElementById('count-school').textContent = allVerbs.filter(v => v.category === 'school').length;
-      }
-      if (document.getElementById('count-objects')) {
-        document.getElementById('count-objects').textContent = allVerbs.filter(v => v.category === 'objects').length;
-      }
-      document.getElementById('count-common').textContent = allVerbs.filter(v => v.category === 'common').length;
-    }
-
-    function setFilter(filter, btn) {
-      currentFilter = filter;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      applyFilter(filter);
-    }
-
-    function applyFilter(filter) {
-      if (filter === 'reflexive') {
-        filteredVerbs = allVerbs.filter(v => v.category === 'reflexive');
-      } else if (filter === 'school') {
-        filteredVerbs = allVerbs.filter(v => v.category === 'school');
-      } else if (filter === 'objects') {
-        filteredVerbs = allVerbs.filter(v => v.category === 'objects');
-      } else if (filter === 'verbs') {
-        filteredVerbs = allVerbs.filter(v => v.category !== 'objects');
-      } else if (filter === 'common') {
-        filteredVerbs = allVerbs.filter(v => v.category === 'common');
-      } else {
-        filteredVerbs = [...allVerbs];
-      }
-      currentIndex = 0;
-      renderCurrentCard();
-      renderGridView();
-    }
-
-    // Splits infinitive into display chunks and interactive letter boxes
-    function buildRiddleHtml(verb) {
-      const inf = verb.infinitive;
-      const words = inf.split(' ');
-      let html = '';
-      let slotCounter = 0;
-
-      // Determine gender color tile for clues
-      let genderTileClass = '';
-      if (verb.gender === 'm' || inf.startsWith('un ')) {
-        genderTileClass = 'tile-m';
-      } else if (verb.gender === 'f' || inf.startsWith('une ')) {
-        genderTileClass = 'tile-f';
-      } else if (verb.gender === 'pl' || inf.startsWith('des ')) {
-        genderTileClass = 'tile-pl';
-      }
-
-      function renderTileSlot() {
-        const idx = slotCounter++;
-        return `<div class="riddle-tile ${genderTileClass}" id="slot-tile-${idx}" data-slot-index="${idx}" onclick="event.stopPropagation(); selectTileSlot(${idx})">?</div>`;
-      }
-
-      words.forEach((word, wIdx) => {
-        html += '<div class="riddle-word">';
-        
-        if (word === "se") {
-          html += '<span class="riddle-text">se</span>';
-        } else if (word.startsWith("s'")) {
-          html += '<span class="riddle-text">s\'</span>';
-          const rest = word.slice(2);
-          for (let i = 0; i < rest.length; i++) {
-            html += renderTileSlot();
-          }
-        } else if (word.startsWith("l'")) {
-          const badgeClass = verb.gender === 'm' ? 'article-badge-m' : 'article-badge-f';
-          const genderIcon = verb.gender === 'm' ? '👦' : '👧';
-          html += `<span class="${badgeClass}">l' ${genderIcon}</span>`;
-          const rest = word.slice(2);
-          for (let i = 0; i < rest.length; i++) {
-            html += renderTileSlot();
-          }
-        } else if (word === "un") {
-          html += '<span class="article-badge-m">un 👦</span>';
-        } else if (word === "une") {
-          html += '<span class="article-badge-f">une 👧</span>';
-        } else if (word === "des") {
-          html += '<span class="article-badge-pl">des 👥</span>';
-        } else {
-          // Normal word: each letter gets an interactive '?' box with gender color hint!
-          for (let i = 0; i < word.length; i++) {
-            const ch = word[i];
-            if (ch === "'" || ch === "-") {
-              html += `<span class="riddle-text" style="color:#64748b;">${ch}</span>`;
-            } else {
-              html += renderTileSlot();
-            }
-          }
-        }
-        html += '</div>';
-        if (wIdx < words.length - 1) {
-          html += '<div style="width: 10px;"></div>';
-        }
-      });
-
-      return html;
-    }
-
-    function renderRevealedFrench(verb) {
-      const inf = verb.infinitive;
-
-      // Special rendering for Nouns / School Objects (with colored articles and nouns)
-      if (verb.category === 'objects' || inf.startsWith('un ') || inf.startsWith('une ') || inf.startsWith('des ') || inf.startsWith("l'")) {
-        let art = '';
-        let rest = '';
-        if (inf.startsWith("l'")) {
-          art = "l'";
-          rest = inf.slice(2);
-        } else {
-          const parts = inf.split(' ');
-          art = parts[0];
-          rest = parts.slice(1).join(' ');
-        }
-        let artBadgeClass = 'article-badge-m';
-        let nounColor = '#1d4ed8'; // azzurro
-        if (art === 'une' || verb.gender === 'f') {
-          artBadgeClass = 'article-badge-f';
-          nounColor = '#db2777'; // rosa
-        } else if (art === 'des' || verb.gender === 'pl') {
-          artBadgeClass = 'article-badge-pl';
-          nounColor = '#16a34a'; // verde
-        }
-        let html = `<span class="${artBadgeClass}" style="font-size: 1.8rem; margin-right: 8px;">${art}</span> <span style="font-weight: 700; color: ${nounColor}; font-size: 2.2rem;">${rest}</span>`;
-        if (verb.note) {
-          html += `<div style="font-size: 1rem; color: #64748b; margin-top: 10px; font-weight: 600; line-height: 1.3; max-width: 440px; margin-left: auto; margin-right: auto;">${verb.note}</div>`;
-        }
-        return html;
-      }
-      
-      // Highlight infinitive ending (-er, -ir, -re, -oir)
-      // Extract reflexive prefix if any
-      let prefix = '';
-      let mainVerb = inf;
-      let suffixExtra = '';
-
-      if (inf.startsWith("se ")) {
-        prefix = 'se ';
-        mainVerb = inf.slice(3);
-      } else if (inf.startsWith("s'")) {
-        prefix = "s'";
-        mainVerb = inf.slice(2);
-      }
-
-      // Check if there are extra words (e.g. "brosser les dents" -> mainVerb "brosser", extra " les dents")
-      const parts = mainVerb.split(' ');
-      let baseWord = parts[0];
-      if (parts.length > 1) {
-        suffixExtra = ' ' + parts.slice(1).join(' ');
-      }
-
-      // Endings: er, ir, re, oir
-      let stem = baseWord;
-      let ending = '';
-      if (baseWord.endsWith('er')) {
-        stem = baseWord.slice(0, -2);
-        ending = 'er';
-      } else if (baseWord.endsWith('ir')) {
-        stem = baseWord.slice(0, -2);
-        ending = 'ir';
-      } else if (baseWord.endsWith('re')) {
-        stem = baseWord.slice(0, -2);
-        ending = 're';
-      }
-
-      let res = '';
-      if (prefix) {
-        res += `<span class="back-refl">${prefix}</span>`;
-      }
-      res += `<span class="back-stem">${stem}</span><span class="back-ending">${ending}</span>`;
-      if (suffixExtra) {
-        res += `<span class="back-extra">${suffixExtra}</span>`;
-      }
-      return res;
-    }
-
-    function renderCurrentCard() {
-      if (!filteredVerbs.length) return;
-      const verb = filteredVerbs[currentIndex];
-      const cardEl = document.getElementById('active-flip-card');
-      
-      // reset flip
-      isFlipped = false;
-      cardEl.classList.remove('is-flipped');
-      document.getElementById('btn-deck-flip').textContent = '💡 Rivela';
-
-      // FRONT
-      const tagEl = document.getElementById('card-tag-el');
-      const tagBackEl = document.getElementById('card-tag-back-el');
-      const isRefl = verb.category === 'reflexive';
-      const isSchool = verb.category === 'school';
-      const isObject = verb.category === 'objects';
-      const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : (isObject ? '🏫 Oggetto Scuola' : '🍽️ Comune'));
-      const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common'));
-      tagEl.textContent = tagText;
-      tagEl.className = `card-tag ${tagClass}`;
-      tagBackEl.textContent = tagText;
-      tagBackEl.className = `card-tag ${tagClass}`;
-
-      if (verb.image) {
-        document.getElementById('card-icon-el').innerHTML = `<img src="${verb.image}" alt="${verb.italian}" class="card-thumb-img">`;
-        const backImg = verb.image_back || verb.image;
-        document.getElementById('card-icon-back-el').innerHTML = `<img src="${backImg}" alt="${verb.italian}" class="card-thumb-img-small">`;
-      } else {
-        document.getElementById('card-icon-el').textContent = verb.icon || '📘';
-        document.getElementById('card-icon-back-el').textContent = verb.icon || '📘';
-      }
-      document.getElementById('card-italian-el').textContent = verb.italian;
-      document.getElementById('card-riddle-el').innerHTML = buildRiddleHtml(verb);
-      initSpellingForVerb(verb);
-
-      // BACK
-      document.getElementById('card-revealed-french').innerHTML = renderRevealedFrench(verb);
-      
-      // Count letters excluding spaces
-      const pureLetters = verb.infinitive.replace(/[\s'-]/g, '').length;
-      document.getElementById('card-count-info-el').textContent = `Parola di ${pureLetters} lettere (${verb.infinitive})`;
-
-      // Link to index conjugation
-      const linkEl = document.getElementById('link-to-conj-el');
-      if (verb.category === 'objects') {
-        linkEl.href = 'grid.html';
-        linkEl.textContent = '🎒 Oggetto Scuola';
-      } else {
-        linkEl.href = `index.html#verb-${verb.id}`;
-        linkEl.textContent = '📖 Coniugazione';
-      }
-
-      // Progress bar
-      const progressPercent = ((currentIndex + 1) / filteredVerbs.length) * 100;
-      document.getElementById('progress-fill-el').style.width = `${progressPercent}%`;
-      document.getElementById('deck-index-label').textContent = `Carta ${currentIndex + 1} di ${filteredVerbs.length}`;
-      document.getElementById('deck-known-count').textContent = `🦁 Ale French`;
-    }
-
-    function flipCurrentCard() {
-      const cardEl = document.getElementById('active-flip-card');
-      isFlipped = !isFlipped;
-      if (isFlipped) {
-        cardEl.classList.add('is-flipped');
-        document.getElementById('btn-deck-flip').textContent = '🔄 Gira';
-        playCurrentAudio();
-      } else {
-        cardEl.classList.remove('is-flipped');
-        document.getElementById('btn-deck-flip').textContent = '💡 Rivela';
-      }
-    }
-
-    let cardSpellingStartTime = 0;
-    let cardHintsUsed = 0;
-
-    function playCurrentAudio() {
-      if (!filteredVerbs.length) return;
-      cardHintsUsed++;
-      const verb = filteredVerbs[currentIndex];
-      speakFrench(verb.infinitive);
-    }
-
-    function speakFrench(text) {
-      playFrenchAudio(text);
-    }
-
-    function nextCard() {
-      if (currentIndex < filteredVerbs.length - 1) {
-        currentIndex++;
-      } else {
-        currentIndex = 0; // loop around
-      }
-      renderCurrentCard();
-    }
-
-    function prevCard() {
-      if (currentIndex > 0) {
-        currentIndex--;
-      } else {
-        currentIndex = filteredVerbs.length - 1;
-      }
-      renderCurrentCard();
-    }
-
-    function shuffleDeck() {
-      for (let i = filteredVerbs.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [filteredVerbs[i], filteredVerbs[j]] = [filteredVerbs[j], filteredVerbs[i]];
-      }
-      currentIndex = 0;
-      renderCurrentCard();
-    }
-
-    // GRID VIEW IMPLEMENTATION
-    function renderGridView() {
-      const gridEl = document.getElementById('grid-view');
-      gridEl.innerHTML = '';
-
-      filteredVerbs.forEach((verb, idx) => {
-        const item = document.createElement('div');
-        item.className = 'grid-card';
-        item.id = `grid-card-${verb.id}`;
-        
-        const iconHtml = verb.image
-          ? `<img src="${verb.image}" class="grid-thumb-img" alt="${verb.italian}">`
-          : `<div class="grid-icon-placeholder">${verb.icon || '📘'}</div>`;
-
-        const isRefl = verb.category === 'reflexive';
-        const isSchool = verb.category === 'school';
-        const isObject = verb.category === 'objects';
-        const tagText = isRefl ? 'Riflessivo' : (isSchool ? 'Simbolo' : (isObject ? 'Oggetto' : 'Comune'));
-        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common'));
-
-        // Gender color for grid tiles
-        let gridTileClass = '';
-        if (verb.gender === 'm' || verb.infinitive.startsWith('un ')) {
-          gridTileClass = 'grid-tile-m';
-        } else if (verb.gender === 'f' || verb.infinitive.startsWith('une ')) {
-          gridTileClass = 'grid-tile-f';
-        } else if (verb.gender === 'pl' || verb.infinitive.startsWith('des ')) {
-          gridTileClass = 'grid-tile-pl';
-        }
-
-        const actionBtn = isObject
-          ? `<div style="font-size:0.8rem; color:#475569; font-weight:700; padding:4px 0;">🎒 Oggetto Scuola</div>`
-          : `<a href="index.html#verb-${verb.id}" class="link-to-study" style="font-size:0.8rem; padding: 4px 10px; display:inline-block;" onclick="event.stopPropagation()">📖 Coniugazione</a>`;
-
-        item.innerHTML = `
-          <div class="grid-card-media">
-            <span class="card-tag ${tagClass} grid-overlay-tag" style="font-size:0.7rem;">
-              ${tagText}
-            </span>
-            ${iconHtml}
-          </div>
-          <div class="grid-card-content">
-            <div class="grid-italian" style="margin: 4px 0 8px 0;">${verb.italian}</div>
-            
-            <div class="grid-target-box" id="grid-box-${verb.id}" style="width: 100%;">
-              <div class="grid-mystery">
-                ${verb.infinitive.split('').map(c => c === ' ' ? '<span style="width:6px;"></span>' : (c === "'" || c === "-" ? `<span>${c}</span>` : `<div class="grid-tile ${gridTileClass}">?</div>`)).join('')}
-              </div>
-              <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">Tocca per scoprire ✨</div>
-            </div>
-
-            <div style="margin-top: 10px; width: 100%;">
-              ${actionBtn}
-            </div>
-          </div>
-        `;
-
-        item.onclick = () => {
-          revealGridCard(verb);
-        };
-
-        gridEl.appendChild(item);
-      });
-    }
-
-    function revealGridCard(verb) {
-      const targetBox = document.getElementById(`grid-box-${verb.id}`);
-      const parentCard = document.getElementById(`grid-card-${verb.id}`);
-      
-      parentCard.classList.toggle('revealed');
-      const isRevealed = parentCard.classList.contains('revealed');
-
-      if (isRevealed) {
-        const safeInf = String(verb.infinitive || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-        targetBox.innerHTML = `
-          <div class="grid-revealed-french">${renderRevealedFrench(verb)}</div>
-          <button class="audio-btn-large" style="width:36px; height:36px; font-size:1.1rem; margin: 4px auto;" onclick="event.stopPropagation(); speakFrench('${safeInf}')">
-            🔊
-          </button>
-        `;
-        speakFrench(verb.infinitive);
-      } else {
-        targetBox.innerHTML = `
-          <div class="grid-mystery">
-            ${verb.infinitive.split('').map(c => c === ' ' ? '<span style="width:6px;"></span>' : (c === "'" || c === "-" ? `<span>${c}</span>` : '<div class="grid-tile">?</div>')).join('')}
-          </div>
-          <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">Tocca per scoprire ✨</div>
-        `;
-      }
-    }
-
-    function toggleView() {
-      isGridView = !isGridView;
-      const deckEl = document.getElementById('deck-view');
-      const gridEl = document.getElementById('grid-view');
-      const btn = document.getElementById('btn-toggle-view');
-
-      if (isGridView) {
-        deckEl.style.display = 'none';
-        gridEl.style.display = 'grid';
-        btn.textContent = '🃏 Vista Mazzo';
-      } else {
-        deckEl.style.display = 'flex';
-        gridEl.style.display = 'none';
-        btn.textContent = '🔲 Vista Griglia';
-      }
-    }
-
-    // =========================================================================
-    // INTERACTIVE KEYBOARD SPELLING & 4-COLOR GOOGLE ACCENT PAD
-    // =========================================================================
-    function setSpellingDifficulty(mode, btn) {
-      spellingDifficulty = mode;
-      document.querySelectorAll('.spelling-diff-btn').forEach(b => b.classList.remove('active'));
-      if (btn) {
-        btn.classList.add('active');
-      } else {
-        const el = document.querySelector(`.spelling-diff-btn[data-diff="${mode}"]`);
-        if (el) el.classList.add('active');
-      }
-      if (filteredVerbs.length) {
-        renderCurrentCard();
-      }
-    }
-
-    function initSpellingForVerb(verb) {
-      currentSlots = extractEditableSlots(verb.infinitive);
-      typedChars = new Array(currentSlots.length).fill('');
-      slotStates = new Array(currentSlots.length).fill('empty');
-      activeSlotIndex = 0;
-      lastVowelSlotIndex = -1;
-      wordCompleted = false;
-      cardSpellingStartTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
-      cardHintsUsed = 0;
-
-      const statusEl = document.getElementById('spelling-status-el');
-      if (statusEl) statusEl.innerHTML = '';
-
-      refreshSpellingTilesUI();
-      updateGoogleAccentPad();
-      updateLetterBubbles(verb);
-    }
-
-    function updateLetterBubbles(verb) {
-      const bubbleContainer = document.getElementById('card-letter-bubbles-el');
-      const hintEl = document.getElementById('card-tap-hint-el');
-      if (!bubbleContainer) return;
-
-      if (spellingDifficulty !== 'facile' || wordCompleted) {
-        bubbleContainer.style.display = 'none';
-        if (hintEl) hintEl.innerHTML = '<span>⌨️ Digita con la tastiera o ✨ tocca per scoprire</span>';
-        return;
-      }
-
-      bubbleContainer.style.display = 'flex';
-      if (hintEl) hintEl.innerHTML = '<span>🎈 Tocca le bolle con le lettere nell\'ordine giusto!</span>';
-
-      const letters = currentSlots.map(s => s.baseChar);
-      const distractors = ['a', 'e', 'i', 'r', 's', 't', 'o'].filter(c => !letters.includes(c)).sort(() => 0.5 - Math.random()).slice(0, 2);
-      const scrambled = [...letters, ...distractors].sort(() => 0.5 - Math.random());
-
-      bubbleContainer.innerHTML = scrambled.map((char, idx) => `
-        <button class="bubble-btn" id="card-bubble-${idx}" onclick="event.stopPropagation(); handleBubbleClick('${char}', ${idx})">
-          ${char}
-        </button>
-      `).join('');
-    }
-
-    function handleBubbleClick(char, idx) {
-      handleLetterInput(char);
-      const btn = document.getElementById(`card-bubble-${idx}`);
-      if (btn) btn.classList.add('used');
-    }
-
-    function focusMobileKeyboard() {
-      const inp = document.getElementById('mobile-kbd-input');
-      if (inp) {
-        inp.value = '';
-        inp.focus();
-      }
-    }
-
-    function selectTileSlot(idx) {
-      if (idx < 0 || idx >= currentSlots.length) return;
-      activeSlotIndex = idx;
-      if (typedChars[idx] && isBaseVowel(typedChars[idx])) {
-        lastVowelSlotIndex = idx;
-      }
-      refreshSpellingTilesUI();
-      updateGoogleAccentPad();
-      focusMobileKeyboard();
-    }
-
-    function refreshSpellingTilesUI() {
-      for (let i = 0; i < currentSlots.length; i++) {
-        const tile = document.getElementById(`slot-tile-${i}`);
-        if (!tile) continue;
-
-        tile.classList.remove('active-cursor', 'tile-filled', 'tile-correct', 'tile-wrong');
-        const ch = typedChars[i];
-        tile.textContent = ch ? ch : '?';
-
-        const state = slotStates[i];
-        if (state === 'correct') {
-          tile.classList.add('tile-correct');
-        } else if (state === 'wrong') {
-          tile.classList.add('tile-wrong');
-        } else if (state === 'filled') {
-          tile.classList.add('tile-filled');
-        }
-
-        if (!wordCompleted && i === activeSlotIndex) {
-          tile.classList.add('active-cursor');
-        }
-      }
-    }
-
-    function updateGoogleAccentPad() {
-      const padEl = document.getElementById('google-accent-pad');
-      if (!padEl) return;
-
-      if (spellingDifficulty !== 'difficile' || wordCompleted) {
-        padEl.classList.remove('visible');
-        return;
-      }
-
-      // Check if active slot or lastVowelSlotIndex holds a vowel
-      let targetIdx = -1;
-      if (typedChars[activeSlotIndex] && isBaseVowel(typedChars[activeSlotIndex])) {
-        targetIdx = activeSlotIndex;
-      } else if (lastVowelSlotIndex >= 0 && typedChars[lastVowelSlotIndex] && isBaseVowel(typedChars[lastVowelSlotIndex])) {
-        targetIdx = lastVowelSlotIndex;
-      }
-
-      if (targetIdx === -1) {
-        padEl.classList.remove('visible');
-        return;
-      }
-
-      lastVowelSlotIndex = targetIdx;
-      const opts = getGoogleAccentOptions(typedChars[targetIdx]);
-      opts.forEach(opt => {
-        const span = document.getElementById(`gpad-char-${opt.code}`);
-        if (span) span.textContent = opt.char;
-      });
-      padEl.classList.add('visible');
-    }
-
-    function applyAccentFromPad(code) {
-      if (spellingDifficulty !== 'difficile' || wordCompleted) return;
-      let targetIdx = -1;
-      if (typedChars[activeSlotIndex] && isBaseVowel(typedChars[activeSlotIndex])) {
-        targetIdx = activeSlotIndex;
-      } else if (lastVowelSlotIndex >= 0 && typedChars[lastVowelSlotIndex] && isBaseVowel(typedChars[lastVowelSlotIndex])) {
-        targetIdx = lastVowelSlotIndex;
-      }
-      if (targetIdx === -1) return;
-
-      const updatedVowel = applyGoogleAccent(typedChars[targetIdx], code);
-      typedChars[targetIdx] = updatedVowel;
-
-      // If all slots are already filled, re-evaluate word immediately!
-      if (typedChars.every(c => c !== '')) {
-        runEndOfWordEvaluation();
-      } else {
-        slotStates[targetIdx] = 'filled';
-        refreshSpellingTilesUI();
-        updateGoogleAccentPad();
-      }
-    }
-
-    function findNextEditableSlot(fromIdx) {
-      for (let i = fromIdx; i < currentSlots.length; i++) {
-        if (slotStates[i] !== 'correct' && typedChars[i] === '') return i;
-      }
-      for (let i = 0; i < currentSlots.length; i++) {
-        if (slotStates[i] === 'wrong') return i;
-      }
-      return Math.min(fromIdx, currentSlots.length - 1);
-    }
-
-    function handleLetterInput(rawChar) {
-      if (isGridView || isFlipped || !currentSlots.length || wordCompleted) return;
-      const ch = rawChar.toLowerCase();
-      if (!/^[a-zàâéèêëîïôùûç]$/.test(ch)) return;
-
-      const statusEl = document.getElementById('spelling-status-el');
-      if (statusEl) statusEl.innerHTML = '';
-
-      if (spellingDifficulty === 'facile') {
-        const slot = currentSlots[activeSlotIndex];
-        const res = evaluateLetterFacile(slot, ch);
-        typedChars[activeSlotIndex] = res.displayChar;
-        if (res.isCorrect) {
-          slotStates[activeSlotIndex] = 'correct';
-          if (slotStates.every(s => s === 'correct')) {
-            onSpellingWordComplete();
-            return;
-          }
-          // Move to next non-correct slot
-          for (let i = activeSlotIndex + 1; i < currentSlots.length; i++) {
-            if (slotStates[i] !== 'correct') {
-              activeSlotIndex = i;
-              break;
-            }
-          }
-        } else {
-          slotStates[activeSlotIndex] = 'wrong';
-          if (statusEl) {
-            statusEl.innerHTML = `<span style="color:#dc2626;">❌ Riprova questa lettera!</span>`;
-          }
-        }
-        refreshSpellingTilesUI();
-        return;
-      }
-
-      // MEDIO or DIFFICILE: fill current slot without revealing green/red until word is full
-      typedChars[activeSlotIndex] = ch;
-      slotStates[activeSlotIndex] = 'filled';
-      if (isBaseVowel(ch)) {
-        lastVowelSlotIndex = activeSlotIndex;
-      } else {
-        lastVowelSlotIndex = -1;
-      }
-
-      // Check if all slots are now filled
-      if (typedChars.every(c => c !== '')) {
-        runEndOfWordEvaluation();
-      } else {
-        activeSlotIndex = findNextEditableSlot(activeSlotIndex + 1);
-        refreshSpellingTilesUI();
-        updateGoogleAccentPad();
-      }
-    }
-
-    function runEndOfWordEvaluation() {
-      const evalRes = evaluateWord(currentSlots, typedChars, spellingDifficulty);
-      for (let i = 0; i < currentSlots.length; i++) {
-        typedChars[i] = evalRes.resolvedChars[i];
-        slotStates[i] = evalRes.results[i];
-      }
-
-      if (evalRes.allCorrect) {
-        onSpellingWordComplete();
-      } else {
-        const firstWrong = slotStates.indexOf('wrong');
-        if (firstWrong !== -1) {
-          activeSlotIndex = firstWrong;
-          if (isBaseVowel(typedChars[firstWrong])) {
-            lastVowelSlotIndex = firstWrong;
-          }
-        }
-        const statusEl = document.getElementById('spelling-status-el');
-        if (statusEl) {
-          const hint = spellingDifficulty === 'difficile'
-            ? '❌ Controlla le caselle rosse (o usa i 4 colori Google 1-4 per gli accenti)!'
-            : '❌ Correggi le caselle rosse (premi Backspace o digita sopra)!';
-          statusEl.innerHTML = `<span style="color:#dc2626;">${hint}</span>`;
-        }
-        refreshSpellingTilesUI();
-        updateGoogleAccentPad();
-      }
-    }
-
-    function handleBackspace() {
-      if (isGridView || isFlipped || !currentSlots.length || wordCompleted) return;
-      const statusEl = document.getElementById('spelling-status-el');
-      if (statusEl) statusEl.innerHTML = '';
-
-      // If current slot has a wrong or filled char, clear it
-      if (typedChars[activeSlotIndex] !== '' && slotStates[activeSlotIndex] !== 'correct') {
-        typedChars[activeSlotIndex] = '';
-        slotStates[activeSlotIndex] = 'empty';
-      } else {
-        // Move backwards to previous non-correct slot and clear it
-        for (let i = activeSlotIndex - 1; i >= 0; i--) {
-          if (slotStates[i] !== 'correct') {
-            activeSlotIndex = i;
-            typedChars[i] = '';
-            slotStates[i] = 'empty';
-            break;
-          }
-        }
-      }
-      refreshSpellingTilesUI();
-      updateGoogleAccentPad();
-    }
-
-    function onSpellingWordComplete() {
-      wordCompleted = true;
-      refreshSpellingTilesUI();
-      updateGoogleAccentPad();
-      const verb = filteredVerbs[currentIndex];
-      const statusEl = document.getElementById('spelling-status-el');
-      if (statusEl && verb) {
-        statusEl.innerHTML = `<span style="color:#059669;">🎉 BRAVISSIMO! <strong>${verb.infinitive}</strong> ✨</span>`;
-      }
-
-      if (typeof recordFrenchTelemetry === 'function' && verb) {
-        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
-        recordFrenchTelemetry({
-          exercise: 'card_spelling',
-          mode: spellingDifficulty,
-          target: verb.infinitive,
-          userInput: typedChars.join(''),
-          correct: true,
-          durationMs: cardSpellingStartTime ? Math.round(now - cardSpellingStartTime) : 0,
-          hintsUsed: cardHintsUsed
-        });
-      }
-
-      if (verb) {
-        speakFrench(verb.infinitive);
-      }
-    }
-
-    // Mobile virtual keyboard input listener
-    const mobileInp = document.getElementById('mobile-kbd-input');
-    if (mobileInp) {
-      mobileInp.addEventListener('input', (e) => {
-        const val = e.target.value;
-        if (val && val.length > 0) {
-          const ch = val[val.length - 1];
-          if (/^[1-4]$/.test(ch) && spellingDifficulty === 'difficile') {
-            applyAccentFromPad(parseInt(ch, 10));
-          } else {
-            handleLetterInput(ch);
-          }
-        }
-        e.target.value = '';
-      });
-    }
-
-    // KEYBOARD NAVIGATION & SPELLING
-    document.addEventListener('keydown', (e) => {
-      if (isGridView) return;
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        nextCard();
-        return;
-      }
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        prevCard();
-        return;
-      }
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        flipCurrentCard();
-        return;
-      }
-
-      if (!isFlipped) {
-        if (e.key === 'Backspace') {
-          e.preventDefault();
-          handleBackspace();
-          return;
-        }
-        if (['1', '2', '3', '4'].includes(e.key) && spellingDifficulty === 'difficile') {
-          e.preventDefault();
-          applyAccentFromPad(parseInt(e.key, 10));
-          return;
-        }
-        if (e.key.length === 1 && /^[a-zA-Zàâéèêëîïôùûç]$/.test(e.key)) {
-          e.preventDefault();
-          handleLetterInput(e.key);
-          return;
-        }
-      }
-
-      if (e.key === ' ') {
-        e.preventDefault();
-        flipCurrentCard();
+  <script type="module">
+    import { PuffinLogin } from './src/puffin-login.js';
+
+    const heroBack = document.getElementById('hero-card-back');
+    const heroVid = heroBack.querySelector('video');
+    heroBack.addEventListener('mouseenter', () => {
+      heroBack.classList.add('playing');
+      heroVid.play().catch(() => {});
+      const sfxPref = localStorage.getItem('puffin_card_back_sfx_v1');
+      if (sfxPref !== '0') {
+        PuffinLogin.playCardBackExplosion();
       }
     });
+    heroBack.addEventListener('click', () => {
+      heroBack.classList.add('playing');
+      heroVid.play().catch(() => {});
+      PuffinLogin.playCardBackExplosion({ force: true });
+    });
+    heroBack.addEventListener('mouseleave', () => {
+      heroBack.classList.remove('playing');
+      heroVid.pause();
+    });
 
-    // Smart Profile Defaults (Seby = facile • Ale = moyen)
-    function applyCardProfileDefaults() {
-      if (typeof getFrenchProfileDefaults === 'function') {
-        const conf = getFrenchProfileDefaults();
-        if (conf.user === 'seby') {
-          setSpellingDifficulty('facile');
-        } else if (conf.user === 'ale') {
-          setSpellingDifficulty('moyen');
-        }
+    document.getElementById('btn-play-card-back-sfx').addEventListener('click', () => {
+      heroBack.classList.add('playing');
+      heroVid.play().catch(() => {});
+      PuffinLogin.playCardBackExplosion({ force: true });
+    });
+
+    const gameSelect = document.getElementById('sim-game-select');
+    const logEl = document.getElementById('sim-98-log');
+
+    document.getElementById('btn-open-draft-pack').addEventListener('click', async () => {
+      const user = PuffinLogin.getCurrentUser();
+      const playerId = user?.id || 'ale';
+      const gameId = gameSelect.value || 'tubature';
+      const res = await PuffinLogin.openGameBoosterPack({
+        player_id: playerId,
+        game_id: gameId,
+        score: 2100,
+        difficulty: 'medium',
+        interactive: true,
+      });
+      logEl.style.display = 'block';
+      logEl.innerHTML = `✅ <b>Partita #${res.matchNumber}</b> completata a <code>${gameId}</code>: hai scelto <b>${res.picked?.card?.emoji || '🃏'} ${res.picked?.card?.title}</b> (${res.picked?.card?.rarity.toUpperCase()})! Mancano <b>${res.matchesUntilJackpot98}</b> partite al Colpo Gobbo della 98ª!`;
+    });
+
+    document.getElementById('btn-sim-98-matches').addEventListener('click', async () => {
+      const user = PuffinLogin.getCurrentUser();
+      const playerId = user?.id || 'ale';
+      const gameId = gameSelect.value || 'tubature';
+      logEl.style.display = 'block';
+
+      const commonTally = {};
+      for (let m = 1; m <= 97; m += 1) {
+        const res = await PuffinLogin.unlockCard({
+          player_id: playerId,
+          game_id: gameId,
+          score: 1200,
+          difficulty: 'easy',
+          matchNumber: m,
+          strict98Mode: true,
+          showToast: false,
+        });
+        const title = `${res.card.emoji} ${res.card.title}`;
+        commonTally[title] = (commonTally[title] || 0) + 1;
       }
-    }
-    window.addEventListener('french-profile-updated', applyCardProfileDefaults);
-    document.addEventListener('DOMContentLoaded', applyCardProfileDefaults);
+
+      PuffinLogin.setGamePackCounter(playerId, gameId, 97);
+      const summaryCommons = Object.entries(commonTally)
+        .map(([k, v]) => `${k} (x${v})`)
+        .join(', ');
+
+      logEl.innerHTML = `🔥 <b>Partite 1..97 a <code>${gameId}</code> completate!</b> In 97 partite hai pescato solo carte <b>⚫ Comuni</b>: ${summaryCommons}.<br/>🎉 <b>ORA È LA 98ª PARTITA!</b> Scegli la tua <b>🟡 Rara / 🟠 Super Rara Mitica</b> dal pacco!`;
+
+      const jackpotPack = await PuffinLogin.openGameBoosterPack({
+        player_id: playerId,
+        game_id: gameId,
+        score: 4500,
+        difficulty: 'hard',
+        matchNumber: 98,
+        interactive: true,
+      });
+
+      logEl.innerHTML = `🏆 <b>COLPO GOBBO DELLA 98ª PARTITA (${gameId})!</b> Dopo 97 Comuni (${summaryCommons}), alla <b>98ª partita</b> hai sbloccato <b>${jackpotPack.picked?.card?.emoji} ${jackpotPack.picked?.card?.title}</b> (<b>${jackpotPack.picked?.card?.rarity.toUpperCase()}</b>)!`;
+    });
+
+    document.getElementById('btn-roll-hard').addEventListener('click', () => {
+      const user = PuffinLogin.getCurrentUser();
+      PuffinLogin.unlockCard({
+        player_id: user?.id || 'ale',
+        game_id: 'tubature',
+        score: 4200,
+        difficulty: 'hard',
+      });
+    });
+
+    document.getElementById('btn-unlock-schmoogle').addEventListener('click', () => {
+      const user = PuffinLogin.getCurrentUser();
+      PuffinLogin.unlockCard({
+        player_id: user?.id || 'riccardo',
+        card_id: 'tubature:schmoogle',
+        game_id: 'tubature',
+        score: 4900,
+      });
+    });
+
+    document.getElementById('btn-unlock-motorino').addEventListener('click', () => {
+      const user = PuffinLogin.getCurrentUser();
+      PuffinLogin.unlockCard({
+        player_id: user?.id || 'riccardo',
+        card_id: 'tubature:motorino',
+        game_id: 'tubature',
+        score: 3800,
+      });
+    });
+
+    document.getElementById('btn-unlock-majjal').addEventListener('click', () => {
+      const user = PuffinLogin.getCurrentUser();
+      PuffinLogin.unlockCard({
+        player_id: user?.id || 'ale',
+        card_id: 'tubature:maialino',
+        game_id: 'tubature',
+        score: 2500,
+      });
+    });
   </script>
-  <script src="profile-switcher.js"></script>
 </body>
 </html>

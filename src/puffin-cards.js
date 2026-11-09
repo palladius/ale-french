@@ -3115,6 +3115,7 @@ export function showPuffinCardRevealToast({
         ${isNew ? '✨ NUOVA CARTA MAGIC SBLOCCATA!' : `🃏 CARTA DOPPIONE (x${count})!`}
       </span>
       <div class="reveal-top-actions">
+        <button type="button" class="reveal-icon-btn" id="open-album-toast-btn" title="Apri il tuo Album delle Carte Magic collezionate!">🃏 Album</button>
         <button type="button" class="reveal-icon-btn" id="flip-toast-card" title="Gira Fronte / Retro Puffin">🔄 Gira</button>
         <button type="button" class="reveal-icon-btn" id="close-toast" title="Chiudi">✖</button>
       </div>
@@ -3228,6 +3229,15 @@ export function showPuffinCardRevealToast({
 
   box.querySelector('#close-toast')?.addEventListener('click', cleanupAndClose);
   box.querySelector('#claim-toast-btn')?.addEventListener('click', cleanupAndClose);
+  box.querySelector('#open-album-toast-btn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    cleanupAndClose();
+    if (typeof window !== 'undefined' && window.PuffinLogin && typeof window.PuffinLogin.openCards === 'function') {
+      window.PuffinLogin.openCards({ gameId: card.game_id });
+    } else if (typeof window !== 'undefined') {
+      window.open('./cards.html', '_blank', 'noopener');
+    }
+  });
 
   // After 9s in center Hero mode, gently dock beside the Hall of Fame instead of disappearing abruptly!
   setTimeout(() => {
