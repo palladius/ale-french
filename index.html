@@ -32,19 +32,23 @@
       font-family: 'Fredoka', 'Lexend', system-ui, sans-serif;
       background: var(--bg-main);
       color: var(--text);
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     header {
       background: white;
       border-bottom: 2px solid var(--border);
-      padding: 10px 20px;
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      flex-shrink: 0;
     }
 
     .brand {
@@ -54,7 +58,7 @@
     }
 
     .brand h1 {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 700;
       color: #1e3a8a;
     }
@@ -72,17 +76,19 @@
     .nav-tabs {
       display: flex;
       align-items: center;
-      gap: 6px;
+      flex-wrap: wrap;
+      gap: 4px;
       background: #f1f5f9;
       padding: 4px;
-      border-radius: 999px;
+      border-radius: 16px;
       border: 1px solid #e2e8f0;
+      max-width: 100%;
     }
 
     .nav-tab {
-      padding: 6px 14px;
+      padding: 5px 11px;
       border-radius: 999px;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 600;
       text-decoration: none;
       color: #475569;
@@ -104,21 +110,22 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .btn-toggle-it {
       background: #f8fafc;
       border: 2px solid #cbd5e1;
       color: #334155;
-      padding: 6px 12px;
+      padding: 5px 11px;
       border-radius: 999px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.2s;
     }
 
@@ -132,14 +139,14 @@
       border: 2px solid var(--primary);
       background: white;
       color: var(--primary);
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 999px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.2s;
     }
 
@@ -151,7 +158,7 @@
     .app-container {
       display: flex;
       flex: 1;
-      height: calc(100vh - 65px);
+      min-height: 0;
       overflow: hidden;
     }
 
@@ -674,10 +681,339 @@
       display: inline-block;
     }
 
+    /* SMART FRENCH ACCENT HELPER BAR */
+    .accent-helper-bar {
+      margin: 12px auto 0;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .accent-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .accent-row-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #64748b;
+      margin-right: 2px;
+    }
+
+    .accent-chip {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+      font-family: 'Fredoka', 'Lexend', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.1;
+      cursor: pointer;
+      transition: all 0.14s ease;
+    }
+
+    .accent-chip:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      transform: translateY(-1px);
+    }
+
+    .accent-chip:active {
+      transform: scale(0.95);
+    }
+
+    .accent-chip.smart {
+      border-color: #f59e0b;
+      background: #fef3c7;
+      color: #92400e;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.22);
+    }
+
+    .accent-chip.smart:hover {
+      border-color: #d97706;
+      background: #fde68a;
+    }
+
+    .accent-chip-sub {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #64748b;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .accent-chip.smart .accent-chip-sub {
+      color: #b45309;
+    }
+
+    /* QUIZ PROGRESS HEADER & BAR */
+    .quiz-progress-box {
+      margin: 0 auto 18px;
+      max-width: 540px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .quiz-progress-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .quiz-progress-label {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      line-height: 1.15;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quiz-progress-label .quiz-progress-total {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .quiz-progress-meta {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #047857;
+      background: #d1fae5;
+      padding: 3px 11px;
+      border-radius: 999px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quiz-progress-track {
+      width: 100%;
+      height: 14px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+      border-radius: 999px;
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .quiz-summary-card {
+      padding: 18px 12px 6px;
+      text-align: center;
+    }
+
+    .quiz-summary-trophy {
+      font-size: 3.4rem;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .quiz-summary-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 6px;
+    }
+
+    .quiz-summary-stats {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 20px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quiz-summary-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .quiz-controls-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .quiz-length-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 3px 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .quiz-len-btn {
+      border: none;
+      background: transparent;
+      color: #475569;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quiz-len-btn.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .quiz-history-btn {
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      color: #1e3a8a;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .quiz-history-btn:hover, .quiz-history-btn.active {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+
+    .quiz-breakdown-list {
+      max-width: 560px;
+      margin: 14px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .quiz-breakdown-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      font-size: 0.92rem;
+    }
+
+    .quiz-breakdown-row.ok {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    .quiz-breakdown-row.ko {
+      border-color: #fecaca;
+      background: #fef2f2;
+    }
+
+    .quiz-history-panel {
+      text-align: left;
+      max-width: 660px;
+      margin: 6px auto 0;
+    }
+
+    .quiz-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .quiz-stat-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    .quiz-stat-num {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quiz-stat-lbl {
+      font-size: 0.78rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .quiz-round-item {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    footer.site-love-footer {
+      flex-shrink: 0;
+      margin-top: 0;
+      padding: 8px 16px;
+      background: #ffffff;
+      border-top: 2px solid var(--border);
+      font-size: 0.9rem;
+    }
+
     @media(max-width: 768px) {
+      body {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+      }
       .app-container {
         flex-direction: column;
         height: auto;
+        overflow: visible;
       }
       .sidebar {
         width: 100%;
@@ -739,15 +1075,20 @@
   </header>
 
   <div class="app-container">
-    <!-- SIDEBAR: TWO SECTIONS WITH DIVIDER -->
+    <!-- SIDEBAR: THREE VERB SECTIONS -->
     <div class="sidebar">
-      <div class="sidebar-section-title">⭐ Verbes Communs (10)</div>
+      <div class="sidebar-section-title" id="title-common-verbs">⭐ Verbes Communs</div>
       <div class="verb-group-list" id="common-verbs-list"></div>
 
       <div class="sidebar-divider"></div>
 
-      <div class="sidebar-section-title">🧴 Verbes Réfléchis (8)</div>
+      <div class="sidebar-section-title" id="title-reflexive-verbs">🧴 Verbes Réfléchis</div>
       <div class="verb-group-list" id="reflexive-verbs-list"></div>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section-title" id="title-school-verbs">🏫 Verbes de Classe</div>
+      <div class="verb-group-list" id="school-verbs-list"></div>
     </div>
 
     <!-- MAIN VIEW -->
@@ -791,33 +1132,64 @@
         </div>
 
         <!-- EXERCISE MODE SELECTOR -->
-        <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
           <button class="btn-mode" id="btn-verb-choice" onclick="setVerbExerciseMode('choice')">🎈 Facile (Scelta Multipla • Seby)</button>
           <button class="btn-mode active" id="btn-verb-typing" onclick="setVerbExerciseMode('typing')">🦁 Scrittura (Ortografia • Ale)</button>
         </div>
 
-        <div class="practice-target" id="quiz-question-el">
-          tu + s'habiller = ?
+        <!-- ROUND LENGTH & PROGRESS HISTORY CONTROLS -->
+        <div class="quiz-controls-row">
+          <div class="quiz-length-group" role="group" aria-label="Numero di domande">
+            <span>Domande:</span>
+            <button type="button" class="quiz-len-btn" id="btn-len-5" onclick="setQuizLength(5)">5</button>
+            <button type="button" class="quiz-len-btn active" id="btn-len-10" onclick="setQuizLength(10)">10</button>
+            <button type="button" class="quiz-len-btn" id="btn-len-20" onclick="setQuizLength(20)">20</button>
+          </div>
+          <button type="button" class="quiz-history-btn" id="btn-quiz-history" onclick="toggleQuizHistory()">📊 Il mio andamento</button>
         </div>
 
-        <!-- MULTIPLE CHOICE OPTIONS (FOR SEBY & EASY MODE) -->
-        <div id="quiz-choice-options" style="display: none; max-width: 520px; margin: 16px auto; grid-template-columns: 1fr; gap: 10px;"></div>
-
-        <!-- TYPING INPUT (FOR ALE & HARD MODE) -->
-        <div id="quiz-typing-container">
-          <input type="text" id="quiz-input-el" class="input-box" placeholder="Scrivi qui..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <!-- QUIZ PROGRESS COUNTER & BAR -->
+        <div class="quiz-progress-box" id="quiz-progress-box">
+          <div class="quiz-progress-top">
+            <div class="quiz-progress-label" id="quiz-progress-label">Domanda 1 <span class="quiz-progress-total">/ 10</span></div>
+            <div class="quiz-progress-meta" id="quiz-progress-meta">✅ 0 corrette</div>
+          </div>
+          <div class="quiz-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="1" id="quiz-progress-track">
+            <div class="quiz-progress-fill" id="quiz-progress-fill" style="width: 10%;"></div>
+          </div>
         </div>
 
-        <div class="feedback-msg" id="quiz-feedback-el"></div>
+        <div id="quiz-active-body">
+          <div class="practice-target" id="quiz-question-el">
+            ⏳ Caricamento esercizio...
+          </div>
 
-        <div id="quiz-typing-actions">
-          <button class="btn-submit-test" id="quiz-btn-el" onclick="checkQuizAnswer()">Verifica ✨</button>
-          <button class="btn-submit-test" style="background: #e2e8f0; color: #334155; margin-left: 10px;" onclick="nextQuiz()">Salta ➡️</button>
+          <!-- MULTIPLE CHOICE OPTIONS (FOR SEBY & EASY MODE) -->
+          <div id="quiz-choice-options" style="display: none; max-width: 520px; margin: 16px auto; grid-template-columns: 1fr; gap: 10px;"></div>
+
+          <!-- TYPING INPUT (FOR ALE & HARD MODE) -->
+          <div id="quiz-typing-container">
+            <input type="text" id="quiz-input-el" class="input-box" placeholder="Scrivi qui..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <div id="accent-helper-bar" class="accent-helper-bar" aria-label="Accenti francesi rapidi"></div>
+          </div>
+
+          <div class="feedback-msg" id="quiz-feedback-el"></div>
+
+          <div id="quiz-typing-actions">
+            <button class="btn-submit-test" id="quiz-btn-el" onclick="checkQuizAnswer()">Verifica ✨</button>
+            <button class="btn-submit-test" style="background: #e2e8f0; color: #334155; margin-left: 10px;" onclick="skipQuizQuestion()">Salta ➡️</button>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <span class="score-badge" id="quiz-score-el">Punteggio: 0 punti ⭐</span>
+          </div>
         </div>
 
-        <div style="margin-top: 14px;">
-          <span class="score-badge" id="quiz-score-el">Punteggio: 0 punti ⭐</span>
-        </div>
+        <!-- END OF ROUND SUMMARY -->
+        <div id="quiz-summary-el" class="quiz-summary-card" style="display: none;"></div>
+
+        <!-- HISTORY / PROGRESS VIEW -->
+        <div id="quiz-history-el" class="quiz-history-panel" style="display: none;"></div>
       </div>
     </div>
   </div>
@@ -826,12 +1198,29 @@
   <script src="card-spelling.js"></script>
   <script src="telemetry.js"></script>
   <script>
+    const QUIZ_TOTAL_QUESTIONS = 10;
+    const VERB_HISTORY_KEY = 'ale_french_verb_quiz_history';
+    let quizTotalQuestions = QUIZ_TOTAL_QUESTIONS;
     let verbsData = [];
     let currentVerb = null;
     let currentMode = 'study';
     let italianMode = 'visible'; // 'visible' | 'covered' | 'hidden'
     let quizCurrent = null;
     let quizScore = 0;
+    let quizQuestionIndex = 0;
+    let quizCorrectCount = 0;
+    let quizCurrentResolved = false;
+    let quizCurrentHadError = false;
+    let quizCompleted = false;
+    let quizShowingHistory = false;
+    let quizStartedAt = null;
+    let quizAskedKeys = new Set();
+    let quizRoundItems = [];
+    let quizChoiceAdvanceTimer = null;
+
+    function getConjugableVerbs() {
+      return verbsData.filter(v => Array.isArray(v.conjugation) && v.conjugation.length > 0);
+    }
 
     fetch('verbs.json')
       .then(res => res.json())
@@ -843,18 +1232,28 @@
         const paramVerb = urlParams.get('verb');
         const hashVerb = window.location.hash.replace('#verb-', '').replace('#', '');
         const targetId = paramVerb || hashVerb;
-        const initialVerb = (targetId && verbsData.find(v => v.id === targetId)) || verbsData.find(v => v.id === 'etre') || verbsData[0];
-        selectVerb(initialVerb.id);
+        const conjugables = getConjugableVerbs();
+        const initialVerb = (targetId && conjugables.find(v => v.id === targetId)) || conjugables.find(v => v.id === 'etre') || conjugables[0];
+        if (initialVerb) selectVerb(initialVerb.id);
+        if (currentMode === 'quiz' && !quizCurrent && !quizCompleted) {
+          startNewQuizRound();
+        }
       })
       .catch(err => console.error("Error loading verbs:", err));
 
     function renderSidebar() {
       const commonEl = document.getElementById('common-verbs-list');
       const reflexiveEl = document.getElementById('reflexive-verbs-list');
+      const schoolEl = document.getElementById('school-verbs-list');
       commonEl.innerHTML = '';
       reflexiveEl.innerHTML = '';
+      if (schoolEl) schoolEl.innerHTML = '';
 
-      verbsData.forEach(verb => {
+      let commonCount = 0;
+      let reflexiveCount = 0;
+      let schoolCount = 0;
+
+      getConjugableVerbs().forEach(verb => {
         const item = document.createElement('div');
         item.className = `verb-item ${currentVerb && currentVerb.id === verb.id ? 'selected' : ''}`;
         item.id = `verb-item-${verb.id}`;
@@ -872,15 +1271,28 @@
 
         if (verb.category === 'common') {
           commonEl.appendChild(item);
+          commonCount++;
+        } else if (verb.category === 'school' && schoolEl) {
+          schoolEl.appendChild(item);
+          schoolCount++;
         } else {
           reflexiveEl.appendChild(item);
+          reflexiveCount++;
         }
       });
+
+      const titleCommon = document.getElementById('title-common-verbs');
+      const titleReflexive = document.getElementById('title-reflexive-verbs');
+      const titleSchool = document.getElementById('title-school-verbs');
+      if (titleCommon) titleCommon.textContent = `⭐ Verbes Communs (${commonCount})`;
+      if (titleReflexive) titleReflexive.textContent = `🧴 Verbes Réfléchis (${reflexiveCount})`;
+      if (titleSchool) titleSchool.textContent = `🏫 Verbes de Classe (${schoolCount})`;
     }
 
     function selectVerb(id) {
-      currentVerb = verbsData.find(v => v.id === id);
-      if (!currentVerb) return;
+      const candidate = getConjugableVerbs().find(v => v.id === id);
+      if (!candidate) return;
+      currentVerb = candidate;
 
       document.querySelectorAll('.verb-item').forEach(el => el.classList.remove('selected'));
       const activeEl = document.getElementById(`verb-item-${id}`);
@@ -1050,7 +1462,11 @@
       if (typingBox) typingBox.style.display = isChoice ? 'none' : 'block';
       if (typingActs) typingActs.style.display = isChoice ? 'none' : 'block';
 
-      if (quizCurrent) {
+      if (quizShowingHistory) {
+        renderQuizHistory();
+      } else if (quizCompleted) {
+        startNewQuizRound();
+      } else if (quizCurrent) {
         renderQuizQuestion();
       }
     }
@@ -1072,28 +1488,548 @@
     window.addEventListener('french-profile-updated', applyVerbProfileDefaults);
     document.addEventListener('DOMContentLoaded', applyVerbProfileDefaults);
 
-    function startQuiz() {
+    function loadVerbHistory() {
+      try {
+        const raw = localStorage.getItem(VERB_HISTORY_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveVerbQuizRound(entry) {
+      try {
+        const history = loadVerbHistory();
+        history.unshift(entry);
+        localStorage.setItem(VERB_HISTORY_KEY, JSON.stringify(history.slice(0, 50)));
+        updateHistoryButtonCount();
+      } catch (e) {
+        console.warn('Could not save verb quiz round:', e);
+      }
+    }
+
+    function updateHistoryButtonCount() {
+      const btn = document.getElementById('btn-quiz-history');
+      if (!btn) return;
+      const count = loadVerbHistory().length;
+      btn.textContent = count > 0 ? `📊 Il mio andamento (${count})` : '📊 Il mio andamento';
+    }
+
+    function setQuizLength(len) {
+      const n = [5, 10, 20].includes(Number(len)) ? Number(len) : 10;
+      quizTotalQuestions = n;
+      [5, 10, 20].forEach(val => {
+        const b = document.getElementById(`btn-len-${val}`);
+        if (b) b.classList.toggle('active', val === n);
+      });
+      if (quizShowingHistory) {
+        toggleQuizHistory(false);
+      }
+      startNewQuizRound();
+    }
+
+    function toggleQuizHistory(forceState) {
+      const next = typeof forceState === 'boolean' ? forceState : !quizShowingHistory;
+      quizShowingHistory = next;
+      const btn = document.getElementById('btn-quiz-history');
+      const progressBox = document.getElementById('quiz-progress-box');
+      const activeBody = document.getElementById('quiz-active-body');
+      const summaryEl = document.getElementById('quiz-summary-el');
+      const historyEl = document.getElementById('quiz-history-el');
+
+      if (btn) btn.classList.toggle('active', next);
+      if (next) {
+        if (progressBox) progressBox.style.display = 'none';
+        if (activeBody) activeBody.style.display = 'none';
+        if (summaryEl) summaryEl.style.display = 'none';
+        if (historyEl) {
+          historyEl.style.display = 'block';
+          renderQuizHistory();
+        }
+      } else {
+        if (historyEl) historyEl.style.display = 'none';
+        if (progressBox) progressBox.style.display = 'block';
+        if (quizCompleted) {
+          if (summaryEl) summaryEl.style.display = 'block';
+        } else {
+          if (activeBody) activeBody.style.display = 'block';
+        }
+      }
+    }
+
+    function renderQuizHistory() {
+      const historyEl = document.getElementById('quiz-history-el');
+      if (!historyEl) return;
+      const history = loadVerbHistory();
+      const tel = (typeof getFrenchTelemetrySummary === 'function') ? getFrenchTelemetrySummary() : null;
+
+      const totalRounds = history.length;
+      const avgPct = totalRounds ? Math.round(history.reduce((s, r) => s + (r.percentage || 0), 0) / totalRounds) : 0;
+      const bestPct = totalRounds ? Math.max(...history.map(r => r.percentage || 0)) : 0;
+
+      const hardestHtml = (tel && tel.hardestItems && tel.hardestItems.length > 0)
+        ? `<div style="background:#fffbeb; border:1.5px solid #fde68a; border-radius:12px; padding:10px 14px; margin-bottom:14px;">
+            <div style="font-weight:700; color:#92400e; margin-bottom:6px;">🎯 Verbi da ripassare (in base ai tuoi tentativi):</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px;">
+              ${tel.hardestItems.map(item => `<span style="background:white; border:1px solid #fcd34d; border-radius:999px; padding:3px 10px; font-size:0.84rem; font-weight:600; color:#78350f;">${item.target} (${item.errors} err / ${item.attempts})</span>`).join('')}
+            </div>
+          </div>`
+        : '';
+
+      const roundsHtml = totalRounds === 0
+        ? `<div style="text-align:center; padding:24px; background:#f8fafc; border-radius:14px; border:1.5px dashed #cbd5e1; color:#64748b; margin-bottom:14px;">
+            Nessuna serie completata ancora! Completa ${quizTotalQuestions} domande per registrare qui il tuo andamento.
+          </div>`
+        : history.slice(0, 15).map(r => {
+            const pillBg = r.percentage >= 80 ? '#d1fae5; color:#047857;' : (r.percentage >= 50 ? '#fef3c7; color:#92400e;' : '#fee2e2; color:#b91c1c;');
+            const modeLbl = r.mode === 'choice' ? '🎈 Scelta Multipla' : '🦁 Scrittura';
+            return `
+              <div class="quiz-round-item">
+                <div>
+                  <div style="font-weight:700; color:#0f172a;">${r.userLabel || '🦁 Ale'} &bull; ${modeLbl}</div>
+                  <div style="font-size:0.8rem; color:#64748b;">${r.dateLabel || ''} &bull; ${r.durationSec || 1}s</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="background:${pillBg} padding:4px 10px; border-radius:999px; font-weight:700; font-size:0.88rem;">
+                    ${r.correct}/${r.total} (${r.percentage}%) &bull; ${r.score} pt
+                  </span>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+      historyEl.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:8px; flex-wrap:wrap;">
+          <h3 style="font-size:1.25rem; color:#1e3a8a;">📊 Il mio andamento (Coniugazioni)</h3>
+          <button type="button" class="btn-submit-test" style="margin-top:0; padding:7px 16px; font-size:0.9rem;" onclick="toggleQuizHistory(false)">🔙 Torna al Quiz</button>
+        </div>
+        <div class="quiz-stats-grid">
+          <div class="quiz-stat-card">
+            <div class="quiz-stat-num">${totalRounds}</div>
+            <div class="quiz-stat-lbl">Serie completate</div>
+          </div>
+          <div class="quiz-stat-card">
+            <div class="quiz-stat-num">${avgPct}%</div>
+            <div class="quiz-stat-lbl">Media corrette</div>
+          </div>
+          <div class="quiz-stat-card">
+            <div class="quiz-stat-num">${bestPct}%</div>
+            <div class="quiz-stat-lbl">Miglior serie</div>
+          </div>
+        </div>
+        ${hardestHtml}
+        <div style="max-height:240px; overflow-y:auto; margin-bottom:14px;">
+          ${roundsHtml}
+        </div>
+        <puffin-leaderboard filter-game="ale-french"></puffin-leaderboard>
+      `;
+    }
+
+    function updateQuizProgressUI() {
+      const total = quizTotalQuestions;
+      const displayNum = Math.min(Math.max(quizQuestionIndex, 1), total);
+      const pct = quizCompleted ? 100 : Math.round((displayNum / total) * 100);
+      const labelEl = document.getElementById('quiz-progress-label');
+      const metaEl = document.getElementById('quiz-progress-meta');
+      const fillEl = document.getElementById('quiz-progress-fill');
+      const trackEl = document.getElementById('quiz-progress-track');
+
+      if (labelEl) {
+        if (quizCompleted) {
+          labelEl.innerHTML = `Completato! <span class="quiz-progress-total">${total} / ${total}</span>`;
+        } else {
+          labelEl.innerHTML = `Domanda ${displayNum} <span class="quiz-progress-total">/ ${total}</span>`;
+        }
+      }
+      if (metaEl) {
+        metaEl.textContent = `✅ ${quizCorrectCount} ${quizCorrectCount === 1 ? 'corretta' : 'corrette'}`;
+      }
+      if (fillEl) {
+        fillEl.style.width = `${pct}%`;
+      }
+      if (trackEl) {
+        trackEl.setAttribute('aria-valuemax', String(total));
+        trackEl.setAttribute('aria-valuenow', String(quizCompleted ? total : displayNum));
+      }
+    }
+
+    function startNewQuizRound() {
+      if (quizChoiceAdvanceTimer) {
+        clearTimeout(quizChoiceAdvanceTimer);
+        quizChoiceAdvanceTimer = null;
+      }
+      quizScore = 0;
+      quizQuestionIndex = 0;
+      quizCorrectCount = 0;
+      quizCurrentResolved = false;
+      quizCurrentHadError = false;
+      quizCompleted = false;
+      quizShowingHistory = false;
+      quizStartedAt = new Date().toISOString();
+      quizAskedKeys.clear();
+      quizRoundItems = [];
+
+      const historyBtn = document.getElementById('btn-quiz-history');
+      if (historyBtn) historyBtn.classList.remove('active');
+      const progressBox = document.getElementById('quiz-progress-box');
+      if (progressBox) progressBox.style.display = 'block';
+      const historyEl = document.getElementById('quiz-history-el');
+      if (historyEl) historyEl.style.display = 'none';
+
+      const scoreEl = document.getElementById('quiz-score-el');
+      if (scoreEl) scoreEl.textContent = 'Punteggio: 0 punti ⭐';
+      const activeBody = document.getElementById('quiz-active-body');
+      const summaryEl = document.getElementById('quiz-summary-el');
+      if (activeBody) activeBody.style.display = 'block';
+      if (summaryEl) {
+        summaryEl.style.display = 'none';
+        summaryEl.innerHTML = '';
+      }
+      updateHistoryButtonCount();
       nextQuiz();
     }
 
+    function startQuiz() {
+      updateHistoryButtonCount();
+      if (quizCompleted || quizQuestionIndex === 0 || !quizCurrent) {
+        startNewQuizRound();
+      } else {
+        updateQuizProgressUI();
+      }
+    }
+
+    const FRENCH_ACCENT_FAMILIES = [
+      {
+        key: 'e',
+        regex: /[éèêë]/i,
+        chars: [
+          { ch: 'é', sub: 'acuta' },
+          { ch: 'è', sub: 'grave' },
+          { ch: 'ê', sub: 'circ. ^' },
+          { ch: 'ë', sub: 'dier.' }
+        ]
+      },
+      {
+        key: 'a',
+        regex: /[àâ]/i,
+        chars: [
+          { ch: 'à', sub: 'grave' },
+          { ch: 'â', sub: 'circ. ^' }
+        ]
+      },
+      {
+        key: 'o',
+        regex: /[ô]/i,
+        chars: [
+          { ch: 'ô', sub: 'circ. ^' }
+        ]
+      },
+      {
+        key: 'u',
+        regex: /[ùû]/i,
+        chars: [
+          { ch: 'ù', sub: 'grave' },
+          { ch: 'û', sub: 'circ. ^' }
+        ]
+      },
+      {
+        key: 'i',
+        regex: /[îï]/i,
+        chars: [
+          { ch: 'î', sub: 'circ. ^' },
+          { ch: 'ï', sub: 'dier.' }
+        ]
+      },
+      {
+        key: 'c',
+        regex: /[ç]/i,
+        chars: [
+          { ch: 'ç', sub: 'ced.' }
+        ]
+      },
+      {
+        key: 'apo',
+        regex: /['’]/,
+        chars: [
+          { ch: "'", sub: 'apost.' }
+        ]
+      }
+    ];
+
+    const CORE_FRENCH_ACCENTS = [
+      { ch: 'é', sub: 'acuta' },
+      { ch: 'è', sub: 'grave' },
+      { ch: 'ê', sub: 'circ. ^' },
+      { ch: 'à', sub: 'grave' },
+      { ch: 'ç', sub: 'ced.' },
+      { ch: 'ô', sub: 'circ. ^' },
+      { ch: "'", sub: 'apost.' }
+    ];
+
+    function insertQuizChar(ch) {
+      const input = document.getElementById('quiz-input-el');
+      if (!input) return;
+      const start = typeof input.selectionStart === 'number' ? input.selectionStart : input.value.length;
+      const end = typeof input.selectionEnd === 'number' ? input.selectionEnd : input.value.length;
+      const before = input.value.slice(0, start);
+      const after = input.value.slice(end);
+      input.value = before + ch + after;
+      const nextPos = start + ch.length;
+      input.focus();
+      if (typeof input.setSelectionRange === 'function') {
+        input.setSelectionRange(nextPos, nextPos);
+      }
+    }
+
+    function createAccentButton(item, isSmart) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `accent-chip${isSmart ? ' smart' : ''}`;
+      btn.title = `Inserisci ${item.ch} (${item.sub})`;
+      btn.setAttribute('aria-label', `Inserisci ${item.ch} (${item.sub})`);
+      btn.onmousedown = (e) => e.preventDefault();
+      btn.onclick = () => insertQuizChar(item.ch);
+      btn.innerHTML = `<span>${item.ch}</span><span class="accent-chip-sub">${item.sub}</span>`;
+      return btn;
+    }
+
+    function renderAccentHelper(targetText) {
+      const bar = document.getElementById('accent-helper-bar');
+      if (!bar) return;
+      bar.innerHTML = '';
+
+      const text = String(targetText || '');
+      const smartChars = [];
+      const seen = new Set();
+
+      FRENCH_ACCENT_FAMILIES.forEach(fam => {
+        if (fam.regex.test(text)) {
+          fam.chars.forEach(item => {
+            if (!seen.has(item.ch)) {
+              seen.add(item.ch);
+              smartChars.push(item);
+            }
+          });
+        }
+      });
+
+      if (smartChars.length > 0) {
+        const smartRow = document.createElement('div');
+        smartRow.className = 'accent-row';
+        const lbl = document.createElement('span');
+        lbl.className = 'accent-row-label';
+        lbl.textContent = '✨ Tasti utili:';
+        smartRow.appendChild(lbl);
+        smartChars.forEach(item => smartRow.appendChild(createAccentButton(item, true)));
+        bar.appendChild(smartRow);
+      }
+
+      const otherChars = CORE_FRENCH_ACCENTS.filter(item => !seen.has(item.ch));
+      if (otherChars.length > 0) {
+        const baseRow = document.createElement('div');
+        baseRow.className = 'accent-row';
+        if (smartChars.length === 0) {
+          const lbl = document.createElement('span');
+          lbl.className = 'accent-row-label';
+          lbl.textContent = '⌨️ Accenti:';
+          baseRow.appendChild(lbl);
+        }
+        otherChars.forEach(item => baseRow.appendChild(createAccentButton(item, false)));
+        bar.appendChild(baseRow);
+      }
+    }
+
+    function pickRandomVerbQuestion(pool) {
+      const candidates = [];
+      pool.forEach(verb => {
+        verb.conjugation.forEach(conj => {
+          const key = `${verb.id}:${conj.pronoun}`;
+          if (!quizAskedKeys.has(key)) {
+            candidates.push({ verb, conj, key });
+          }
+        });
+      });
+
+      if (candidates.length === 0) {
+        quizAskedKeys.clear();
+        pool.forEach(verb => {
+          verb.conjugation.forEach(conj => {
+            candidates.push({ verb, conj, key: `${verb.id}:${conj.pronoun}` });
+          });
+        });
+      }
+
+      const picked = candidates[Math.floor(Math.random() * candidates.length)];
+      if (picked) quizAskedKeys.add(picked.key);
+      return picked;
+    }
+
+    function recordCurrentQuizItem(isCorrect, userInput, skipped = false) {
+      if (!quizCurrent) return;
+      const { verb, conj } = quizCurrent;
+      const idx = quizRoundItems.findIndex(it => it.questionIndex === quizQuestionIndex);
+      const entry = {
+        questionIndex: quizQuestionIndex,
+        icon: verb.icon,
+        prompt: `${simplifyPronoun(conj.pronoun)} + ${verb.infinitive}`,
+        target: conj.full,
+        userInput: userInput || '',
+        isCorrect: Boolean(isCorrect),
+        hadError: Boolean(quizCurrentHadError),
+        skipped: Boolean(skipped)
+      };
+      if (idx >= 0) {
+        quizRoundItems[idx] = entry;
+      } else {
+        quizRoundItems.push(entry);
+      }
+    }
+
+    function skipQuizQuestion() {
+      if (quizCurrent && !quizCurrentResolved) {
+        recordCurrentQuizItem(false, '(saltata)', true);
+      }
+      nextQuiz();
+    }
+
+    function finishQuizRound() {
+      if (quizChoiceAdvanceTimer) {
+        clearTimeout(quizChoiceAdvanceTimer);
+        quizChoiceAdvanceTimer = null;
+      }
+      quizCompleted = true;
+      updateQuizProgressUI();
+
+      const activeBody = document.getElementById('quiz-active-body');
+      const summaryEl = document.getElementById('quiz-summary-el');
+      if (activeBody) activeBody.style.display = 'none';
+
+      const total = quizTotalQuestions;
+      const pct = Math.round((quizCorrectCount / total) * 100);
+      const endedIso = new Date().toISOString();
+      const startedIso = quizStartedAt || endedIso;
+      const durationSec = Math.max(1, Math.round((Date.parse(endedIso) - Date.parse(startedIso)) / 1000));
+
+      const puffinUser = window.PuffinLogin && typeof window.PuffinLogin.getCurrentUser === 'function'
+        ? window.PuffinLogin.getCurrentUser()
+        : null;
+      const fallbackUser = (typeof getActiveFrenchUser === 'function') ? getActiveFrenchUser() : 'ale';
+      const userLabel = puffinUser ? `${puffinUser.emoji || '🐧'} ${puffinUser.name}` : (fallbackUser === 'seby' ? '🎈 Seby' : '🦁 Ale');
+
+      saveVerbQuizRound({
+        id: 'vq_' + Date.now(),
+        dateIso: endedIso,
+        dateLabel: new Date().toLocaleString('it-IT', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }),
+        userLabel,
+        mode: verbExerciseMode,
+        score: quizScore,
+        correct: quizCorrectCount,
+        total,
+        percentage: pct,
+        durationSec,
+        items: quizRoundItems
+      });
+
+      const trophy = pct >= 80 ? '🏆' : (pct >= 50 ? '🎉' : '💪');
+      const headline = pct === 100
+        ? 'INCROYABLE! Tutto perfetto!'
+        : (pct >= 80 ? 'BRAVISSIMO! Ottima serie!' : (pct >= 50 ? 'TRÈS BIEN! Continua così!' : 'BEL TENTATIVO! Riproviamo!'));
+
+      const breakdownHtml = quizRoundItems.map(it => {
+        const cls = it.isCorrect ? 'ok' : 'ko';
+        const badge = it.skipped
+          ? '⏭️ Saltata'
+          : (it.isCorrect ? (it.hadError ? '🩹 Corretta (+aiuto)' : '✅ Corretta') : '❌ Errore');
+        const safeTarget = String(it.target || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        return `
+          <div class="quiz-breakdown-row ${cls}">
+            <div>
+              <strong>${it.icon} ${it.prompt}</strong>
+              <div style="font-size:0.84rem; color:#475569;">Risposta: <strong>${it.target}</strong></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:0.82rem; font-weight:700;">${badge}</span>
+              <button type="button" class="quiz-choice-speaker" style="padding:3px 9px; font-size:0.9rem;" onclick="speakText('${safeTarget}')" title="Ascolta pronuncia">🔊</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (summaryEl) {
+        summaryEl.innerHTML = `
+          <div class="quiz-summary-trophy">${trophy}</div>
+          <div class="quiz-summary-title">${headline}</div>
+          <div class="quiz-summary-stats">
+            Punteggio: <strong>${quizScore} punti</strong> ⭐ &bull; <strong>${quizCorrectCount} / ${total}</strong> corrette (${pct}%) &bull; ⏱️ ${durationSec}s
+          </div>
+          <div class="quiz-breakdown-list">${breakdownHtml}</div>
+          <div class="quiz-summary-actions">
+            <button class="btn-submit-test" style="margin-top:0;" type="button" onclick="startNewQuizRound()">🔄 Gioca ancora (${total} domande)</button>
+            <button class="btn-submit-test" style="margin-top:0; background:#eff6ff; color:#1d4ed8; border:2px solid #93c5fd;" type="button" onclick="toggleQuizHistory(true)">📊 Il mio andamento</button>
+            <button class="btn-submit-test" style="margin-top:0; background: #e2e8f0; color: #334155;" type="button" onclick="setMode('study')">📖 Torna allo Studio</button>
+          </div>
+          <div style="margin-top:18px; text-align:left;">
+            <puffin-leaderboard filter-game="ale-french"></puffin-leaderboard>
+          </div>
+        `;
+        summaryEl.style.display = 'block';
+      }
+
+      if (window.PuffinLogin && typeof window.PuffinLogin.submitScore === 'function') {
+        window.PuffinLogin.submitScore({
+          appId: 'ale-french',
+          score: quizScore,
+          mode: `verbs_${verbExerciseMode}`,
+          started_at: startedIso,
+          ended_at: endedIso,
+          duration_sec: durationSec,
+          extra: {
+            exercise: 'verb_quiz',
+            mode: verbExerciseMode,
+            correct: quizCorrectCount,
+            total,
+            percentage: pct,
+            seconds: durationSec
+          }
+        }).catch(err => console.debug('Puffin score submission:', err));
+      }
+    }
+
     function nextQuiz() {
-      if (!verbsData || !verbsData.length) return;
-      const verb = verbsData[Math.floor(Math.random() * verbsData.length)];
-      const conj = verb.conjugation[Math.floor(Math.random() * verb.conjugation.length)];
-      quizCurrent = { verb, conj };
+      if (quizChoiceAdvanceTimer) {
+        clearTimeout(quizChoiceAdvanceTimer);
+        quizChoiceAdvanceTimer = null;
+      }
+      const pool = getConjugableVerbs();
+      if (!pool.length) return;
+
+      if (quizQuestionIndex >= quizTotalQuestions) {
+        finishQuizRound();
+        return;
+      }
+
+      const picked = pickRandomVerbQuestion(pool);
+      if (!picked) return;
+
+      quizQuestionIndex += 1;
+      quizCurrentResolved = false;
+      quizCurrentHadError = false;
+      quizCurrent = { verb: picked.verb, conj: picked.conj };
+      updateQuizProgressUI();
 
       const questionEl = document.getElementById('quiz-question-el');
       questionEl.innerHTML = `
-        <span style="font-size: 2rem;">${verb.icon}</span> 
-        <strong>${simplifyPronoun(conj.pronoun)}</strong> + <em>${verb.infinitive}</em>
-        <div style="font-size: 1.05rem; color: #64748b; margin-top: 4px;">👉 <em>${conj.italian || verb.italian}</em></div>
+        <span style="font-size: 2rem;">${picked.verb.icon}</span> 
+        <strong>${simplifyPronoun(picked.conj.pronoun)}</strong> + <em>${picked.verb.infinitive}</em>
+        <div style="font-size: 1.05rem; color: #64748b; margin-top: 4px;">👉 <em>${picked.conj.italian || picked.verb.italian}</em></div>
       `;
 
       if (typeof startFrenchQuestionTelemetry === 'function') {
         quizTracker = startFrenchQuestionTelemetry({
           exercise: 'verb_quiz',
           mode: verbExerciseMode,
-          target: conj.full
+          target: picked.conj.full
         });
       } else {
         quizTracker = null;
@@ -1111,6 +2047,7 @@
       if (verbExerciseMode === 'choice') {
         renderQuizChoiceOptions(verb, conj);
       } else {
+        renderAccentHelper(conj.full);
         const input = document.getElementById('quiz-input-el');
         if (input) {
           input.value = '';
@@ -1140,9 +2077,9 @@
         }
       });
 
-      // If needed, supplement with other verbs
+      // If needed, supplement with other conjugable verbs
       if (distractors.length < 2) {
-        verbsData.forEach(v => {
+        getConjugableVerbs().forEach(v => {
           if (v.id !== verb.id) {
             v.conjugation.forEach(c => {
               if (c.full !== correctText && !distractors.includes(c.full)) {
@@ -1185,34 +2122,75 @@
         allBtns.forEach(b => b.disabled = true);
         feedback.innerHTML = `<span style="color: #059669;">Bravo! C'est parfait! 🎉 <strong>${correctText}</strong></span>`;
         speakText(correctText);
-        quizScore += 10;
-        document.getElementById('quiz-score-el').textContent = `Punteggio: ${quizScore} punti ⭐`;
+        if (!quizCurrentResolved) {
+          quizCurrentResolved = true;
+          quizScore += 10;
+          quizCorrectCount += 1;
+          recordCurrentQuizItem(true, selected, false);
+          document.getElementById('quiz-score-el').textContent = `Punteggio: ${quizScore} punti ⭐`;
+          updateQuizProgressUI();
+        }
 
-        setTimeout(() => {
+        quizChoiceAdvanceTimer = setTimeout(() => {
+          quizChoiceAdvanceTimer = null;
           nextQuiz();
         }, 1300);
       } else {
+        quizCurrentHadError = true;
         btnEl.classList.add('wrong');
         feedback.innerHTML = `<span style="color: #dc2626;">Riprova! Ascolta bene la pronuncia 🔊</span>`;
         speakText(correctText);
       }
     }
 
+    function normalizeQuizText(str) {
+      return String(str || '').trim().toLowerCase().replace(/’/g, "'").replace(/\s+/g, ' ');
+    }
+
+    function buildAcceptedAnswers(conj) {
+      const targetFull = normalizeQuizText(conj.full);
+      const accepted = new Set([targetFull]);
+      const pronoun = normalizeQuizText(conj.pronoun);
+
+      if (pronoun.startsWith("j'")) {
+        accepted.add(targetFull.replace(/^j'/, '').trim());
+      } else if (pronoun.includes('il / elle')) {
+        const rest = targetFull.replace(/^il\s+/, '').trim();
+        accepted.add(rest);
+        accepted.add(`il ${rest}`);
+        accepted.add(`elle ${rest}`);
+        accepted.add(`on ${rest}`);
+      } else if (pronoun.includes('ils / elles')) {
+        const rest = targetFull.replace(/^ils\s+/, '').trim();
+        accepted.add(rest);
+        accepted.add(`ils ${rest}`);
+        accepted.add(`elles ${rest}`);
+      } else if (targetFull.startsWith(pronoun + ' ')) {
+        accepted.add(targetFull.slice(pronoun.length + 1).trim());
+      }
+
+      return { targetFull, accepted: [...accepted].filter(Boolean) };
+    }
+
     function checkQuizAnswer() {
+      if (!quizCurrent || !quizCurrent.conj) {
+        nextQuiz();
+        return;
+      }
+
       const input = document.getElementById('quiz-input-el');
-      const userText = input.value.trim().toLowerCase().replace(/’/g, "'");
-      const targetFull = quizCurrent.conj.full.toLowerCase().replace(/’/g, "'");
-      const verbOnly = targetFull.replace(quizCurrent.conj.pronoun + ' ', '').trim();
+      const userText = normalizeQuizText(input.value);
+      const { targetFull, accepted } = buildAcceptedAnswers(quizCurrent.conj);
 
       let isMatch = false;
       const conf = (typeof getFrenchProfileDefaults === 'function') ? getFrenchProfileDefaults() : { accentsStrict: true };
+      const strip = (s) => (typeof stripAccent === 'function') ? stripAccent(s) : s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
       if (!conf.accentsStrict) {
-        const normUser = (typeof stripAccent === 'function') ? stripAccent(userText) : userText.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        const normTarget = (typeof stripAccent === 'function') ? stripAccent(targetFull) : targetFull.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        const normVerbOnly = (typeof stripAccent === 'function') ? stripAccent(verbOnly) : verbOnly.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        isMatch = (normUser === normTarget || normUser === normVerbOnly);
+        const normUser = strip(userText);
+        isMatch = accepted.some(ans => strip(ans) === normUser);
       } else {
-        isMatch = (userText === targetFull || userText === verbOnly);
+        isMatch = accepted.includes(userText);
       }
 
       if (quizTracker) {
@@ -1222,13 +2200,21 @@
       const feedback = document.getElementById('quiz-feedback-el');
       if (isMatch) {
         input.className = 'input-box correct';
-        feedback.innerHTML = `<span style="color: #059669;">Bravo Alessandro! C'est parfait! 🎉</span>`;
+        feedback.innerHTML = `<span style="color: #059669;">Bravo! C'est parfait! 🎉</span>`;
         speakText(targetFull);
-        quizScore += 10;
-        document.getElementById('quiz-score-el').textContent = `Punteggio: ${quizScore} punti ⭐`;
-        document.getElementById('quiz-btn-el').textContent = 'Prossimo ➡️';
-        document.getElementById('quiz-btn-el').onclick = nextQuiz;
+        if (!quizCurrentResolved) {
+          quizCurrentResolved = true;
+          quizScore += 10;
+          quizCorrectCount += 1;
+          recordCurrentQuizItem(true, userText, false);
+          document.getElementById('quiz-score-el').textContent = `Punteggio: ${quizScore} punti ⭐`;
+          updateQuizProgressUI();
+        }
+        const btn = document.getElementById('quiz-btn-el');
+        btn.textContent = quizQuestionIndex >= quizTotalQuestions ? 'Fine serie 🏆' : 'Prossimo ➡️';
+        btn.onclick = nextQuiz;
       } else {
+        quizCurrentHadError = true;
         input.className = 'input-box wrong';
         feedback.innerHTML = `<span style="color: #dc2626;">Attenzione: si scrive <strong>${quizCurrent.conj.full}</strong></span>`;
         speakText(targetFull);
@@ -1236,7 +2222,7 @@
     }
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && currentMode === 'quiz') {
+      if (e.key === 'Enter' && currentMode === 'quiz' && !quizCompleted && !quizShowingHistory) {
         if (verbExerciseMode === 'typing') {
           const btn = document.getElementById('quiz-btn-el');
           if (btn) btn.click();

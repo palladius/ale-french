@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🃏 Puffin Cards — Raccoglitore Universale MTG & Retro Animato Veo 3.1</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080b16;
+      --panel: #12172b;
+      --border: rgba(250, 204, 21, 0.25);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Nunito', 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #1f1938 0%, #080b16 72%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.2rem;
+    }
+    header, main {
+      max-width: 1280px;
+      margin: 0 auto 1.25rem;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      background: var(--panel);
+      border: 1.5px solid var(--border);
+      padding: 1rem 1.3rem;
+      border-radius: 1.2rem;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65);
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #fef08a;
+    }
+    .brand p {
+      margin: 0.25rem 0 0;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+    .nav-links a {
+      color: #fde047;
+      font-weight: 800;
+      text-decoration: none;
+      margin-right: 0.85rem;
+    }
+    .hero-showcase {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 1.35rem;
+      background: linear-gradient(135deg, rgba(180, 83, 9, 0.2), rgba(18, 23, 43, 0.96));
+      border: 1.5px solid rgba(250, 204, 21, 0.45);
+      border-radius: 1.25rem;
+      padding: 1.2rem;
+      margin-bottom: 1.25rem;
+      align-items: center;
+    }
+    @media (max-width: 720px) {
+      .hero-showcase { grid-template-columns: 1fr; justify-items: center; }
+    }
+    .card-back-preview {
+      position: relative;
+      width: 210px;
+      aspect-ratio: 5 / 7;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 4px solid #d97706;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.85), 0 0 24px rgba(245, 158, 11, 0.45);
+      cursor: pointer;
+    }
+    .card-back-preview img,
+    .card-back-preview video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-back-preview video {
+      opacity: 0;
+      transition: opacity 0.28s ease;
+    }
+    .card-back-preview:hover video,
+    .card-back-preview.playing video {
+      opacity: 1;
+    }
+    .sim-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+    button.pack-btn {
+      background: linear-gradient(135deg, #ea580c, #d97706);
+      color: #fff;
+      border: 1.5px solid #fde047;
+      border-radius: 0.75rem;
+      padding: 0.55rem 0.95rem;
+      font-weight: 900;
+      font-size: 0.82rem;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.4);
+    }
+    button.pack-btn.secondary {
+      background: #1e293b;
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>🃏 Puffin Cards — Album Collezionabile Universale MTG (46 Carte • 9 Giochi)</h1>
+      <p class="nav-links">
+        <a href="./explorer.html">👑 Multi-Hall of Fame & Insights Explorer</a>
+        <a href="./index.html">🐧 Home PuffinLogin</a>
+        <a href="./ring.html">🔥💍 Puffin Ring</a>
+        <a href="./hall-of-fame.html">🏆 Top 10 Globale</a>
+      </p>
+    </div>
+    <puffin-login id="puffin-widget" app-id="tubature" require-login="false"></puffin-login>
+  </header>
+
+  <main>
+    <section class="hero-showcase">
+      <div class="card-back-preview" id="hero-card-back" title="Passa il mouse per animare con Veo 3.1!">
+        <img src="./assets/cards/card-back.png" alt="Puffin Card Back V1 — Carlesso Deckmaster" />
+        <video src="./assets/cards/card-back.mp4" muted loop playsinline preload="metadata"></video>
+      </div>
+      <div>
+        <div style="font-size:0.76rem;font-weight:900;color:#fde047;text-transform:uppercase;letter-spacing:0.06em;">
+          ✨ Retro Ufficiale V1 • Carlesso Deckmaster + Animazione Hover Veo 3.1
+        </div>
+        <h2 style="margin:0.3rem 0 0.5rem;font-size:1.35rem;">
+          Omaggio MTG Anni ’90: Il Puffin Incoronato & Il Trittico di Ale, Seby e Papino!
+        </h2>
+        <p style="margin:0;color:#cbd5e1;font-size:0.9rem;line-height:1.48;">
+          Passa il mouse sul retro della carta qui a sinistra (o clicca <b>"🔄 Retro"</b> su qualsiasi carta dell’album) per vedere il video magico generato con <b>Veo 3.1</b> prendere vita! Include tutte le <b>22 carte originali di Tubature</b> (con gli audio ferraresi <i>"Majjal!"</i> e <i>"Magnat al canal!"</i>) più le carte degli altri giochi di famiglia.
+        </p>
+        <div class="sim-bar" style="align-items:center;">
+          <select id="sim-game-select" style="background:#0b1021;color:#fde047;border:1.5px solid #facc15;border-radius:0.75rem;padding:0.52rem 0.75rem;font-weight:900;font-size:0.82rem;">
+            <option value="tubature">🚰 Pacco: Tubature (22 Carte)</option>
+            <option value="carchess3d">♟️ Pacco: CarChess 3D (4 Carte MTG)</option>
+            <option value="puffin-snake">🐍 Pacco: Puffin Snake (4 Carte)</option>
+            <option value="smurfs-and-dragons">🐉 Pacco: Smurfs &amp; Dragons (4 Carte)</option>
+            <option value="pupurabbu-3d">🐰 Pacco: Pupurabbu 3D (6 Carte)</option>
+          </select>
+          <button type="button" class="pack-btn" id="btn-open-draft-pack">
+            🎁 Fine Partita: Scegli 1 Carta dal Pacco (Pick 1 of 3)
+          </button>
+          <button type="button" class="pack-btn" id="btn-sim-98-matches" style="background:linear-gradient(135deg,#7c3aed,#db2777);border-color:#f472b6;">
+            🎰 Simula 98 Partite (97 Comuni → 98ª Rara / Super Rara!)
+          </button>
+        </div>
+        <div class="sim-bar">
+          <button type="button" class="pack-btn secondary" id="btn-roll-hard">
+            🎲 Roll Veloce Tubature (Hard 4200pt)
+          </button>
+          <button type="button" class="pack-btn secondary" id="btn-unlock-schmoogle">
+            👻 Sblocca Schmoogle Mitico (1.5% Orange Holo)
+          </button>
+          <button type="button" class="pack-btn secondary" id="btn-unlock-motorino">
+            🛵 Sblocca Motorino nel Canale (🔊 Magnat al canal!)
+          </button>
+          <button type="button" class="pack-btn secondary" id="btn-unlock-majjal">
+            🐷 Sblocca Majjal! (🔊 Audio Ferrarese)
+          </button>
+          <button type="button" class="pack-btn secondary" id="btn-play-card-back-sfx" style="border-color:#38bdf8;color:#7dd3fc;">
+            🔊 Boom! Esplosione Medieval-Futuristica &amp; Grand Piano (⚔️🎹🚀)
+          </button>
+        </div>
+        <div id="sim-98-log" style="margin-top:0.65rem;padding:0.55rem 0.85rem;border-radius:0.75rem;background:rgba(9,13,26,0.85);border:1px solid rgba(250,204,21,0.3);font-size:0.8rem;color:#fde68a;display:none;"></div>
+      </div>
+    </section>
+
+    <puffin-cards id="cards-binder"></puffin-cards>
+  </main>
+
+  <script type="module">
+    import { PuffinLogin } from './src/puffin-login.js';
+
+    const heroBack = document.getElementById('hero-card-back');
+    const heroVid = heroBack.querySelector('video');
+    heroBack.addEventListener('mouseenter', () => {
+      heroBack.classList.add('playing');
+      heroVid.play().catch(() => {});
+      const sfxPref = localStorage.getItem('puffin_card_back_sfx_v1');
+      if (sfxPref !== '0') {
+        PuffinLogin.playCardBackExplosion();
+      }
+    });
+    heroBack.addEventListener('click', () => {
+      heroBack.classList.add('playing');
+      heroVid.play().catch(() => {});
+      PuffinLogin.playCardBackExplosion({ force: true });
+    });
+    heroBack.addEventListener('mouseleave', () => {
+      heroBack.classList.remove('playing');
+      heroVid.pause();
+    });
+
+    document.getElementById('btn-play-card-back-sfx').addEventListener('click', () => {
+      heroBack.classList.add('playing');
+      heroVid.play().catch(() => {});
+      PuffinLogin.playCardBackExplosion({ force: true });
+    });
+
+    const gameSelect = document.getElementById('sim-game-select');
+    const logEl = document.getElementById('sim-98-log');
+
+    document.getElementById('btn-open-draft-pack').addEventListener('click', async () => {
+      const user = PuffinLogin.getCurrentUser();
+      const playerId = user?.id || 'ale';
+      const gameId = gameSelect.value || 'tubature';
+      const res = await PuffinLogin.openGameBoosterPack({
+        player_id: playerId,
+        game_id: gameId,
+        score: 2100,
+        difficulty: 'medium',
+        interactive: true,
+      });
+      logEl.style.display = 'block';
+      logEl.innerHTML = `✅ <b>Partita #${res.matchNumber}</b> completata a <code>${gameId}</code>: hai scelto <b>${res.picked?.card?.emoji || '🃏'} ${res.picked?.card?.title}</b> (${res.picked?.card?.rarity.toUpperCase()})! Mancano <b>${res.matchesUntilJackpot98}</b> partite al Colpo Gobbo della 98ª!`;
+    });
+
+    document.getElementById('btn-sim-98-matches').addEventListener('click', async () => {
+      const user = PuffinLogin.getCurrentUser();
+      const playerId = user?.id || 'ale';
+      const gameId = gameSelect.value || 'tubature';
+      logEl.style.display = 'block';
+
+      const commonTally = {};
+      for (let m = 1; m <= 97; m += 1) {
+        const res = await PuffinLogin.unlockCard({
+          player_id: playerId,
+          game_id: gameId,
+          score: 1200,
+          difficulty: 'easy',
+          matchNumber: m,
+          strict98Mode: true,
+          showToast: false,
+        });
+        const title = `${res.card.emoji} ${res.card.title}`;
+        commonTally[title] = (commonTally[title] || 0) + 1;
+      }
+
+      PuffinLogin.setGamePackCounter(playerId, gameId, 97);
+      const summaryCommons = Object.entries(commonTally)
+        .map(([k, v]) => `${k} (x${v})`)
+        .join(', ');
+
+      logEl.innerHTML = `🔥 <b>Partite 1..97 a <code>${gameId}</code> completate!</b> In 97 partite hai pescato solo carte <b>⚫ Comuni</b>: ${summaryCommons}.<br/>🎉 <b>ORA È LA 98ª PARTITA!</b> Scegli la tua <b>🟡 Rara / 🟠 Super Rara Mitica</b> dal pacco!`;
+
+      const jackpotPack = await PuffinLogin.openGameBoosterPack({
+        player_id: playerId,
+        game_id: gameId,
+        score: 4500,
+        difficulty: 'hard',
+        matchNumber: 98,
+        interactive: true,
+      });
+
+      logEl.innerHTML = `🏆 <b>COLPO GOBBO DELLA 98ª PARTITA (${gameId})!</b> Dopo 97 Comuni (${summaryCommons}), alla <b>98ª partita</b> hai sbloccato <b>${jackpotPack.picked?.card?.emoji} ${jackpotPack.picked?.card?.title}</b> (<b>${jackpotPack.picked?.card?.rarity.toUpperCase()}</b>)!`;
+    });
+
+    document.getElementById('btn-roll-hard').addEventListener('click', () => {
+      const user = PuffinLogin.getCurrentUser();
+      PuffinLogin.unlockCard({
+        player_id: user?.id || 'ale',
+        game_id: 'tubature',
+        score: 4200,
+        difficulty: 'hard',
+      });
+    });
+
+    document.getElementById('btn-unlock-schmoogle').addEventListener('click', () => {
+      const user = PuffinLogin.getCurrentUser();
+      PuffinLogin.unlockCard({
+        player_id: user?.id || 'riccardo',
+        card_id: 'tubature:schmoogle',
+        game_id: 'tubature',
+        score: 4900,
+      });
+    });
+
+    document.getElementById('btn-unlock-motorino').addEventListener('click', () => {
+      const user = PuffinLogin.getCurrentUser();
+      PuffinLogin.unlockCard({
+        player_id: user?.id || 'riccardo',
+        card_id: 'tubature:motorino',
+        game_id: 'tubature',
+        score: 3800,
+      });
+    });
+
+    document.getElementById('btn-unlock-majjal').addEventListener('click', () => {
+      const user = PuffinLogin.getCurrentUser();
+      PuffinLogin.unlockCard({
+        player_id: user?.id || 'ale',
+        card_id: 'tubature:maialino',
+        game_id: 'tubature',
+        score: 2500,
+      });
+    });
+  </script>
+  <footer style="max-width: 1280px; margin: 1.5rem auto 0; padding: 0.9rem 1rem; border-top: 1px solid rgba(250, 204, 21, 0.2); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; color: #94a3b8; font-size: 0.88rem; font-weight: 700;">
+    <span>🇫🇷 Fait avec ❤️ par mon papa</span>
+    <span aria-hidden="true">•</span>
+    <span style="background: rgba(148, 163, 184, 0.14); color: #e2e8f0; border: 1px solid rgba(148, 163, 184, 0.3); border-radius: 999px; padding: 2px 10px; font-family: ui-monospace, monospace; font-size: 0.8rem; font-variant-numeric: tabular-nums;">v2.0.5</span>
+    <a href="https://github.com/palladius/ale-french" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 5px; color: #fde047; text-decoration: none; border: 1px solid rgba(250, 204, 21, 0.35); border-radius: 999px; padding: 2px 10px; font-size: 0.82rem;">GitHub ↗</a>
+  </footer>
+  <script src="telemetry.js"></script>
+  <script src="profile-switcher.js"></script>
+</body>
+</html>

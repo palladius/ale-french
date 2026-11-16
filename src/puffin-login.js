@@ -5154,7 +5154,7 @@ export class PuffinLeaderboardElement extends BaseElement {
       if (typeof window !== 'undefined' && window.PuffinLogin && typeof window.PuffinLogin.openCards === 'function') {
         window.PuffinLogin.openCards();
       } else {
-        window.open('./cards.html', '_blank', 'noopener');
+        window.open('./puffin-cards.html', '_blank', 'noopener');
       }
     });
 
@@ -5922,7 +5922,7 @@ export const PuffinLogin = {
     if (el && typeof el.openCards === 'function') {
       el.openCards(opts);
     } else if (typeof window !== 'undefined') {
-      window.open('./cards.html', '_blank', 'noopener');
+      window.open('./puffin-cards.html', '_blank', 'noopener');
     }
   },
 

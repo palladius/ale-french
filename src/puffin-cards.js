@@ -3390,7 +3390,7 @@ export function showPuffinCardRevealToast({
     if (typeof window !== 'undefined' && window.PuffinLogin && typeof window.PuffinLogin.openCards === 'function') {
       window.PuffinLogin.openCards({ gameId: card.game_id });
     } else if (typeof window !== 'undefined') {
-      window.open('./cards.html', '_blank', 'noopener');
+      window.open('./puffin-cards.html', '_blank', 'noopener');
     }
   });
 
