@@ -295,6 +295,11 @@
       color: #3730a3;
     }
 
+    .tag-colors {
+      background: #dcfce7;
+      color: #166534;
+    }
+
     .card-body {
       display: flex;
       flex-direction: column;
@@ -475,6 +480,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 6px;
       border-top: 1px solid #f1f5f9;
       padding-top: 10px;
       margin-top: 4px;
@@ -493,6 +499,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
       transition: all 0.15s;
     }
 
@@ -506,11 +513,13 @@
       background: white;
       border: 1.5px solid #cbd5e1;
       color: #334155;
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: all 0.15s;
     }
 
@@ -526,8 +535,10 @@
       text-decoration: none;
       padding: 4px 8px;
       border-radius: 6px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: all 0.15s;
     }
 
@@ -599,11 +610,12 @@
     </div>
 
     <div class="tool-btn-group">
+      <button class="tool-btn" onclick="selectOnlyColors()" id="btn-filter-colors" style="display:none;">🎨 Solo Colori (<span id="count-btn-colors">0</span>)</button>
       <button class="tool-btn" onclick="selectOnlyObjects()" id="btn-filter-objects">🏫 Solo Oggetti (<span id="count-btn-objects">0</span>)</button>
       <button class="tool-btn" onclick="selectOnlyVerbs()" id="btn-filter-verbs">🗣️ Solo Verbi (<span id="count-btn-verbs">0</span>)</button>
-      <button class="tool-btn" onclick="selectByCategory('school')">🎒 Simboli (<span id="count-btn-school">0</span>)</button>
-      <button class="tool-btn" onclick="selectByCategory('reflexive')">🧴 Riflessivi (<span id="count-btn-reflexive">0</span>)</button>
-      <button class="tool-btn" onclick="selectByCategory('common')">🍽️ Comuni (<span id="count-btn-common">0</span>)</button>
+      <button class="tool-btn" onclick="selectByCategory('school')" id="btn-filter-school">🎒 Simboli (<span id="count-btn-school">0</span>)</button>
+      <button class="tool-btn" onclick="selectByCategory('reflexive')" id="btn-filter-reflexive">🧴 Riflessivi (<span id="count-btn-reflexive">0</span>)</button>
+      <button class="tool-btn" onclick="selectByCategory('common')" id="btn-filter-common">🍽️ Comuni (<span id="count-btn-common">0</span>)</button>
       
       <div style="width: 1px; height: 24px; background: #cbd5e1; margin: 0 4px;"></div>
 
@@ -630,44 +642,118 @@
   </main>
 
   <script src="audio-player.js"></script>
+  <script src="seby-data.js"></script>
   <script>
+    let rawVerbsData = [];
     let verbsData = [];
     let selectedIds = new Set();
     let revealedIds = new Set();
     let isPlayingSequence = false;
 
+    function isSebyActive() {
+      if (typeof window.getActiveFrenchUser === 'function') {
+        return window.getActiveFrenchUser() === 'seby';
+      }
+      try {
+        const puffinAuth = localStorage.getItem('puffin_auth_v2');
+        if (puffinAuth) {
+          const parsed = JSON.parse(puffinAuth);
+          const uid = parsed?.player_id || parsed?.userId;
+          if (uid) return uid === 'seby';
+        }
+      } catch {}
+      return localStorage.getItem('french_active_user') === 'seby';
+    }
+
+    function getSebyColorItems() {
+      if (typeof SEBY_DATA === 'undefined' || !Array.isArray(SEBY_DATA.couleurs)) return [];
+      return SEBY_DATA.couleurs.map(c => ({
+        id: `color-${c.id}`,
+        infinitive: c.fr,
+        italian: c.it,
+        category: 'colors',
+        icon: c.icon,
+        hex: c.hex,
+        border: c.border,
+        phonetic: c.phonetic
+      }));
+    }
+
+    function rebuildGridForProfile(resetSelection = true) {
+      const sebyMode = isSebyActive();
+      const colors = getSebyColorItems();
+      const objects = rawVerbsData.filter(v => v.category === 'objects');
+
+      if (sebyMode) {
+        // Seby sees ONLY Colors + School Objects — ZERO verbs!
+        verbsData = [...colors, ...objects];
+      } else {
+        verbsData = [...rawVerbsData];
+      }
+
+      // Toggle Seby vs Ale filter buttons
+      const colorsBtn = document.getElementById('btn-filter-colors');
+      if (colorsBtn) colorsBtn.style.display = sebyMode ? '' : 'none';
+      ['btn-filter-verbs', 'btn-filter-school', 'btn-filter-reflexive', 'btn-filter-common'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = sebyMode ? 'none' : '';
+      });
+
+      if (resetSelection) {
+        selectedIds.clear();
+        const urlParams = new URLSearchParams(window.location.search);
+        const catParam = urlParams.get('cat') || urlParams.get('category') || urlParams.get('mode');
+
+        if (sebyMode) {
+          if (catParam === 'colors') {
+            verbsData.filter(v => v.category === 'colors').forEach(v => selectedIds.add(v.id));
+          } else if (catParam === 'objects') {
+            verbsData.filter(v => v.category === 'objects').forEach(v => selectedIds.add(v.id));
+          } else {
+            // Default for Seby: select all his Colors + Objects!
+            verbsData.forEach(v => selectedIds.add(v.id));
+          }
+        } else {
+          if (catParam === 'verbs') {
+            verbsData.filter(v => v.category !== 'objects').forEach(v => selectedIds.add(v.id));
+          } else if (catParam === 'all') {
+            verbsData.forEach(v => selectedIds.add(v.id));
+          } else if (catParam === 'reflexive' || catParam === 'school' || catParam === 'common') {
+            verbsData.filter(v => v.category === catParam).forEach(v => selectedIds.add(v.id));
+          } else {
+            verbsData.filter(v => v.category === 'objects').forEach(v => selectedIds.add(v.id));
+          }
+        }
+      }
+
+      updateCategoryCounts();
+      renderGrid();
+      updateSelectedCounter();
+    }
+
     fetch('verbs.json')
       .then(res => res.json())
       .then(data => {
-        verbsData = data;
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const catParam = urlParams.get('cat') || urlParams.get('category') || urlParams.get('mode');
-        
-        if (catParam === 'verbs') {
-          verbsData.filter(v => v.category !== 'objects').forEach(v => selectedIds.add(v.id));
-        } else if (catParam === 'all') {
-          verbsData.forEach(v => selectedIds.add(v.id));
-        } else if (catParam === 'reflexive' || catParam === 'school' || catParam === 'common') {
-          verbsData.filter(v => v.category === catParam).forEach(v => selectedIds.add(v.id));
-        } else {
-          // Default: select only objects! As requested by Riccardo ("Per oggi dobbiamo fare gli oggetti quindi mettimi la cosa nel mazzo che le card hanno di selezionati solo gli oggetti")
-          verbsData.filter(v => v.category === 'objects').forEach(v => selectedIds.add(v.id));
-        }
-        
-        updateCategoryCounts();
-        renderGrid();
-        updateSelectedCounter();
+        rawVerbsData = data;
+        rebuildGridForProfile(true);
       })
       .catch(err => console.error("Error loading verbs:", err));
 
+    window.addEventListener('french-profile-updated', () => {
+      if (rawVerbsData.length) {
+        rebuildGridForProfile(true);
+      }
+    });
+
     function updateCategoryCounts() {
+      const colorCount = verbsData.filter(v => v.category === 'colors').length;
       const objCount = verbsData.filter(v => v.category === 'objects').length;
-      const verbCount = verbsData.filter(v => v.category !== 'objects').length;
+      const verbCount = verbsData.filter(v => v.category !== 'objects' && v.category !== 'colors').length;
       const reflCount = verbsData.filter(v => v.category === 'reflexive').length;
       const schoolCount = verbsData.filter(v => v.category === 'school').length;
       const commonCount = verbsData.filter(v => v.category === 'common').length;
 
+      if (document.getElementById('count-btn-colors')) document.getElementById('count-btn-colors').textContent = colorCount;
       if (document.getElementById('count-btn-objects')) document.getElementById('count-btn-objects').textContent = objCount;
       if (document.getElementById('count-btn-verbs')) document.getElementById('count-btn-verbs').textContent = verbCount;
       if (document.getElementById('count-btn-reflexive')) document.getElementById('count-btn-reflexive').textContent = reflCount;
@@ -685,8 +771,9 @@
         const isRefl = verb.category === 'reflexive';
         const isSchool = verb.category === 'school';
         const isObject = verb.category === 'objects';
-        const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : (isObject ? '🏫 Oggetto' : '🍽️ Comune'));
-        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common'));
+        const isColor = verb.category === 'colors';
+        const tagText = isColor ? '🎨 Colore' : (isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : (isObject ? '🏫 Oggetto' : '🍽️ Comune')));
+        const tagClass = isColor ? 'tag-colors' : (isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common')));
 
         const card = document.createElement('div');
         card.className = `verb-card ${isSelected ? 'selected' : ''} ${isRevealed ? 'revealed' : ''}`;
@@ -695,7 +782,7 @@
         // Card Header: Checkbox + Tag
         let headerHtml = `
           <div class="card-top-bar">
-            <div class="card-checkbox" title="Seleziona verbo" onclick="toggleSelect('${verb.id}', event)"></div>
+            <div class="card-checkbox" title="Seleziona carta" onclick="toggleSelect('${verb.id}', event)"></div>
             <span class="card-tag ${tagClass}">
               ${tagText}
             </span>
@@ -703,9 +790,11 @@
         `;
 
         const currentImg = (isRevealed && verb.image_back) ? verb.image_back : verb.image;
-        const iconHtml = currentImg
-          ? `<div class="card-hero-img-box"><img src="${currentImg}" class="card-hero-img" alt="${verb.italian}"></div>`
-          : `<div class="card-hero-img-box"><div class="card-icon">${verb.icon || '📘'}</div></div>`;
+        const iconHtml = isColor
+          ? `<div class="card-hero-img-box" style="background:${verb.hex}; ${verb.border ? 'border: 2px solid ' + verb.border + ';' : ''}"><div class="card-icon" style="filter: drop-shadow(0 2px 6px rgba(0,0,0,0.22));">${verb.icon || '🎨'}</div></div>`
+          : (currentImg
+            ? `<div class="card-hero-img-box"><img src="${currentImg}" class="card-hero-img" alt="${verb.italian}"></div>`
+            : `<div class="card-hero-img-box"><div class="card-icon">${verb.icon || '📘'}</div></div>`);
 
         // Card Body
         let bodyHtml = `
@@ -728,7 +817,7 @@
             <button class="btn-reveal-mini" onclick="toggleSingleReveal('${verb.id}')">
               ${isRevealed ? '🙈 Copri' : '💡 Svela'}
             </button>
-            ${isObject 
+            ${(isObject || isColor)
               ? `<a href="cards.html?ids=${verb.id}" class="btn-conj-link" style="background:#4338ca; color:white; border-color:#4338ca;" title="Apri flashcard">🎒 Flashcard</a>`
               : `<a href="index.html#verb-${verb.id}" class="btn-conj-link" title="Vedi presente indicativo">📖 Coniuga</a>`
             }
@@ -803,6 +892,11 @@
 
     function getRevealedHtml(verb) {
       const inf = verb.infinitive;
+
+      // Special rendering for Seby Colors
+      if (verb.category === 'colors') {
+        return `<div class="revealed-french"><span style="font-weight:700; color:#065f46; font-size:1.25rem;">${inf}</span></div>`;
+      }
 
       // Special rendering for Nouns / School Objects
       if (verb.category === 'objects' || inf.startsWith('un ') || inf.startsWith('une ') || inf.startsWith('des ') || inf.startsWith("l'")) {
@@ -897,6 +991,13 @@
       updateSelectedCounter();
     }
 
+    function selectOnlyColors() {
+      selectedIds.clear();
+      verbsData.filter(v => v.category === 'colors').forEach(v => selectedIds.add(v.id));
+      renderGrid();
+      updateSelectedCounter();
+    }
+
     function selectOnlyObjects() {
       selectedIds.clear();
       verbsData.filter(v => v.category === 'objects').forEach(v => selectedIds.add(v.id));
@@ -906,7 +1007,7 @@
 
     function selectOnlyVerbs() {
       selectedIds.clear();
-      verbsData.filter(v => v.category !== 'objects').forEach(v => selectedIds.add(v.id));
+      verbsData.filter(v => v.category !== 'objects' && v.category !== 'colors').forEach(v => selectedIds.add(v.id));
       renderGrid();
       updateSelectedCounter();
     }
@@ -922,15 +1023,18 @@
       const count = selectedIds.size;
       const total = verbsData.length;
       document.getElementById('counter-selected-el').textContent = `Selezionati: ${count} di ${total}`;
+      const colorCount = verbsData.filter(v => v.category === 'colors' && selectedIds.has(v.id)).length;
       const objCount = verbsData.filter(v => v.category === 'objects' && selectedIds.has(v.id)).length;
-      const verbCount = verbsData.filter(v => v.category !== 'objects' && selectedIds.has(v.id)).length;
+      const verbCount = verbsData.filter(v => v.category !== 'objects' && v.category !== 'colors' && selectedIds.has(v.id)).length;
       
-      if (objCount > 0 && verbCount === 0) {
+      if (colorCount > 0 && objCount === 0 && verbCount === 0) {
+        document.getElementById('select-hint-el').textContent = `🎨 Solo Colori attivi (${count}) per il mazzo!`;
+      } else if (objCount > 0 && verbCount === 0 && colorCount === 0) {
         document.getElementById('select-hint-el').textContent = `🎒 Solo Oggetti attivi (${count}) per il mazzo!`;
-      } else if (verbCount > 0 && objCount === 0) {
+      } else if (verbCount > 0 && objCount === 0 && colorCount === 0) {
         document.getElementById('select-hint-el').textContent = `🗣️ Solo Verbi attivi (${count}) per il mazzo!`;
       } else if (count === total) {
-        document.getElementById('select-hint-el').textContent = '🌟 Tutte le carte selezionate!';
+        document.getElementById('select-hint-el').textContent = isSebyActive() ? '🎈 Tutti i Colori e gli Oggetti di Seby selezionati!' : '🌟 Tutte le carte selezionate!';
       } else {
         document.getElementById('select-hint-el').textContent = `${count} carte selezionate per lo studio`;
       }

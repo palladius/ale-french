@@ -178,8 +178,51 @@
     setActiveUser(user, true);
   }
 
+  function applyProfileChrome(user) {
+    const active = user || getActiveUser() || 'ale';
+    const isSeby = active === 'seby';
+
+    if (document.body) {
+      document.body.classList.toggle('profile-seby', isSeby);
+    }
+
+    // Update "Pour Alessandro 🦁" badge & title dynamically when Seby logs in
+    document.querySelectorAll('.badge-ale').forEach(el => {
+      if (isSeby) {
+        el.textContent = 'Pour Sebastian 🎈';
+        el.style.background = '#dcfce7';
+        el.style.color = '#166534';
+        el.style.borderColor = '#86efac';
+      } else {
+        el.textContent = 'Pour Alessandro 🦁';
+        el.style.background = '';
+        el.style.color = '';
+        el.style.borderColor = '';
+      }
+    });
+
+    const isSebyPage = window.location.pathname.endsWith('seby.html');
+    if (!isSebyPage) {
+      document.querySelectorAll('.brand h1').forEach(h1 => {
+        if (h1.textContent.trim() === 'Ale French' || h1.textContent.trim() === 'Seby French') {
+          h1.textContent = isSeby ? 'Seby French' : 'Ale French';
+        }
+      });
+    }
+
+    // Hide verb/conjugation-only tabs (index.html & quiz.html) when Seby is logged in
+    document.querySelectorAll('.nav-tabs a.nav-tab').forEach(link => {
+      const href = (link.getAttribute('href') || '').trim();
+      const isAleVerbTab = href === 'index.html' || href === 'quiz.html' || href.startsWith('index.html#') || href.startsWith('quiz.html?');
+      if (isAleVerbTab) {
+        link.style.display = isSeby ? 'none' : '';
+      }
+    });
+  }
+
   function updateBadge() {
     const user = getActiveUser() || 'ale';
+    applyProfileChrome(user);
     const badges = document.querySelectorAll('.user-profile-badge');
     badges.forEach(badge => {
       badge.className = `user-profile-badge ${user === 'ale' ? 'ale-active' : user === 'seby' ? 'seby-active' : ''}`;
@@ -194,7 +237,7 @@
     });
   }
 
-  const APP_VERSION = '2.0.5';
+  const APP_VERSION = '2.0.6';
   const GITHUB_REPO_URL = 'https://github.com/palladius/ale-french';
 
   function ensureLoveFooter() {
@@ -229,6 +272,13 @@
 
       const defaults = getFrenchProfileDefaults();
       window.dispatchEvent(new CustomEvent('french-profile-updated', { detail: { user: user.id, defaults } }));
+
+      // If Seby logs in while on a verb/conjugation-only page, take him straight to Spazio Seby!
+      const p = window.location.pathname;
+      const isVerbOnlyPage = p.endsWith('index.html') || p.endsWith('quiz.html') || p.endsWith('/') || p.endsWith('/ale-french');
+      if (user.id === 'seby' && isVerbOnlyPage) {
+        window.location.href = 'seby.html';
+      }
     }
   });
 
@@ -256,6 +306,7 @@
   window.closeProfileModal = closeProfileModal;
   window.selectUserProfile = selectUserProfile;
   window.getActiveFrenchUser = getActiveUser;
+  window.isSebyProfile = () => getActiveUser() === 'seby';
   window.setActiveFrenchUser = setActiveUser;
   window.getFrenchProfileDefaults = getFrenchProfileDefaults;
 

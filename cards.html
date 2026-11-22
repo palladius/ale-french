@@ -950,6 +950,7 @@
   </header>
 
   <div class="top-controls">
+    <button class="filter-btn" onclick="setFilter('colors', this)" id="btn-filter-colors" style="display:none;">🎨 Colori (<span id="count-colors">0</span>)</button>
     <button class="filter-btn active" onclick="setFilter('objects', this)" id="btn-filter-objects">🏫 Oggetti Scuola (<span id="count-objects">0</span>)</button>
     <button class="filter-btn" onclick="setFilter('verbs', this)" id="btn-filter-verbs">🗣️ Solo Verbi (<span id="count-verbs">0</span>)</button>
     <button class="filter-btn" onclick="setFilter('all', this)" id="btn-filter-all">🌟 Tutti (<span id="count-all">0</span>)</button>
@@ -1083,13 +1084,102 @@
   <script src="audio-player.js"></script>
   <script src="card-spelling.js"></script>
   <script src="telemetry.js"></script>
+  <script src="seby-data.js"></script>
   <script>
+    let rawVerbs = [];
     let allVerbs = [];
     let filteredVerbs = [];
     let currentIndex = 0;
     let isFlipped = false;
     let isGridView = false;
     let currentFilter = 'objects';
+
+    function isSebyActive() {
+      if (typeof window.getActiveFrenchUser === 'function') {
+        return window.getActiveFrenchUser() === 'seby';
+      }
+      try {
+        const puffinAuth = localStorage.getItem('puffin_auth_v2');
+        if (puffinAuth) {
+          const parsed = JSON.parse(puffinAuth);
+          const uid = parsed?.player_id || parsed?.userId;
+          if (uid) return uid === 'seby';
+        }
+      } catch {}
+      return localStorage.getItem('french_active_user') === 'seby';
+    }
+
+    function getSebyColorCards() {
+      if (typeof SEBY_DATA === 'undefined' || !Array.isArray(SEBY_DATA.couleurs)) return [];
+      return SEBY_DATA.couleurs.map(c => ({
+        id: `color-${c.id}`,
+        infinitive: c.fr,
+        italian: c.it,
+        category: 'colors',
+        icon: c.icon,
+        hex: c.hex,
+        border: c.border,
+        phonetic: c.phonetic
+      }));
+    }
+
+    function rebuildCardsForProfile() {
+      const sebyMode = isSebyActive();
+      const colors = getSebyColorCards();
+      const urlParams = new URLSearchParams(window.location.search);
+      const idsParam = urlParams.get('ids');
+      const catParam = urlParams.get('cat') || urlParams.get('category') || urlParams.get('mode');
+
+      if (sebyMode) {
+        // Seby sees ONLY Colors + School Objects — ZERO verbs!
+        allVerbs = [...colors, ...rawVerbs.filter(v => v.category === 'objects')];
+      } else {
+        // Include colors too if explicitly requested via ?ids=color-... or ?cat=colors
+        const needsColors = (catParam === 'colors') || (idsParam && idsParam.includes('color-'));
+        allVerbs = needsColors ? [...colors, ...rawVerbs] : [...rawVerbs];
+      }
+
+      if (idsParam) {
+        const targetIds = new Set(idsParam.split(','));
+        allVerbs = allVerbs.filter(v => targetIds.has(v.id));
+      }
+
+      // Toggle Seby vs Ale filter buttons
+      const colorsBtn = document.getElementById('btn-filter-colors');
+      if (colorsBtn) colorsBtn.style.display = sebyMode ? '' : 'none';
+      ['btn-filter-verbs', 'btn-filter-reflexive', 'btn-filter-school', 'btn-filter-common'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = sebyMode ? 'none' : '';
+      });
+
+      updateCounts();
+
+      let initialFilter = sebyMode ? 'all' : 'objects';
+      if (sebyMode) {
+        if (catParam === 'colors' || catParam === 'objects') {
+          initialFilter = catParam;
+        } else {
+          initialFilter = 'all';
+        }
+      } else {
+        if (catParam === 'verbs') {
+          initialFilter = 'verbs';
+        } else if (catParam === 'all') {
+          initialFilter = 'all';
+        } else if (catParam && ['reflexive', 'school', 'objects', 'common', 'colors'].includes(catParam)) {
+          initialFilter = catParam;
+        } else if (idsParam) {
+          initialFilter = 'all';
+        }
+      }
+
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-filter-${initialFilter}`) || document.querySelector(`[onclick*="setFilter('${initialFilter}'"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      currentFilter = initialFilter;
+      applyFilter(initialFilter);
+    }
 
     // Interactive Keyboard Spelling State
     let spellingDifficulty = 'moyen'; // 'facile' | 'moyen' | 'difficile'
@@ -1103,41 +1193,18 @@
     fetch('verbs.json')
       .then(res => res.json())
       .then(data => {
-        allVerbs = data;
-        const urlParams = new URLSearchParams(window.location.search);
-        const idsParam = urlParams.get('ids');
-        const catParam = urlParams.get('cat') || urlParams.get('category') || urlParams.get('mode');
-
-        if (idsParam) {
-          const targetIds = new Set(idsParam.split(','));
-          allVerbs = allVerbs.filter(v => targetIds.has(v.id));
-        }
-
-        updateCounts();
-
-        let initialFilter = 'objects';
-        if (catParam === 'verbs') {
-          initialFilter = 'verbs';
-        } else if (catParam === 'all') {
-          initialFilter = 'all';
-        } else if (catParam && ['reflexive', 'school', 'objects', 'common'].includes(catParam)) {
-          initialFilter = catParam;
-        } else if (idsParam) {
-          initialFilter = 'all';
-        }
-
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        const activeBtn = document.getElementById(`btn-filter-${initialFilter}`) || document.querySelector(`[onclick*="setFilter('${initialFilter}'"]`);
-        if (activeBtn) activeBtn.classList.add('active');
-
-        applyFilter(initialFilter);
+        rawVerbs = data;
+        rebuildCardsForProfile();
       })
       .catch(err => console.error("Error loading verbs:", err));
 
     function updateCounts() {
       document.getElementById('count-all').textContent = allVerbs.length;
+      if (document.getElementById('count-colors')) {
+        document.getElementById('count-colors').textContent = allVerbs.filter(v => v.category === 'colors').length;
+      }
       if (document.getElementById('count-verbs')) {
-        document.getElementById('count-verbs').textContent = allVerbs.filter(v => v.category !== 'objects').length;
+        document.getElementById('count-verbs').textContent = allVerbs.filter(v => v.category !== 'objects' && v.category !== 'colors').length;
       }
       document.getElementById('count-reflexive').textContent = allVerbs.filter(v => v.category === 'reflexive').length;
       if (document.getElementById('count-school')) {
@@ -1157,14 +1224,16 @@
     }
 
     function applyFilter(filter) {
-      if (filter === 'reflexive') {
+      if (filter === 'colors') {
+        filteredVerbs = allVerbs.filter(v => v.category === 'colors');
+      } else if (filter === 'reflexive') {
         filteredVerbs = allVerbs.filter(v => v.category === 'reflexive');
       } else if (filter === 'school') {
         filteredVerbs = allVerbs.filter(v => v.category === 'school');
       } else if (filter === 'objects') {
         filteredVerbs = allVerbs.filter(v => v.category === 'objects');
       } else if (filter === 'verbs') {
-        filteredVerbs = allVerbs.filter(v => v.category !== 'objects');
+        filteredVerbs = allVerbs.filter(v => v.category !== 'objects' && v.category !== 'colors');
       } else if (filter === 'common') {
         filteredVerbs = allVerbs.filter(v => v.category === 'common');
       } else {
@@ -1335,14 +1404,19 @@
       const isRefl = verb.category === 'reflexive';
       const isSchool = verb.category === 'school';
       const isObject = verb.category === 'objects';
-      const tagText = isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : (isObject ? '🏫 Oggetto Scuola' : '🍽️ Comune'));
-      const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common'));
+      const isColor = verb.category === 'colors';
+      const tagText = isColor ? '🎨 Colore' : (isRefl ? '🧴 Riflessivo' : (isSchool ? '🎒 Simbolo' : (isObject ? '🏫 Oggetto Scuola' : '🍽️ Comune')));
+      const tagClass = isColor ? 'tag-objects' : (isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common')));
       tagEl.textContent = tagText;
       tagEl.className = `card-tag ${tagClass}`;
       tagBackEl.textContent = tagText;
       tagBackEl.className = `card-tag ${tagClass}`;
 
-      if (verb.image) {
+      if (isColor) {
+        const swatchStyle = `background:${verb.hex}; ${verb.border ? 'border: 3px solid ' + verb.border + ';' : 'border: 3px solid rgba(255,255,255,0.85);'}`;
+        document.getElementById('card-icon-el').innerHTML = `<div style="width:150px; height:150px; border-radius:24px; ${swatchStyle} display:flex; align-items:center; justify-content:center; font-size:3.2rem; box-shadow:0 8px 20px rgba(0,0,0,0.12);">${verb.icon || '🎨'}</div>`;
+        document.getElementById('card-icon-back-el').innerHTML = `<div style="width:82px; height:82px; border-radius:16px; ${swatchStyle} display:flex; align-items:center; justify-content:center; font-size:2rem; box-shadow:0 4px 12px rgba(0,0,0,0.12);">${verb.icon || '🎨'}</div>`;
+      } else if (verb.image) {
         document.getElementById('card-icon-el').innerHTML = `<img src="${verb.image}" alt="${verb.italian}" class="card-thumb-img">`;
         const backImg = verb.image_back || verb.image;
         document.getElementById('card-icon-back-el').innerHTML = `<img src="${backImg}" alt="${verb.italian}" class="card-thumb-img-small">`;
@@ -1363,7 +1437,10 @@
 
       // Link to index conjugation
       const linkEl = document.getElementById('link-to-conj-el');
-      if (verb.category === 'objects') {
+      if (verb.category === 'colors') {
+        linkEl.href = 'seby.html';
+        linkEl.textContent = '🎨 Spazio Seby';
+      } else if (verb.category === 'objects') {
         linkEl.href = 'grid.html';
         linkEl.textContent = '🎒 Oggetto Scuola';
       } else {
@@ -1375,7 +1452,7 @@
       const progressPercent = ((currentIndex + 1) / filteredVerbs.length) * 100;
       document.getElementById('progress-fill-el').style.width = `${progressPercent}%`;
       document.getElementById('deck-index-label').textContent = `Carta ${currentIndex + 1} di ${filteredVerbs.length}`;
-      document.getElementById('deck-known-count').textContent = `🦁 Ale French`;
+      document.getElementById('deck-known-count').textContent = isSebyActive() ? `🎈 Seby French` : `🦁 Ale French`;
     }
 
     function flipCurrentCard() {
@@ -1442,15 +1519,18 @@
         item.className = 'grid-card';
         item.id = `grid-card-${verb.id}`;
         
-        const iconHtml = verb.image
-          ? `<img src="${verb.image}" class="grid-thumb-img" alt="${verb.italian}">`
-          : `<div class="grid-icon-placeholder">${verb.icon || '📘'}</div>`;
-
         const isRefl = verb.category === 'reflexive';
         const isSchool = verb.category === 'school';
         const isObject = verb.category === 'objects';
-        const tagText = isRefl ? 'Riflessivo' : (isSchool ? 'Simbolo' : (isObject ? 'Oggetto' : 'Comune'));
-        const tagClass = isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common'));
+        const isColor = verb.category === 'colors';
+        const tagText = isColor ? 'Colore' : (isRefl ? 'Riflessivo' : (isSchool ? 'Simbolo' : (isObject ? 'Oggetto' : 'Comune')));
+        const tagClass = isColor ? 'tag-objects' : (isRefl ? 'tag-reflexive' : (isSchool ? 'tag-school' : (isObject ? 'tag-objects' : 'tag-common')));
+
+        const iconHtml = isColor
+          ? `<div class="grid-icon-placeholder" style="background:${verb.hex}; width:100%; height:100%; display:flex; align-items:center; justify-content:center; ${verb.border ? 'border-bottom: 2px solid ' + verb.border + ';' : ''}">${verb.icon || '🎨'}</div>`
+          : (verb.image
+            ? `<img src="${verb.image}" class="grid-thumb-img" alt="${verb.italian}">`
+            : `<div class="grid-icon-placeholder">${verb.icon || '📘'}</div>`);
 
         // Gender color for grid tiles
         let gridTileClass = '';
@@ -1462,9 +1542,11 @@
           gridTileClass = 'grid-tile-pl';
         }
 
-        const actionBtn = isObject
-          ? `<div style="font-size:0.8rem; color:#475569; font-weight:700; padding:4px 0;">🎒 Oggetto Scuola</div>`
-          : `<a href="index.html#verb-${verb.id}" class="link-to-study" style="font-size:0.8rem; padding: 4px 10px; display:inline-block;" onclick="event.stopPropagation()">📖 Coniugazione</a>`;
+        const actionBtn = isColor
+          ? `<div style="font-size:0.8rem; color:#059669; font-weight:700; padding:4px 0;">🎨 Colore (Seby)</div>`
+          : (isObject
+            ? `<div style="font-size:0.8rem; color:#475569; font-weight:700; padding:4px 0;">🎒 Oggetto Scuola</div>`
+            : `<a href="index.html#verb-${verb.id}" class="link-to-study" style="font-size:0.8rem; padding: 4px 10px; display:inline-block;" onclick="event.stopPropagation()">📖 Coniugazione</a>`);
 
         item.innerHTML = `
           <div class="grid-card-media">
@@ -1910,7 +1992,7 @@
       }
     });
 
-    // Smart Profile Defaults (Seby = facile • Ale = moyen)
+    // Smart Profile Defaults (Seby = facile + Solo Colori & Oggetti • Ale = moyen)
     function applyCardProfileDefaults() {
       if (typeof getFrenchProfileDefaults === 'function') {
         const conf = getFrenchProfileDefaults();
@@ -1919,6 +2001,9 @@
         } else if (conf.user === 'ale') {
           setSpellingDifficulty('moyen');
         }
+      }
+      if (rawVerbs.length) {
+        rebuildCardsForProfile();
       }
     }
     window.addEventListener('french-profile-updated', applyCardProfileDefaults);

@@ -40,3 +40,23 @@ test('3. cards.html, quiz.html, and seby.html all include telemetry.js and profi
     assert.match(content, /<script src="profile-switcher\.js"><\/script>/, `${page} must load profile-switcher.js`);
   }
 });
+
+test('4. Seby Mode hides Ale verbs/conjugations, updates badge to Pour Sebastian, and exposes Colors + Objects', () => {
+  const profileJs = fs.readFileSync(path.join(ROOT_DIR, 'profile-switcher.js'), 'utf8');
+  assert.match(profileJs, /function applyProfileChrome\(/, 'profile-switcher.js must define applyProfileChrome');
+  assert.match(profileJs, /Pour Sebastian 🎈/, 'profile-switcher.js must update badge for Seby');
+  assert.match(profileJs, /isAleVerbTab/, 'profile-switcher.js must hide Ale verb tabs for Seby');
+  assert.match(profileJs, /window\.isSebyProfile/, 'profile-switcher.js must expose window.isSebyProfile');
+
+  const sebyHtml = fs.readFileSync(path.join(ROOT_DIR, 'seby.html'), 'utf8');
+  assert.match(sebyHtml, /id="cat-objets"/, 'seby.html must have Oggetti tab');
+  assert.match(sebyHtml, /function renderObjets\(/, 'seby.html must render school objects');
+  assert.match(sebyHtml, /function initObjetsRound\(/, 'seby.html must support objects audio game');
+
+  for (const page of ['grid.html', 'cards.html']) {
+    const content = fs.readFileSync(path.join(ROOT_DIR, page), 'utf8');
+    assert.match(content, /<script src="seby-data\.js"><\/script>/, `${page} must load seby-data.js`);
+    assert.match(content, /id="btn-filter-colors"/, `${page} must have Solo Colori / Colori filter button`);
+    assert.match(content, /function isSebyActive\(/, `${page} must detect active Seby profile`);
+  }
+});

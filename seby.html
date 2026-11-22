@@ -836,6 +836,7 @@
       <a href="seby.html" class="nav-tab active">🧒 Spazio Seby (A1)</a>
       <a href="index.html" class="nav-tab">📖 Verbi Ale (P3)</a>
       <a href="cards.html" class="nav-tab">🃏 Flashcards</a>
+      <a href="grid.html" class="nav-tab">🔲 Griglia 4x4</a>
       <a href="quiz.html" class="nav-tab">🎯 Quiz Ale</a>
       <a href="ring.html" class="nav-tab" style="color: #f59e0b; font-weight: 700;">🔥💍 Ring</a>
     </div>
@@ -861,6 +862,9 @@
     <button class="cat-btn" id="cat-couleurs" onclick="setCategory('couleurs')">
       <span>🎨</span> Colori & Forme
     </button>
+    <button class="cat-btn" id="cat-objets" onclick="setCategory('objets')">
+      <span>🎒</span> Oggetti
+    </button>
     <button class="cat-btn" id="cat-quiz" onclick="setCategory('quiz')">
       <span>✍️</span> Quiz & Scrittura
     </button>
@@ -880,6 +884,19 @@
     // STATE & CONFIG
     // =========================================================================
     let currentCategory = 'nombres'; // Default directly to Numbers game
+    let sebyObjects = []; // Loaded from verbs.json (category === 'objects')
+    let sebyObjectsLoaded = false;
+
+    fetch('verbs.json')
+      .then(res => res.json())
+      .then(data => {
+        sebyObjects = data.filter(v => v.category === 'objects');
+        sebyObjectsLoaded = true;
+        if (currentCategory === 'objets') {
+          renderCategory();
+        }
+      })
+      .catch(err => console.error('Error loading Seby objects:', err));
     let viewMode = 'game'; // 'game' | 'study'
     let currentDifficulty = 'facile'; // 'facile' (Seby) | 'campione' (Ale)
     let italianMode = 'visible'; // 'visible' | 'covered' | 'hidden'
@@ -1039,6 +1056,8 @@
         renderSalutations(container);
       } else if (currentCategory === 'couleurs') {
         renderCouleurs(container);
+      } else if (currentCategory === 'objets') {
+        renderObjets(container);
       } else if (currentCategory === 'quiz') {
         renderGrandQuiz(container);
       }
@@ -1792,6 +1811,157 @@
         btn.classList.add('wrong');
         playTone('wrong');
         fb.innerHTML = `<span style="color: #dc2626;">Quasi! Riprova a toccare quello giusto!</span>`;
+        speakFr(correct);
+        setTimeout(() => btn.classList.remove('wrong'), 700);
+      }
+    }
+
+    // =========================================================================
+    // 3B. LES OBJETS DE L'ÉCOLE (20 oggetti da verbs.json — zero verbi!)
+    // =========================================================================
+    function renderObjets(container) {
+      let html = buildHeroBanner('🎒', "Les Objets de l'École", 'Ascolta, riconosci e impara gli oggetti di scuola (senza verbi)!', false);
+
+      if (!sebyObjectsLoaded) {
+        html += `<div class="game-stage-card"><p style="color:#64748b;">Caricamento oggetti...</p></div>`;
+        container.innerHTML = html;
+        return;
+      }
+
+      if (viewMode === 'game') {
+        html += `<div id="objets-game-stage"></div>`;
+        container.innerHTML = html;
+        initObjetsRound();
+      } else {
+        html += `
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin: 10px 0 16px 0;">
+            <h3 style="font-size: 1.4rem; color: #065f46; margin: 0;">🎒 Gli Oggetti (${sebyObjects.length})</h3>
+            <a href="cards.html?cat=objects" class="btn-game-toggle" style="text-decoration:none;">
+              🃏 Apri Flashcards Oggetti ➔
+            </a>
+          </div>
+          <div class="cards-grid">
+        `;
+        sebyObjects.forEach(item => {
+          let itClass = 'seby-card-it';
+          if (italianMode === 'covered') itClass += ' covered';
+          else if (italianMode === 'hidden') itClass += ' hidden';
+
+          const safeFr = escapeSingleQuotes(item.infinitive);
+          const imgHtml = item.image
+            ? `<img src="${item.image}" alt="${item.italian}" style="width:100%; height:130px; object-fit:cover; border-radius:12px; margin-bottom:8px;">`
+            : `<div class="seby-card-icon">${item.icon || '🎒'}</div>`;
+
+          html += `
+            <div class="seby-card" onclick="speakFr('${safeFr}')">
+              ${imgHtml}
+              <div class="seby-card-fr">${item.infinitive}</div>
+              <div class="${itClass}" onclick="event.stopPropagation(); uncoverItalian(this)">${item.italian}</div>
+              <button class="btn-audio-seby" onclick="event.stopPropagation(); speakFr('${safeFr}')">🔊</button>
+            </div>
+          `;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
+      }
+    }
+
+    function initObjetsRound() {
+      const stage = document.getElementById('objets-game-stage');
+      if (!stage || !sebyObjects.length) return;
+
+      if (currentQuestionIndex === 0 || roundQuestions.length === 0) {
+        roundQuestions = [...sebyObjects].sort(() => 0.5 - Math.random()).slice(0, TOTAL_QUESTIONS_PER_ROUND);
+      }
+
+      if (currentQuestionIndex >= roundQuestions.length) {
+        renderRoundVictory(stage, 'gli Oggetti di Scuola');
+        return;
+      }
+
+      currentQuestion = roundQuestions[currentQuestionIndex];
+      questionAnswered = false;
+      questionStartTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+      questionHintsUsed = 0;
+
+      const others = sebyObjects
+        .filter(x => x.id !== currentQuestion.id)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+      const options = [currentQuestion, ...others].sort(() => 0.5 - Math.random());
+
+      stage.innerHTML = `
+        <div class="game-stage-card">
+          <div class="game-score-bar">
+            <span class="game-stars-badge">🏆 Punti: <span id="game-score-val">${spellScore}</span> ⭐</span>
+            <span class="game-step-badge">Sfida ${currentQuestionIndex + 1} di ${TOTAL_QUESTIONS_PER_ROUND} 🎒</span>
+          </div>
+
+          <h3 style="font-size: 1.45rem; color: #065f46; margin-bottom: 4px;">Ascolta e trova l'oggetto giusto!</h3>
+          <p style="color: #64748b; font-size: 0.95rem;">Tocca per ascoltare la voce:</p>
+
+          <button class="quiz-audio-prompt-btn" onclick="speakFr('${escapeSingleQuotes(currentQuestion.infinitive)}')">
+            🔊
+          </button>
+
+          <div class="quiz-options-grid">
+            ${options.map(opt => `
+              <button class="quiz-opt-btn" onclick="checkObjetAnswer(this, '${escapeSingleQuotes(opt.infinitive)}', '${escapeSingleQuotes(currentQuestion.infinitive)}')">
+                ${opt.image
+                  ? `<img src="${opt.image}" alt="${opt.italian}" style="width:58px; height:58px; object-fit:cover; border-radius:10px; flex-shrink:0;">`
+                  : `<span style="font-size: 2.2rem;">${opt.icon || '🎒'}</span>`
+                }
+                <div style="text-align: left;">
+                  <div style="font-size: 1.15rem;">${opt.infinitive}</div>
+                  <div style="font-size: 0.85rem; color: #64748b; font-weight: normal;">${opt.italian}</div>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+
+          <div id="game-feedback-msg" style="margin-top: 18px; font-size: 1.25rem; font-weight: 800; min-height: 32px;"></div>
+        </div>
+      `;
+
+      setTimeout(() => speakFr(currentQuestion.infinitive, true), 350);
+    }
+
+    function checkObjetAnswer(btn, chosen, correct) {
+      if (questionAnswered) return;
+      const fb = document.getElementById('game-feedback-msg');
+      const isCorrect = (chosen === correct);
+
+      if (typeof recordFrenchTelemetry === 'function') {
+        const now = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+        recordFrenchTelemetry({
+          user: (typeof getActiveFrenchUser === 'function') ? getActiveFrenchUser() : 'seby',
+          exercise: 'objets_listen',
+          mode: currentDifficulty,
+          target: correct,
+          userInput: chosen,
+          correct: isCorrect,
+          durationMs: questionStartTime ? Math.round(now - questionStartTime) : 0,
+          hintsUsed: questionHintsUsed
+        });
+      }
+
+      if (isCorrect) {
+        questionAnswered = true;
+        btn.classList.add('correct');
+        playTone('correct');
+        spellScore += 10;
+        document.getElementById('game-score-val').textContent = spellScore;
+        submitPuffinScore(spellScore, 'objets');
+        fb.innerHTML = `<span style="color: #059669;">🎉 Super! Bravissimo! C'est ${correct} !</span>`;
+
+        setTimeout(() => {
+          currentQuestionIndex++;
+          initObjetsRound();
+        }, 1300);
+      } else {
+        btn.classList.add('wrong');
+        playTone('wrong');
+        fb.innerHTML = `<span style="color: #dc2626;">Quasi! Riascolta bene e tocca l'oggetto giusto!</span>`;
         speakFr(correct);
         setTimeout(() => btn.classList.remove('wrong'), 700);
       }
