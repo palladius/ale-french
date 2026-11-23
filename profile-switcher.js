@@ -237,7 +237,7 @@
     });
   }
 
-  const APP_VERSION = '2.0.6';
+  const APP_VERSION = '2.0.7';
   const GITHUB_REPO_URL = 'https://github.com/palladius/ale-french';
 
   function ensureLoveFooter() {

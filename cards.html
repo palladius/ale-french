@@ -1183,6 +1183,8 @@
 
     // Interactive Keyboard Spelling State
     let spellingDifficulty = 'moyen'; // 'facile' | 'moyen' | 'difficile'
+    let cardsSessionScore = 0;
+    let cardsCompletedWords = new Set();
     let currentSlots = [];
     let typedChars = [];
     let slotStates = []; // 'empty' | 'filled' | 'correct' | 'wrong'
@@ -1923,6 +1925,29 @@
           durationMs: cardSpellingStartTime ? Math.round(now - cardSpellingStartTime) : 0,
           hintsUsed: cardHintsUsed
         });
+      }
+
+      if (verb && !cardsCompletedWords.has(verb.id)) {
+        cardsCompletedWords.add(verb.id);
+        cardsSessionScore += 10;
+        const durationSec = cardSpellingStartTime
+          ? Math.max(1, Math.round((((typeof performance !== 'undefined') ? performance.now() : Date.now()) - cardSpellingStartTime) / 1000))
+          : 1;
+        if (window.PuffinLogin && typeof window.PuffinLogin.submitScore === 'function') {
+          window.PuffinLogin.submitScore({
+            appId: 'ale-french',
+            score: cardsSessionScore,
+            mode: `cards_${spellingDifficulty}`,
+            duration_sec: durationSec,
+            extra: {
+              exercise: 'card_spelling',
+              word: verb.infinitive,
+              category: verb.category,
+              difficulty: spellingDifficulty,
+              words_completed: cardsCompletedWords.size
+            }
+          }).catch(err => console.debug('Puffin cards score submission:', err));
+        }
       }
 
       if (verb) {

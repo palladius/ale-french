@@ -59,4 +59,7 @@ test('4. Seby Mode hides Ale verbs/conjugations, updates badge to Pour Sebastian
     assert.match(content, /id="btn-filter-colors"/, `${page} must have Solo Colori / Colori filter button`);
     assert.match(content, /function isSebyActive\(/, `${page} must detect active Seby profile`);
   }
+
+  const cardsHtml = fs.readFileSync(path.join(ROOT_DIR, 'cards.html'), 'utf8');
+  assert.match(cardsHtml, /window\.PuffinLogin\.submitScore\(/, 'cards.html must submit completed card exercises to PuffinLogin');
 });
