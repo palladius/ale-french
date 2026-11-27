@@ -2,11 +2,16 @@
 
 # Run TDD test suite
 test:
-    node --test tests/audio.test.mjs tests/card-spelling.test.mjs tests/telemetry.test.mjs tests/profile-defaults.test.mjs tests/verb-quiz.test.mjs
+    node --test tests/audio.test.mjs tests/card-spelling.test.mjs tests/telemetry.test.mjs tests/profile-defaults.test.mjs tests/verb-quiz.test.mjs tests/german.test.mjs
 
 # Generate missing French TTS audio clips via gemini-3.8-flash-tts (incremental, skips existing valid MP3s)
 tts *args:
     node scripts/generate-tts.mjs {{args}}
+
+# Generate missing German TTS audio clips & Nano Banana images
+german-assets:
+    node scripts/generate-german-images.mjs
+    node scripts/generate-german-tts.mjs
 
 # Commit and push audio fix immediately to GitHub Pages
 deploy: test

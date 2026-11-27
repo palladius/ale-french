@@ -2,6 +2,7 @@
   let currentAudio = null;
   let cachedVoices = [];
   const availableMp3Slugs = new Set();
+  const availableDeMp3Slugs = new Set();
 
   if (typeof window !== 'undefined') {
     if ('speechSynthesis' in window) {
@@ -26,7 +27,39 @@
           }
         })
         .catch(() => {});
+
+      fetch('audio/de/manifest.json')
+        .then((res) => (res.ok ? res.json() : null))
+        .then((manifest) => {
+          if (manifest && manifest.clips && typeof manifest.clips === 'object') {
+            Object.values(manifest.clips).forEach((entry) => {
+              if (entry && entry.slug) {
+                availableDeMp3Slugs.add(entry.slug);
+              }
+            });
+          }
+        })
+        .catch(() => {});
     }
+  }
+
+  function germanPhraseToSlug(text) {
+    return String(text || '')
+      .trim()
+      .toLowerCase()
+      .replace(/ä/g, 'ae')
+      .replace(/ö/g, 'oe')
+      .replace(/ü/g, 'ue')
+      .replace(/ß/g, 'ss')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  function getGermanAudioPathForPhrase(text) {
+    const slug = germanPhraseToSlug(text);
+    return `audio/de/${slug}.mp3`;
   }
 
   function phraseToSlug(text) {
@@ -215,12 +248,141 @@
     }
   }
 
+  function pickBestGermanVoice(voices) {
+    if (!Array.isArray(voices) || voices.length === 0) return null;
+    const deVoices = voices.filter((v) => {
+      const lang = String(v?.lang || '').replace('_', '-').toLowerCase();
+      return lang === 'de' || lang.startsWith('de-');
+    });
+    if (deVoices.length === 0) return null;
+    return [...deVoices].sort((a, b) => {
+      const score = (v) => {
+        const lang = String(v?.lang || '').replace('_', '-').toLowerCase();
+        const name = String(v?.name || '').toLowerCase();
+        let s = lang === 'de-de' ? 100 : lang === 'de-ch' || lang === 'de-at' ? 70 : 20;
+        if (name.includes('google') || name.includes('anna') || name.includes('petra') || name.includes('natural') || name.includes('neural')) s += 40;
+        if (name.includes('espeak') || name.includes('+')) s -= 30;
+        return s;
+      };
+      return score(b) - score(a);
+    })[0];
+  }
+
+  function speakGermanWithWebSpeech(text, opts) {
+    const synth =
+      opts.speechSynth ||
+      (typeof window !== 'undefined' && 'speechSynthesis' in window
+        ? window.speechSynthesis
+        : null);
+    const UtteranceCtor =
+      opts.UtteranceCtor ||
+      (typeof SpeechSynthesisUtterance !== 'undefined'
+        ? SpeechSynthesisUtterance
+        : null);
+
+    if (!synth || !UtteranceCtor) {
+      if (typeof opts.onerror === 'function') {
+        opts.onerror(new Error('No audio or speechSynthesis available'));
+      }
+      return Promise.resolve();
+    }
+
+    if (synth.speaking || synth.pending) {
+      try {
+        synth.cancel();
+      } catch (_) {}
+    }
+
+    const utterance = new UtteranceCtor(text);
+    utterance.lang = 'de-DE';
+    utterance.rate = 0.85;
+
+    const voices =
+      (typeof synth.getVoices === 'function' ? synth.getVoices() : []) ||
+      cachedVoices;
+    const bestVoice = pickBestGermanVoice(voices);
+    if (bestVoice) {
+      utterance.voice = bestVoice;
+    }
+
+    return new Promise((resolve) => {
+      utterance.onend = () => {
+        if (typeof opts.onend === 'function') opts.onend();
+        resolve();
+      };
+      utterance.onerror = (err) => {
+        if (typeof opts.onerror === 'function') opts.onerror(err);
+        resolve();
+      };
+      try {
+        synth.speak(utterance);
+      } catch (err) {
+        if (typeof opts.onerror === 'function') opts.onerror(err);
+        resolve();
+      }
+    });
+  }
+
+  function playGermanAudio(text, options) {
+    const opts = options || {};
+    stopFrenchAudio(opts.speechSynth);
+
+    const slug = germanPhraseToSlug(text);
+    const src = `audio/de/${slug}.mp3`;
+    const AudioCtor =
+      opts.AudioCtor || (typeof Audio !== 'undefined' ? Audio : null);
+
+    const knownSlugs =
+      opts.knownMp3Slugs !== undefined ? opts.knownMp3Slugs : availableDeMp3Slugs;
+    const shouldTryMp3 =
+      Boolean(AudioCtor) &&
+      (opts.knownMp3Slugs !== undefined ? knownSlugs.has(slug) : true);
+
+    if (!shouldTryMp3) {
+      return speakGermanWithWebSpeech(text, opts);
+    }
+
+    const audio = new AudioCtor(src);
+    currentAudio = audio;
+    let fallbackTriggered = false;
+
+    function triggerFallback() {
+      if (fallbackTriggered) return Promise.resolve();
+      fallbackTriggered = true;
+      if (currentAudio === audio) currentAudio = null;
+      return speakGermanWithWebSpeech(text, opts);
+    }
+
+    audio.onended = () => {
+      if (currentAudio === audio) currentAudio = null;
+      if (typeof opts.onend === 'function') opts.onend();
+    };
+
+    audio.onerror = () => {
+      triggerFallback();
+    };
+
+    try {
+      const playPromise = audio.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        return playPromise.catch(() => triggerFallback());
+      }
+      return Promise.resolve();
+    } catch (_) {
+      return triggerFallback();
+    }
+  }
+
   if (typeof module === 'object' && module.exports) {
     exports.phraseToSlug = phraseToSlug;
     exports.getAudioPathForPhrase = getAudioPathForPhrase;
     exports.pickBestFrenchVoice = pickBestFrenchVoice;
     exports.playFrenchAudio = playFrenchAudio;
     exports.stopFrenchAudio = stopFrenchAudio;
+    exports.germanPhraseToSlug = germanPhraseToSlug;
+    exports.getGermanAudioPathForPhrase = getGermanAudioPathForPhrase;
+    exports.pickBestGermanVoice = pickBestGermanVoice;
+    exports.playGermanAudio = playGermanAudio;
   }
   if (root) {
     root.phraseToSlug = phraseToSlug;
@@ -228,6 +390,10 @@
     root.pickBestFrenchVoice = pickBestFrenchVoice;
     root.playFrenchAudio = playFrenchAudio;
     root.stopFrenchAudio = stopFrenchAudio;
+    root.germanPhraseToSlug = germanPhraseToSlug;
+    root.getGermanAudioPathForPhrase = getGermanAudioPathForPhrase;
+    root.pickBestGermanVoice = pickBestGermanVoice;
+    root.playGermanAudio = playGermanAudio;
   }
 })(
   typeof globalThis !== 'undefined'

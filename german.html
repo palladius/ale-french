@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🇩🇪 Ale Deutsch — Nomen, Artikel &amp; Plural</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="profile-switcher.css">
+  <script type="module" src="./src/puffin-login.js"></script>
+  <style>
+    :root {
+      --bg-main: #f1f5f9;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --der-color: #2563eb;
+      --der-bg: #dbeafe;
+      --die-color: #db2777;
+      --die-bg: #fce7f3;
+      --das-color: #16a34a;
+      --das-bg: #dcfce7;
+      --plural-color: #dc2626;
+      --plural-bg: #fee2e2;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Fredoka', 'Lexend', system-ui, sans-serif;
+      background: var(--bg-main);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: white;
+      border-bottom: 2px solid var(--border);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand h1 { font-size: 1.4rem; font-weight: 700; color: #1e3a8a; }
+
+    .badge-ale {
+      background: #fef08a;
+      color: #854d0e;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: 1px solid #facc15;
+    }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      max-width: 100%;
+    }
+
+    .nav-tab {
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #475569;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover { color: #1e3a8a; }
+    .nav-tab.active {
+      background: white;
+      color: #b45309;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
+
+    .nav-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+
+    .btn-pill {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      color: #334155;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-pill:hover { border-color: #94a3b8; background: #f1f5f9; }
+    .btn-pill.active { background: #eff6ff; border-color: var(--primary); color: var(--primary); }
+
+    .score-pill {
+      background: #fef9c3;
+      border: 2px solid #facc15;
+      color: #854d0e;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    main {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+      flex: 1;
+    }
+
+    /* Progressive Skill Ladder */
+    .level-ladder {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .level-btn {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      position: relative;
+    }
+
+    .level-btn:hover {
+      transform: translateY(-2px);
+      border-color: #94a3b8;
+      box-shadow: var(--shadow);
+    }
+
+    .level-btn.active {
+      border-color: #d97706;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      box-shadow: 0 8px 20px rgba(217, 119, 6, 0.15);
+    }
+
+    .level-stars { font-size: 0.72rem; letter-spacing: 1px; color: #d97706; font-weight: 700; }
+    .level-title { font-size: 0.98rem; font-weight: 700; color: #0f172a; }
+    .level-sub { font-size: 0.76rem; color: #64748b; }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+      background: white;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+    .chip {
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip:hover { border-color: #94a3b8; }
+    .chip.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
+
+    /* Explorer Grid (Level 0) */
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .noun-card {
+      background: white;
+      border-radius: 20px;
+      border: 2.5px solid #e2e8f0;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      box-shadow: var(--shadow);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .noun-card:hover {
+      transform: translateY(-5px) scale(1.015);
+      box-shadow: 0 18px 32px -10px rgba(15, 23, 42, 0.14);
+    }
+
+    .noun-card.art-der { border-color: #93c5fd; }
+    .noun-card.art-der:hover { border-color: var(--der-color); background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%); }
+    .noun-card.art-die { border-color: #f9a8d4; }
+    .noun-card.art-die:hover { border-color: var(--die-color); background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 42%); }
+    .noun-card.art-das { border-color: #86efac; }
+    .noun-card.art-das:hover { border-color: var(--das-color); background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 42%); }
+
+    .card-visual {
+      width: 128px;
+      height: 128px;
+      border-radius: 16px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 4rem;
+      border: 1px solid #e2e8f0;
+    }
+
+    .card-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+    .noun-card:hover .card-visual img { transform: scale(1.07); }
+
+    .article-pill {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+    .article-pill.der { background: var(--der-bg); color: var(--der-color); }
+    .article-pill.die { background: var(--die-bg); color: var(--die-color); }
+    .article-pill.das { background: var(--das-bg); color: var(--das-color); }
+
+    .noun-title { font-size: 1.2rem; font-weight: 700; color: #0f172a; }
+    .noun-plural {
+      font-size: 0.88rem;
+      color: #b91c1c;
+      background: #fef2f2;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .noun-meta {
+      font-size: 0.76rem;
+      color: #64748b;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .noun-it { font-size: 0.82rem; color: #475569; font-style: italic; }
+
+    .hover-cases {
+      font-size: 0.75rem;
+      color: #334155;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 4px 8px;
+      width: 100%;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .noun-card:hover .hover-cases { opacity: 1; background: #fffbeb; border-color: #fbbf24; }
+
+    .audio-row { display: flex; gap: 6px; width: 100%; justify-content: center; margin-top: 2px; }
+    .btn-audio {
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #1e293b;
+      transition: all 0.15s;
+    }
+    .btn-audio:hover { background: #eff6ff; border-color: var(--primary); color: var(--primary); }
+
+    /* Game Stage Panel */
+    .stage-panel {
+      background: white;
+      border-radius: 24px;
+      border: 2px solid #e2e8f0;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .stage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .stage-title { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; }
+    .stage-subtitle { font-size: 0.9rem; color: #64748b; }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #16a34a);
+      transition: width 0.3s ease;
+    }
+
+    .prompt-card {
+      max-width: 440px;
+      margin: 0 auto 18px;
+      background: #f8fafc;
+      border: 2.5px dashed #94a3b8;
+      border-radius: 22px;
+      padding: 18px;
+      text-align: center;
+      cursor: grab;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .prompt-card:active { cursor: grabbing; transform: scale(0.98); }
+    .prompt-card .card-visual { width: 168px; height: 168px; margin: 0 auto 10px; font-size: 5rem; }
+
+    .mystery-word {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mystery-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 62px;
+      padding: 2px 12px;
+      border-radius: 12px;
+      background: #fef08a;
+      color: #854d0e;
+      border: 2px dashed #eab308;
+      font-weight: 700;
+    }
+
+    .drop-zones-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .drop-zones-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 12px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .drop-zone {
+      border-radius: 20px;
+      padding: 18px 12px;
+      text-align: center;
+      font-family: inherit;
+      font-size: 1.35rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+    }
+    .drop-zone small { display: block; font-size: 0.78rem; font-weight: 600; opacity: 0.82; margin-top: 3px; }
+
+    .dz-der { background: var(--der-bg); color: var(--der-color); border-color: #93c5fd; }
+    .dz-die { background: var(--die-bg); color: var(--die-color); border-color: #f9a8d4; }
+    .dz-das { background: var(--das-bg); color: var(--das-color); border-color: #86efac; }
+
+    .feedback-banner {
+      max-width: 640px;
+      margin: 16px auto 0;
+      padding: 12px 16px;
+      border-radius: 16px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .feedback-banner.ok { background: #dcfce7; color: #166534; border: 2px solid #4ade80; }
+    .feedback-banner.err { background: #fee2e2; color: #991b1b; border: 2px solid #f87171; }
+    .feedback-banner.info { background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; }
+
+    /* Level 3: Einzahl/Mehrzahl 4x4 grid + Plural Quiz */
+    .submode-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+
+    .em-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) {
+      .em-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .em-cell {
+      padding: 14px 10px;
+      border-radius: 14px;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.16s;
+      color: #0f172a;
+    }
+    .em-cell:hover { transform: translateY(-2px); border-color: #64748b; }
+    .em-cell.painted-sg { background: #dbeafe; border-color: #2563eb; color: #1e40af; }
+    .em-cell.painted-pl { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+    .em-cell.wrong-shake { animation: shake 0.35s ease; border-color: #f59e0b; }
+
+    .brush-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brush-btn {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 3px solid transparent;
+    }
+    .brush-sg { background: #dbeafe; color: #1d4ed8; }
+    .brush-pl { background: #fee2e2; color: #b91c1c; }
+    .brush-btn.active { border-color: #0f172a; transform: scale(1.05); }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .opt-btn {
+      padding: 14px 12px;
+      border-radius: 16px;
+      border: 2px solid #cbd5e1;
+      background: white;
+      font-family: inherit;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .opt-btn:hover { border-color: var(--primary); background: #eff6ff; transform: translateY(-2px); }
+    .opt-btn.correct { background: #dcfce7; border-color: #16a34a; color: #166534; }
+    .opt-btn.wrong { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+
+    /* Level 4: Phonics token selector */
+    .phonics-word {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+    }
+    .phonics-tile {
+      min-width: 52px;
+      height: 62px;
+      padding: 0 12px;
+      border-radius: 16px;
+      border: 3px solid #cbd5e1;
+      background: white;
+      font-family: inherit;
+      font-size: 1.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .phonics-tile:hover { transform: translateY(-3px); border-color: #6366f1; }
+    .phonics-tile.picked-ok { background: #dcfce7; border-color: #16a34a; color: #166534; }
+    .phonics-tile.picked-err { background: #fee2e2; border-color: #dc2626; color: #991b1b; animation: shake 0.3s; }
+
+    /* Level 5: Keyboard Typing + Umlaut Pad */
+    .typing-box {
+      max-width: 540px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .typing-input-row {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .typing-input {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 3px solid #94a3b8;
+      font-family: inherit;
+      font-size: 1.35rem;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+    }
+    .typing-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+    .umlaut-pad {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .umlaut-key {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      border: 2px solid #cbd5e1;
+      background: #fffbeb;
+      color: #92400e;
+      font-family: inherit;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .umlaut-key:hover { background: #fef08a; border-color: #eab308; transform: translateY(-2px); }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 14px;
+      color: #64748b;
+      font-size: 0.82rem;
+      border-top: 1px solid #e2e8f0;
+      background: white;
+    }
+    footer a { color: #2563eb; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>🇩🇪 Ale Deutsch</h1>
+      <span class="badge-ale" id="profileBadge">Für Alessandro</span>
+    </div>
+
+    <div class="nav-tabs">
+      <a href="index.html" class="nav-tab">🇫🇷 Verbes</a>
+      <a href="cards.html" class="nav-tab">🃏 Flashcards</a>
+      <a href="grid.html" class="nav-tab">🔲 Griglia 4x4</a>
+      <a href="quiz.html" class="nav-tab">🎯 Quiz FR</a>
+      <a href="seby.html" class="nav-tab" style="color: #059669; font-weight: 700;">🧒 Seby (A1)</a>
+      <a href="german.html" class="nav-tab active">🇩🇪 Deutsch</a>
+      <a href="ring.html" class="nav-tab" style="color: #f59e0b; font-weight: 700;">🔥💍 Ring</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn-pill active" id="btnToggleIt" type="button">🇮🇹 IT: ON</button>
+      <div class="score-pill" id="scorePill">⭐ <span id="starCount">0</span> · 🔥 <span id="streakCount">0</span></div>
+      <puffin-login game="ale-french" compact></puffin-login>
+    </div>
+  </header>
+
+  <main>
+    <!-- Progressive Skill Ladder -->
+    <section class="level-ladder" aria-label="Livelli di abilità crescenti">
+      <button class="level-btn active" data-level="0" type="button">
+        <span class="level-stars">👀 LIVELLO 0</span>
+        <span class="level-title">🃏 Esplora &amp; Ascolta</span>
+        <span class="level-sub">Hover, immagini &amp; audio DE</span>
+      </button>
+      <button class="level-btn" data-level="1" type="button">
+        <span class="level-stars">⭐ LIVELLO 1 · MOUSE</span>
+        <span class="level-title">🔵🩷🟢 der / die / das</span>
+        <span class="level-sub">Drag &amp; Drop o click</span>
+      </button>
+      <button class="level-btn" data-level="2" type="button">
+        <span class="level-stars">⭐⭐ LIVELLO 2 · SCHEDA 2</span>
+        <span class="level-title">📦 Nomen sortieren</span>
+        <span class="level-sub">Menschen · Tiere · Pflanzen · Dinge</span>
+      </button>
+      <button class="level-btn" data-level="3" type="button">
+        <span class="level-stars">⭐⭐⭐ LIVELLO 3 · SCHEDA 1</span>
+        <span class="level-title">🔢 Einzahl &amp; Mehrzahl</span>
+        <span class="level-sub">Blu/Rosso + Plurali con Umlaut</span>
+      </button>
+      <button class="level-btn" data-level="4" type="button">
+        <span class="level-stars">⭐⭐⭐⭐ LIVELLO 4 · SCHEDA 3</span>
+        <span class="level-title">🔤 Vokale &amp; Umlaute</span>
+        <span class="level-sub">Trova ä, ö, ü, eu, ei, au</span>
+      </button>
+      <button class="level-btn" data-level="5" type="button">
+        <span class="level-stars">⭐⭐⭐⭐⭐ LIVELLO 5 · TASTIERA</span>
+        <span class="level-title">⌨️ Scrivi le Parole!</span>
+        <span class="level-sub">Tastiera PC + barra ä ö ü ß</span>
+      </button>
+    </section>
+
+    <!-- Worksheet Filter Bar -->
+    <section class="filter-bar">
+      <div class="filter-chips" id="worksheetFilters">
+        <button class="chip active" data-filter="all" type="button">✨ Tutti (51)</button>
+        <button class="chip" data-filter="illustrated" type="button">🍌 Illustrati (28)</button>
+        <button class="chip" data-filter="1" type="button">📄 Scheda 1: Plurali</button>
+        <button class="chip" data-filter="2" type="button">📄 Scheda 2: Categorie</button>
+        <button class="chip" data-filter="3" type="button">📄 Scheda 3: Animali &amp; Laute</button>
+      </div>
+      <div style="font-size:0.82rem;color:#64748b;">
+        <span class="article-pill der">der</span> Maskulin ·
+        <span class="article-pill die">die</span> Feminin ·
+        <span class="article-pill das">das</span> Neutrum
+      </div>
+    </section>
+
+    <div id="appStage"></div>
+  </main>
+
+  <footer>
+    🇩🇪 Ale Deutsch · Modulo Tandem IMS (Primary 3) · Audio generato con <strong>gemini-3.8-flash-tts</strong> ·
+    <a href="https://github.com/palladius/ale-french" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+  <script src="audio-player.js"></script>
+  <script src="telemetry.js"></script>
+  <script src="profile-switcher.js"></script>
+  <script src="german-data.js"></script>
+  <script>
+    (function () {
+      const {
+        GERMAN_NOUNS,
+        GERMAN_CATEGORIES,
+        GERMAN_ARTICLES,
+        tokenizeGermanPhonics,
+        evaluateGermanTyping
+      } = window.GERMAN_DATA;
+
+      const STORAGE_KEY = 'ale_deutsch_progress_v1';
+      let state = {
+        level: 0,
+        filter: 'all',
+        showIt: true,
+        stars: 0,
+        streak: 0,
+        qIndex: 0,
+        deck: [],
+        l3Mode: 'plural', // 'plural' | 'grid'
+        l3Brush: 'sg',
+        l3GridPainted: {},
+        l4TargetType: 'umlaut',
+        l4Picked: new Set(),
+        l5Mode: 'singular' // 'singular' | 'plural'
+      };
+
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        if (typeof saved.stars === 'number') state.stars = saved.stars;
+        if (typeof saved.streak === 'number') state.streak = saved.streak;
+      } catch (_) {}
+
+      function saveProgress() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ stars: state.stars, streak: state.streak }));
+        } catch (_) {}
+        document.getElementById('starCount').textContent = state.stars;
+        document.getElementById('streakCount').textContent = state.streak;
+      }
+
+      function addReward(ok, itemLabel, modeTag) {
+        if (ok) {
+          state.stars += 1;
+          state.streak += 1;
+        } else {
+          state.streak = 0;
+        }
+        saveProgress();
+        if (typeof window.recordFrenchTelemetry === 'function') {
+          try {
+            window.recordFrenchTelemetry({
+              item: itemLabel,
+              mode: `deutsch-${modeTag}`,
+              correct: ok
+            });
+          } catch (_) {}
+        }
+      }
+
+      function speakDe(phrase) {
+        if (typeof window.playGermanAudio === 'function') {
+          window.playGermanAudio(phrase);
+        }
+      }
+
+      function shuffle(arr) {
+        const copy = [...arr];
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      function getFilteredNouns() {
+        if (state.filter === 'illustrated') return GERMAN_NOUNS.filter((n) => Boolean(n.image));
+        if (state.filter === '1') return GERMAN_NOUNS.filter((n) => n.worksheet === 1);
+        if (state.filter === '2') return GERMAN_NOUNS.filter((n) => n.worksheet === 2 || n.worksheet === 'extra');
+        if (state.filter === '3') return GERMAN_NOUNS.filter((n) => n.worksheet === 3);
+        return GERMAN_NOUNS;
+      }
+
+      function renderVisualHtml(noun) {
+        if (noun.image) {
+          return `<div class="card-visual"><img src="${noun.image}" alt="${noun.singular}" loading="lazy" onerror="this.parentElement.textContent='${noun.emoji}'"></div>`;
+        }
+        return `<div class="card-visual">${noun.emoji}</div>`;
+      }
+
+      function prepareDeckForLevel() {
+        let pool = getFilteredNouns();
+        if (state.level === 4) {
+          // Level 4 focuses on words that actually have Umlaute or Zwielaute or Vokale
+          pool = GERMAN_NOUNS.filter((n) => {
+            const toks = tokenizeGermanPhonics(n.singular);
+            return toks.some((t) => t.type === 'umlaut' || t.type === 'zwielaut' || n.worksheet === 3);
+          });
+        }
+        state.deck = shuffle(pool);
+        state.qIndex = 0;
+        state.l4Picked = new Set();
+        state.l3GridPainted = {};
+      }
+
+      function currentNoun() {
+        if (!state.deck.length) prepareDeckForLevel();
+        return state.deck[state.qIndex % state.deck.length];
+      }
+
+      function nextQuestion() {
+        state.qIndex = (state.qIndex + 1) % state.deck.length;
+        state.l4Picked = new Set();
+        renderStage();
+      }
+
+      // === RENDER LEVEL 0: EXPLORE ===
+      function renderLevel0(stage) {
+        const list = getFilteredNouns();
+        const cardsHtml = list.map((n) => {
+          const art = GERMAN_ARTICLES[n.article];
+          const cat = GERMAN_CATEGORIES[n.category];
+          return `
+            <article class="noun-card art-${n.article}" data-sg="${n.article} ${n.singular}" data-pl="die ${n.plural}">
+              ${renderVisualHtml(n)}
+              <div class="noun-title">
+                <span class="article-pill ${n.article}">${n.article}</span> ${n.singular}
+              </div>
+              <div class="noun-plural">viele ${n.plural} · die ${n.plural}</div>
+              ${state.showIt ? `<div class="noun-it">${n.it} / ${n.itPlural}</div>` : ''}
+              <div class="noun-meta">
+                <span>${cat.emoji} ${cat.label}</span>
+                <span>· ${n.pluralRule}</span>
+              </div>
+              <div class="hover-cases">
+                ${art.indef} ${n.singular} · Akk: <b>${art.akk}</b> · Dat: <b>${art.dat}</b>
+              </div>
+              <div class="audio-row">
+                <button class="btn-audio" type="button" data-speak="${n.article} ${n.singular}">🔊 Einzahl</button>
+                <button class="btn-audio" type="button" data-speak="die ${n.plural}">🔊 Mehrzahl</button>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        stage.innerHTML = `<div class="explore-grid">${cardsHtml}</div>`;
+        stage.querySelectorAll('.btn-audio').forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            speakDe(btn.dataset.speak);
+          });
+        });
+        stage.querySelectorAll('.noun-card').forEach((card) => {
+          card.addEventListener('click', () => speakDe(card.dataset.sg));
+        });
+      }
+
+      // === RENDER LEVEL 1: DER / DIE / DAS (DRAG & DROP OR CLICK) ===
+      function renderLevel1(stage) {
+        const n = currentNoun();
+        const pct = Math.round(((state.qIndex % 10) / 10) * 100);
+        stage.innerHTML = `
+          <div class="stage-panel">
+            <div class="stage-header">
+              <div>
+                <div class="stage-title">⭐ Livello 1: Scegli l'articolo giusto (der / die / das)</div>
+                <div class="stage-subtitle">Trascina la carta nel cesto giusto oppure clicca il pulsante colorato!</div>
+              </div>
+              <button class="btn-audio" id="btnHearL1" type="button">🔊 Ascolta "${n.singular}"</button>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+
+            <div class="prompt-card" id="dragCardL1" draggable="true">
+              ${renderVisualHtml(n)}
+              <div class="mystery-word">
+                <span class="mystery-box">?</span>
+                <span>${n.singular}</span>
+              </div>
+              ${state.showIt ? `<div class="noun-it" style="margin-top:6px;">(${n.it})</div>` : ''}
+            </div>
+
+            <div class="drop-zones-3">
+              <button class="drop-zone dz-der" data-art="der" type="button">🔵 der<small>Maskulin · ein / einen</small></button>
+              <button class="drop-zone dz-die" data-art="die" type="button">🩷 die<small>Feminin · eine</small></button>
+              <button class="drop-zone dz-das" data-art="das" type="button">🟢 das<small>Neutrum · ein</small></button>
+            </div>
+
+            <div class="feedback-banner info" id="fbL1">Trascina la carta o scegli <b>der</b>, <b>die</b> o <b>das</b>!</div>
+          </div>
+        `;
+
+        const card = document.getElementById('dragCardL1');
+        card.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', n.id);
+        });
+        document.getElementById('btnHearL1').addEventListener('click', () => speakDe(`${n.article} ${n.singular}`));
+
+        let answered = false;
+        function checkArt(chosen) {
+          if (answered) return;
+          const fb = document.getElementById('fbL1');
+          if (chosen === n.article) {
+            answered = true;
+            addReward(true, `${n.article} ${n.singular}`, 'l1-article');
+            fb.className = 'feedback-banner ok';
+            fb.innerHTML = `✅ Super! <b>${n.article} ${n.singular}</b> (${GERMAN_ARTICLES[n.article].indef} ${n.singular}) · Plurale: <b>die ${n.plural}</b>`;
+            speakDe(`${n.article} ${n.singular}`);
+            setTimeout(nextQuestion, 1300);
+          } else {
+            addReward(false, `${n.article} ${n.singular}`, 'l1-article');
+            fb.className = 'feedback-banner err';
+            fb.innerHTML = `❌ Non è "${chosen}" — riprova! Indizio: pensa al colore di ${n.singular}.`;
+          }
+        }
+
+        stage.querySelectorAll('.drop-zone').forEach((zone) => {
+          zone.addEventListener('click', () => checkArt(zone.dataset.art));
+          zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
+          zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+          zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            zone.classList.remove('drag-over');
+            checkArt(zone.dataset.art);
+          });
+        });
+      }
+
+      // === RENDER LEVEL 2: NOMEN SORTIEREN (SCHEDA 2 — DRAG & DROP) ===
+      function renderLevel2(stage) {
+        const n = currentNoun();
+        const pct = Math.round(((state.qIndex % 10) / 10) * 100);
+        const cats = Object.values(GERMAN_CATEGORIES);
+        stage.innerHTML = `
+          <div class="stage-panel">
+            <div class="stage-header">
+              <div>
+                <div class="stage-title">⭐⭐ Livello 2: Nomen sortieren (Scheda 2)</div>
+                <div class="stage-subtitle">Trascina o clicca la categoria giusta: Menschen · Tiere · Pflanzen · Dinge</div>
+              </div>
+              <button class="btn-audio" id="btnHearL2" type="button">🔊 Ascolta</button>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+
+            <div class="prompt-card" id="dragCardL2" draggable="true">
+              ${renderVisualHtml(n)}
+              <div class="mystery-word">
+                <span class="article-pill ${n.article}">${n.article}</span>
+                <span>${n.singular}</span>
+              </div>
+              ${state.showIt ? `<div class="noun-it" style="margin-top:6px;">(${n.it})</div>` : ''}
+            </div>
+
+            <div class="drop-zones-4">
+              ${cats.map((c) => `
+                <button class="drop-zone" data-cat="${c.id}" type="button"
+                  style="background:${c.bg};color:${c.color};border-color:${c.border};">
+                  ${c.emoji} ${c.label}<small>${c.it}</small>
+                </button>
+              `).join('')}
+            </div>
+
+            <div class="feedback-banner info" id="fbL2">In quale colonna della scheda va <b>${n.singular}</b>?</div>
+          </div>
+        `;
+
+        document.getElementById('dragCardL2').addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', n.id);
+        });
+        document.getElementById('btnHearL2').addEventListener('click', () => speakDe(`${n.article} ${n.singular}`));
+
+        let answered = false;
+        function checkCat(chosen) {
+          if (answered) return;
+          const fb = document.getElementById('fbL2');
+          if (chosen === n.category) {
+            answered = true;
+            addReward(true, n.singular, 'l2-category');
+            fb.className = 'feedback-banner ok';
+            fb.innerHTML = `✅ Perfetto! <b>${n.article} ${n.singular}</b> è nella categoria <b>${n.category}</b>!`;
+            speakDe(`${n.article} ${n.singular}`);
+            setTimeout(nextQuestion, 1150);
+          } else {
+            addReward(false, n.singular, 'l2-category');
+            fb.className = 'feedback-banner err';
+            fb.innerHTML = `❌ Non è ${chosen}. Riprova!`;
+          }
+        }
+
+        stage.querySelectorAll('.drop-zone').forEach((zone) => {
+          zone.addEventListener('click', () => checkCat(zone.dataset.cat));
+          zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
+          zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+          zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            zone.classList.remove('drag-over');
+            checkCat(zone.dataset.cat);
+          });
+        });
+      }
+
+      // === RENDER LEVEL 3: EINZAHL & MEHRZAHL (SCHEDA 1) ===
+      function renderLevel3(stage) {
+        if (state.l3Mode === 'grid') {
+          // Exact recreation of Scheda 1 Exercise 2 (4x4 Einzahl blau / Mehrzahl rot)
+          const worksheetPairs = GERMAN_NOUNS.filter((n) =>
+            ['der-kuerbis', 'das-kind', 'das-pferd', 'der-loewe', 'der-schrank', 'die-jahreszeit', 'der-fuss', 'die-ampel'].includes(n.id)
+          );
+          const cells = [];
+          worksheetPairs.forEach((n) => {
+            cells.push({ key: `${n.id}-sg`, text: `${n.article} ${n.singular}`, kind: 'sg' });
+            cells.push({ key: `${n.id}-pl`, text: `die ${n.plural}`, kind: 'pl' });
+          });
+          // Deterministic pleasant order matching Scheda 1
+          const order = [0, 3, 5, 7, 8, 10, 6, 14, 11, 12, 1, 2, 4, 9, 13, 15];
+          const gridItems = order.map((i) => cells[i]).filter(Boolean);
+          const solvedCount = Object.keys(state.l3GridPainted).length;
+
+          stage.innerHTML = `
+            <div class="stage-panel">
+              <div class="stage-header">
+                <div>
+                  <div class="stage-title">⭐⭐⭐ Livello 3: Einzahl (blu) vs Mehrzahl (rosso)</div>
+                  <div class="stage-subtitle">Scegli il pennello e colora la griglia 4×4 della Scheda 1! (${solvedCount}/16)</div>
+                </div>
+                <div class="submode-bar">
+                  <button class="chip" id="btnL3Plural" type="button">🎯 Trasforma al Plurale</button>
+                  <button class="chip active" id="btnL3Grid" type="button">🎨 Griglia 4×4 Blu/Rosso</button>
+                </div>
+              </div>
+
+              <div class="brush-bar">
+                <button class="brush-btn brush-sg ${state.l3Brush === 'sg' ? 'active' : ''}" id="brushSg" type="button">🔵 Pennello Einzahl (Singolare)</button>
+                <button class="brush-btn brush-pl ${state.l3Brush === 'pl' ? 'active' : ''}" id="brushPl" type="button">🔴 Pennello Mehrzahl (Plurale)</button>
+              </div>
+
+              <div class="em-grid">
+                ${gridItems.map((item) => {
+                  const p = state.l3GridPainted[item.key];
+                  return `<button class="em-cell ${p ? 'painted-' + p : ''}" data-key="${item.key}" data-kind="${item.kind}" data-text="${item.text}" type="button">${item.text}</button>`;
+                }).join('')}
+              </div>
+
+              <div class="feedback-banner ${solvedCount === 16 ? 'ok' : 'info'}" id="fbL3Grid">
+                ${solvedCount === 16 ? '🏆 Fantastico! Hai colorato correttamente tutta la griglia della Scheda 1!' : 'Seleziona Blu (Einzahl) o Rosso (Mehrzahl) e clicca le caselle!'}
+              </div>
+            </div>
+          `;
+
+          document.getElementById('btnL3Plural').addEventListener('click', () => { state.l3Mode = 'plural'; renderStage(); });
+          document.getElementById('brushSg').addEventListener('click', () => { state.l3Brush = 'sg'; renderStage(); });
+          document.getElementById('brushPl').addEventListener('click', () => { state.l3Brush = 'pl'; renderStage(); });
+
+          stage.querySelectorAll('.em-cell').forEach((cell) => {
+            cell.addEventListener('click', () => {
+              const key = cell.dataset.key;
+              if (state.l3GridPainted[key]) {
+                speakDe(cell.dataset.text);
+                return;
+              }
+              const fb = document.getElementById('fbL3Grid');
+              if (cell.dataset.kind === state.l3Brush) {
+                state.l3GridPainted[key] = state.l3Brush;
+                addReward(true, cell.dataset.text, 'l3-grid');
+                speakDe(cell.dataset.text);
+                renderStage();
+              } else {
+                addReward(false, cell.dataset.text, 'l3-grid');
+                cell.classList.add('wrong-shake');
+                setTimeout(() => cell.classList.remove('wrong-shake'), 350);
+                fb.className = 'feedback-banner err';
+                fb.innerHTML = `❌ Attento! "${cell.dataset.text}" è ${cell.dataset.kind === 'sg' ? 'Einzahl (🔵 blu)' : 'Mehrzahl (🔴 rosso)'}!`;
+              }
+            });
+          });
+          return;
+        }
+
+        // Submode B: Plural Quiz (Scheda 1 Exercise 1)
+        const n = currentNoun();
+        const options = shuffle([n.plural, ...(n.distractors || [`${n.singular}e`, `${n.singular}en`, `${n.singular}s`]).slice(0, 3)]);
+        const pct = Math.round(((state.qIndex % 10) / 10) * 100);
+
+        stage.innerHTML = `
+          <div class="stage-panel">
+            <div class="stage-header">
+              <div>
+                <div class="stage-title">⭐⭐⭐ Livello 3: Einzahl → Mehrzahl (viele … / die …)</div>
+                <div class="stage-subtitle">Qual è il plurale corretto? Occhio agli Umlaut (ä, ö, ü)!</div>
+              </div>
+              <div class="submode-bar">
+                <button class="chip active" id="btnL3Plural" type="button">🎯 Trasforma al Plurale</button>
+                <button class="chip" id="btnL3Grid" type="button">🎨 Griglia 4×4 Blu/Rosso</button>
+              </div>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+
+            <div class="prompt-card">
+              ${renderVisualHtml(n)}
+              <div class="mystery-word">
+                <span class="article-pill ${n.article}">${n.article}</span>
+                <span>${n.singular}</span>
+                <span>➔</span>
+                <span class="mystery-box">viele ?</span>
+              </div>
+              ${state.showIt ? `<div class="noun-it" style="margin-top:6px;">${n.it} ➔ ${n.itPlural}</div>` : ''}
+            </div>
+
+            <div class="options-grid">
+              ${options.map((opt) => `<button class="opt-btn" data-opt="${opt}" type="button">die ${opt}</button>`).join('')}
+            </div>
+
+            <div class="feedback-banner info" id="fbL3">Regola: scopri il plurale di <b>${n.article} ${n.singular}</b>!</div>
+          </div>
+        `;
+
+        document.getElementById('btnL3Grid').addEventListener('click', () => { state.l3Mode = 'grid'; renderStage(); });
+        let answered = false;
+        stage.querySelectorAll('.opt-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            if (answered) return;
+            const fb = document.getElementById('fbL3');
+            if (btn.dataset.opt === n.plural) {
+              answered = true;
+              btn.classList.add('correct');
+              addReward(true, `die ${n.plural}`, 'l3-plural');
+              fb.className = 'feedback-banner ok';
+              fb.innerHTML = `✅ Esatto! <b>viele ${n.plural}</b> / <b>die ${n.plural}</b> (regola: ${n.pluralRule})`;
+              speakDe(`die ${n.plural}`);
+              setTimeout(nextQuestion, 1300);
+            } else {
+              btn.classList.add('wrong');
+              addReward(false, `die ${n.plural}`, 'l3-plural');
+              fb.className = 'feedback-banner err';
+              fb.innerHTML = `❌ Non è "die ${btn.dataset.opt}" — riprova!`;
+            }
+          });
+        });
+      }
+
+      // === RENDER LEVEL 4: VOKALE, UMLAUTE & ZWIELAUTE (SCHEDA 3) ===
+      function renderLevel4(stage) {
+        const n = currentNoun();
+        const tokens = tokenizeGermanPhonics(n.singular);
+        // Pick the most interesting target type present in this word
+        let targetType = 'vokal';
+        let targetLabel = 'Vokale (a, e, i, o, u)';
+        if (tokens.some((t) => t.type === 'umlaut')) {
+          targetType = 'umlaut';
+          targetLabel = 'Umlaute (ä, ö, ü)';
+        } else if (tokens.some((t) => t.type === 'zwielaut')) {
+          targetType = 'zwielaut';
+          targetLabel = 'Zwielaute (eu, ei, ai, au, äu)';
+        }
+
+        const expectedIndices = tokens
+          .map((t, idx) => (t.type === targetType ? idx : -1))
+          .filter((idx) => idx >= 0);
+
+        stage.innerHTML = `
+          <div class="stage-panel">
+            <div class="stage-header">
+              <div>
+                <div class="stage-title">⭐⭐⭐⭐ Livello 4: Caccia ai suoni tedeschi (Scheda 3)</div>
+                <div class="stage-subtitle">Clicca tutti i <b>${targetLabel}</b> dentro la parola!</div>
+              </div>
+              <button class="btn-audio" id="btnHearL4" type="button">🔊 Ascolta</button>
+            </div>
+
+            <div class="prompt-card">
+              ${renderVisualHtml(n)}
+              <div style="font-size:0.95rem;color:#475569;font-weight:600;">Trova: <b style="color:#db2777;">${targetLabel}</b></div>
+              <div class="phonics-word">
+                ${tokens.map((t, idx) => `
+                  <button class="phonics-tile ${state.l4Picked.has(idx) ? 'picked-ok' : ''}" data-idx="${idx}" data-type="${t.type}" type="button">${t.text}</button>
+                `).join('')}
+              </div>
+              ${state.showIt ? `<div class="noun-it">(${n.article} ${n.singular} = ${n.it})</div>` : ''}
+            </div>
+
+            <div class="feedback-banner info" id="fbL4">Tocca le tessere giuste! (${state.l4Picked.size}/${expectedIndices.length})</div>
+          </div>
+        `;
+
+        document.getElementById('btnHearL4').addEventListener('click', () => speakDe(`${n.article} ${n.singular}`));
+        stage.querySelectorAll('.phonics-tile').forEach((tile) => {
+          tile.addEventListener('click', () => {
+            const idx = Number(tile.dataset.idx);
+            const fb = document.getElementById('fbL4');
+            if (tile.dataset.type === targetType) {
+              state.l4Picked.add(idx);
+              tile.classList.add('picked-ok');
+              if (state.l4Picked.size >= expectedIndices.length) {
+                addReward(true, n.singular, 'l4-phonics');
+                fb.className = 'feedback-banner ok';
+                fb.innerHTML = `✅ Grandissimo! Hai trovato tutti i <b>${targetLabel}</b> in <b>${n.singular}</b>!`;
+                speakDe(`${n.article} ${n.singular}`);
+                setTimeout(nextQuestion, 1200);
+              } else {
+                fb.className = 'feedback-banner info';
+                fb.innerHTML = `👍 Bene! Ne mancano ${expectedIndices.length - state.l4Picked.size}...`;
+              }
+            } else {
+              addReward(false, n.singular, 'l4-phonics');
+              tile.classList.add('picked-err');
+              setTimeout(() => tile.classList.remove('picked-err'), 350);
+              fb.className = 'feedback-banner err';
+              fb.innerHTML = `❌ "${tile.textContent}" è un ${tile.dataset.type}, noi cerchiamo <b>${targetLabel}</b>!`;
+            }
+          });
+        });
+      }
+
+      // === RENDER LEVEL 5: KEYBOARD TYPING + UMLAUT PAD ===
+      function renderLevel5(stage) {
+        const n = currentNoun();
+        const isPlural = state.l5Mode === 'plural';
+        const promptTitle = isPlural
+          ? `Scrivi il PLURALE di "${n.article} ${n.singular}" (es. ${n.plural} o die ${n.plural})`
+          : `Scrivi la parola in tedesco (con iniziale MAIUSCOLA!)`;
+
+        stage.innerHTML = `
+          <div class="stage-panel">
+            <div class="stage-header">
+              <div>
+                <div class="stage-title">⭐⭐⭐⭐⭐ Livello 5: Scrivi con la Tastiera!</div>
+                <div class="stage-subtitle">Usa la tastiera del computer + i tasti rapidi <b>ä ö ü ß</b> qui sotto.</div>
+              </div>
+              <div class="submode-bar">
+                <button class="chip ${!isPlural ? 'active' : ''}" id="btnL5Sg" type="button">1️⃣ Einzahl</button>
+                <button class="chip ${isPlural ? 'active' : ''}" id="btnL5Pl" type="button">🔢 Mehrzahl</button>
+              </div>
+            </div>
+
+            <div class="prompt-card">
+              ${renderVisualHtml(n)}
+              <div style="font-size:1.05rem;font-weight:700;color:#1e3a8a;margin-bottom:6px;">
+                ${isPlural ? `${n.article} ${n.singular} ➔ viele ___` : `${n.article} ___ (${n.it})`}
+              </div>
+              <button class="btn-audio" id="btnHearL5" type="button">🔊 Ascolta la pronuncia</button>
+            </div>
+
+            <div class="typing-box">
+              <div class="typing-input-row">
+                <input class="typing-input" id="typingInput" type="text" autocomplete="off" spellcheck="false"
+                  placeholder="${isPlural ? 'Scrivi il plurale (es. Häuser)...' : 'Scrivi con la MAIUSCOLA (es. Vogel)...'}">
+                <button class="btn-primary" id="btnCheckL5" type="button">Verifica ↵</button>
+              </div>
+
+              <div class="umlaut-pad" aria-label="Tasti rapidi Umlaut e Eszett">
+                ${['ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'].map((ch) => `<button class="umlaut-key" data-ch="${ch}" type="button">${ch}</button>`).join('')}
+              </div>
+
+              <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+                <button class="btn-pill" id="btnHintL5" type="button">💡 Indizio</button>
+                <button class="btn-pill" id="btnSkipL5" type="button">⏭️ Salta</button>
+              </div>
+            </div>
+
+            <div class="feedback-banner info" id="fbL5">${promptTitle}</div>
+          </div>
+        `;
+
+        const inputEl = document.getElementById('typingInput');
+        inputEl.focus();
+
+        document.getElementById('btnL5Sg').addEventListener('click', () => { state.l5Mode = 'singular'; renderStage(); });
+        document.getElementById('btnL5Pl').addEventListener('click', () => { state.l5Mode = 'plural'; renderStage(); });
+        document.getElementById('btnHearL5').addEventListener('click', () => {
+          speakDe(isPlural ? `die ${n.plural}` : `${n.article} ${n.singular}`);
+        });
+        document.getElementById('btnSkipL5').addEventListener('click', nextQuestion);
+        document.getElementById('btnHintL5').addEventListener('click', () => {
+          const targetWord = isPlural ? n.plural : n.singular;
+          const fb = document.getElementById('fbL5');
+          fb.className = 'feedback-banner info';
+          fb.innerHTML = `💡 Inizia con <b>${targetWord.slice(0, 2)}…</b> (${targetWord.length} lettere). ${n.spellingTrap || ''}`;
+          inputEl.focus();
+        });
+
+        stage.querySelectorAll('.umlaut-key').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const ch = btn.dataset.ch;
+            const start = inputEl.selectionStart || inputEl.value.length;
+            const end = inputEl.selectionEnd || inputEl.value.length;
+            inputEl.value = inputEl.value.slice(0, start) + ch + inputEl.value.slice(end);
+            inputEl.focus();
+            inputEl.setSelectionRange(start + ch.length, start + ch.length);
+          });
+        });
+
+        function submitAnswer() {
+          const res = evaluateGermanTyping(inputEl.value, n, state.l5Mode);
+          const fb = document.getElementById('fbL5');
+          if (res.ok) {
+            addReward(true, res.expected, 'l5-typing');
+            fb.className = 'feedback-banner ok';
+            fb.innerHTML = `🏆 Perfetto! <b>${res.expected}</b> scritto benissimo!`;
+            speakDe(res.expected);
+            setTimeout(nextQuestion, 1300);
+          } else {
+            addReward(false, res.expected || n.singular, 'l5-typing');
+            fb.className = 'feedback-banner err';
+            fb.innerHTML = `✏️ ${res.hint}`;
+            inputEl.focus();
+          }
+        }
+
+        document.getElementById('btnCheckL5').addEventListener('click', submitAnswer);
+        inputEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') submitAnswer();
+        });
+      }
+
+      function renderStage() {
+        const stage = document.getElementById('appStage');
+        if (state.level === 0) renderLevel0(stage);
+        else if (state.level === 1) renderLevel1(stage);
+        else if (state.level === 2) renderLevel2(stage);
+        else if (state.level === 3) renderLevel3(stage);
+        else if (state.level === 4) renderLevel4(stage);
+        else renderLevel5(stage);
+      }
+
+      // Wire top controls
+      document.querySelectorAll('.level-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.level-btn').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          state.level = Number(btn.dataset.level);
+          prepareDeckForLevel();
+          renderStage();
+        });
+      });
+
+      document.querySelectorAll('#worksheetFilters .chip').forEach((chip) => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('#worksheetFilters .chip').forEach((c) => c.classList.remove('active'));
+          chip.classList.add('active');
+          state.filter = chip.dataset.filter;
+          prepareDeckForLevel();
+          renderStage();
+        });
+      });
+
+      const btnIt = document.getElementById('btnToggleIt');
+      btnIt.addEventListener('click', () => {
+        state.showIt = !state.showIt;
+        btnIt.classList.toggle('active', state.showIt);
+        btnIt.textContent = state.showIt ? '🇮🇹 IT: ON' : '🇮🇹 IT: OFF';
+        renderStage();
+      });
+
+      saveProgress();
+      prepareDeckForLevel();
+      renderStage();
+    })();
+  </script>
+</body>
+</html>

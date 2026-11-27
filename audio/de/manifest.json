@@ -1,0 +1,926 @@
+{
+  "model": "gemini-3.8-flash-tts",
+  "voiceName": "Aoede",
+  "lang": "de-DE",
+  "clips": {
+    "die-maus": {
+      "slug": "die-maus",
+      "text": "die Maus",
+      "file": "audio/de/die-maus.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:52.960Z",
+      "sha256": "02e90eda806630006302e281258c7efad23454edb1789be9876abf805a60d4fa"
+    },
+    "das-haus": {
+      "slug": "das-haus",
+      "text": "das Haus",
+      "file": "audio/de/das-haus.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:53.089Z",
+      "sha256": "cfa99006aba5d151efe755cbe94be4ec73b0b4a243ea5707981e334c20863bb1"
+    },
+    "der-apfel": {
+      "slug": "der-apfel",
+      "text": "der Apfel",
+      "file": "audio/de/der-apfel.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:53.218Z",
+      "sha256": "0984b014ca8e57c2bdaeb8be182b651b35ba9dbc684d4f497ccd2c54136b2d7b"
+    },
+    "die-aepfel": {
+      "slug": "die-aepfel",
+      "text": "die Äpfel",
+      "file": "audio/de/die-aepfel.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:53.327Z",
+      "sha256": "1686a007941e73967cdbcb079c17eebf79d1a0193b269f12083f1e5cf9a0ade2"
+    },
+    "die-haeuser": {
+      "slug": "die-haeuser",
+      "text": "die Häuser",
+      "file": "audio/de/die-haeuser.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:53.430Z",
+      "sha256": "0017b47becebc1f3245cb441fffd2bd14401fa6e855e8048df9fefce750f3b1f"
+    },
+    "die-maeuse": {
+      "slug": "die-maeuse",
+      "text": "die Mäuse",
+      "file": "audio/de/die-maeuse.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:55.326Z",
+      "sha256": "28a7b21417bd8f697df00c249cc0703b1083d8d44d4bdca7d482151625b3abdb"
+    },
+    "der-igel": {
+      "slug": "der-igel",
+      "text": "der Igel",
+      "file": "audio/de/der-igel.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:55.554Z",
+      "sha256": "df6a313961247955c8edde8e743d8f94065b42fbeb53799e9f92456862e7e4c8"
+    },
+    "das-blatt": {
+      "slug": "das-blatt",
+      "text": "das Blatt",
+      "file": "audio/de/das-blatt.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:55.663Z",
+      "sha256": "51b9e8cc7b50987a0611dabb9c3b3e9e32b564fbb153feec4b6098fe3df6f620"
+    },
+    "die-igel": {
+      "slug": "die-igel",
+      "text": "die Igel",
+      "file": "audio/de/die-igel.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:55.757Z",
+      "sha256": "56c0f3f90759dfbdb978af1c616230966f24e2d293b1b3321261fdf738a2b0bc"
+    },
+    "die-blaetter": {
+      "slug": "die-blaetter",
+      "text": "die Blätter",
+      "file": "audio/de/die-blaetter.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:55.903Z",
+      "sha256": "782fb033dae1e50cdfd2c5259ff4fbeb976b4c28e57c407dea8f26e741f2bbed"
+    },
+    "die-wolken": {
+      "slug": "die-wolken",
+      "text": "die Wolken",
+      "file": "audio/de/die-wolken.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:58.103Z",
+      "sha256": "f5d5145869669f3d2c6f2bb623f8edd4d3800d0d8a23cb8e94712848832cba0e"
+    },
+    "der-kuerbis": {
+      "slug": "der-kuerbis",
+      "text": "der Kürbis",
+      "file": "audio/de/der-kuerbis.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:58.194Z",
+      "sha256": "9bccb4f52a47d285ed24ceb11bfb8304d64c4e193cb97913a91c976ddefa3c38"
+    },
+    "die-wolke": {
+      "slug": "die-wolke",
+      "text": "die Wolke",
+      "file": "audio/de/die-wolke.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:58.304Z",
+      "sha256": "4ec8049110a99dcd2b7fb3b98ed4c7d4075274794286ea7ef25e0dc4e82444b6"
+    },
+    "die-kuerbisse": {
+      "slug": "die-kuerbisse",
+      "text": "die Kürbisse",
+      "file": "audio/de/die-kuerbisse.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:58.433Z",
+      "sha256": "6b61dbcce23ff2dd7553d0975b5671ed9f755191ed74e1e9566e93463a83fa6f"
+    },
+    "das-kind": {
+      "slug": "das-kind",
+      "text": "das Kind",
+      "file": "audio/de/das-kind.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:48:58.517Z",
+      "sha256": "8ce562b3c9d3ed5a37e4100721181b596ef26b735ffa52f998db70d5f8a386ed"
+    },
+    "die-kinder": {
+      "slug": "die-kinder",
+      "text": "die Kinder",
+      "file": "audio/de/die-kinder.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:00.458Z",
+      "sha256": "0c8a9cfa1c9a1da26541d8e28ea6f1f5fce86d29e71370ac90f401309bc6e7e7"
+    },
+    "das-pferd": {
+      "slug": "das-pferd",
+      "text": "das Pferd",
+      "file": "audio/de/das-pferd.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:00.610Z",
+      "sha256": "bfad60d7a2f8718954bdb4c7f7995d5723042ed99d2e33a6acace0e61c369362"
+    },
+    "der-loewe": {
+      "slug": "der-loewe",
+      "text": "der Löwe",
+      "file": "audio/de/der-loewe.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:00.718Z",
+      "sha256": "de80c933b3ee4ae0f85640737a5591df6fb1e471fcfdf6351d3410dfe0ff7e5d"
+    },
+    "die-pferde": {
+      "slug": "die-pferde",
+      "text": "die Pferde",
+      "file": "audio/de/die-pferde.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:00.801Z",
+      "sha256": "e24d397e2476b425c7617517e5e3930acfd8491d2180cc4c82b78ac454d53203"
+    },
+    "die-loewen": {
+      "slug": "die-loewen",
+      "text": "die Löwen",
+      "file": "audio/de/die-loewen.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:00.886Z",
+      "sha256": "f5159eebba23a994fbcebec42236e16bdf9cdbe1240b7f3d7d616774f4ed02e7"
+    },
+    "die-schraenke": {
+      "slug": "die-schraenke",
+      "text": "die Schränke",
+      "file": "audio/de/die-schraenke.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:02.849Z",
+      "sha256": "023ffb08f2e442626c5a8e3be8c141f1453afc07ab1e6846a2f2b8ab5d7fe924"
+    },
+    "der-schrank": {
+      "slug": "der-schrank",
+      "text": "der Schrank",
+      "file": "audio/de/der-schrank.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:03.003Z",
+      "sha256": "9e00c7e59a38e358ff726e8e9a9b8a24d2895e4332cba7e9588ddf7d9f043722"
+    },
+    "der-fuss": {
+      "slug": "der-fuss",
+      "text": "der Fuß",
+      "file": "audio/de/der-fuss.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:03.156Z",
+      "sha256": "79589f55dfc97304bb5e2e7a2ce48519e3d65e46dce2c9c512bab862fa4a3697"
+    },
+    "die-jahreszeit": {
+      "slug": "die-jahreszeit",
+      "text": "die Jahreszeit",
+      "file": "audio/de/die-jahreszeit.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:03.280Z",
+      "sha256": "19946e7f86e98671aa76b7f0ff4c8aed46a10af7e348e493413666701ea8ce63"
+    },
+    "die-jahreszeiten": {
+      "slug": "die-jahreszeiten",
+      "text": "die Jahreszeiten",
+      "file": "audio/de/die-jahreszeiten.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:03.411Z",
+      "sha256": "4e07e9a2e30e08000454c2b81d38d355bf3f797949dda8b8732abd2ecdd1390a"
+    },
+    "die-ampel": {
+      "slug": "die-ampel",
+      "text": "die Ampel",
+      "file": "audio/de/die-ampel.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:05.391Z",
+      "sha256": "e14f409048fa3e3017766d1a87ea3b56de13dd2689a2933b46a6b48522271a30"
+    },
+    "die-fuesse": {
+      "slug": "die-fuesse",
+      "text": "die Füße",
+      "file": "audio/de/die-fuesse.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:05.510Z",
+      "sha256": "819ff4baa8f8d21b7bcffad9754357048ff0eec2921ca80b91eda082d4d0cbf3"
+    },
+    "die-ampeln": {
+      "slug": "die-ampeln",
+      "text": "die Ampeln",
+      "file": "audio/de/die-ampeln.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:05.620Z",
+      "sha256": "6a3af50d6897f43e02f71ae78963f60138ac1e092130b4f276d970e22e222d5a"
+    },
+    "der-uhu": {
+      "slug": "der-uhu",
+      "text": "der Uhu",
+      "file": "audio/de/der-uhu.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:05.929Z",
+      "sha256": "877c739175fa8ea51b6b110e6c4927fef2b197a920277c0fb596af765935668d"
+    },
+    "die-uhus": {
+      "slug": "die-uhus",
+      "text": "die Uhus",
+      "file": "audio/de/die-uhus.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:06.048Z",
+      "sha256": "167196699092a531caecd73c5e76bd37eb6782ef74f004547d1b6230d3560607"
+    },
+    "das-auto": {
+      "slug": "das-auto",
+      "text": "das Auto",
+      "file": "audio/de/das-auto.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:07.843Z",
+      "sha256": "7988a4969b53dfdcde9682efb277a8abe7228368efda1ea644aa4250de9bb187"
+    },
+    "der-vogel": {
+      "slug": "der-vogel",
+      "text": "der Vogel",
+      "file": "audio/de/der-vogel.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:08.072Z",
+      "sha256": "8d9bd2d31d65cf464ada397dd8baa7ad940a4e88981690189e9604ea1f42c6bb"
+    },
+    "die-autos": {
+      "slug": "die-autos",
+      "text": "die Autos",
+      "file": "audio/de/die-autos.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:08.197Z",
+      "sha256": "81fb904c5683bc90e6d47dd81b5c6b3fb833dcb7b511e67aec1b0e2dba7095ff"
+    },
+    "die-voegel": {
+      "slug": "die-voegel",
+      "text": "die Vögel",
+      "file": "audio/de/die-voegel.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:08.326Z",
+      "sha256": "02dff19554d82f14a8c1ae57da6c1579182f777e4a7e8893fa67b2243dfdfb57"
+    },
+    "der-tiger": {
+      "slug": "der-tiger",
+      "text": "der Tiger",
+      "file": "audio/de/der-tiger.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:08.409Z",
+      "sha256": "f385186ec9806805155e75b7738f6f2ef988d86c882e2848b1161309fc955969"
+    },
+    "die-tiger": {
+      "slug": "die-tiger",
+      "text": "die Tiger",
+      "file": "audio/de/die-tiger.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:10.107Z",
+      "sha256": "bef1e46c42d8a29cfa21055bf452093a403b94f37338bd14d09349825a8d6811"
+    },
+    "der-wal": {
+      "slug": "der-wal",
+      "text": "der Wal",
+      "file": "audio/de/der-wal.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:10.201Z",
+      "sha256": "7553e42d6a75ea1e5dd8110a5c235ddc029ef2a572c4f43acf911ba62854908b"
+    },
+    "die-wale": {
+      "slug": "die-wale",
+      "text": "die Wale",
+      "file": "audio/de/die-wale.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:10.649Z",
+      "sha256": "e1e2afee297d111a4b32e88f683883e408e8e2a8795e5064df4841808999f861"
+    },
+    "die-schnecke": {
+      "slug": "die-schnecke",
+      "text": "die Schnecke",
+      "file": "audio/de/die-schnecke.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:10.902Z",
+      "sha256": "f99d003d28a4ac51ed636bd52d2cacfce76367e7fc58712e6491b87fba7b67b1"
+    },
+    "die-schnecken": {
+      "slug": "die-schnecken",
+      "text": "die Schnecken",
+      "file": "audio/de/die-schnecken.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:11.012Z",
+      "sha256": "c4a65c0ba1a07cf1918dbe355b5f7c212be2cc2d4548e9e13cd5a96282b01f3d"
+    },
+    "der-baecker": {
+      "slug": "der-baecker",
+      "text": "der Bäcker",
+      "file": "audio/de/der-baecker.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:12.457Z",
+      "sha256": "f53fc3afbe4faa068b9174e330be81f5889a485025271aa3406f15d7b0ef796c"
+    },
+    "die-baecker": {
+      "slug": "die-baecker",
+      "text": "die Bäcker",
+      "file": "audio/de/die-baecker.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:12.581Z",
+      "sha256": "27b816215f8fdda9346ffa58249a09757c3e0513b9aca1c281b47d11a917c719"
+    },
+    "das-baby": {
+      "slug": "das-baby",
+      "text": "das Baby",
+      "file": "audio/de/das-baby.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:13.128Z",
+      "sha256": "13160dd96421e9dd8aa7221fba62c2a53c4bc29be275548834b0af4788a9c66d"
+    },
+    "die-pilotin": {
+      "slug": "die-pilotin",
+      "text": "die Pilotin",
+      "file": "audio/de/die-pilotin.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:13.229Z",
+      "sha256": "82cee265515442a8372b09b0ac14670f2518ed63a22f481a94d1688d76170f87"
+    },
+    "die-babys": {
+      "slug": "die-babys",
+      "text": "die Babys",
+      "file": "audio/de/die-babys.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:13.364Z",
+      "sha256": "e4946112c740e980232baae2714fac4e4f113d34c68f34f20af5a4f615f6d271"
+    },
+    "die-tante": {
+      "slug": "die-tante",
+      "text": "die Tante",
+      "file": "audio/de/die-tante.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:14.880Z",
+      "sha256": "0fc833aff17a54a45056a5558acc69f1a212a377f528e36f13c65679a3e8b0d3"
+    },
+    "die-pilotinnen": {
+      "slug": "die-pilotinnen",
+      "text": "die Pilotinnen",
+      "file": "audio/de/die-pilotinnen.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:15.009Z",
+      "sha256": "c5a7c07730bdda4c8af0fd0d9ab76d4c69e3440f68a57d863e1db0e57a413bb5"
+    },
+    "die-tanten": {
+      "slug": "die-tanten",
+      "text": "die Tanten",
+      "file": "audio/de/die-tanten.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:15.448Z",
+      "sha256": "aa7f9cd2464d1897a1e5d37d9506467f191c4cf9107bea484e9f0ef5fa49b858"
+    },
+    "die-rose": {
+      "slug": "die-rose",
+      "text": "die Rose",
+      "file": "audio/de/die-rose.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:15.554Z",
+      "sha256": "c1a6a40cb0dcbb77563c0473f6729258a51695e363e979bf9a4cee9ae3170f32"
+    },
+    "die-rosen": {
+      "slug": "die-rosen",
+      "text": "die Rosen",
+      "file": "audio/de/die-rosen.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:15.715Z",
+      "sha256": "dd44faf22a2556dd53b05a0889fac218ea52a31ea51ebdc57108a5a8fa3be075"
+    },
+    "die-tulpe": {
+      "slug": "die-tulpe",
+      "text": "die Tulpe",
+      "file": "audio/de/die-tulpe.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:17.265Z",
+      "sha256": "415eec7a2dc91a2bc8d5c3515af640581eeba244ea1d2ad52d44daafd2f4f14d"
+    },
+    "die-tulpen": {
+      "slug": "die-tulpen",
+      "text": "die Tulpen",
+      "file": "audio/de/die-tulpen.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:17.365Z",
+      "sha256": "241416755098263f6e5cd28ae4ac2458ad1829843985f2dfb97196fd69c8423c"
+    },
+    "die-tannen": {
+      "slug": "die-tannen",
+      "text": "die Tannen",
+      "file": "audio/de/die-tannen.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:17.826Z",
+      "sha256": "5e6c114022d3ec397f0757f37ee19b2993a6c6bc54ea016223b88c00f711874b"
+    },
+    "die-tanne": {
+      "slug": "die-tanne",
+      "text": "die Tanne",
+      "file": "audio/de/die-tanne.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:18.174Z",
+      "sha256": "fc18f4b54a5fc12705f23b60b3b14fff573878f33790b84a8027a41265d59a5d"
+    },
+    "die-petersilie": {
+      "slug": "die-petersilie",
+      "text": "die Petersilie",
+      "file": "audio/de/die-petersilie.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:18.310Z",
+      "sha256": "b34be21adc308744f9adce745d7d7b26991795b09e662da5967f77b05fcb7281"
+    },
+    "der-kalender": {
+      "slug": "der-kalender",
+      "text": "der Kalender",
+      "file": "audio/de/der-kalender.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:19.481Z",
+      "sha256": "98a1bbcf952efc93d8e9ffa29f44648730f2dd4d3f27d32460ac3ac27c7412f2"
+    },
+    "die-petersilien": {
+      "slug": "die-petersilien",
+      "text": "die Petersilien",
+      "file": "audio/de/die-petersilien.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:19.614Z",
+      "sha256": "d7c9cf23237953fb60846fe4029c9773a19b5ee8d4cffe20ee18efed52e1d4c8"
+    },
+    "die-huette": {
+      "slug": "die-huette",
+      "text": "die Hütte",
+      "file": "audio/de/die-huette.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:20.210Z",
+      "sha256": "f5fdaa8024193efe45b363ea4c082a28d463c029c7718a5b1d39293a8d008792"
+    },
+    "die-kalender": {
+      "slug": "die-kalender",
+      "text": "die Kalender",
+      "file": "audio/de/die-kalender.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:20.340Z",
+      "sha256": "44df2cffb9ca2e737c721a6d2873384859326068c3fe9aa955a61472461de97d"
+    },
+    "die-huetten": {
+      "slug": "die-huetten",
+      "text": "die Hütten",
+      "file": "audio/de/die-huetten.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:20.502Z",
+      "sha256": "1b9516129be34941c8365b13c3bc1c89cab5cd01ff83587ab2330444cd68b081"
+    },
+    "das-buch": {
+      "slug": "das-buch",
+      "text": "das Buch",
+      "file": "audio/de/das-buch.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:21.862Z",
+      "sha256": "dde3e1f6280a44aa6aa9e6fa647646465fa45530bed45a2eaec2f14a900fb86e"
+    },
+    "die-buecher": {
+      "slug": "die-buecher",
+      "text": "die Bücher",
+      "file": "audio/de/die-buecher.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:21.979Z",
+      "sha256": "21c5b1473b04f99c4d7784bc2b085f1c1caed90b8ddf56ec7a82585d312142f4"
+    },
+    "der-ball": {
+      "slug": "der-ball",
+      "text": "der Ball",
+      "file": "audio/de/der-ball.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:22.440Z",
+      "sha256": "01b26213420beefb07f43c0d6f0e9ee14904dc9d7c8b4fcaddb5efdd16479ed8"
+    },
+    "die-baelle": {
+      "slug": "die-baelle",
+      "text": "die Bälle",
+      "file": "audio/de/die-baelle.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:22.772Z",
+      "sha256": "088f6a46064f6c17cd991c4fa8328ac158bfb444892fcf07be2e4b2c48ffa740"
+    },
+    "das-flugzeug": {
+      "slug": "das-flugzeug",
+      "text": "das Flugzeug",
+      "file": "audio/de/das-flugzeug.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:22.874Z",
+      "sha256": "de584a623b5dc641f61856e86cbc1d43c4ddd4a422aa7692e7790f0579df3026"
+    },
+    "die-flugzeuge": {
+      "slug": "die-flugzeuge",
+      "text": "die Flugzeuge",
+      "file": "audio/de/die-flugzeuge.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:24.143Z",
+      "sha256": "aacd2c9bdb8fa52496ce03d20819483d7f8f6e7971d88e1a3da43d03d92fd9bb"
+    },
+    "der-schmetterling": {
+      "slug": "der-schmetterling",
+      "text": "der Schmetterling",
+      "file": "audio/de/der-schmetterling.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:24.510Z",
+      "sha256": "52a80d8c7c228719a4c64e468c73864ac056491fcca7e587b71e7621899f4ba0"
+    },
+    "die-schmetterlinge": {
+      "slug": "die-schmetterlinge",
+      "text": "die Schmetterlinge",
+      "file": "audio/de/die-schmetterlinge.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:24.806Z",
+      "sha256": "fc8d4c0d0538ec5a99b42c5afd5a4c8f84dc27dff4e5745e199b696791b73352"
+    },
+    "die-giraffe": {
+      "slug": "die-giraffe",
+      "text": "die Giraffe",
+      "file": "audio/de/die-giraffe.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:25.208Z",
+      "sha256": "4018925978f7994bf9c1c4d983e6bb6b3b6e1290ef1350ace70e3e56e48987fe"
+    },
+    "die-giraffen": {
+      "slug": "die-giraffen",
+      "text": "die Giraffen",
+      "file": "audio/de/die-giraffen.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:25.471Z",
+      "sha256": "abadf49239abe8c47b08a939bfbadded2825df01c5d11ddd1b0e036e4237a6a9"
+    },
+    "die-gans": {
+      "slug": "die-gans",
+      "text": "die Gans",
+      "file": "audio/de/die-gans.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:26.627Z",
+      "sha256": "1fb7be3a83f5046acfd034a93b3aa8dcd1544dd008f0c96e8464bdf4c6cbb720"
+    },
+    "die-gaense": {
+      "slug": "die-gaense",
+      "text": "die Gänse",
+      "file": "audio/de/die-gaense.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:26.968Z",
+      "sha256": "9dd60317069b7468b19c7b25afa440cc8dcc667d6542762d4dc9cfd962666143"
+    },
+    "das-huhn": {
+      "slug": "das-huhn",
+      "text": "das Huhn",
+      "file": "audio/de/das-huhn.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:27.419Z",
+      "sha256": "ab453104b4473fcdea8da9e35229cff2ff033cea041762526589f0a8660977ea"
+    },
+    "die-huehner": {
+      "slug": "die-huehner",
+      "text": "die Hühner",
+      "file": "audio/de/die-huehner.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:27.749Z",
+      "sha256": "96ce89ab0d1f3da2bd9da479e36eb576abf6143043086ac860b7fbaebc46e556"
+    },
+    "der-frosch": {
+      "slug": "der-frosch",
+      "text": "der Frosch",
+      "file": "audio/de/der-frosch.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:28.042Z",
+      "sha256": "ec596cb6fbd6f690a957e72a70388e58336bc0f7fe9cc9b94c32207aae82874c"
+    },
+    "die-froesche": {
+      "slug": "die-froesche",
+      "text": "die Frösche",
+      "file": "audio/de/die-froesche.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:29.121Z",
+      "sha256": "5f6dbb201e072cc95807e884c49e10a009f13f682e525ba2c495c2cb9b868bd2"
+    },
+    "der-fisch": {
+      "slug": "der-fisch",
+      "text": "der Fisch",
+      "file": "audio/de/der-fisch.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:29.264Z",
+      "sha256": "4540827aac2bd0be5d9d5aeb0b86345937be6bdcdf13c02942c6adcc31475ae8"
+    },
+    "die-fische": {
+      "slug": "die-fische",
+      "text": "die Fische",
+      "file": "audio/de/die-fische.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:29.703Z",
+      "sha256": "0479da02b427d74e4a73dbb38d4af8be2a044e508dcb70591fec17bf288e25fd"
+    },
+    "der-kaefer": {
+      "slug": "der-kaefer",
+      "text": "der Käfer",
+      "file": "audio/de/der-kaefer.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:30.016Z",
+      "sha256": "64fb1c2df51384387f150d1eea3c76a80616e0cbdd58d299e392b1eda87c2ce9"
+    },
+    "die-kaefer": {
+      "slug": "die-kaefer",
+      "text": "die Käfer",
+      "file": "audio/de/die-kaefer.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:30.326Z",
+      "sha256": "ed42049e01a646c6d1969e87fc204830d6da79e584785dd0ea6b518ba2c4dcf2"
+    },
+    "die-schildkroete": {
+      "slug": "die-schildkroete",
+      "text": "die Schildkröte",
+      "file": "audio/de/die-schildkroete.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:31.531Z",
+      "sha256": "d213a8ab0563fec5683a42a2bf96d682146df494c2201f8cf3df6303e3c496cc"
+    },
+    "die-schildkroeten": {
+      "slug": "die-schildkroeten",
+      "text": "die Schildkröten",
+      "file": "audio/de/die-schildkroeten.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:31.643Z",
+      "sha256": "882e005879d642d5367ba2e03d191868007899e50b50c143e49b4c1631290a50"
+    },
+    "das-kueken": {
+      "slug": "das-kueken",
+      "text": "das Küken",
+      "file": "audio/de/das-kueken.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:32.009Z",
+      "sha256": "d63f6ee87d229d3a5f2fa8f4d46b2c5270d3a2cc8bd276e0ae3f5740494f99a6"
+    },
+    "die-eule": {
+      "slug": "die-eule",
+      "text": "die Eule",
+      "file": "audio/de/die-eule.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:32.307Z",
+      "sha256": "ffb6a193630a76288513ce4147550eee251ff0df5ecf65d2e87f4ad7325248e0"
+    },
+    "die-kueken": {
+      "slug": "die-kueken",
+      "text": "die Küken",
+      "file": "audio/de/die-kueken.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:32.394Z",
+      "sha256": "8c14459e23a116bcc1c4a0ff9d6471d1740f8d4cf4d96328a258201a16991f28"
+    },
+    "der-hai": {
+      "slug": "der-hai",
+      "text": "der Hai",
+      "file": "audio/de/der-hai.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:33.558Z",
+      "sha256": "4ddbf88aa76ee376a3f0aa99d61ca926458b06d554a8f991a17c786dbf4a11cf"
+    },
+    "die-eulen": {
+      "slug": "die-eulen",
+      "text": "die Eulen",
+      "file": "audio/de/die-eulen.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:33.918Z",
+      "sha256": "7447e0a0fd165107ef98302124a8ef13edd6353ac59a1c1581411a9c2874f8fd"
+    },
+    "die-haie": {
+      "slug": "die-haie",
+      "text": "die Haie",
+      "file": "audio/de/die-haie.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:34.411Z",
+      "sha256": "9b25cbd3180c5fa6e991f84e5321dda79513f58f1aac0b62c783b8ef42c40cfc"
+    },
+    "das-schwein": {
+      "slug": "das-schwein",
+      "text": "das Schwein",
+      "file": "audio/de/das-schwein.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:34.615Z",
+      "sha256": "15aa61fe9552edcf318f8d254cb370d9645f47f2e84cb5b17d8dbaf66b2c32ea"
+    },
+    "die-schweine": {
+      "slug": "die-schweine",
+      "text": "die Schweine",
+      "file": "audio/de/die-schweine.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:34.872Z",
+      "sha256": "d573803dfb3e469581a0b907961b1c38b8f2253f5df2a9e97b57e8e2db198a28"
+    },
+    "das-zebra": {
+      "slug": "das-zebra",
+      "text": "das Zebra",
+      "file": "audio/de/das-zebra.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:35.868Z",
+      "sha256": "7a4158b2de01103791a6bd9ce6fe03aa0e616839ad19b14bf1e8590e7bb7b394"
+    },
+    "die-zebras": {
+      "slug": "die-zebras",
+      "text": "die Zebras",
+      "file": "audio/de/die-zebras.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:36.470Z",
+      "sha256": "e53da733a2897bfc6ffd017920655d1aa6e7b18cf9b7fd179647f02257485eb2"
+    },
+    "der-hamster": {
+      "slug": "der-hamster",
+      "text": "der Hamster",
+      "file": "audio/de/der-hamster.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:36.728Z",
+      "sha256": "90b7fbea968dc0c4951fa9e6f3bc7cd5ad70aff5a5f236f565b5e74256996aef"
+    },
+    "die-hamster": {
+      "slug": "die-hamster",
+      "text": "die Hamster",
+      "file": "audio/de/die-hamster.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:36.902Z",
+      "sha256": "5603fd67a90e820decbef7b3af8cc98d866e5af0378e6019c5013486a41c648a"
+    },
+    "der-delfin": {
+      "slug": "der-delfin",
+      "text": "der Delfin",
+      "file": "audio/de/der-delfin.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:37.541Z",
+      "sha256": "4d62a60217c24ad1ff0469f824a507aa9b067202611f42be388ff6bc05c5591f"
+    },
+    "die-delfine": {
+      "slug": "die-delfine",
+      "text": "die Delfine",
+      "file": "audio/de/die-delfine.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:38.605Z",
+      "sha256": "3b029ada36380fd98b96f1841163154448bfba23d4f0e7b7c8fca3c07923d454"
+    },
+    "der-clownfisch": {
+      "slug": "der-clownfisch",
+      "text": "der Clownfisch",
+      "file": "audio/de/der-clownfisch.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:38.906Z",
+      "sha256": "4c52ccc6e8e054b72eccf0e8fa6aaa396dc0a621f19fd7d899dd08bc68b01382"
+    },
+    "die-clownfische": {
+      "slug": "die-clownfische",
+      "text": "die Clownfische",
+      "file": "audio/de/die-clownfische.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T05:49:39.251Z",
+      "sha256": "ee02f73d92083bef98ac62d00ab05cc49b134122f4b5a0046afa7de437ffb1bf"
+    },
+    "der-drache": {
+      "slug": "der-drache",
+      "text": "der Drache",
+      "file": "audio/de/der-drache.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T17:36:30.575Z",
+      "sha256": "0463ad83217f89c2fc6441f4b4c31f87fd745d9184e109f5f5dc9f68b354b737"
+    },
+    "die-drachen": {
+      "slug": "die-drachen",
+      "text": "die Drachen",
+      "file": "audio/de/die-drachen.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T17:36:30.682Z",
+      "sha256": "32872be6378841fff96190f64266da6d5b71d73045968ae1850dd53d9bdab7c0"
+    },
+    "der-papageientaucher": {
+      "slug": "der-papageientaucher",
+      "text": "der Papageientaucher",
+      "file": "audio/de/der-papageientaucher.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T17:36:30.816Z",
+      "sha256": "07d03380ec4d86626b3813f62d53b27ffb861896230a00fb7a449f20374e7abf"
+    },
+    "die-papageientaucher": {
+      "slug": "die-papageientaucher",
+      "text": "die Papageientaucher",
+      "file": "audio/de/die-papageientaucher.mp3",
+      "model": "gemini-3.8-flash-tts",
+      "voiceName": "Aoede",
+      "createdAt": "2026-11-27T17:36:31.071Z",
+      "sha256": "0e9039193e9c546e259bbe35cfe9cfaff1645fd23ac07e5f75ffe49fed6e939f"
+    }
+  },
+  "updatedAt": "2026-11-27T17:36:31.071Z"
+}
