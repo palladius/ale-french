@@ -632,24 +632,23 @@
 <body>
   <header>
     <div class="brand">
-      <h1>🇩🇪 Ale Deutsch</h1>
+      <h1>Ale German</h1>
       <span class="badge-ale" id="profileBadge">Für Alessandro</span>
     </div>
 
-    <div class="nav-tabs">
-      <a href="index.html" class="nav-tab">🇫🇷 Verbes</a>
-      <a href="cards.html" class="nav-tab">🃏 Flashcards</a>
-      <a href="grid.html" class="nav-tab">🔲 Griglia 4x4</a>
-      <a href="quiz.html" class="nav-tab">🎯 Quiz FR</a>
-      <a href="seby.html" class="nav-tab" style="color: #059669; font-weight: 700;">🧒 Seby (A1)</a>
-      <a href="german.html" class="nav-tab active">🇩🇪 Deutsch</a>
-      <a href="ring.html" class="nav-tab" style="color: #f59e0b; font-weight: 700;">🔥💍 Ring</a>
+    <div class="nav-tabs" id="germanNavTabs">
+      <button type="button" class="nav-tab active" data-nav-level="0" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">🃏 Esplora</button>
+      <button type="button" class="nav-tab" data-nav-level="1" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">🔵 der/die/das</button>
+      <button type="button" class="nav-tab" data-nav-level="2" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">📦 Categorie</button>
+      <button type="button" class="nav-tab" data-nav-level="3" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">🔢 Plurali</button>
+      <button type="button" class="nav-tab" data-nav-level="4" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">🔤 Laute</button>
+      <button type="button" class="nav-tab" data-nav-level="5" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">⌨️ Tastiera</button>
     </div>
 
     <div class="nav-actions">
       <button class="btn-pill active" id="btnToggleIt" type="button">🇮🇹 IT: ON</button>
       <div class="score-pill" id="scorePill">⭐ <span id="starCount">0</span> · 🔥 <span id="streakCount">0</span></div>
-      <puffin-login game="ale-french" compact></puffin-login>
+      <puffin-login id="puffin-widget" app-id="ale-french"></puffin-login>
     </div>
   </header>
 
@@ -1339,15 +1338,24 @@
         else renderLevel5(stage);
       }
 
-      // Wire top controls
-      document.querySelectorAll('.level-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.level-btn').forEach((b) => b.classList.remove('active'));
-          btn.classList.add('active');
-          state.level = Number(btn.dataset.level);
-          prepareDeckForLevel();
-          renderStage();
+      // Wire top controls (both skill ladder & contextual header nav tabs stay in sync)
+      function selectLevel(lv) {
+        state.level = Number(lv);
+        document.querySelectorAll('.level-btn').forEach((b) => b.classList.toggle('active', Number(b.dataset.level) === state.level));
+        document.querySelectorAll('#germanNavTabs [data-nav-level]').forEach((t) => {
+          const isAct = Number(t.dataset.navLevel) === state.level;
+          t.classList.toggle('active', isAct);
+          t.style.background = isAct ? 'white' : 'transparent';
         });
+        prepareDeckForLevel();
+        renderStage();
+      }
+
+      document.querySelectorAll('.level-btn').forEach((btn) => {
+        btn.addEventListener('click', () => selectLevel(btn.dataset.level));
+      });
+      document.querySelectorAll('#germanNavTabs [data-nav-level]').forEach((tab) => {
+        tab.addEventListener('click', () => selectLevel(tab.dataset.navLevel));
       });
 
       document.querySelectorAll('#worksheetFilters .chip').forEach((chip) => {

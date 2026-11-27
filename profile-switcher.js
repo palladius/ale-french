@@ -282,6 +282,79 @@
     }
   });
 
+  function ensureLangSlider() {
+    if (document.getElementById('lang-slider-control')) return;
+    const brand = document.querySelector('header .brand') || document.querySelector('header');
+    if (!brand) return;
+
+    const isGerman = window.location.pathname.endsWith('german.html');
+    const slider = document.createElement('div');
+    slider.id = 'lang-slider-control';
+    slider.className = `lang-slider ${isGerman ? 'is-de' : 'is-fr'}`;
+    slider.setAttribute('role', 'group');
+    slider.setAttribute('aria-label', 'Scegli lingua: Francese o Tedesco');
+    slider.innerHTML = `
+      <span class="lang-slider-thumb" aria-hidden="true"></span>
+      <button type="button" class="lang-slider-btn ${!isGerman ? 'active' : ''}" data-lang="fr" title="Passa al Francese 🇫🇷">
+        <span class="lang-slider-flag">🇫🇷</span><span>FR</span>
+      </button>
+      <button type="button" class="lang-slider-btn ${isGerman ? 'active' : ''}" data-lang="de" title="Passa al Tedesco 🇩🇪">
+        <span class="lang-slider-flag">🇩🇪</span><span>DE</span>
+      </button>
+    `;
+
+    slider.querySelectorAll('.lang-slider-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetLang = btn.dataset.lang;
+        if (targetLang === 'de' && !isGerman) {
+          slider.classList.remove('is-fr');
+          slider.classList.add('is-de');
+          slider.querySelectorAll('.lang-slider-btn').forEach((b) => b.classList.toggle('active', b.dataset.lang === 'de'));
+          setTimeout(() => {
+            window.location.href = 'german.html';
+          }, 180);
+        } else if (targetLang === 'fr' && isGerman) {
+          slider.classList.remove('is-de');
+          slider.classList.add('is-fr');
+          slider.querySelectorAll('.lang-slider-btn').forEach((b) => b.classList.toggle('active', b.dataset.lang === 'fr'));
+          const dest = getActiveUser() === 'seby' ? 'seby.html' : 'index.html';
+          setTimeout(() => {
+            window.location.href = dest;
+          }, 180);
+        }
+      });
+    });
+
+    brand.insertBefore(slider, brand.firstChild);
+  }
+
+  const NAV_MONOCHROME_ICONS = {
+    'index.html': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>',
+    'cards.html': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="18" x="5" y="3" rx="2"/><path d="M9 7h6"/><path d="M9 11h6"/></svg>',
+    'grid.html': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>',
+    'quiz.html': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>',
+    'seby.html': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M6 20a6 6 0 0 1 12 0"/></svg>',
+    'nav-0': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+    'nav-1': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>',
+    'nav-2': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>',
+    'nav-3': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>',
+    'nav-4': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>',
+    'nav-5': '<svg class="nav-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M6 9h.01"/><path d="M10 9h.01"/><path d="M14 9h.01"/><path d="M18 9h.01"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M7 16h10"/></svg>'
+  };
+
+  function upgradeNavIcons() {
+    document.querySelectorAll('header .nav-tab').forEach((el) => {
+      if (el.querySelector('svg.nav-svg-icon')) return;
+      const href = el.getAttribute('href');
+      const navLevel = el.dataset.navLevel;
+      const svg = href ? NAV_MONOCHROME_ICONS[href] : (navLevel !== undefined ? NAV_MONOCHROME_ICONS[`nav-${navLevel}`] : null);
+      if (!svg) return;
+      // Strip leading polychrome emojis from tab label so only crisp monochrome SVG + clean text remain
+      const cleanLabel = el.textContent.replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u, '').trim();
+      el.innerHTML = `${svg}<span>${cleanLabel}</span>`;
+    });
+  }
+
   function initProfileSwitcher() {
     const currentUser = getActiveUser();
     const currentPath = window.location.pathname;
@@ -293,6 +366,8 @@
       }
     }
 
+    ensureLangSlider();
+    upgradeNavIcons();
     updateBadge();
     ensureLoveFooter();
     const defaults = getFrenchProfileDefaults();

@@ -1,4 +1,98 @@
-/* profile-switcher.css - Stili per il selettore profilo Ale vs Seby */
+/* profile-switcher.css - Stili per il selettore profilo Ale vs Seby e switch lingua FR/DE */
+
+/* Top-Left Sliding Language Switcher (FR <-> DE) */
+.lang-slider {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background: #e2e8f0;
+  padding: 3px;
+  border-radius: 999px;
+  border: 2px solid #cbd5e1;
+  box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.08);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.lang-slider-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14);
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
+  z-index: 0;
+}
+
+.lang-slider.is-de .lang-slider-thumb {
+  transform: translateX(100%);
+  background: #fffbeb;
+}
+
+.lang-slider-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.18s ease, transform 0.12s ease;
+  white-space: nowrap;
+}
+
+.lang-slider-btn:hover {
+  color: #0f172a;
+}
+
+.lang-slider-btn.active {
+  color: #1e3a8a;
+}
+
+.lang-slider.is-de .lang-slider-btn.active {
+  color: #b45309;
+}
+
+.lang-slider-flag {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+/* Monochrome currentColor SVG icons in header nav tabs (webapp-that-riccardo-likes) */
+.nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-svg-icon {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.85;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  opacity: 0.78;
+}
+
+.nav-tab.active .nav-svg-icon,
+.nav-tab:hover .nav-svg-icon {
+  opacity: 1;
+}
 
 /* Header User Badge */
 .user-profile-badge {

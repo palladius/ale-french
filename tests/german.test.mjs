@@ -101,15 +101,26 @@ test('5. All German nouns (singular & plural) have static gemini-3.8-flash-tts M
   }
 });
 
-test('6. german.html integrates shared scripts and all main HTML pages link to german.html', () => {
+test('6. german.html integrates shared scripts, contextual nav, top-left FR/DE slider, and right-side Ring button', () => {
   const germanHtml = fs.readFileSync(path.join(ROOT_DIR, 'german.html'), 'utf8');
   for (const reqScript of ['audio-player.js', 'telemetry.js', 'profile-switcher.js', 'german-data.js', 'puffin-login.js']) {
     assert.ok(germanHtml.includes(reqScript), `german.html must load ${reqScript}`);
   }
   assert.ok(germanHtml.includes('umlaut-pad'), 'german.html must include clickable Umlaut pad');
+  assert.ok(germanHtml.includes('id="germanNavTabs"'), 'german.html must render contextual German nav tabs');
 
   for (const page of ['index.html', 'cards.html', 'grid.html', 'quiz.html', 'seby.html']) {
     const html = fs.readFileSync(path.join(ROOT_DIR, page), 'utf8');
-    assert.ok(html.includes('german.html'), `${page} must include navigation link to german.html`);
+    assert.ok(html.includes('profile-switcher.js'), `${page} must load profile-switcher.js for the top-left FR/DE slider`);
+    assert.ok(!html.includes('href="ring.html"'), `${page} should not keep Ring inside center nav-tabs (moved right of login)`);
   }
+
+  const switcherJs = fs.readFileSync(path.join(ROOT_DIR, 'profile-switcher.js'), 'utf8');
+  const switcherCss = fs.readFileSync(path.join(ROOT_DIR, 'profile-switcher.css'), 'utf8');
+  const puffinJs = fs.readFileSync(path.join(ROOT_DIR, 'src', 'puffin-login.js'), 'utf8');
+  assert.ok(switcherJs.includes('ensureLangSlider'), 'profile-switcher.js must inject the top-left FR/DE sliding switcher');
+  assert.ok(switcherJs.includes('upgradeNavIcons'), 'profile-switcher.js must upgrade header nav tabs to monochrome SVG icons');
+  assert.ok(switcherCss.includes('.lang-slider-thumb'), 'profile-switcher.css must style the sliding language switcher');
+  assert.ok(switcherCss.includes('.nav-svg-icon'), 'profile-switcher.css must style monochrome SVG nav icons');
+  assert.ok(puffinJs.includes('puffin-quick-group'), 'src/puffin-login.js must group trophy/cards/ring in a unified pill');
 });

@@ -1850,41 +1850,77 @@ const COMPONENT_CSS = `
   outline: none;
 }
 
+.puffin-quick-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgba(24, 30, 58, 0.96), rgba(14, 18, 36, 0.98));
+  border: 2px solid rgba(148, 163, 184, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  flex-shrink: 0;
+}
+
 .puffin-quick-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.45rem;
-  height: 2.45rem;
-  border-radius: 50%;
-  background: linear-gradient(145deg, rgba(24, 30, 58, 0.96), rgba(14, 18, 36, 0.98));
-  border: 2px solid rgba(250, 204, 21, 0.55);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  color: #fde047;
-  font-size: 1.05rem;
+  width: 2.05rem;
+  height: 2.05rem;
+  border-radius: 999px;
+  background: transparent;
+  border: 1.5px solid transparent;
+  color: #cbd5e1;
   cursor: pointer;
   flex-shrink: 0;
-  transition: scale 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, box-shadow 0.2s ease;
-  scale: 1;
+  transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
 }
 
-.puffin-quick-btn:hover,
-.puffin-quick-btn:focus-visible {
-  scale: 1.12;
-  border-color: #facc15;
-  box-shadow: 0 6px 18px rgba(250, 204, 21, 0.45);
+.puffin-quick-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.puffin-quick-scores-btn {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.12);
+}
+.puffin-quick-scores-btn:hover,
+.puffin-quick-scores-btn:focus-visible {
+  background: rgba(251, 191, 36, 0.24);
+  border-color: rgba(251, 191, 36, 0.55);
+  transform: scale(1.06);
+  outline: none;
+}
+
+.puffin-quick-cards-btn {
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.12);
+}
+.puffin-quick-cards-btn:hover,
+.puffin-quick-cards-btn:focus-visible {
+  background: rgba(167, 139, 250, 0.24);
+  border-color: rgba(167, 139, 250, 0.55);
+  transform: scale(1.06);
   outline: none;
 }
 
 .puffin-quick-ring-btn {
-  border-color: rgba(249, 115, 22, 0.65);
   color: #fb923c;
+  background: rgba(251, 146, 60, 0.12);
 }
-
 .puffin-quick-ring-btn:hover,
 .puffin-quick-ring-btn:focus-visible {
-  border-color: #fb923c;
-  box-shadow: 0 6px 18px rgba(249, 115, 22, 0.55);
+  background: rgba(251, 146, 60, 0.24);
+  border-color: rgba(251, 146, 60, 0.55);
+  transform: scale(1.06);
+  outline: none;
 }
 
 .badge-offline-icon {
@@ -2894,9 +2930,17 @@ if (template) {
         <span class="badge-name"></span>
         <span class="badge-offline-icon" hidden title="Airplane / Offline Mode (Local MD5 + Seed)">✈️</span>
       </button>
-      <button type="button" class="puffin-quick-btn puffin-quick-scores-btn" part="scores-btn" title="Top 10 High Scores (Hall of Fame)" aria-label="Top 10 High Scores">🏆</button>
-      <button type="button" class="puffin-quick-btn puffin-quick-cards-btn" part="cards-btn" title="Magic Collectible Cards Album (Collezione Carte)" aria-label="Magic Collectible Cards Album">🃏</button>
-      <button type="button" class="puffin-quick-btn puffin-quick-ring-btn" part="ring-btn" title="Puffin Login Ring (All Family Games)" aria-label="Puffin Login Ring">💍</button>
+      <div class="puffin-quick-group" part="quick-group" role="group" aria-label="Puffin Hub">
+        <button type="button" class="puffin-quick-btn puffin-quick-scores-btn" part="scores-btn" title="Top 10 High Scores (Hall of Fame)" aria-label="Top 10 High Scores">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        </button>
+        <button type="button" class="puffin-quick-btn puffin-quick-cards-btn" part="cards-btn" title="Magic Collectible Cards Album (Collezione Carte)" aria-label="Magic Collectible Cards Album">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="12" height="16" x="7" y="4" rx="2"/><path d="M5 8H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1"/><path d="m11 10 2 2 2-2-2-2-2 2Z"/></svg>
+        </button>
+        <button type="button" class="puffin-quick-btn puffin-quick-ring-btn" part="ring-btn" title="Puffin Login Ring (All Family Games)" aria-label="Puffin Login Ring">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="14" r="7"/><path d="m9 4 3 3 3-3-1.5-2h-3L9 4Z"/></svg>
+        </button>
+      </div>
     </div>
 
     <dialog closedby="any" data-active-tab="login" aria-labelledby="puffin-dialog-title">
