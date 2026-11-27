@@ -50,7 +50,7 @@
 
 ## 🎯 3. Quiz a Scelta Multipla & Registro del Papà (`quiz.html`)
 
-Sviluppato per permettere ad Alessandro e Sebastiano di allenarsi in autonomia e a Papà Riccardo di verificare i risultati e gli errori storici al suo ritorno, senza bisogno di server complessi o database Cloud Run.
+Sviluppato per permettere ad Alessandro e Sebastian di allenarsi in autonomia e a Papà Riccardo di verificare i risultati e gli errori storici al suo ritorno, senza bisogno di server complessi o database Cloud Run.
 
 ### A. I 3 Livelli Didattici di Difficoltà:
 1. 🟢 **Facile (Débutant):**

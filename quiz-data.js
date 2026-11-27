@@ -1,6 +1,6 @@
 /**
  * Ale French - Quiz Distractors and Tips
- * Calibrato per Alessandro e Sebastiano
+ * Calibrato per Alessandro e Sebastian
  * Trappole fonetiche, falsi amici e inversione di genere (un/une) sistematica
  */
 const QUIZ_DISTRACTORS = {
