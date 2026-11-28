@@ -39,13 +39,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 4px 10px;
+  gap: 3px;
+  padding: 3px 8px;
   border: none;
   background: transparent;
   border-radius: 999px;
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: #64748b;
   cursor: pointer;

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🇩🇪 Ale Deutsch — Nomen, Artikel &amp; Plural</title>
+  <title>Ale German — Nomen, Artikel &amp; Plural</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
       --text: #0f172a;
       --text-muted: #64748b;
       --border: #cbd5e1;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      --shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.06), 0 4px 8px -4px rgba(0, 0, 0, 0.03);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,199 +39,231 @@
       flex-direction: column;
     }
 
+    /* Strictly single-row compact header on desktop */
     header {
       background: white;
-      border-bottom: 2px solid var(--border);
-      padding: 8px 16px;
+      border-bottom: 1.5px solid var(--border);
+      padding: 4px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px 12px;
+      flex-wrap: nowrap;
+      gap: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.03);
       position: sticky;
       top: 0;
       z-index: 40;
+      min-height: 48px;
     }
 
-    .brand { display: flex; align-items: center; gap: 10px; }
-    .brand h1 { font-size: 1.4rem; font-weight: 700; color: #1e3a8a; }
-
-    .badge-ale {
-      background: #fef08a;
-      color: #854d0e;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .brand h1 {
+      font-size: 1.08rem;
       font-weight: 700;
-      border: 1px solid #facc15;
+      color: #1e3a8a;
+      white-space: nowrap;
     }
 
     .nav-tabs {
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 4px;
+      flex-wrap: nowrap;
+      gap: 2px;
       background: #f1f5f9;
-      padding: 4px;
-      border-radius: 16px;
+      padding: 3px;
+      border-radius: 999px;
       border: 1px solid #e2e8f0;
-      max-width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .nav-tabs::-webkit-scrollbar { display: none; }
 
     .nav-tab {
-      padding: 5px 11px;
+      padding: 4px 9px;
       border-radius: 999px;
-      font-size: 0.88rem;
+      font-size: 0.8rem;
       font-weight: 600;
       text-decoration: none;
       color: #475569;
-      transition: all 0.2s;
+      transition: all 0.16s;
       white-space: nowrap;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
     }
-
     .nav-tab:hover { color: #1e3a8a; }
     .nav-tab.active {
       background: white;
       color: #b45309;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
       font-weight: 700;
     }
 
-    .nav-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: 6px;
+      flex-shrink: 0;
+    }
 
-    .btn-pill {
+    @media (max-width: 960px) {
+      header { flex-wrap: wrap; }
+    }
+
+    /* 2-column workspace: content starts immediately at top-left, compact filters on right */
+    .workspace {
+      max-width: 1360px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px 14px 32px;
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 206px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+      .side-rail {
+        order: -1;
+      }
+    }
+
+    .side-rail {
+      position: sticky;
+      top: 58px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rail-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+    }
+
+    .rail-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #64748b;
+    }
+
+    .rail-chip {
+      width: 100%;
+      text-align: left;
+      padding: 5px 9px;
+      border-radius: 9px;
+      border: 1.5px solid #e2e8f0;
       background: #f8fafc;
-      border: 2px solid #cbd5e1;
       color: #334155;
-      padding: 6px 12px;
-      border-radius: 999px;
       font-family: inherit;
-      font-size: 0.88rem;
+      font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.14s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
     }
-    .btn-pill:hover { border-color: #94a3b8; background: #f1f5f9; }
-    .btn-pill.active { background: #eff6ff; border-color: var(--primary); color: var(--primary); }
+    .rail-chip:hover { border-color: #94a3b8; background: #f1f5f9; }
+    .rail-chip.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
 
-    .score-pill {
+    .rail-toggle {
+      width: 100%;
+      text-align: left;
+      padding: 6px 9px;
+      border-radius: 9px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.14s;
+    }
+    .rail-toggle.active { background: #eff6ff; border-color: var(--primary); color: var(--primary); }
+
+    .rail-score {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       background: #fef9c3;
-      border: 2px solid #facc15;
+      border: 1.5px solid #facc15;
       color: #854d0e;
-      padding: 5px 12px;
-      border-radius: 999px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.82rem;
       font-weight: 700;
-      font-size: 0.9rem;
+    }
+
+    .legend-row {
       display: flex;
       align-items: center;
       gap: 6px;
-    }
-
-    main {
-      max-width: 1180px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 18px 16px 40px;
-      flex: 1;
-    }
-
-    /* Progressive Skill Ladder */
-    .level-ladder {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .level-btn {
-      background: white;
-      border: 2px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 10px 12px;
-      text-align: left;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.18s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      position: relative;
-    }
-
-    .level-btn:hover {
-      transform: translateY(-2px);
-      border-color: #94a3b8;
-      box-shadow: var(--shadow);
-    }
-
-    .level-btn.active {
-      border-color: #d97706;
-      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-      box-shadow: 0 8px 20px rgba(217, 119, 6, 0.15);
-    }
-
-    .level-stars { font-size: 0.72rem; letter-spacing: 1px; color: #d97706; font-weight: 700; }
-    .level-title { font-size: 0.98rem; font-weight: 700; color: #0f172a; }
-    .level-sub { font-size: 0.76rem; color: #64748b; }
-
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 16px;
-      background: white;
-      padding: 10px 14px;
-      border-radius: 16px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-
-    .chip {
-      padding: 5px 11px;
-      border-radius: 999px;
-      border: 1.5px solid #cbd5e1;
-      background: #f8fafc;
+      font-size: 0.75rem;
       color: #475569;
-      font-family: inherit;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
     }
-    .chip:hover { border-color: #94a3b8; }
-    .chip.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
+
+    /* Monochrome singular / plural silhouette icons */
+    .num-svg-icon {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      vertical-align: -2px;
+    }
 
     /* Explorer Grid (Level 0) */
     .explore-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(188px, 1fr));
+      gap: 12px;
     }
 
     .noun-card {
       background: white;
-      border-radius: 20px;
-      border: 2.5px solid #e2e8f0;
-      padding: 12px;
+      border-radius: 18px;
+      border: 2px solid #e2e8f0;
+      padding: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 8px;
+      gap: 6px;
       box-shadow: var(--shadow);
-      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       cursor: pointer;
       position: relative;
       overflow: hidden;
     }
 
     .noun-card:hover {
-      transform: translateY(-5px) scale(1.015);
-      box-shadow: 0 18px 32px -10px rgba(15, 23, 42, 0.14);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 26px -10px rgba(15, 23, 42, 0.14);
     }
 
     .noun-card.art-der { border-color: #93c5fd; }
@@ -241,7 +273,7 @@
     .noun-card.art-das { border-color: #86efac; }
     .noun-card.art-das:hover { border-color: var(--das-color); background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 42%); }
 
-    /* Hover-to-reveal mystery mode in Level 0 (Esplora & Ascolta — ON by default!) */
+    /* Hover-to-reveal mystery mode in Level 0 (ON by default) */
     .explore-grid.hover-quiz .noun-card { border-color: #e2e8f0 !important; background: #ffffff; }
     .explore-grid.hover-quiz .noun-card.art-der:hover,
     .explore-grid.hover-quiz .noun-card.art-der.revealed { border-color: var(--der-color) !important; background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%); }
@@ -252,7 +284,7 @@
     .explore-grid.hover-quiz .noun-card .art-real { display: none; }
     .explore-grid.hover-quiz .noun-card .art-mystery { display: inline-block; }
     .explore-grid.hover-quiz .noun-card .noun-plural,
-    .explore-grid.hover-quiz .noun-card .hover-cases { opacity: 0; transform: translateY(4px); transition: opacity 0.2s ease, transform 0.2s ease; }
+    .explore-grid.hover-quiz .noun-card .hover-cases { opacity: 0; transform: translateY(3px); transition: opacity 0.18s ease, transform 0.18s ease; }
 
     .explore-grid.hover-quiz .noun-card:hover .art-real,
     .explore-grid.hover-quiz .noun-card.revealed .art-real { display: inline-block; }
@@ -265,25 +297,25 @@
 
     .art-mystery {
       display: none;
-      padding: 2px 10px;
+      padding: 1px 9px;
       border-radius: 999px;
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       background: #fef08a;
       color: #854d0e;
       border: 1.5px dashed #eab308;
     }
 
     .card-visual {
-      width: 128px;
-      height: 128px;
-      border-radius: 16px;
+      width: 118px;
+      height: 118px;
+      border-radius: 14px;
       background: #f8fafc;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      font-size: 4rem;
+      font-size: 3.6rem;
       border: 1px solid #e2e8f0;
     }
 
@@ -291,74 +323,87 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.25s ease;
+      transition: transform 0.22s ease;
     }
-    .noun-card:hover .card-visual img { transform: scale(1.07); }
+    .noun-card:hover .card-visual img { transform: scale(1.06); }
 
     .article-pill {
       display: inline-block;
-      padding: 2px 9px;
+      padding: 1px 8px;
       border-radius: 999px;
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.86rem;
     }
     .article-pill.der { background: var(--der-bg); color: var(--der-color); }
     .article-pill.die { background: var(--die-bg); color: var(--die-color); }
     .article-pill.das { background: var(--das-bg); color: var(--das-color); }
 
-    .noun-title { font-size: 1.2rem; font-weight: 700; color: #0f172a; }
-    .noun-plural {
-      font-size: 0.88rem;
-      color: #b91c1c;
-      background: #fef2f2;
-      padding: 3px 10px;
-      border-radius: 10px;
-      font-weight: 600;
-    }
-    .noun-meta {
-      font-size: 0.76rem;
-      color: #64748b;
-      display: flex;
-      gap: 6px;
+    .noun-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       flex-wrap: wrap;
       justify-content: center;
     }
-    .noun-it { font-size: 0.82rem; color: #475569; font-style: italic; }
+    .noun-plural {
+      font-size: 0.84rem;
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .noun-meta {
+      font-size: 0.74rem;
+      color: #64748b;
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .noun-it { font-size: 0.78rem; color: #475569; font-style: italic; }
 
     .hover-cases {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: #334155;
       background: #f8fafc;
       border: 1px dashed #cbd5e1;
-      border-radius: 10px;
-      padding: 4px 8px;
+      border-radius: 8px;
+      padding: 3px 6px;
       width: 100%;
-      opacity: 0.85;
-      transition: opacity 0.2s;
     }
-    .noun-card:hover .hover-cases { opacity: 1; background: #fffbeb; border-color: #fbbf24; }
 
-    .audio-row { display: flex; gap: 6px; width: 100%; justify-content: center; margin-top: 2px; }
+    .audio-row { display: flex; gap: 5px; width: 100%; justify-content: center; margin-top: 2px; }
     .btn-audio {
       border: 1.5px solid #cbd5e1;
       background: #f8fafc;
       border-radius: 999px;
-      padding: 4px 10px;
+      padding: 3px 8px;
       font-family: inherit;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 600;
       cursor: pointer;
       color: #1e293b;
-      transition: all 0.15s;
+      transition: all 0.14s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
     .btn-audio:hover { background: #eff6ff; border-color: var(--primary); color: var(--primary); }
 
-    /* Game Stage Panel */
+    /* Game / Exam Stage Panel */
     .stage-panel {
       background: white;
-      border-radius: 24px;
-      border: 2px solid #e2e8f0;
-      padding: 22px;
+      border-radius: 20px;
+      border: 1.5px solid #e2e8f0;
+      padding: 18px 20px;
       box-shadow: var(--shadow);
     }
 
@@ -367,49 +412,69 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
-    .stage-title { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; }
-    .stage-subtitle { font-size: 0.9rem; color: #64748b; }
+    .stage-title { font-size: 1.18rem; font-weight: 700; color: #1e3a8a; }
+    .stage-subtitle { font-size: 0.85rem; color: #64748b; }
+
+    .exam-hud {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hud-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .hud-pill.points { background: #fef9c3; color: #854d0e; border-color: #facc15; }
+    .hud-pill.ok { background: #dcfce7; color: #166534; border-color: #86efac; }
 
     .progress-track {
       width: 100%;
-      height: 10px;
+      height: 8px;
       background: #e2e8f0;
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
     .progress-fill {
       height: 100%;
       background: linear-gradient(90deg, #2563eb, #16a34a);
-      transition: width 0.3s ease;
+      transition: width 0.28s ease;
     }
 
     .prompt-card {
-      max-width: 440px;
-      margin: 0 auto 18px;
+      max-width: 400px;
+      margin: 0 auto 14px;
       background: #f8fafc;
-      border: 2.5px dashed #94a3b8;
-      border-radius: 22px;
-      padding: 18px;
+      border: 2px dashed #94a3b8;
+      border-radius: 20px;
+      padding: 14px;
       text-align: center;
       cursor: grab;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.18s;
     }
     .prompt-card:active { cursor: grabbing; transform: scale(0.98); }
-    .prompt-card .card-visual { width: 168px; height: 168px; margin: 0 auto 10px; font-size: 5rem; }
+    .prompt-card .card-visual { width: 152px; height: 152px; margin: 0 auto 8px; font-size: 4.5rem; }
 
     .mystery-word {
-      font-size: 1.85rem;
+      font-size: 1.7rem;
       font-weight: 700;
       color: #0f172a;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
@@ -417,9 +482,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 62px;
-      padding: 2px 12px;
-      border-radius: 12px;
+      min-width: 56px;
+      padding: 2px 10px;
+      border-radius: 10px;
       background: #fef08a;
       color: #854d0e;
       border: 2px dashed #eab308;
@@ -429,35 +494,35 @@
     .drop-zones-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      max-width: 720px;
+      gap: 10px;
+      max-width: 680px;
       margin: 0 auto;
     }
 
     .drop-zones-4 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-      gap: 12px;
-      max-width: 820px;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 10px;
+      max-width: 760px;
       margin: 0 auto;
     }
 
     .drop-zone {
-      border-radius: 20px;
-      padding: 18px 12px;
+      border-radius: 16px;
+      padding: 14px 10px;
       text-align: center;
       font-family: inherit;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 700;
       cursor: pointer;
-      border: 3px solid transparent;
-      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      border: 2.5px solid transparent;
+      transition: transform 0.14s, box-shadow 0.14s;
     }
     .drop-zone:hover, .drop-zone.drag-over {
-      transform: translateY(-4px) scale(1.03);
-      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.11);
     }
-    .drop-zone small { display: block; font-size: 0.78rem; font-weight: 600; opacity: 0.82; margin-top: 3px; }
+    .drop-zone small { display: block; font-size: 0.74rem; font-weight: 600; opacity: 0.82; margin-top: 2px; }
 
     .dz-der { background: var(--der-bg); color: var(--der-color); border-color: #93c5fd; }
     .dz-die { background: var(--die-bg); color: var(--die-color); border-color: #f9a8d4; }
@@ -465,31 +530,99 @@
 
     .feedback-banner {
       max-width: 640px;
-      margin: 16px auto 0;
-      padding: 12px 16px;
-      border-radius: 16px;
+      margin: 14px auto 0;
+      padding: 10px 14px;
+      border-radius: 14px;
       text-align: center;
       font-weight: 600;
-      font-size: 1rem;
-      min-height: 48px;
+      font-size: 0.94rem;
+      min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
-    .feedback-banner.ok { background: #dcfce7; color: #166534; border: 2px solid #4ade80; }
-    .feedback-banner.err { background: #fee2e2; color: #991b1b; border: 2px solid #f87171; }
+    .feedback-banner.ok { background: #dcfce7; color: #166534; border: 1.5px solid #4ade80; }
+    .feedback-banner.err { background: #fee2e2; color: #991b1b; border: 1.5px solid #f87171; }
     .feedback-banner.info { background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; }
 
+    /* Exam Completion Summary */
+    .exam-summary {
+      text-align: center;
+      padding: 12px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .exam-score-big {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      font-variant-numeric: tabular-nums;
+    }
+    .exam-stars-row { font-size: 2rem; letter-spacing: 6px; }
+    .exam-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(110px, 160px));
+      gap: 10px;
+    }
+    .stat-box {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 10px;
+    }
+    .stat-box b { display: block; font-size: 1.25rem; color: #0f172a; font-variant-numeric: tabular-nums; }
+    .stat-box span { font-size: 0.76rem; color: #64748b; }
+
+    .mistakes-list {
+      width: 100%;
+      max-width: 560px;
+      text-align: left;
+      background: #fef2f2;
+      border: 1.5px solid #fecaca;
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .mistake-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: white;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+
+    .summary-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
     /* Level 3: Einzahl/Mehrzahl 4x4 grid + Plural Quiz */
-    .submode-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .submode-bar { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .chip {
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .chip.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
 
     .em-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      max-width: 780px;
+      gap: 8px;
+      max-width: 740px;
       margin: 0 auto;
     }
     @media (max-width: 640px) {
@@ -497,15 +630,15 @@
     }
 
     .em-cell {
-      padding: 14px 10px;
-      border-radius: 14px;
+      padding: 12px 8px;
+      border-radius: 12px;
       border: 2px solid #cbd5e1;
       background: #f8fafc;
       font-family: inherit;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.16s;
+      transition: all 0.15s;
       color: #0f172a;
     }
     .em-cell:hover { transform: translateY(-2px); border-color: #64748b; }
@@ -513,135 +646,123 @@
     .em-cell.painted-pl { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
     .em-cell.wrong-shake { animation: shake 0.35s ease; border-color: #f59e0b; }
 
-    .brush-bar {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
+    .brush-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
     .brush-btn {
-      padding: 8px 18px;
+      padding: 6px 14px;
       border-radius: 999px;
       font-family: inherit;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       cursor: pointer;
-      border: 3px solid transparent;
+      border: 2.5px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     .brush-sg { background: #dbeafe; color: #1d4ed8; }
     .brush-pl { background: #fee2e2; color: #b91c1c; }
-    .brush-btn.active { border-color: #0f172a; transform: scale(1.05); }
+    .brush-btn.active { border-color: #0f172a; transform: scale(1.04); }
 
     .options-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      max-width: 560px;
+      gap: 10px;
+      max-width: 540px;
       margin: 0 auto;
     }
     .opt-btn {
-      padding: 14px 12px;
-      border-radius: 16px;
+      padding: 12px 10px;
+      border-radius: 14px;
       border: 2px solid #cbd5e1;
       background: white;
       font-family: inherit;
-      font-size: 1.15rem;
+      font-size: 1.08rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.14s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
     .opt-btn:hover { border-color: var(--primary); background: #eff6ff; transform: translateY(-2px); }
     .opt-btn.correct { background: #dcfce7; border-color: #16a34a; color: #166534; }
     .opt-btn.wrong { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
 
-    /* Level 4: Phonics token selector */
-    .phonics-word {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 18px 0;
-    }
+    /* Level 4: Phonics */
+    .phonics-word { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin: 14px 0; }
     .phonics-tile {
-      min-width: 52px;
-      height: 62px;
-      padding: 0 12px;
-      border-radius: 16px;
-      border: 3px solid #cbd5e1;
+      min-width: 48px;
+      height: 56px;
+      padding: 0 10px;
+      border-radius: 14px;
+      border: 2.5px solid #cbd5e1;
       background: white;
       font-family: inherit;
-      font-size: 1.8rem;
+      font-size: 1.65rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.14s;
     }
-    .phonics-tile:hover { transform: translateY(-3px); border-color: #6366f1; }
+    .phonics-tile:hover { transform: translateY(-2px); border-color: #6366f1; }
     .phonics-tile.picked-ok { background: #dcfce7; border-color: #16a34a; color: #166534; }
     .phonics-tile.picked-err { background: #fee2e2; border-color: #dc2626; color: #991b1b; animation: shake 0.3s; }
 
     /* Level 5: Keyboard Typing + Umlaut Pad */
-    .typing-box {
-      max-width: 540px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .typing-input-row {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-    }
-
+    .typing-box { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+    .typing-input-row { display: flex; gap: 8px; width: 100%; }
     .typing-input {
       flex: 1;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 3px solid #94a3b8;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 2.5px solid #94a3b8;
       font-family: inherit;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 700;
       text-align: center;
       outline: none;
     }
-    .typing-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); }
+    .typing-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
 
     .btn-primary {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 12px 20px;
-      border-radius: 16px;
+      padding: 10px 18px;
+      border-radius: 14px;
       font-family: inherit;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.14s;
     }
     .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
 
-    .umlaut-pad {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 1.5px solid #cbd5e1;
+      padding: 10px 16px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
     }
+    .btn-secondary:hover { background: #e2e8f0; }
+
+    .umlaut-pad { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
     .umlaut-key {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      border: 2px solid #cbd5e1;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 1.5px solid #cbd5e1;
       background: #fffbeb;
       color: #92400e;
       font-family: inherit;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.12s;
     }
     .umlaut-key:hover { background: #fef08a; border-color: #eab308; transform: translateY(-2px); }
 
@@ -653,9 +774,9 @@
 
     footer {
       text-align: center;
-      padding: 14px;
+      padding: 12px;
       color: #64748b;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       border-top: 1px solid #e2e8f0;
       background: white;
     }
@@ -666,84 +787,65 @@
   <header>
     <div class="brand">
       <h1>Ale German</h1>
-      <span class="badge-ale" id="profileBadge">Für Alessandro</span>
     </div>
 
     <div class="nav-tabs" id="germanNavTabs">
-      <button type="button" class="nav-tab active" data-nav-level="0" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">🃏 Esplora</button>
-      <button type="button" class="nav-tab" data-nav-level="1" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">🔵 der/die/das</button>
-      <button type="button" class="nav-tab" data-nav-level="2" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">📦 Categorie</button>
-      <button type="button" class="nav-tab" data-nav-level="3" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">🔢 Plurali</button>
-      <button type="button" class="nav-tab" data-nav-level="4" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">🔤 Laute</button>
-      <button type="button" class="nav-tab" data-nav-level="5" style="border:none;background:transparent;cursor:pointer;font-family:inherit;">⌨️ Tastiera</button>
+      <button type="button" class="nav-tab active" data-nav-level="0">Esplora</button>
+      <button type="button" class="nav-tab" data-nav-level="1">der/die/das</button>
+      <button type="button" class="nav-tab" data-nav-level="2">Categorie</button>
+      <button type="button" class="nav-tab" data-nav-level="3">Plurali</button>
+      <button type="button" class="nav-tab" data-nav-level="4">Laute</button>
+      <button type="button" class="nav-tab" data-nav-level="5">Tastiera</button>
     </div>
 
     <div class="nav-actions">
-      <button class="btn-pill active" id="btnToggleIt" type="button">🇮🇹 IT: ON</button>
-      <div class="score-pill" id="scorePill">⭐ <span id="starCount">0</span> · 🔥 <span id="streakCount">0</span></div>
       <puffin-login id="puffin-widget" app-id="ale-french"></puffin-login>
     </div>
   </header>
 
-  <main>
-    <!-- Progressive Skill Ladder -->
-    <section class="level-ladder" aria-label="Livelli di abilità crescenti">
-      <button class="level-btn active" data-level="0" type="button">
-        <span class="level-stars">👀 LIVELLO 0</span>
-        <span class="level-title">🃏 Esplora &amp; Ascolta</span>
-        <span class="level-sub">Hover, immagini &amp; audio DE</span>
-      </button>
-      <button class="level-btn" data-level="1" type="button">
-        <span class="level-stars">⭐ LIVELLO 1 · MOUSE</span>
-        <span class="level-title">🔵🩷🟢 der / die / das</span>
-        <span class="level-sub">Drag &amp; Drop o click</span>
-      </button>
-      <button class="level-btn" data-level="2" type="button">
-        <span class="level-stars">⭐⭐ LIVELLO 2 · SCHEDA 2</span>
-        <span class="level-title">📦 Nomen sortieren</span>
-        <span class="level-sub">Menschen · Tiere · Pflanzen · Dinge</span>
-      </button>
-      <button class="level-btn" data-level="3" type="button">
-        <span class="level-stars">⭐⭐⭐ LIVELLO 3 · SCHEDA 1</span>
-        <span class="level-title">🔢 Einzahl &amp; Mehrzahl</span>
-        <span class="level-sub">Blu/Rosso + Plurali con Umlaut</span>
-      </button>
-      <button class="level-btn" data-level="4" type="button">
-        <span class="level-stars">⭐⭐⭐⭐ LIVELLO 4 · SCHEDA 3</span>
-        <span class="level-title">🔤 Vokale &amp; Umlaute</span>
-        <span class="level-sub">Trova ä, ö, ü, eu, ei, au</span>
-      </button>
-      <button class="level-btn" data-level="5" type="button">
-        <span class="level-stars">⭐⭐⭐⭐⭐ LIVELLO 5 · TASTIERA</span>
-        <span class="level-title">⌨️ Scrivi le Parole!</span>
-        <span class="level-sub">Tastiera PC + barra ä ö ü ß</span>
-      </button>
-    </section>
-
-    <!-- Worksheet Filter Bar -->
-    <section class="filter-bar">
-      <div class="filter-chips" id="worksheetFilters">
-        <button class="chip active" data-filter="all" type="button">✨ Tutti (51)</button>
-        <button class="chip" data-filter="illustrated" type="button">🍌 Illustrati (28)</button>
-        <button class="chip" data-filter="1" type="button">📄 Scheda 1: Plurali</button>
-        <button class="chip" data-filter="2" type="button">📄 Scheda 2: Categorie</button>
-        <button class="chip" data-filter="3" type="button">📄 Scheda 3: Animali &amp; Laute</button>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.82rem;color:#64748b;">
-        <button class="chip active" id="btnHoverQuiz" type="button" title="Nasconde articolo e plurale finché non passi col mouse sulla carta">👁️ Hover ? → ATTIVO</button>
-        <span>
-          <span class="article-pill der">der</span> Maskulin ·
-          <span class="article-pill die">die</span> Feminin ·
-          <span class="article-pill das">das</span> Neutrum
-        </span>
-      </div>
-    </section>
-
+  <main class="workspace">
     <div id="appStage"></div>
+
+    <aside class="side-rail" aria-label="Filtri e opzioni">
+      <div class="rail-score" id="scorePill">
+        <span>⭐ <span id="starCount">0</span></span>
+        <span>🔥 <span id="streakCount">0</span></span>
+      </div>
+
+      <div class="rail-card" id="worksheetFilters">
+        <div class="rail-title">Schede</div>
+        <button class="rail-chip active" data-filter="all" type="button"><span>Tutti</span><span>51</span></button>
+        <button class="rail-chip" data-filter="illustrated" type="button"><span>Illustrati</span><span>28</span></button>
+        <button class="rail-chip" data-filter="1" type="button"><span>Scheda 1 · Plurali</span><span>14</span></button>
+        <button class="rail-chip" data-filter="2" type="button"><span>Scheda 2 · Categorie</span><span>23</span></button>
+        <button class="rail-chip" data-filter="3" type="button"><span>Scheda 3 · Laute</span><span>14</span></button>
+      </div>
+
+      <div class="rail-card">
+        <div class="rail-title">Vista</div>
+        <button class="rail-toggle active" id="btnHoverQuiz" type="button" title="Nasconde articolo e plurale finché non passi col mouse sulla carta">Hover ?: ATTIVO</button>
+        <button class="rail-toggle active" id="btnToggleIt" type="button">Traduzione IT: ON</button>
+      </div>
+
+      <div class="rail-card">
+        <div class="rail-title">Legenda</div>
+        <div class="legend-row"><span class="article-pill der">der</span> Maskulin</div>
+        <div class="legend-row"><span class="article-pill die">die</span> Feminin</div>
+        <div class="legend-row"><span class="article-pill das">das</span> Neutrum</div>
+        <div class="legend-row" style="margin-top:3px;color:#1e40af;">
+          <svg class="num-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg>
+          Einzahl (1)
+        </div>
+        <div class="legend-row" style="color:#b91c1c;">
+          <svg class="num-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="11" r="3.5"/><path d="M3 21a6 6 0 0 1 12 0"/><circle cx="16.5" cy="6.5" r="3"/><path d="M16.5 11.5a5 5 0 0 1 5 5"/></svg>
+          Mehrzahl (2+)
+        </div>
+      </div>
+    </aside>
   </main>
 
   <footer>
-    🇩🇪 Ale Deutsch · Modulo Tandem IMS (Primary 3) · Audio generato con <strong>gemini-3.8-flash-tts</strong> ·
+    Ale German · Modulo Tandem IMS (Primary 3) · Audio <strong>gemini-3.8-flash-tts</strong> ·
     <a href="https://github.com/palladius/ale-french" target="_blank" rel="noopener">GitHub</a>
   </footer>
 
@@ -761,7 +863,20 @@
         evaluateGermanTyping
       } = window.GERMAN_DATA;
 
+      // Clean monochrome SVG icons: 1 silhouette = Einzahl, 2 overlapping (NE offset) = Mehrzahl
+      const ICON_SINGULAR = '<svg class="num-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg>';
+      const ICON_PLURAL = '<svg class="num-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="11" r="3.5"/><path d="M3 21a6 6 0 0 1 12 0"/><circle cx="16.5" cy="6.5" r="3"/><path d="M16.5 11.5a5 5 0 0 1 5 5"/></svg>';
+
+      const EXAM_LENGTH = 10;
       const STORAGE_KEY = 'ale_deutsch_progress_v1';
+      const LEVEL_LABELS = {
+        1: 'Livello 1 · der / die / das',
+        2: 'Livello 2 · Nomen sortieren',
+        3: 'Livello 3 · Einzahl & Mehrzahl',
+        4: 'Livello 4 · Vokale & Umlaute',
+        5: 'Livello 5 · Tastiera'
+      };
+
       let state = {
         level: 0,
         filter: 'all',
@@ -774,9 +889,9 @@
         l3Mode: 'plural', // 'plural' | 'grid'
         l3Brush: 'sg',
         l3GridPainted: {},
-        l4TargetType: 'umlaut',
         l4Picked: new Set(),
-        l5Mode: 'singular' // 'singular' | 'plural'
+        l5Mode: 'singular', // 'singular' | 'plural'
+        exam: null
       };
 
       try {
@@ -793,7 +908,22 @@
         document.getElementById('streakCount').textContent = state.streak;
       }
 
-      function addReward(ok, itemLabel, modeTag) {
+      function createExamSession(total) {
+        return {
+          total: Math.min(EXAM_LENGTH, Math.max(1, total)),
+          answered: 0,
+          firstTryCorrect: 0,
+          points: 0,
+          bestStreak: 0,
+          currentStreak: 0,
+          hadMistakeOnCurrent: false,
+          mistakes: [],
+          startedAt: new Date().toISOString(),
+          finished: false
+        };
+      }
+
+      function recordExamAttempt(ok, noun, answerLabel, modeTag) {
         if (ok) {
           state.stars += 1;
           state.streak += 1;
@@ -801,12 +931,62 @@
           state.streak = 0;
         }
         saveProgress();
+
+        if (state.exam && !state.exam.finished) {
+          if (ok) {
+            state.exam.answered += 1;
+            if (!state.exam.hadMistakeOnCurrent) {
+              state.exam.firstTryCorrect += 1;
+              state.exam.currentStreak += 1;
+              if (state.exam.currentStreak > state.exam.bestStreak) {
+                state.exam.bestStreak = state.exam.currentStreak;
+              }
+              state.exam.points += 100 + Math.min(state.exam.currentStreak - 1, 5) * 20;
+            } else {
+              state.exam.currentStreak = 0;
+              state.exam.points += 30;
+            }
+          } else {
+            if (!state.exam.hadMistakeOnCurrent) {
+              state.exam.hadMistakeOnCurrent = true;
+              state.exam.currentStreak = 0;
+              state.exam.mistakes.push({
+                phrase: answerLabel,
+                noun
+              });
+            }
+          }
+        }
+
         if (typeof window.recordFrenchTelemetry === 'function') {
           try {
             window.recordFrenchTelemetry({
-              item: itemLabel,
+              item: answerLabel,
               mode: `deutsch-${modeTag}`,
               correct: ok
+            });
+          } catch (_) {}
+        }
+      }
+
+      function submitExamToPuffin(levelNum, exam) {
+        const endedIso = new Date().toISOString();
+        const durationSec = Math.max(1, Math.round((Date.parse(endedIso) - Date.parse(exam.startedAt)) / 1000));
+        if (window.PuffinLogin && typeof window.PuffinLogin.submitScore === 'function') {
+          try {
+            window.PuffinLogin.submitScore({
+              appId: 'ale-french',
+              score: exam.points,
+              mode: `deutsch-l${levelNum}`,
+              started_at: exam.startedAt,
+              ended_at: endedIso,
+              duration_sec: durationSec,
+              extra: {
+                language: 'de',
+                level: levelNum,
+                correct: exam.firstTryCorrect,
+                total: exam.total
+              }
             });
           } catch (_) {}
         }
@@ -845,7 +1025,6 @@
       function prepareDeckForLevel() {
         let pool = getFilteredNouns();
         if (state.level === 4) {
-          // Level 4 focuses on words that actually have Umlaute or Zwielaute or Vokale
           pool = GERMAN_NOUNS.filter((n) => {
             const toks = tokenizeGermanPhonics(n.singular);
             return toks.some((t) => t.type === 'umlaut' || t.type === 'zwielaut' || n.worksheet === 3);
@@ -855,6 +1034,7 @@
         state.qIndex = 0;
         state.l4Picked = new Set();
         state.l3GridPainted = {};
+        state.exam = state.level > 0 ? createExamSession(state.deck.length) : null;
       }
 
       function currentNoun() {
@@ -862,10 +1042,94 @@
         return state.deck[state.qIndex % state.deck.length];
       }
 
-      function nextQuestion() {
+      function advanceExamOrNext() {
+        if (state.exam && state.exam.answered >= state.exam.total) {
+          state.exam.finished = true;
+          submitExamToPuffin(state.level, state.exam);
+          renderStage();
+          return;
+        }
         state.qIndex = (state.qIndex + 1) % state.deck.length;
         state.l4Picked = new Set();
+        if (state.exam) state.exam.hadMistakeOnCurrent = false;
         renderStage();
+      }
+
+      function renderExamHud() {
+        if (!state.exam) return '';
+        const qNum = Math.min(state.exam.answered + 1, state.exam.total);
+        return `
+          <div class="exam-hud">
+            <span class="hud-pill">Domanda ${qNum} / ${state.exam.total}</span>
+            <span class="hud-pill ok">✅ ${state.exam.firstTryCorrect}</span>
+            <span class="hud-pill points">🏆 ${state.exam.points} pt</span>
+          </div>
+        `;
+      }
+
+      function examProgressPct() {
+        if (!state.exam) return 0;
+        return Math.round((state.exam.answered / state.exam.total) * 100);
+      }
+
+      function renderExamSummary(stage) {
+        const ex = state.exam;
+        const pct = Math.round((ex.firstTryCorrect / ex.total) * 100);
+        const starsText = pct >= 90 ? '⭐⭐⭐' : pct >= 70 ? '⭐⭐' : '⭐';
+        const praise =
+          pct === 100
+            ? 'PERFETTO! 100% al primo colpo!'
+            : pct >= 80
+              ? 'Bravissimo! Ottimo esame!'
+              : pct >= 60
+                ? 'Buon lavoro! Continua così!'
+                : 'Ottimo allenamento! Ripassa le parole qui sotto e riprova!';
+
+        stage.innerHTML = `
+          <div class="stage-panel">
+            <div class="exam-summary">
+              <div style="font-size:0.9rem;font-weight:700;color:#64748b;">${LEVEL_LABELS[state.level] || 'Esame Tedesco'}</div>
+              <div class="exam-stars-row">${starsText}</div>
+              <div class="exam-score-big">${ex.firstTryCorrect} / ${ex.total} (${pct}%)</div>
+              <div style="font-size:1.05rem;font-weight:600;color:#166534;">${praise}</div>
+
+              <div class="exam-stats-grid">
+                <div class="stat-box"><b>${ex.points} pt</b><span>Punti Esame</span></div>
+                <div class="stat-box"><b>${ex.bestStreak}</b><span>Serie Migliore</span></div>
+                <div class="stat-box"><b>${ex.mistakes.length}</b><span>Da Ripassare</span></div>
+              </div>
+
+              ${ex.mistakes.length > 0 ? `
+                <div class="mistakes-list">
+                  <div style="font-weight:700;color:#991b1b;font-size:0.86rem;">Parole da ripassare:</div>
+                  ${ex.mistakes.map((m) => `
+                    <div class="mistake-item">
+                      <span><b>${m.phrase}</b> <span style="color:#64748b;">(${m.noun.it})</span></span>
+                      <button class="btn-audio" type="button" data-speak="${m.phrase}">🔊 Ascolta</button>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+
+              <div class="summary-actions">
+                <button class="btn-primary" id="btnRestartExam" type="button">🔄 Nuovo Esame (10 domande)</button>
+                ${state.level < 5 ? `<button class="btn-secondary" id="btnNextLevel" type="button">➡️ Livello Successivo</button>` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+
+        stage.querySelectorAll('.btn-audio').forEach((btn) => {
+          btn.addEventListener('click', () => speakDe(btn.dataset.speak));
+        });
+        document.getElementById('btnRestartExam').addEventListener('click', () => {
+          prepareDeckForLevel();
+          renderStage();
+        });
+        const nextBtn = document.getElementById('btnNextLevel');
+        if (nextBtn) {
+          nextBtn.addEventListener('click', () => selectLevel(state.level + 1));
+        }
       }
 
       // === RENDER LEVEL 0: EXPLORE ===
@@ -879,20 +1143,24 @@
               ${renderVisualHtml(n)}
               <div class="noun-title">
                 <span class="art-mystery">?</span>
-                <span class="article-pill ${n.article} art-real">${n.article}</span> ${n.singular}
+                <span class="article-pill ${n.article} art-real">${n.article}</span>
+                <span>${n.singular}</span>
               </div>
-              <div class="noun-plural" title="1. Möglichkeit: viele ${n.plural} · 2. Möglichkeit: die ${n.plural}">die ${n.plural}</div>
+              <div class="noun-plural" title="Mehrzahl (Plurale): die ${n.plural} / viele ${n.plural}">
+                ${ICON_PLURAL}
+                <span>die ${n.plural}</span>
+              </div>
               ${state.showIt ? `<div class="noun-it">${n.it} / ${n.itPlural}</div>` : ''}
               <div class="noun-meta">
-                <span>${cat.emoji} ${cat.label}</span>
+                <span>${cat.label}</span>
                 <span>· ${n.pluralRule}</span>
               </div>
               <div class="hover-cases">
                 ${art.indef} ${n.singular} · Akk: <b>${art.akk}</b> · Dat: <b>${art.dat}</b>
               </div>
               <div class="audio-row">
-                <button class="btn-audio" type="button" data-speak="${n.article} ${n.singular}">🔊 Einzahl</button>
-                <button class="btn-audio" type="button" data-speak="die ${n.plural}">🔊 Mehrzahl</button>
+                <button class="btn-audio" type="button" data-speak="${n.article} ${n.singular}">${ICON_SINGULAR} Einzahl</button>
+                <button class="btn-audio" type="button" data-speak="die ${n.plural}">${ICON_PLURAL} Mehrzahl</button>
               </div>
             </article>
           `;
@@ -913,20 +1181,20 @@
         });
       }
 
-      // === RENDER LEVEL 1: DER / DIE / DAS (DRAG & DROP OR CLICK) ===
+      // === RENDER LEVEL 1: DER / DIE / DAS EXAM (10 QUESTIONS) ===
       function renderLevel1(stage) {
+        if (state.exam && state.exam.finished) return renderExamSummary(stage);
         const n = currentNoun();
-        const pct = Math.round(((state.qIndex % 10) / 10) * 100);
         stage.innerHTML = `
           <div class="stage-panel">
             <div class="stage-header">
               <div>
-                <div class="stage-title">⭐ Livello 1: Scegli l'articolo giusto (der / die / das)</div>
-                <div class="stage-subtitle">Trascina la carta nel cesto giusto oppure clicca il pulsante colorato!</div>
+                <div class="stage-title">Esame der / die / das</div>
+                <div class="stage-subtitle">Trascina la carta o clicca l'articolo giusto · 10 domande con punteggio!</div>
               </div>
-              <button class="btn-audio" id="btnHearL1" type="button">🔊 Ascolta "${n.singular}"</button>
+              ${renderExamHud()}
             </div>
-            <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="progress-track"><div class="progress-fill" style="width:${examProgressPct()}%"></div></div>
 
             <div class="prompt-card" id="dragCardL1" draggable="true">
               ${renderVisualHtml(n)}
@@ -934,40 +1202,43 @@
                 <span class="mystery-box">?</span>
                 <span>${n.singular}</span>
               </div>
-              ${state.showIt ? `<div class="noun-it" style="margin-top:6px;">(${n.it})</div>` : ''}
+              ${state.showIt ? `<div class="noun-it" style="margin-top:4px;">(${n.it})</div>` : ''}
+              <div style="margin-top:8px;">
+                <button class="btn-audio" id="btnHearL1" type="button">🔊 Ascolta "${n.singular}"</button>
+              </div>
             </div>
 
             <div class="drop-zones-3">
-              <button class="drop-zone dz-der" data-art="der" type="button">🔵 der<small>Maskulin · ein / einen</small></button>
-              <button class="drop-zone dz-die" data-art="die" type="button">🩷 die<small>Feminin · eine</small></button>
-              <button class="drop-zone dz-das" data-art="das" type="button">🟢 das<small>Neutrum · ein</small></button>
+              <button class="drop-zone dz-der" data-art="der" type="button">der<small>Maskulin · ein / einen</small></button>
+              <button class="drop-zone dz-die" data-art="die" type="button">die<small>Feminin · eine</small></button>
+              <button class="drop-zone dz-das" data-art="das" type="button">das<small>Neutrum · ein</small></button>
             </div>
 
-            <div class="feedback-banner info" id="fbL1">Trascina la carta o scegli <b>der</b>, <b>die</b> o <b>das</b>!</div>
+            <div class="feedback-banner info" id="fbL1">Trascina la carta o clicca <b>der</b>, <b>die</b> o <b>das</b>!</div>
           </div>
         `;
 
         const card = document.getElementById('dragCardL1');
-        card.addEventListener('dragstart', (e) => {
-          e.dataTransfer.setData('text/plain', n.id);
-        });
+        card.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', n.id));
         document.getElementById('btnHearL1').addEventListener('click', () => speakDe(`${n.article} ${n.singular}`));
 
         let answered = false;
         function checkArt(chosen) {
           if (answered) return;
           const fb = document.getElementById('fbL1');
+          const phrase = `${n.article} ${n.singular}`;
           if (chosen === n.article) {
             answered = true;
-            addReward(true, `${n.article} ${n.singular}`, 'l1-article');
+            const firstTry = !state.exam?.hadMistakeOnCurrent;
+            recordExamAttempt(true, n, phrase, 'l1-article');
             fb.className = 'feedback-banner ok';
-            fb.innerHTML = `✅ Super! <b>${n.article} ${n.singular}</b> (${GERMAN_ARTICLES[n.article].indef} ${n.singular}) · Plurale: <b>die ${n.plural}</b>`;
-            speakDe(`${n.article} ${n.singular}`);
-            setTimeout(nextQuestion, 1300);
+            fb.innerHTML = `✅ ${firstTry ? '+100 pt!' : '+30 pt'} <b>${phrase}</b> · Plurale: ${ICON_PLURAL} <b>die ${n.plural}</b>`;
+            speakDe(phrase);
+            setTimeout(advanceExamOrNext, 1150);
           } else {
-            addReward(false, `${n.article} ${n.singular}`, 'l1-article');
+            recordExamAttempt(false, n, phrase, 'l1-article');
             fb.className = 'feedback-banner err';
-            fb.innerHTML = `❌ Non è "${chosen}" — riprova! Indizio: pensa al colore di ${n.singular}.`;
+            fb.innerHTML = `❌ Non è "${chosen}" — riprova per trovare quello giusto!`;
           }
         }
 
@@ -983,21 +1254,21 @@
         });
       }
 
-      // === RENDER LEVEL 2: NOMEN SORTIEREN (SCHEDA 2 — DRAG & DROP) ===
+      // === RENDER LEVEL 2: NOMEN SORTIEREN EXAM (SCHEDA 2) ===
       function renderLevel2(stage) {
+        if (state.exam && state.exam.finished) return renderExamSummary(stage);
         const n = currentNoun();
-        const pct = Math.round(((state.qIndex % 10) / 10) * 100);
         const cats = Object.values(GERMAN_CATEGORIES);
         stage.innerHTML = `
           <div class="stage-panel">
             <div class="stage-header">
               <div>
-                <div class="stage-title">⭐⭐ Livello 2: Nomen sortieren (Scheda 2)</div>
+                <div class="stage-title">Esame Nomen sortieren (Scheda 2)</div>
                 <div class="stage-subtitle">Trascina o clicca la categoria giusta: Menschen · Tiere · Pflanzen · Dinge</div>
               </div>
-              <button class="btn-audio" id="btnHearL2" type="button">🔊 Ascolta</button>
+              ${renderExamHud()}
             </div>
-            <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="progress-track"><div class="progress-fill" style="width:${examProgressPct()}%"></div></div>
 
             <div class="prompt-card" id="dragCardL2" draggable="true">
               ${renderVisualHtml(n)}
@@ -1005,14 +1276,17 @@
                 <span class="article-pill ${n.article}">${n.article}</span>
                 <span>${n.singular}</span>
               </div>
-              ${state.showIt ? `<div class="noun-it" style="margin-top:6px;">(${n.it})</div>` : ''}
+              ${state.showIt ? `<div class="noun-it" style="margin-top:4px;">(${n.it})</div>` : ''}
+              <div style="margin-top:8px;">
+                <button class="btn-audio" id="btnHearL2" type="button">🔊 Ascolta</button>
+              </div>
             </div>
 
             <div class="drop-zones-4">
               ${cats.map((c) => `
                 <button class="drop-zone" data-cat="${c.id}" type="button"
                   style="background:${c.bg};color:${c.color};border-color:${c.border};">
-                  ${c.emoji} ${c.label}<small>${c.it}</small>
+                  ${c.label}<small>${c.it}</small>
                 </button>
               `).join('')}
             </div>
@@ -1021,24 +1295,23 @@
           </div>
         `;
 
-        document.getElementById('dragCardL2').addEventListener('dragstart', (e) => {
-          e.dataTransfer.setData('text/plain', n.id);
-        });
+        document.getElementById('dragCardL2').addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', n.id));
         document.getElementById('btnHearL2').addEventListener('click', () => speakDe(`${n.article} ${n.singular}`));
 
         let answered = false;
         function checkCat(chosen) {
           if (answered) return;
           const fb = document.getElementById('fbL2');
+          const phrase = `${n.article} ${n.singular}`;
           if (chosen === n.category) {
             answered = true;
-            addReward(true, n.singular, 'l2-category');
+            recordExamAttempt(true, n, phrase, 'l2-category');
             fb.className = 'feedback-banner ok';
-            fb.innerHTML = `✅ Perfetto! <b>${n.article} ${n.singular}</b> è nella categoria <b>${n.category}</b>!`;
-            speakDe(`${n.article} ${n.singular}`);
-            setTimeout(nextQuestion, 1150);
+            fb.innerHTML = `✅ Perfetto! <b>${phrase}</b> è nella categoria <b>${n.category}</b>!`;
+            speakDe(phrase);
+            setTimeout(advanceExamOrNext, 1050);
           } else {
-            addReward(false, n.singular, 'l2-category');
+            recordExamAttempt(false, n, phrase, 'l2-category');
             fb.className = 'feedback-banner err';
             fb.innerHTML = `❌ Non è ${chosen}. Riprova!`;
           }
@@ -1059,7 +1332,6 @@
       // === RENDER LEVEL 3: EINZAHL & MEHRZAHL (SCHEDA 1) ===
       function renderLevel3(stage) {
         if (state.l3Mode === 'grid') {
-          // Exact recreation of Scheda 1 Exercise 2 (4x4 Einzahl blau / Mehrzahl rot)
           const worksheetPairs = GERMAN_NOUNS.filter((n) =>
             ['der-kuerbis', 'das-kind', 'das-pferd', 'der-loewe', 'der-schrank', 'die-jahreszeit', 'der-fuss', 'die-ampel'].includes(n.id)
           );
@@ -1068,7 +1340,6 @@
             cells.push({ key: `${n.id}-sg`, text: `${n.article} ${n.singular}`, kind: 'sg' });
             cells.push({ key: `${n.id}-pl`, text: `die ${n.plural}`, kind: 'pl' });
           });
-          // Deterministic pleasant order matching Scheda 1
           const order = [0, 3, 5, 7, 8, 10, 6, 14, 11, 12, 1, 2, 4, 9, 13, 15];
           const gridItems = order.map((i) => cells[i]).filter(Boolean);
           const solvedCount = Object.keys(state.l3GridPainted).length;
@@ -1077,18 +1348,18 @@
             <div class="stage-panel">
               <div class="stage-header">
                 <div>
-                  <div class="stage-title">⭐⭐⭐ Livello 3: Einzahl (blu) vs Mehrzahl (rosso)</div>
-                  <div class="stage-subtitle">Scegli il pennello e colora la griglia 4×4 della Scheda 1! (${solvedCount}/16)</div>
+                  <div class="stage-title">Einzahl (blu) vs Mehrzahl (rosso) · Griglia 4×4</div>
+                  <div class="stage-subtitle">Scegli il pennello e colora tutte le 16 caselle della Scheda 1 (${solvedCount}/16)</div>
                 </div>
                 <div class="submode-bar">
-                  <button class="chip" id="btnL3Plural" type="button">🎯 Trasforma al Plurale</button>
-                  <button class="chip active" id="btnL3Grid" type="button">🎨 Griglia 4×4 Blu/Rosso</button>
+                  <button class="chip" id="btnL3Plural" type="button">Esame Plurale (10)</button>
+                  <button class="chip active" id="btnL3Grid" type="button">Griglia 4×4 Blu/Rosso</button>
                 </div>
               </div>
 
               <div class="brush-bar">
-                <button class="brush-btn brush-sg ${state.l3Brush === 'sg' ? 'active' : ''}" id="brushSg" type="button">🔵 Pennello Einzahl (Singolare)</button>
-                <button class="brush-btn brush-pl ${state.l3Brush === 'pl' ? 'active' : ''}" id="brushPl" type="button">🔴 Pennello Mehrzahl (Plurale)</button>
+                <button class="brush-btn brush-sg ${state.l3Brush === 'sg' ? 'active' : ''}" id="brushSg" type="button">${ICON_SINGULAR} Einzahl (Blu)</button>
+                <button class="brush-btn brush-pl ${state.l3Brush === 'pl' ? 'active' : ''}" id="brushPl" type="button">${ICON_PLURAL} Mehrzahl (Rosso)</button>
               </div>
 
               <div class="em-grid">
@@ -1099,7 +1370,7 @@
               </div>
 
               <div class="feedback-banner ${solvedCount === 16 ? 'ok' : 'info'}" id="fbL3Grid">
-                ${solvedCount === 16 ? '🏆 Fantastico! Hai colorato correttamente tutta la griglia della Scheda 1!' : 'Seleziona Blu (Einzahl) o Rosso (Mehrzahl) e clicca le caselle!'}
+                ${solvedCount === 16 ? '🏆 Fantastico! Hai colorato tutta la griglia 4×4 della Scheda 1!' : 'Seleziona Blu (Einzahl) o Rosso (Mehrzahl) e clicca le caselle!'}
               </div>
             </div>
           `;
@@ -1118,39 +1389,41 @@
               const fb = document.getElementById('fbL3Grid');
               if (cell.dataset.kind === state.l3Brush) {
                 state.l3GridPainted[key] = state.l3Brush;
-                addReward(true, cell.dataset.text, 'l3-grid');
+                state.stars += 1;
+                state.streak += 1;
+                saveProgress();
                 speakDe(cell.dataset.text);
                 renderStage();
               } else {
-                addReward(false, cell.dataset.text, 'l3-grid');
+                state.streak = 0;
+                saveProgress();
                 cell.classList.add('wrong-shake');
                 setTimeout(() => cell.classList.remove('wrong-shake'), 350);
                 fb.className = 'feedback-banner err';
-                fb.innerHTML = `❌ Attento! "${cell.dataset.text}" è ${cell.dataset.kind === 'sg' ? 'Einzahl (🔵 blu)' : 'Mehrzahl (🔴 rosso)'}!`;
+                fb.innerHTML = `❌ "${cell.dataset.text}" è ${cell.dataset.kind === 'sg' ? 'Einzahl (blu)' : 'Mehrzahl (rosso)'}!`;
               }
             });
           });
           return;
         }
 
-        // Submode B: Plural Quiz (Scheda 1 Exercise 1)
+        if (state.exam && state.exam.finished) return renderExamSummary(stage);
         const n = currentNoun();
         const options = shuffle([n.plural, ...(n.distractors || [`${n.singular}e`, `${n.singular}en`, `${n.singular}s`]).slice(0, 3)]);
-        const pct = Math.round(((state.qIndex % 10) / 10) * 100);
 
         stage.innerHTML = `
           <div class="stage-panel">
             <div class="stage-header">
               <div>
-                <div class="stage-title">⭐⭐⭐ Livello 3: Einzahl → Mehrzahl (viele … / die …)</div>
-                <div class="stage-subtitle">Qual è il plurale corretto? Occhio agli Umlaut (ä, ö, ü)!</div>
+                <div class="stage-title">Esame Einzahl → Mehrzahl</div>
+                <div class="stage-subtitle">Scegli il plurale corretto · occhio agli Umlaut (ä, ö, ü)!</div>
               </div>
-              <div class="submode-bar">
-                <button class="chip active" id="btnL3Plural" type="button">🎯 Trasforma al Plurale</button>
-                <button class="chip" id="btnL3Grid" type="button">🎨 Griglia 4×4 Blu/Rosso</button>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                ${renderExamHud()}
+                <button class="chip" id="btnL3Grid" type="button">Griglia 4×4</button>
               </div>
             </div>
-            <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="progress-track"><div class="progress-fill" style="width:${examProgressPct()}%"></div></div>
 
             <div class="prompt-card">
               ${renderVisualHtml(n)}
@@ -1158,16 +1431,16 @@
                 <span class="article-pill ${n.article}">${n.article}</span>
                 <span>${n.singular}</span>
                 <span>➔</span>
-                <span class="mystery-box">viele ?</span>
+                <span class="mystery-box">${ICON_PLURAL} die ?</span>
               </div>
-              ${state.showIt ? `<div class="noun-it" style="margin-top:6px;">${n.it} ➔ ${n.itPlural}</div>` : ''}
+              ${state.showIt ? `<div class="noun-it" style="margin-top:4px;">${n.it} ➔ ${n.itPlural}</div>` : ''}
             </div>
 
             <div class="options-grid">
-              ${options.map((opt) => `<button class="opt-btn" data-opt="${opt}" type="button">die ${opt}</button>`).join('')}
+              ${options.map((opt) => `<button class="opt-btn" data-opt="${opt}" type="button">${ICON_PLURAL} die ${opt}</button>`).join('')}
             </div>
 
-            <div class="feedback-banner info" id="fbL3">Regola: scopri il plurale di <b>${n.article} ${n.singular}</b>!</div>
+            <div class="feedback-banner info" id="fbL3">Trova il plurale di <b>${n.article} ${n.singular}</b>!</div>
           </div>
         `;
 
@@ -1177,17 +1450,18 @@
           btn.addEventListener('click', () => {
             if (answered) return;
             const fb = document.getElementById('fbL3');
+            const phrase = `die ${n.plural}`;
             if (btn.dataset.opt === n.plural) {
               answered = true;
               btn.classList.add('correct');
-              addReward(true, `die ${n.plural}`, 'l3-plural');
+              recordExamAttempt(true, n, phrase, 'l3-plural');
               fb.className = 'feedback-banner ok';
-              fb.innerHTML = `✅ Esatto! <b>viele ${n.plural}</b> / <b>die ${n.plural}</b> (regola: ${n.pluralRule})`;
-              speakDe(`die ${n.plural}`);
-              setTimeout(nextQuestion, 1300);
+              fb.innerHTML = `✅ Esatto! ${ICON_PLURAL} <b>die ${n.plural}</b> (regola: ${n.pluralRule})`;
+              speakDe(phrase);
+              setTimeout(advanceExamOrNext, 1150);
             } else {
               btn.classList.add('wrong');
-              addReward(false, `die ${n.plural}`, 'l3-plural');
+              recordExamAttempt(false, n, phrase, 'l3-plural');
               fb.className = 'feedback-banner err';
               fb.innerHTML = `❌ Non è "die ${btn.dataset.opt}" — riprova!`;
             }
@@ -1195,11 +1469,11 @@
         });
       }
 
-      // === RENDER LEVEL 4: VOKALE, UMLAUTE & ZWIELAUTE (SCHEDA 3) ===
+      // === RENDER LEVEL 4: VOKALE, UMLAUTE & ZWIELAUTE EXAM (SCHEDA 3) ===
       function renderLevel4(stage) {
+        if (state.exam && state.exam.finished) return renderExamSummary(stage);
         const n = currentNoun();
         const tokens = tokenizeGermanPhonics(n.singular);
-        // Pick the most interesting target type present in this word
         let targetType = 'vokal';
         let targetLabel = 'Vokale (a, e, i, o, u)';
         if (tokens.some((t) => t.type === 'umlaut')) {
@@ -1218,15 +1492,16 @@
           <div class="stage-panel">
             <div class="stage-header">
               <div>
-                <div class="stage-title">⭐⭐⭐⭐ Livello 4: Caccia ai suoni tedeschi (Scheda 3)</div>
+                <div class="stage-title">Esame Suoni Tedeschi (Scheda 3)</div>
                 <div class="stage-subtitle">Clicca tutti i <b>${targetLabel}</b> dentro la parola!</div>
               </div>
-              <button class="btn-audio" id="btnHearL4" type="button">🔊 Ascolta</button>
+              ${renderExamHud()}
             </div>
+            <div class="progress-track"><div class="progress-fill" style="width:${examProgressPct()}%"></div></div>
 
             <div class="prompt-card">
               ${renderVisualHtml(n)}
-              <div style="font-size:0.95rem;color:#475569;font-weight:600;">Trova: <b style="color:#db2777;">${targetLabel}</b></div>
+              <div style="font-size:0.9rem;color:#475569;font-weight:600;">Trova: <b style="color:#db2777;">${targetLabel}</b></div>
               <div class="phonics-word">
                 ${tokens.map((t, idx) => `
                   <button class="phonics-tile ${state.l4Picked.has(idx) ? 'picked-ok' : ''}" data-idx="${idx}" data-type="${t.type}" type="button">${t.text}</button>
@@ -1239,60 +1514,60 @@
           </div>
         `;
 
-        document.getElementById('btnHearL4').addEventListener('click', () => speakDe(`${n.article} ${n.singular}`));
         stage.querySelectorAll('.phonics-tile').forEach((tile) => {
           tile.addEventListener('click', () => {
             const idx = Number(tile.dataset.idx);
             const fb = document.getElementById('fbL4');
+            const phrase = `${n.article} ${n.singular}`;
             if (tile.dataset.type === targetType) {
               state.l4Picked.add(idx);
               tile.classList.add('picked-ok');
               if (state.l4Picked.size >= expectedIndices.length) {
-                addReward(true, n.singular, 'l4-phonics');
+                recordExamAttempt(true, n, phrase, 'l4-phonics');
                 fb.className = 'feedback-banner ok';
-                fb.innerHTML = `✅ Grandissimo! Hai trovato tutti i <b>${targetLabel}</b> in <b>${n.singular}</b>!`;
-                speakDe(`${n.article} ${n.singular}`);
-                setTimeout(nextQuestion, 1200);
+                fb.innerHTML = `✅ Grandissimo! Tutti i <b>${targetLabel}</b> trovati in <b>${n.singular}</b>!`;
+                speakDe(phrase);
+                setTimeout(advanceExamOrNext, 1100);
               } else {
                 fb.className = 'feedback-banner info';
                 fb.innerHTML = `👍 Bene! Ne mancano ${expectedIndices.length - state.l4Picked.size}...`;
               }
             } else {
-              addReward(false, n.singular, 'l4-phonics');
+              recordExamAttempt(false, n, phrase, 'l4-phonics');
               tile.classList.add('picked-err');
               setTimeout(() => tile.classList.remove('picked-err'), 350);
               fb.className = 'feedback-banner err';
-              fb.innerHTML = `❌ "${tile.textContent}" è un ${tile.dataset.type}, noi cerchiamo <b>${targetLabel}</b>!`;
+              fb.innerHTML = `❌ "${tile.textContent}" è un ${tile.dataset.type}, cerchiamo <b>${targetLabel}</b>!`;
             }
           });
         });
       }
 
-      // === RENDER LEVEL 5: KEYBOARD TYPING + UMLAUT PAD ===
+      // === RENDER LEVEL 5: KEYBOARD TYPING EXAM + UMLAUT PAD ===
       function renderLevel5(stage) {
+        if (state.exam && state.exam.finished) return renderExamSummary(stage);
         const n = currentNoun();
         const isPlural = state.l5Mode === 'plural';
-        const promptTitle = isPlural
-          ? `Scrivi il PLURALE di "${n.article} ${n.singular}" (es. ${n.plural} o die ${n.plural})`
-          : `Scrivi la parola in tedesco (con iniziale MAIUSCOLA!)`;
 
         stage.innerHTML = `
           <div class="stage-panel">
             <div class="stage-header">
               <div>
-                <div class="stage-title">⭐⭐⭐⭐⭐ Livello 5: Scrivi con la Tastiera!</div>
-                <div class="stage-subtitle">Usa la tastiera del computer + i tasti rapidi <b>ä ö ü ß</b> qui sotto.</div>
+                <div class="stage-title">Esame Tastiera · Scrivi le Parole!</div>
+                <div class="stage-subtitle">Usa la tastiera del PC + i tasti rapidi <b>ä ö ü ß</b> qui sotto.</div>
               </div>
-              <div class="submode-bar">
-                <button class="chip ${!isPlural ? 'active' : ''}" id="btnL5Sg" type="button">1️⃣ Einzahl</button>
-                <button class="chip ${isPlural ? 'active' : ''}" id="btnL5Pl" type="button">🔢 Mehrzahl</button>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                ${renderExamHud()}
+                <button class="chip ${!isPlural ? 'active' : ''}" id="btnL5Sg" type="button">Einzahl</button>
+                <button class="chip ${isPlural ? 'active' : ''}" id="btnL5Pl" type="button">Mehrzahl</button>
               </div>
             </div>
+            <div class="progress-track"><div class="progress-fill" style="width:${examProgressPct()}%"></div></div>
 
             <div class="prompt-card">
               ${renderVisualHtml(n)}
               <div style="font-size:1.05rem;font-weight:700;color:#1e3a8a;margin-bottom:6px;">
-                ${isPlural ? `${n.article} ${n.singular} ➔ viele ___` : `${n.article} ___ (${n.it})`}
+                ${isPlural ? `${n.article} ${n.singular} ➔ die ___` : `${n.article} ___ (${n.it})`}
               </div>
               <button class="btn-audio" id="btnHearL5" type="button">🔊 Ascolta la pronuncia</button>
             </div>
@@ -1309,24 +1584,28 @@
               </div>
 
               <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
-                <button class="btn-pill" id="btnHintL5" type="button">💡 Indizio</button>
-                <button class="btn-pill" id="btnSkipL5" type="button">⏭️ Salta</button>
+                <button class="chip" id="btnHintL5" type="button">💡 Indizio</button>
+                <button class="chip" id="btnSkipL5" type="button">⏭️ Salta</button>
               </div>
             </div>
 
-            <div class="feedback-banner info" id="fbL5">${promptTitle}</div>
+            <div class="feedback-banner info" id="fbL5">Scrivi la parola con l'iniziale MAIUSCOLA e premi Invio!</div>
           </div>
         `;
 
         const inputEl = document.getElementById('typingInput');
         inputEl.focus();
 
-        document.getElementById('btnL5Sg').addEventListener('click', () => { state.l5Mode = 'singular'; renderStage(); });
-        document.getElementById('btnL5Pl').addEventListener('click', () => { state.l5Mode = 'plural'; renderStage(); });
+        document.getElementById('btnL5Sg').addEventListener('click', () => { state.l5Mode = 'singular'; prepareDeckForLevel(); renderStage(); });
+        document.getElementById('btnL5Pl').addEventListener('click', () => { state.l5Mode = 'plural'; prepareDeckForLevel(); renderStage(); });
         document.getElementById('btnHearL5').addEventListener('click', () => {
           speakDe(isPlural ? `die ${n.plural}` : `${n.article} ${n.singular}`);
         });
-        document.getElementById('btnSkipL5').addEventListener('click', nextQuestion);
+        document.getElementById('btnSkipL5').addEventListener('click', () => {
+          recordExamAttempt(false, n, isPlural ? `die ${n.plural}` : `${n.article} ${n.singular}`, 'l5-typing');
+          if (state.exam) state.exam.answered += 1;
+          advanceExamOrNext();
+        });
         document.getElementById('btnHintL5').addEventListener('click', () => {
           const targetWord = isPlural ? n.plural : n.singular;
           const fb = document.getElementById('fbL5');
@@ -1349,14 +1628,15 @@
         function submitAnswer() {
           const res = evaluateGermanTyping(inputEl.value, n, state.l5Mode);
           const fb = document.getElementById('fbL5');
+          const expectedPhrase = isPlural ? `die ${n.plural}` : `${n.article} ${n.singular}`;
           if (res.ok) {
-            addReward(true, res.expected, 'l5-typing');
+            recordExamAttempt(true, n, expectedPhrase, 'l5-typing');
             fb.className = 'feedback-banner ok';
             fb.innerHTML = `🏆 Perfetto! <b>${res.expected}</b> scritto benissimo!`;
             speakDe(res.expected);
-            setTimeout(nextQuestion, 1300);
+            setTimeout(advanceExamOrNext, 1150);
           } else {
-            addReward(false, res.expected || n.singular, 'l5-typing');
+            recordExamAttempt(false, n, expectedPhrase, 'l5-typing');
             fb.className = 'feedback-banner err';
             fb.innerHTML = `✏️ ${res.hint}`;
             inputEl.focus();
@@ -1379,10 +1659,8 @@
         else renderLevel5(stage);
       }
 
-      // Wire top controls (both skill ladder & contextual header nav tabs stay in sync)
       function selectLevel(lv) {
         state.level = Number(lv);
-        document.querySelectorAll('.level-btn').forEach((b) => b.classList.toggle('active', Number(b.dataset.level) === state.level));
         document.querySelectorAll('#germanNavTabs [data-nav-level]').forEach((t) => {
           const isAct = Number(t.dataset.navLevel) === state.level;
           t.classList.toggle('active', isAct);
@@ -1392,16 +1670,13 @@
         renderStage();
       }
 
-      document.querySelectorAll('.level-btn').forEach((btn) => {
-        btn.addEventListener('click', () => selectLevel(btn.dataset.level));
-      });
       document.querySelectorAll('#germanNavTabs [data-nav-level]').forEach((tab) => {
         tab.addEventListener('click', () => selectLevel(tab.dataset.navLevel));
       });
 
-      document.querySelectorAll('#worksheetFilters .chip').forEach((chip) => {
+      document.querySelectorAll('#worksheetFilters .rail-chip').forEach((chip) => {
         chip.addEventListener('click', () => {
-          document.querySelectorAll('#worksheetFilters .chip').forEach((c) => c.classList.remove('active'));
+          document.querySelectorAll('#worksheetFilters .rail-chip').forEach((c) => c.classList.remove('active'));
           chip.classList.add('active');
           state.filter = chip.dataset.filter;
           prepareDeckForLevel();
@@ -1413,7 +1688,7 @@
       btnIt.addEventListener('click', () => {
         state.showIt = !state.showIt;
         btnIt.classList.toggle('active', state.showIt);
-        btnIt.textContent = state.showIt ? '🇮🇹 IT: ON' : '🇮🇹 IT: OFF';
+        btnIt.textContent = state.showIt ? 'Traduzione IT: ON' : 'Traduzione IT: OFF';
         renderStage();
       });
 
@@ -1421,7 +1696,7 @@
       btnHoverQuiz.addEventListener('click', () => {
         state.hoverQuiz = !state.hoverQuiz;
         btnHoverQuiz.classList.toggle('active', state.hoverQuiz);
-        btnHoverQuiz.textContent = state.hoverQuiz ? '👁️ Hover ? → ATTIVO' : '🙈 Hover ? → der/die/das';
+        btnHoverQuiz.textContent = state.hoverQuiz ? 'Hover ?: ATTIVO' : 'Hover ?: OFF';
         renderStage();
       });
 
