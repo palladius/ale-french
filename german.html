@@ -241,8 +241,14 @@
     .noun-card.art-das { border-color: #86efac; }
     .noun-card.art-das:hover { border-color: var(--das-color); background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 42%); }
 
-    /* Hover-to-reveal mystery mode in Level 0 (Esplora & Ascolta) */
-    .explore-grid.hover-quiz .noun-card { border-color: #e2e8f0; }
+    /* Hover-to-reveal mystery mode in Level 0 (Esplora & Ascolta — ON by default!) */
+    .explore-grid.hover-quiz .noun-card { border-color: #e2e8f0 !important; background: #ffffff; }
+    .explore-grid.hover-quiz .noun-card.art-der:hover,
+    .explore-grid.hover-quiz .noun-card.art-der.revealed { border-color: var(--der-color) !important; background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%); }
+    .explore-grid.hover-quiz .noun-card.art-die:hover,
+    .explore-grid.hover-quiz .noun-card.art-die.revealed { border-color: var(--die-color) !important; background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 42%); }
+    .explore-grid.hover-quiz .noun-card.art-das:hover,
+    .explore-grid.hover-quiz .noun-card.art-das.revealed { border-color: var(--das-color) !important; background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 42%); }
     .explore-grid.hover-quiz .noun-card .art-real { display: none; }
     .explore-grid.hover-quiz .noun-card .art-mystery { display: inline-block; }
     .explore-grid.hover-quiz .noun-card .noun-plural,
@@ -724,7 +730,7 @@
         <button class="chip" data-filter="3" type="button">📄 Scheda 3: Animali &amp; Laute</button>
       </div>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.82rem;color:#64748b;">
-        <button class="chip" id="btnHoverQuiz" type="button" title="Nasconde articolo e plurale finché non passi col mouse sulla carta">🙈 Hover ? → der/die/das</button>
+        <button class="chip active" id="btnHoverQuiz" type="button" title="Nasconde articolo e plurale finché non passi col mouse sulla carta">👁️ Hover ? → ATTIVO</button>
         <span>
           <span class="article-pill der">der</span> Maskulin ·
           <span class="article-pill die">die</span> Feminin ·
@@ -760,7 +766,7 @@
         level: 0,
         filter: 'all',
         showIt: true,
-        hoverQuiz: false,
+        hoverQuiz: true,
         stars: 0,
         streak: 0,
         qIndex: 0,
