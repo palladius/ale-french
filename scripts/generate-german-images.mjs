@@ -32,7 +32,10 @@ const SUBJECT_PROMPTS = {
   'die-wolke': 'A fluffy happy white cloud floating in a soft blue sky',
   'der-kuerbis': 'A cheerful round orange pumpkin with a curly green vine',
   'das-kind': 'A happy 8-year-old boy with a colorful school backpack waving cheerfully',
-  'das-pferd': 'A friendly brown horse with a flowing mane in a sunny meadow',
+  'das-pferd': {
+    refImage: 'images/avatar-seby.png',
+    prompt: 'The cheerful 6-year-old boy from the reference image (keep his exact face, hair, and joyful smiling expression) happily riding on top of a friendly brown storybook horse with a flowing mane in a sunny green meadow. Cute Pixar-inspired children\'s book illustration, vibrant friendly colors, centered subject, NO text, NO letters, NO words, NO labels.'
+  },
   'der-loewe': 'A cute friendly golden lion with a big fluffy mane smiling',
   'der-schrank': 'A charming painted wooden wardrobe cupboard slightly open',
   'der-uhu': 'A majestic yet adorable Eurasian eagle-owl (Uhu) with big orange eyes and ear tufts perched on a pine branch',

@@ -70,6 +70,60 @@
   line-height: 1;
 }
 
+/* Shared single-row compact header across ALL pages (FR & DE) */
+@media (min-width: 760px) {
+  header {
+    flex-wrap: nowrap !important;
+    padding: 4px 10px !important;
+    gap: 6px !important;
+    min-height: 46px !important;
+  }
+
+  header .brand {
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  header .brand h1 {
+    font-size: 1rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* Redundant with PuffinLogin avatar pill on the right */
+  header .badge-ale {
+    display: none !important;
+  }
+
+  header .nav-tabs {
+    flex-wrap: nowrap !important;
+    gap: 2px !important;
+    padding: 2px !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    min-width: 0 !important;
+  }
+  header .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  header .nav-tab {
+    padding: 4px 7px !important;
+    font-size: 0.78rem !important;
+    gap: 4px !important;
+  }
+
+  header .nav-actions {
+    flex-wrap: nowrap !important;
+    gap: 5px !important;
+    flex-shrink: 0 !important;
+  }
+
+  header puffin-login {
+    transform: scale(0.86);
+    transform-origin: right center;
+  }
+}
+
 /* Monochrome currentColor SVG icons in header nav tabs (webapp-that-riccardo-likes) */
 .nav-tab {
   display: inline-flex;

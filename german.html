@@ -113,7 +113,7 @@
       flex-shrink: 0;
     }
 
-    @media (max-width: 960px) {
+    @media (max-width: 740px) {
       header { flex-wrap: wrap; }
     }
 
@@ -125,17 +125,18 @@
       padding: 12px 14px 32px;
       flex: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 206px;
+      grid-template-columns: minmax(0, 1fr) 196px;
       gap: 14px;
       align-items: start;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 640px) {
       .workspace {
         grid-template-columns: 1fr;
       }
       .side-rail {
         order: -1;
+        position: static;
       }
     }
 
@@ -1017,7 +1018,7 @@
 
       function renderVisualHtml(noun) {
         if (noun.image) {
-          return `<div class="card-visual"><img src="${noun.image}" alt="${noun.singular}" loading="lazy" onerror="this.parentElement.textContent='${noun.emoji}'"></div>`;
+          return `<div class="card-visual"><img src="${noun.image}?v=2" alt="${noun.singular}" loading="lazy" onerror="this.parentElement.textContent='${noun.emoji}'"></div>`;
         }
         return `<div class="card-visual">${noun.emoji}</div>`;
       }
